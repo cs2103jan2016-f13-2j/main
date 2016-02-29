@@ -1,4 +1,4 @@
-package main.gui.view;
+package main.gui.resources;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -10,7 +10,7 @@ import javafx.scene.control.TextField;
 import main.gui.MainApp;
 import main.gui.model.Task;
 
-public class PersonOverviewController {
+public class TaskOverviewController {
     @FXML
     private TableView<Task> taskTable;
     @FXML
@@ -33,7 +33,7 @@ public class PersonOverviewController {
      * The constructor.
      * The constructor is called before the initialize() method.
      */
-    public PersonOverviewController() {
+    public TaskOverviewController() {
     }
 
     /**
@@ -46,10 +46,10 @@ public class PersonOverviewController {
         taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().taskNameProperty());
         taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
         
-        // Clear person details.
+        // Clear task details.
         showTaskDetails(null);
 
-        // Listen for selection changes and show the person details when changed.
+        // Listen for selection changes and show the task details when changed.
         taskTable.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showTaskDetails(newValue));
     }
@@ -109,6 +109,7 @@ public class PersonOverviewController {
     
     public void onEnter(){
     	String command = commandText.getText(); //string received from user.
+    	System.out.println(command);
  	   
  	   commandText.clear();
  	   

@@ -8,12 +8,15 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.view.PersonOverviewController">
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.TaskOverviewController">
    <children>
       <SplitPane dividerPositions="0.7023411371237458" layoutX="100.0" layoutY="90.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -26,7 +29,7 @@
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <TextField fx:id="commandText" layoutX="37.0" layoutY="392.0" onAction="#onEnter" prefHeight="25.0" prefWidth="331.0" />
-                                    <TableView fx:id="taskTable" layoutY="7.0" prefHeight="200.0" prefWidth="417.0">
+                                    <TableView fx:id="taskTable" prefHeight="207.0" prefWidth="417.0">
                                       <columns>
                                         <TableColumn fx:id="taskNameColumn" prefWidth="75.0" text="Task Name" />
                                         <TableColumn fx:id="taskDetailsColumn" prefWidth="75.0" text="Task Details" />
@@ -50,9 +53,18 @@
                                           <Label fx:id="taskNameLabel" text="Output 1" GridPane.columnIndex="1" />
                                           <Label fx:id="taskDetailsLabel" text="Output 2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
+                                       <effect>
+                                          <SepiaTone />
+                                       </effect>
                                     </GridPane>
-                                    <Button layoutX="239.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleDeleteTask" text="Delete" />
+                                    <Button layoutX="239.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleDeleteTask" text="Delete">
+                                       <effect>
+                                          <SepiaTone level="0.45" />
+                                       </effect></Button>
                                  </children>
+                                 <effect>
+                                    <SepiaTone level="0.66" />
+                                 </effect>
                               </AnchorPane>
                         </content>
                       </Tab>
@@ -62,6 +74,9 @@
                         </content>
                       </Tab>
                     </tabs>
+                     <effect>
+                        <SepiaTone />
+                     </effect>
                   </TabPane>
                </children>
             </AnchorPane>
@@ -69,8 +84,17 @@
                <children>
                   <Label layoutX="7.0" layoutY="6.0" text="Floating Tasks" />
                </children>
+               <effect>
+                  <SepiaTone />
+               </effect>
             </AnchorPane>
         </items>
+         <effect>
+            <Glow />
+         </effect>
       </SplitPane>
    </children>
+   <effect>
+      <InnerShadow />
+   </effect>
 </AnchorPane>

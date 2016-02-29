@@ -11,7 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import main.gui.model.Task;
-import main.gui.view.PersonOverviewController;
+import main.gui.resources.TaskOverviewController;
 
 public class MainApp extends Application {
 
@@ -59,7 +59,7 @@ public class MainApp extends Application {
 
         initRootLayout();
 
-        showPersonOverview();
+        showTaskOverview();
     }
 
     /**
@@ -84,18 +84,18 @@ public class MainApp extends Application {
     /**
      * Shows the task overview inside the root layout.
      */
-    public void showPersonOverview() {
+    public void showTaskOverview() {
         try {
-            // Load person overview.
+            // Load Task overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("PersonOverview.fxml"));
-            AnchorPane personOverview = (AnchorPane) loader.load();
+            loader.setLocation(MainApp.class.getResource("TaskOverview.fxml"));
+            AnchorPane taskOverview = (AnchorPane) loader.load();
 
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(personOverview);
+            // Set task overview into the center of root layout.
+            rootLayout.setCenter(taskOverview);
 
             // Give the controller access to the main app.
-            PersonOverviewController controller = loader.getController();
+            TaskOverviewController controller = loader.getController();
             controller.setMainApp(this);
 
         } catch (IOException e) {
