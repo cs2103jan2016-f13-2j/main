@@ -30,7 +30,8 @@ public class MainApp extends Application {
      */
     public MainApp() {
         // Add some sample data
-        taskData.add(new Task("wash hand", "Muster"));
+        /*
+    	taskData.add(new Task("wash hand", "Muster"));
         taskData.add(new Task("wash leg", "Mueller"));
         taskData.add(new Task("wash clothes", "Kurz"));
         taskData.add(new Task("wash car", "Meier"));
@@ -39,6 +40,8 @@ public class MainApp extends Application {
         taskData.add(new Task("wash shoe", "Best"));
         taskData.add(new Task("wash toilet", "Meier"));
         taskData.add(new Task("do work", "Mueller"));
+        */
+        
     }
 
     /**

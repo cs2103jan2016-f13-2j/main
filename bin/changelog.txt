@@ -1,0 +1,16 @@
+Trekker Changelog
+
+v1.0.1
+
+- Editted showMessage() to allow printing of formatted strings.
+- Moved Trekker constructor to the top of the class, below class attributes.
+- In runCommandOptions(), changed switch condition to (command.toLowerCase()) from (command.toUpperCase()) and adjusted cases accordingly. Also re-arranged cases in alphabetical order, except for "exit" which is the final case.
+- Renamed run() to runUntilExitCommand() for clarity.
+
+
+==================================================
+
+v1.0.0
+
+- Changelog created.
+- Trekker contains add, delete, edit, and display functions.

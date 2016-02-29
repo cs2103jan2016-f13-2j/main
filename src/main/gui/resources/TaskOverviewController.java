@@ -1,5 +1,9 @@
 package main.gui.resources;
 
+import java.util.ArrayList;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -25,6 +29,8 @@ public class TaskOverviewController {
     
     @FXML
     private TextField commandText;
+    
+    private ObservableList<Task> list = FXCollections.observableArrayList();
 
     // Reference to the main application.
     private MainApp mainApp;
@@ -63,7 +69,15 @@ public class TaskOverviewController {
         this.mainApp = mainApp;
 
         // Add observable list data to the table
-        taskTable.setItems(mainApp.getTaskData());
+        Trekker trekker = new Trekker("display");
+    	trekker.run();
+    	ArrayList<Task> temp = trekker.getTaskList();
+    	for (int i=0; i<temp.size(); i++) {
+    		list.add(temp.get(i));
+    	}
+       taskTable.setItems(list);
+        
+        
     }
     
     /**
@@ -109,10 +123,12 @@ public class TaskOverviewController {
     
     public void onEnter(){
     	String command = commandText.getText(); //string received from user.
-    	System.out.println(command);
+    	//System.out.println(command);
+    	
+    	Trekker trekker = new Trekker(command);
+    	trekker.run();
  	   
  	   commandText.clear();
  	   
- 	}
-    
+ 	}    
 }

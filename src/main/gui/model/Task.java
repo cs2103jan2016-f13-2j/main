@@ -1,5 +1,6 @@
 package main.gui.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javafx.beans.property.IntegerProperty;
@@ -9,10 +10,15 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Task {
-//define and set a task class, ie a class entry
-	   private final StringProperty taskName;
-	   private final StringProperty taskDetails;
+public class Task implements Serializable {
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	//define and set a task class, ie a class entry
+	   private String taskName;
+	   private String taskDetails;
 	
 	    public Task() {
 	        this(null, null);
@@ -25,32 +31,35 @@ public class Task {
 	     * @param lastName
 	     */
 	    public Task(String taskName, String taskDetails) {
-	        this.taskName = new SimpleStringProperty(taskName);
-	        this.taskDetails = new SimpleStringProperty(taskDetails);
+	        this.taskName = taskName;
+	        this.taskDetails = taskDetails;
 	    }
 	    
 	    public String getTaskName(){
-	    	return this.taskName.get();
+	    	return this.taskName;
 	    }
 	    
 	    public void setTaskName(String taskName){
-	    	this.taskName.set(taskName);
+	    	this.taskName = taskName;
 	    }
 	    
 	    public StringProperty taskNameProperty() {
-	        return taskName;
+	        return convertType(taskName);
 	    }
 	    
 	    public String getTaskDetails(){
-	    	return this.taskDetails.get();
+	    	return this.taskDetails;
 	    }
 	    
 	    public void setTaskDetails(String taskDetails){
-	    	this.taskName.set(taskDetails);
+	    	this.taskName = taskDetails;
 	    }
 	    
 	    public StringProperty taskDetailsProperty() {
-	        return taskDetails;
+	        return convertType(taskDetails);
 	    }
 	    
+	    public StringProperty convertType(String text) {
+	    	return new SimpleStringProperty(text);
 	    }
+}
