@@ -26,18 +26,8 @@ public class Trekker {
 	//Global Variables
 	String[] inputCommand;
 
-
 	//MESSAGES
-	public final String MSG_EDIT = "Enter Task to Edit: <task number>";
-	public final String MSG_EDIT_CHOICE = "Choose number to edit: <1. title> <2. startDate> <3. endDate> <4. notes>";
-	public final String MSG_EDIT_CHOICE_TO = "Edit to: ";
-
-	//MESSAGES_SUCCESS
-	public final String MSG_EDIT_SUCCESS = "Task updated successfully.";
-
-	//MESSAGES_ERROR
 	public final String MSG_ERROR_COMMAND_NOT_FOUND = "Command not found.";
-	public final String MSG_ERROR_EDIT_FAIL = "Failed to edit task.";
 
 
 	//-----Constructor-----
@@ -72,27 +62,19 @@ public class Trekker {
 		} catch (IndexOutOfBoundsException e) {
 		}
 	}
-/*
+
 	private void editTask() {
 		try {
-			showMessage(MSG_EDIT);
-			int taskToEdit = Integer.parseInt(sc.nextLine());
-			Task task = taskList.get(taskToEdit-1);
-			showTask(task, taskToEdit);
-			showMessage(MSG_EDIT_CHOICE);
-			int lineToEdit = Integer.parseInt(sc.nextLine());
-			showMessage(MSG_EDIT_CHOICE_TO);
-			String newEdit = sc.nextLine();
-			task = updateTask(task, newEdit, lineToEdit);	
+			int taskToEdit = Integer.parseInt(inputCommand[1].trim())-1;
+			Task task = taskList.get(taskToEdit);
+			String whatToEdit = inputCommand[2].trim();
+			String newEdit = inputCommand[3].trim();
+			task = updateTask(task, newEdit, whatToEdit);	
 			saveFile();
-			showMessage(MSG_EDIT_SUCCESS);
 		} catch (IndexOutOfBoundsException e) {
-			showMessage(MSG_ERROR_EDIT_FAIL);
 		} catch (NumberFormatException e) {
-			showMessage(MSG_ERROR_EDIT_FAIL);
 		}
 	}
-*/
 
 
 	//-----Start-up Program Functions-----
@@ -108,7 +90,7 @@ public class Trekker {
 			break;
 		}
 		case "edit": {
-			//editTask();
+			editTask();
 			break;
 		}
 		
@@ -143,29 +125,19 @@ public class Trekker {
 		}
 	}
 
-/*
-	private Task updateTask(Task task, String newEdit, int lineToEdit) {
+
+	private Task updateTask(Task task, String newEdit, String whatToEdit) {
 		boolean notValid = true;
 
 		while (notValid) {
-			switch (lineToEdit) {
-			case 1: {			//title
-				task.updateTitle(newEdit);
+			switch (whatToEdit) {
+			case "taskName": {			//taskName
+				task.setTaskName(newEdit);
 				notValid = false;
 				break;
 			}
-			case 2: {			//startDate
-				task.updateStartDate(Integer.parseInt(newEdit));
-				notValid = false;
-				break;
-			}
-			case 3: {			//endDate
-				task.updateEndDate(Integer.parseInt(newEdit));
-				notValid = false;
-				break;
-			}
-			case 4: {			//notes
-				task.updateNotes(newEdit);
+			case "taskDetails": {			//taskDetails
+				task.setTaskDetails(newEdit);
 				notValid = false;
 				break;
 			}
@@ -177,7 +149,7 @@ public class Trekker {
 
 		return task;
 	}
-*/
+	
 	private void exitProgram() {
 		saveFile();
 	}
