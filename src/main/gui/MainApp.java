@@ -15,6 +15,14 @@ import main.gui.resources.TaskOverviewController;
 
 public class MainApp extends Application {
 
+	//Window titles
+	private static final String WINDOW_TITLE = "Trekker";
+	
+	//Layout file paths
+	private static final String ROOT_LAYOUT_FXML = "resources/RootLayout.fxml";
+	private static final String TASK_OVERVIEW_FXML = "resources/TaskOverview.fxml";
+	
+
     private Stage primaryStage;
     private BorderPane rootLayout;
 
@@ -58,7 +66,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Trekker");
+        this.primaryStage.setTitle(WINDOW_TITLE);
 
         initRootLayout();
 
@@ -72,7 +80,7 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource(ROOT_LAYOUT_FXML));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
@@ -91,7 +99,7 @@ public class MainApp extends Application {
         try {
             // Load Task overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("TaskOverview.fxml"));
+            loader.setLocation(MainApp.class.getResource(TASK_OVERVIEW_FXML));
             AnchorPane taskOverview = (AnchorPane) loader.load();
 
             // Set task overview into the center of root layout.

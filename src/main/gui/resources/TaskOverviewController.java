@@ -2,6 +2,8 @@ package main.gui.resources;
 
 import java.util.ArrayList;
 
+import com.sun.javafx.scene.control.skin.TableViewSkinBase;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -127,7 +129,8 @@ public class TaskOverviewController {
     	
     	Trekker trekker = new Trekker(command);
     	trekker.run();
- 	   
+
+       mainApp.showTaskOverview(); 
  	   commandText.clear();
  	   
  	}    

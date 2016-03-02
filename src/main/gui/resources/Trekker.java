@@ -130,13 +130,13 @@ public class Trekker {
 		boolean notValid = true;
 
 		while (notValid) {
-			switch (whatToEdit) {
-			case "taskName": {			//taskName
+			switch (whatToEdit.toLowerCase()) {
+			case "taskname": {			//taskName
 				task.setTaskName(newEdit);
 				notValid = false;
 				break;
 			}
-			case "taskDetails": {			//taskDetails
+			case "taskdetails": {			//taskDetails
 				task.setTaskDetails(newEdit);
 				notValid = false;
 				break;
