@@ -14,7 +14,7 @@ import main.gui.model.Task;
 public class Trekker {
 
 	//-----Variables-----
-
+	
 	//File Variables
 	File file;
 	String fileName;
@@ -27,7 +27,12 @@ public class Trekker {
 	String[] inputCommand;
 
 	//MESSAGES
-	public final String MSG_ERROR_COMMAND_NOT_FOUND = "Command not found.";
+	private static final String MSG_ERROR_COMMAND_NOT_FOUND = "Command not found.";
+	private static final String CMD_ADD = "add";
+	private static final String CMD_DELETE = "delete";
+	private static final String CMD_EDIT = "edit";
+	private static final String CMD_DISPLAY = "display";
+	private static final String CMD_EXIT = "exit";
 
 
 	//-----Constructor-----
@@ -81,24 +86,24 @@ public class Trekker {
 
 	private void runCommandOptions() {
 		switch (inputCommand[0].toLowerCase()) {
-		case "add": {
+		case CMD_ADD: {
 			addTask();
 			break;
 		}
-		case "delete": {
+		case CMD_DELETE: {
 			deleteTask();
 			break;
 		}
-		case "edit": {
+		case CMD_EDIT: {
 			editTask();
 			break;
 		}
-		
-		case "display": {
+
+		case CMD_DISPLAY: {
 			//Nothing done here
 			break;
 		}
-		case "exit": {
+		case CMD_EXIT: {
 			exitProgram();
 			break;
 		}
