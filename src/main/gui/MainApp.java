@@ -1,6 +1,10 @@
 package main.gui;
 
+import java.awt.SystemTray;
 import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -62,12 +66,12 @@ public class MainApp extends Application {
 
     // ... THE REST OF THE CLASS ...
     
+
     
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle(WINDOW_TITLE);
-
         initRootLayout();
 
         showTaskOverview();
