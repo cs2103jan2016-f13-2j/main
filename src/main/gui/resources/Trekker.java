@@ -77,35 +77,72 @@ public class Trekker {
 	}
 
 
+	/*
+	private void sortTask() {
+		Collections.sort(taskList, taskComparator);
+		saveFile();
+	}
+
+	public static void searchTasks(String searchWords) {
+		ArrayList<String> searchResults = new ArrayList<String>();
+		for (Task t : taskList) {
+			if ((t.getTaskDetails()).contains(searchWords)) {
+				searchResults.add(t.getTaskDetails());
+			}
+		}
+		displayTasks(searchResults);
+	}
+
+	public static void displayTasks(ArrayList<String> toDisplay) {
+		if (toDisplay.size() == 0) {
+			showToUser(MESSAGE_NO_FINDING_RESULTS);
+		} else {
+			for (int i = 1; i <= toDisplay.size(); i++) {
+				showToUser(String.format(MESSAGE_DISPLAY_TASK, i, toDisplay.get(i - 1)));
+			}
+		}
+	}
+
+	public static final Comparator<Task> taskComparator = new Comparator<Task>() {
+
+		@Override
+		public int compare(Task t1, Task t2) {
+			return (t1.getTaskDetails()).compareToIgnoreCase(t2.getTaskDetails());
+		}
+
+	};
+	*/
+
+
 	//-----Start-up Program Functions-----
 
 	private void runCommandOptions() {
 		switch (inputCommand[0].toLowerCase()) {
-		case "add": {
-			addTask();
-			break;
-		}
-		case "delete": {
-			deleteTask();
-			break;
-		}
-		case "edit": {
-			editTask();
-			break;
-		}
-		
-		case "display": {
+			case "add": {
+				addTask();
+				break;
+			}
+			case "delete": {
+				deleteTask();
+				break;
+			}
+			case "edit": {
+				editTask();
+				break;
+			}
+
+			case "display": {
 			//Nothing done here
-			break;
-		}
-		case "exit": {
-			exitProgram();
-			break;
-		}
-		default: {
-			showMessage(MSG_ERROR_COMMAND_NOT_FOUND);
-			break;
-		}
+				break;
+			}
+			case "exit": {
+				exitProgram();
+				break;
+			}
+			default: {
+				showMessage(MSG_ERROR_COMMAND_NOT_FOUND);
+				break;
+			}
 		}
 	}
 
@@ -144,83 +181,83 @@ public class Trekker {
 			default: {
 				notValid = true;
 			}
-			}
 		}
+	}
 
-		return task;
-	}
-	
-	private void exitProgram() {
-		saveFile();
-	}
-	
-	public ArrayList<Task> getTaskList() {
-		return taskList;
-	}
+	return task;
+}
+
+private void exitProgram() {
+	saveFile();
+}
+
+public ArrayList<Task> getTaskList() {
+	return taskList;
+}
 
 
 	//-----File Readers-----
 
 	//Reads the file and inputs it into the ArrayList
-	private void readFile() {
-		try {			
-			ObjectInputStream objectInputStream = new ObjectInputStream(
-					new FileInputStream("task.txt"));
+private void readFile() {
+	try {			
+		ObjectInputStream objectInputStream = new ObjectInputStream(
+			new FileInputStream("task.txt"));
 
 			//Read number of Tasks
-			numberOfTasks = (Integer) objectInputStream.readObject();
+		numberOfTasks = (Integer) objectInputStream.readObject();
 
 
-			Task task = null;
-			for (int i=0; i<numberOfTasks; i++) {
-				task = (Task) objectInputStream.readObject();
-				taskList.add(task);
-			}
-
-			objectInputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+		Task task = null;
+		for (int i=0; i<numberOfTasks; i++) {
+			task = (Task) objectInputStream.readObject();
+			taskList.add(task);
 		}
 
+		objectInputStream.close();
+	} catch (IOException e) {
+		e.printStackTrace();
+	} catch (ClassNotFoundException e) {
+		e.printStackTrace();
 	}
+
+}
 
 	//Saves the current testList to the text file
-	private void saveFile() {
-		try {
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					new FileOutputStream("task.txt"));
-			objectOutputStream.writeObject(numberOfTasks);
-			for (int i=0; i<numberOfTasks; i++) {
-				objectOutputStream.writeObject(taskList.get(i));
-			}
-
-			objectOutputStream.close();
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+private void saveFile() {
+	try {
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+			new FileOutputStream("task.txt"));
+		objectOutputStream.writeObject(numberOfTasks);
+		for (int i=0; i<numberOfTasks; i++) {
+			objectOutputStream.writeObject(taskList.get(i));
 		}
+
+		objectOutputStream.close();
+
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} catch (IOException e) {
+		e.printStackTrace();
 	}
+}
 
 	//Creates text file if it does not exist
-	private void createFile() {
-		try {
-			file.createNewFile();
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-					new FileOutputStream("task.txt"));
-			objectOutputStream.writeObject(new Integer(0));
+private void createFile() {
+	try {
+		file.createNewFile();
+		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
+			new FileOutputStream("task.txt"));
+		objectOutputStream.writeObject(new Integer(0));
 
-			objectOutputStream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		objectOutputStream.close();
+	} catch (IOException e) {
+		e.printStackTrace();
 	}
+}
 
-	public void run() {
+public void run() {
 		//Runs command options
-		runCommandOptions();
-	}
+	runCommandOptions();
+}
 }
