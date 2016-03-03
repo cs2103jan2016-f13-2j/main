@@ -14,7 +14,7 @@ import main.gui.model.Task;
 public class Trekker {
 
 	//-----Variables-----
-
+	
 	//File Variables
 	File file;
 	String fileName;
@@ -27,7 +27,12 @@ public class Trekker {
 	String[] inputCommand;
 
 	//MESSAGES
-	public final String MSG_ERROR_COMMAND_NOT_FOUND = "Command not found.";
+	private static final String MSG_ERROR_COMMAND_NOT_FOUND = "Command not found.";
+	private static final String CMD_ADD = "add";
+	private static final String CMD_DELETE = "delete";
+	private static final String CMD_EDIT = "edit";
+	private static final String CMD_DISPLAY = "display";
+	private static final String CMD_EXIT = "exit";
 
 
 	//-----Constructor-----
@@ -83,6 +88,7 @@ public class Trekker {
 		saveFile();
 	}
 
+<<<<<<< HEAD
 	public static void searchTasks(String searchWords) {
 		ArrayList<String> searchResults = new ArrayList<String>();
 		for (Task t : taskList) {
@@ -143,6 +149,35 @@ public class Trekker {
 				showMessage(MSG_ERROR_COMMAND_NOT_FOUND);
 				break;
 			}
+=======
+	private void runCommandOptions() {
+		switch (inputCommand[0].toLowerCase()) {
+		case CMD_ADD: {
+			addTask();
+			break;
+		}
+		case CMD_DELETE: {
+			deleteTask();
+			break;
+		}
+		case CMD_EDIT: {
+			editTask();
+			break;
+		}
+
+		case CMD_DISPLAY: {
+			//Nothing done here
+			break;
+		}
+		case CMD_EXIT: {
+			exitProgram();
+			break;
+		}
+		default: {
+			showMessage(MSG_ERROR_COMMAND_NOT_FOUND);
+			break;
+		}
+>>>>>>> 5386042f2501a10dc9ce5c351908927b25ee1b12
 		}
 	}
 
@@ -167,13 +202,13 @@ public class Trekker {
 		boolean notValid = true;
 
 		while (notValid) {
-			switch (whatToEdit) {
-			case "taskName": {			//taskName
+			switch (whatToEdit.toLowerCase()) {
+			case "taskname": {			//taskName
 				task.setTaskName(newEdit);
 				notValid = false;
 				break;
 			}
-			case "taskDetails": {			//taskDetails
+			case "taskdetails": {			//taskDetails
 				task.setTaskDetails(newEdit);
 				notValid = false;
 				break;

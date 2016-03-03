@@ -1,6 +1,10 @@
 package main.gui;
 
+import java.awt.SystemTray;
 import java.io.IOException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -14,6 +18,14 @@ import main.gui.model.Task;
 import main.gui.resources.TaskOverviewController;
 
 public class MainApp extends Application {
+
+	//Window titles
+	private static final String WINDOW_TITLE = "Trekker";
+	
+	//Layout file paths
+	private static final String FXML_ROOT_LAYOUT = "resources/RootLayout.fxml";
+	private static final String FXML_TASK_OVERVIEW = "resources/TaskOverview.fxml";
+	
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -54,12 +66,12 @@ public class MainApp extends Application {
 
     // ... THE REST OF THE CLASS ...
     
+
     
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Trekker");
-
+        this.primaryStage.setTitle(WINDOW_TITLE);
         initRootLayout();
 
         showTaskOverview();
@@ -72,7 +84,7 @@ public class MainApp extends Application {
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("RootLayout.fxml"));
+            loader.setLocation(MainApp.class.getResource(FXML_ROOT_LAYOUT));
             rootLayout = (BorderPane) loader.load();
 
             // Show the scene containing the root layout.
@@ -91,7 +103,7 @@ public class MainApp extends Application {
         try {
             // Load Task overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource("TaskOverview.fxml"));
+            loader.setLocation(MainApp.class.getResource(FXML_TASK_OVERVIEW));
             AnchorPane taskOverview = (AnchorPane) loader.load();
 
             // Set task overview into the center of root layout.
