@@ -10,16 +10,18 @@ import java.io.ObjectOutputStream;
 import java.util.*;
 
 import main.gui.model.Task;
+import main.storage.Storage;
 
 public class Trekker {
 
 	//-----Variables-----
-	
+
 	//File Variables
 	File file;
 	String fileName;
 
 	//Running Program Variables
+	Storage storage;
 	ArrayList<Task> taskList;
 	int numberOfTasks;
 
@@ -39,11 +41,10 @@ public class Trekker {
 
 	public Trekker(String command) {
 		//Initialize variables
-		file = new File("task.txt");
-		fileName = "task.txt";
-		taskList = new ArrayList<Task>();
+		storage = new Storage();
+		taskList = storage.getTaskList();
 		inputCommand = command.split(";");
-		prepareFile();
+
 	}
 
 	//-----Basic Functions-----;
@@ -117,59 +118,31 @@ public class Trekker {
 		}
 
 	};
-	*/
+	 */
 
 
 	//-----Start-up Program Functions-----
 
 	private void runCommandOptions() {
 		switch (inputCommand[0].toLowerCase()) {
-			case "add": {
-				addTask();
-				break;
-			}
-			case "delete": {
-				deleteTask();
-				break;
-			}
-			case "edit": {
-				editTask();
-				break;
-			}
-
-			case "display": {
-			//Nothing done here
-				break;
-			}
-			case "exit": {
-				exitProgram();
-				break;
-			}
-			default: {
-				showMessage(MSG_ERROR_COMMAND_NOT_FOUND);
-				break;
-			}
-=======
-	private void runCommandOptions() {
-		switch (inputCommand[0].toLowerCase()) {
-		case CMD_ADD: {
+		case "add": {
 			addTask();
 			break;
 		}
-		case CMD_DELETE: {
+		case "delete": {
 			deleteTask();
 			break;
 		}
-		case CMD_EDIT: {
+		case "edit": {
 			editTask();
 			break;
 		}
 
-		case CMD_DISPLAY: {
+		case "display": {
 			//Nothing done here
 			break;
 		}
-		case CMD_EXIT: {
+		case "exit": {
 			exitProgram();
 			break;
 		}
@@ -177,26 +150,13 @@ public class Trekker {
 			showMessage(MSG_ERROR_COMMAND_NOT_FOUND);
 			break;
 		}
->>>>>>> 5386042f2501a10dc9ce5c351908927b25ee1b12
 		}
 	}
-
 
 	//-----Helper Functions-----
 	private void showMessage(String message, Object... args) {
 		System.out.printf(message, args).println();
 	}
-
-	private void prepareFile() {
-		if (file.exists()) {
-			readFile();
-		}
-
-		else {
-			createFile();
-		}
-	}
-
 
 	private Task updateTask(Task task, String newEdit, String whatToEdit) {
 		boolean notValid = true;
@@ -216,83 +176,29 @@ public class Trekker {
 			default: {
 				notValid = true;
 			}
-		}
-	}
-
-	return task;
-}
-
-private void exitProgram() {
-	saveFile();
-}
-
-public ArrayList<Task> getTaskList() {
-	return taskList;
-}
-
-
-	//-----File Readers-----
-
-	//Reads the file and inputs it into the ArrayList
-private void readFile() {
-	try {			
-		ObjectInputStream objectInputStream = new ObjectInputStream(
-			new FileInputStream("task.txt"));
-
-			//Read number of Tasks
-		numberOfTasks = (Integer) objectInputStream.readObject();
-
-
-		Task task = null;
-		for (int i=0; i<numberOfTasks; i++) {
-			task = (Task) objectInputStream.readObject();
-			taskList.add(task);
+			}
 		}
 
-		objectInputStream.close();
-	} catch (IOException e) {
-		e.printStackTrace();
-	} catch (ClassNotFoundException e) {
-		e.printStackTrace();
+		return task;
 	}
 
-}
+	private void exitProgram() {
+		saveFile();
+		storage.saveFile();
+	}
+
+	public ArrayList<Task> getTaskList() {
+		return taskList;
+	}
 
 	//Saves the current testList to the text file
-private void saveFile() {
-	try {
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			new FileOutputStream("task.txt"));
-		objectOutputStream.writeObject(numberOfTasks);
-		for (int i=0; i<numberOfTasks; i++) {
-			objectOutputStream.writeObject(taskList.get(i));
-		}
-
-		objectOutputStream.close();
-
-	} catch (FileNotFoundException e) {
-		e.printStackTrace();
-	} catch (IOException e) {
-		e.printStackTrace();
+	private void saveFile() {
+		//storage.setTaskList(taskList);
+		storage.saveFile();
 	}
-}
 
-	//Creates text file if it does not exist
-private void createFile() {
-	try {
-		file.createNewFile();
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(
-			new FileOutputStream("task.txt"));
-		objectOutputStream.writeObject(new Integer(0));
-
-		objectOutputStream.close();
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-}
-
-public void run() {
+	public void run() {
 		//Runs command options
-	runCommandOptions();
-}
+		runCommandOptions();
+	}
 }

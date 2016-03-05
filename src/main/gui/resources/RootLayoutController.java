@@ -39,9 +39,11 @@ public class RootLayoutController {
     /**
      * Minimises the application.
      */
+    /**
     @FXML
     private void handleMinimise() {
         //code here
     	mainApp.setIconified(true);
     }
+    /**/
 }
