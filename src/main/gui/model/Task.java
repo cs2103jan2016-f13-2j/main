@@ -52,7 +52,7 @@ public class Task implements Serializable {
 	    }
 	    
 	    public void setTaskDetails(String taskDetails){
-	    	this.taskName = taskDetails;
+	    	this.taskDetails = taskDetails;
 	    }
 	    
 	    public StringProperty taskDetailsProperty() {

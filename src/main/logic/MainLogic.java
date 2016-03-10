@@ -6,6 +6,9 @@ import java.util.*;
 import main.gui.model.Task;
 import main.gui.model.UserInput;
 import main.storage.Storage;
+import main.parser.Parser;
+import main.parser.FlexiCommands;
+
 
 public class MainLogic {
 
@@ -19,9 +22,10 @@ public class MainLogic {
 	Storage storage;
 	ArrayList<Task> taskList;
 	int numberOfTasks;
+	Task task = null;
 
 	//Global Variables
-	String[] inputCommand;
+	ArrayList<String> inputCommand;
 	Command command;
 	UserInput userInput;
 
@@ -36,15 +40,15 @@ public class MainLogic {
 		taskList = storage.getTaskList();
 		this.userInput = userInput;
 		//-----------parser section
-		inputCommand = userInput.getRawInput().split(";");
-		userInput.setCommand(inputCommand[0]);
+
+		userInput = Parser.resetUserInput(userInput);
 		//-----------parser section
 	}
 
 	private void addTask() {
 		try {
-			Task newTask = new Task(inputCommand[1], inputCommand[2]);
-			taskList.add(newTask);
+			task = userInput.getTask();
+			taskList.add(task);
 			numberOfTasks++;
 			saveFile();
 		} catch (NoSuchElementException e) {
@@ -54,7 +58,7 @@ public class MainLogic {
 
 	private void deleteTask() {
 		try {
-			taskList.remove(Integer.parseInt(inputCommand[1].trim())-1);
+			taskList.remove(userInput.getDeleteNumber());
 			numberOfTasks--;
 			saveFile();
 		} catch (IndexOutOfBoundsException e) {
@@ -63,10 +67,10 @@ public class MainLogic {
 
 	private void editTask() {
 		try {
-			int taskToEdit = Integer.parseInt(inputCommand[1].trim())-1;
-			Task task = taskList.get(taskToEdit);
-			String whatToEdit = inputCommand[2].trim();
-			String newEdit = inputCommand[3].trim();
+			int[] editNumber = userInput.getEditNumber();
+			Task task = taskList.get(editNumber[0]);
+			String whatToEdit = editNumber[1]+"";
+			String newEdit = userInput.getDetails();
 			task = updateTask(task, newEdit, whatToEdit);	
 			saveFile();
 		} catch (IndexOutOfBoundsException e) {
@@ -115,24 +119,19 @@ public class MainLogic {
 	//-----Start-up Program Functions-----
 
 	private void runCommandOptions() {
-		switch (inputCommand[0].toLowerCase()) {
+		switch (FlexiCommands.flexiCommands(userInput.getCommand().toLowerCase())) {
 		case "add": {
 			//addTask();
 			command = new Add(userInput);
-			Task newTask = new Task(inputCommand[1], inputCommand[2]);
-			userInput.setTask(newTask);
 			break;
 		}
 		case "delete": {
 			//deleteTask();
-			userInput.setDelete(Integer.parseInt(inputCommand[1]));
 			command = new Delete(userInput);
 			break;
 		}
 		case "edit": {
 			//editTask();
-			userInput.setEdit(Integer.parseInt(inputCommand[1]), Integer.parseInt(inputCommand[2]));
-			userInput.setDetails(inputCommand[3]);
 			command = new Edit(userInput);
 			break;
 		}
