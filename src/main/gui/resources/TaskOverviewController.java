@@ -15,6 +15,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import main.gui.MainApp;
 import main.gui.model.Task;
+import main.gui.model.UserInput;
+import main.logic.MainLogic;
 
 public class TaskOverviewController {
 	
@@ -74,9 +76,10 @@ public class TaskOverviewController {
 	}
 
 	private void getTaskListFromFile() {
-		Trekker trekker = new Trekker(CMD_DISPLAY);
-		trekker.run();
-		ArrayList<Task> temp = trekker.getTaskList();
+		UserInput userInput = new UserInput(CMD_DISPLAY);
+		MainLogic mainLogic = new MainLogic(userInput);
+		mainLogic.run();
+		ArrayList<Task> temp = mainLogic.getTaskList();
 		for (int i=0; i<temp.size(); i++) {
 			list.add(temp.get(i));
 		}
@@ -105,9 +108,9 @@ public class TaskOverviewController {
 	public void onEnter(){
 		String command = commandText.getText(); //string received from user.
 		//System.out.println(command);
-
-		Trekker trekker = new Trekker(command);
-		trekker.run();
+		UserInput userInput = new UserInput(command);
+		MainLogic mainLogic = new MainLogic(userInput);
+		mainLogic.run();
 
 		mainApp.showTaskOverview(); 
 		commandText.clear();
