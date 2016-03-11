@@ -1,12 +1,11 @@
 package main.logic;
 
-import java.io.File;
 import java.util.*;
 
+import main.gui.resources.Task;
+import main.gui.resources.UserInput;
 import main.storage.Storage;
 import main.parser.Parser;
-import main.resources.Task;
-import main.resources.UserInput;
 import main.parser.FlexiCommands;
 
 
@@ -14,71 +13,94 @@ public class MainLogic {
 
 	//-----Variables-----
 
-	//File Variables
-	File file;
-	String fileName;
-
 	//Running Program Variables
 	Storage storage;
 	ArrayList<Task> taskList;
-	int numberOfTasks;
-	Task task = null;
 
 	//Global Variables
 	ArrayList<String> inputCommand;
 	Command command;
 	UserInput userInput;
 
-	//MESSAGES
-	private static final String MSG_ERROR_COMMAND_NOT_FOUND = "Command not found.";
-
-
 	//-----Constructor-----
-	public MainLogic(UserInput userInput) {
+	public MainLogic(UserInput input) {
 		//Initialize variables
 		storage = new Storage();
-		taskList = storage.getTaskList();
-		this.userInput = userInput;
-		//-----------parser section
+		updateTaskList();
+		userInput = input;
+	}
+	
+	public void run() {
+		runParser();
+		createCommandObject();
+		executeCommand();
+		updateTaskList();
+	}
+	
+	//-----Private methods-----
+	private void createCommandObject() {
+		switch (getCommand()) {
+		case "add": {
+			command = new Add(userInput);
+			break;
+		}
+		case "delete": {
+			command = new Delete(userInput);
+			break;
+		}
+		case "edit": {
+			command = new Edit(userInput);
+			break;
+		}
 
+		case "display": {
+			command = new Display(userInput);
+			break;
+		}
+		
+		case "sort": {
+			command = new Sort(userInput);
+			break;
+		}
+		
+		case "search": {
+			command = new Search(userInput);
+			break;
+		}
+		
+		case "exit": {
+			command = new Exit(userInput);
+			break;
+		}
+		default: {
+			//return error
+			break;
+		}
+		}
+	}
+	
+	private void runParser() {
 		userInput = Parser.resetUserInput(userInput);
-		//-----------parser section
+	}
+	
+	private void executeCommand() {
+		command.execute();
 	}
 
-	private void addTask() {
-		try {
-			task = userInput.getTask();
-			taskList.add(task);
-			numberOfTasks++;
-			saveFile();
-		} catch (NoSuchElementException e) {
-		} catch (NumberFormatException e) {
-		}
+	private void updateTaskList() {
+		taskList = storage.getTaskList();
 	}
-
-	private void deleteTask() {
-		try {
-			taskList.remove(userInput.getDeleteNumber());
-			numberOfTasks--;
-			saveFile();
-		} catch (IndexOutOfBoundsException e) {
-		}
+	
+	private String getCommand() {
+		return FlexiCommands.flexiCommands(userInput.getCommand().toLowerCase());
 	}
+	
 
-	private void editTask() {
-		try {
-			int[] editNumber = userInput.getEditNumber();
-			Task task = taskList.get(editNumber[0]);
-			String whatToEdit = editNumber[1]+"";
-			String newEdit = userInput.getDetails();
-			task = updateTask(task, newEdit, whatToEdit);	
-			saveFile();
-		} catch (IndexOutOfBoundsException e) {
-		} catch (NumberFormatException e) {
-		}
+	//-----Public Methods-----
+	public ArrayList<Task> getTaskList() {
+		return taskList;
 	}
-
-
+	
 	/*
 	private void sortTask() {
 		Collections.sort(taskList, taskComparator);
@@ -114,93 +136,4 @@ public class MainLogic {
 
 	};
 	 */
-
-
-	//-----Start-up Program Functions-----
-
-	private void runCommandOptions() {
-		switch (FlexiCommands.flexiCommands(userInput.getCommand().toLowerCase())) {
-		case "add": {
-			//addTask();
-			command = new Add(userInput);
-			break;
-		}
-		case "delete": {
-			//deleteTask();
-			command = new Delete(userInput);
-			break;
-		}
-		case "edit": {
-			//editTask();
-			command = new Edit(userInput);
-			break;
-		}
-
-		case "display": {
-			command = new Display(userInput);
-			break;
-		}
-		case "exit": {
-			exitProgram();
-			break;
-		}
-		default: {
-			showMessage(MSG_ERROR_COMMAND_NOT_FOUND);
-			break;
-		}
-		}
-		
-		command.execute();
-	}
-
-	//-----Helper Functions-----
-	private void showMessage(String message, Object... args) {
-		System.out.printf(message, args).println();
-	}
-
-	private Task updateTask(Task task, String newEdit, String whatToEdit) {
-		boolean notValid = true;
-
-		while (notValid) {
-			switch (whatToEdit.toLowerCase()) {
-			case "taskname": {			//taskName
-				task.setTaskName(newEdit);
-				notValid = false;
-				break;
-			}
-			case "taskdetails": {			//taskDetails
-				task.setTaskDetails(newEdit);
-				notValid = false;
-				break;
-			}
-			default: {
-				notValid = true;
-			}
-			}
-		}
-
-		return task;
-	}
-
-	private void exitProgram() {
-		saveFile();
-		storage.saveFile();
-	}
-
-	public ArrayList<Task> getTaskList() {
-		return taskList;
-	}
-
-	//Saves the current testList to the text file
-	private void saveFile() {
-		//storage.setTaskList(taskList);
-		storage.saveFile();
-	}
-
-	public void run() {
-		//Runs command options
-		runCommandOptions();
-		//to be edited
-		taskList = storage.getTaskList();
-	}
 }

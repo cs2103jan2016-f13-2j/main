@@ -2,7 +2,7 @@
 
 package main.parser;
 
-import main.resources.Task;
+import main.gui.resources.Task;
 
 
 

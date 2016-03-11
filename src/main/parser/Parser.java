@@ -4,8 +4,8 @@ package main.parser;
 
 import java.util.ArrayList;
 import main.parser.FlexiCommands;
-import main.resources.Task;
-import main.resources.UserInput;
+import main.gui.resources.Task;
+import main.gui.resources.UserInput;
 
 
 public class Parser {

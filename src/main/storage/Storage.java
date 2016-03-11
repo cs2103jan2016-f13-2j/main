@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import main.resources.Task;
+import main.gui.resources.Task;
 
 public class Storage {
 	//Key must be exactly 16 bytes long.
