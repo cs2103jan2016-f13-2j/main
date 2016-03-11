@@ -14,9 +14,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import main.gui.MainApp;
-import main.gui.model.Task;
-import main.gui.model.UserInput;
 import main.logic.MainLogic;
+import main.resources.Task;
+import main.resources.UserInput;
 
 public class TaskOverviewController {
 	

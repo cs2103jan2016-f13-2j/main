@@ -1,4 +1,4 @@
-package main.gui.model;
+package main.resources;
 
 import java.io.Serializable;
 import java.time.LocalDate;

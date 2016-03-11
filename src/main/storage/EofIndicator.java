@@ -2,7 +2,7 @@ package main.storage;
 
 import java.io.Serializable;
 
-import main.gui.model.Task;
+import main.resources.Task;
 
 public class EofIndicator implements Serializable {
 	//empty

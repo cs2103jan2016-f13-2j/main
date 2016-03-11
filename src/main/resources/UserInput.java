@@ -1,4 +1,4 @@
-package main.gui.model;
+package main.resources;
 
 public class UserInput {
 	

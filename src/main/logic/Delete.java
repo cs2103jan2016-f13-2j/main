@@ -2,8 +2,8 @@ package main.logic;
 
 import java.util.ArrayList;
 
-import main.gui.model.Task;
-import main.gui.model.UserInput;
+import main.resources.Task;
+import main.resources.UserInput;
 import main.storage.Storage;
 
 public class Delete implements Command {
