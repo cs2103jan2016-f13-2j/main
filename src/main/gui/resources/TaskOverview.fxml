@@ -8,8 +8,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Glow?>
-<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -53,18 +51,9 @@
                                           <Label fx:id="taskNameLabel" text="Output 1" GridPane.columnIndex="1" />
                                           <Label fx:id="taskDetailsLabel" text="Output 2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
-                                       <effect>
-                                          <SepiaTone />
-                                       </effect>
                                     </GridPane>
-                                    <Button layoutX="239.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleDeleteTask" text="Delete">
-                                       <effect>
-                                          <SepiaTone level="0.45" />
-                                       </effect></Button>
+                                    <Button layoutX="239.0" layoutY="430.0" mnemonicParsing="false" onAction="#handleDeleteTask" text="Delete" />
                                  </children>
-                                 <effect>
-                                    <SepiaTone level="0.66" />
-                                 </effect>
                               </AnchorPane>
                         </content>
                       </Tab>
@@ -74,9 +63,6 @@
                         </content>
                       </Tab>
                     </tabs>
-                     <effect>
-                        <SepiaTone />
-                     </effect>
                   </TabPane>
                </children>
             </AnchorPane>
@@ -89,12 +75,6 @@
                </effect>
             </AnchorPane>
         </items>
-         <effect>
-            <Glow />
-         </effect>
       </SplitPane>
    </children>
-   <effect>
-      <InnerShadow />
-   </effect>
 </AnchorPane>
