@@ -1,6 +1,6 @@
 package main.logic;
 
-import main.gui.resources.UserInput;
+import main.resources.UserInput;
 import main.storage.Storage;
 
 public class Display implements Command {

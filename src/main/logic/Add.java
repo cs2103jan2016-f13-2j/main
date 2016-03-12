@@ -2,8 +2,8 @@ package main.logic;
 
 import java.util.ArrayList;
 
-import main.gui.resources.Task;
-import main.gui.resources.UserInput;
+import main.resources.Task;
+import main.resources.UserInput;
 import main.storage.Storage;
 
 public class Add implements Command {

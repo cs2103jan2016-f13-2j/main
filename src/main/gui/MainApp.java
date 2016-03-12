@@ -14,8 +14,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import main.gui.resources.Task;
 import main.gui.resources.TaskOverviewController;
+import main.resources.Task;
 
 public class MainApp extends Application {
 

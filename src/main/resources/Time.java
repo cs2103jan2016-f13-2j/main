@@ -1,4 +1,4 @@
-package main.gui.resources;
+package main.resources;
 
 public class Time {
 	

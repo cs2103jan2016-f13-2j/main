@@ -2,10 +2,10 @@ package main.logic;
 
 import java.util.*;
 
-import main.gui.resources.Task;
-import main.gui.resources.UserInput;
 import main.storage.Storage;
 import main.parser.Parser;
+import main.resources.Task;
+import main.resources.UserInput;
 import main.parser.FlexiCommands;
 
 
