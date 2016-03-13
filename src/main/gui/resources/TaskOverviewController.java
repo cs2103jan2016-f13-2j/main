@@ -28,11 +28,17 @@ public class TaskOverviewController {
 	private TableColumn<Task, String> taskNameColumn;
 	@FXML
 	private TableColumn<Task, String> taskDetailsColumn;
+	@FXML
+	private TableColumn<Task, String> taskDateColumn;
+	@FXML
+	private TableColumn<Task, String> taskTimeColumn;
+	@FXML
+	private TableColumn<Task, String> taskLocationColumn;
 
-	@FXML
-	private Label taskNameLabel;
-	@FXML
-	private Label taskDetailsLabel;
+	//@FXML
+	//private Label taskNameLabel;
+	//@FXML
+	//private Label taskDetailsLabel;
 
 	@FXML
 	private TextField commandText;
@@ -58,6 +64,10 @@ public class TaskOverviewController {
 		// Initialize the task table with the two columns.
 		taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().taskNameProperty());
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
+		taskDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
+		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
+	//	taskLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
+		
 	}
 
 	/**
@@ -105,6 +115,9 @@ public class TaskOverviewController {
 		}
 	}
 
+	/**
+	 * Called when the user presses enter.
+	 */
 	public void onEnter(){
 		String command = commandText.getText(); //string received from user.
 		//System.out.println(command);
@@ -113,7 +126,7 @@ public class TaskOverviewController {
 		mainLogic.run();
 
 		mainApp.showTaskOverview(); 
-		commandText.clear();
+		commandText.setText("");
 
 	}    
 

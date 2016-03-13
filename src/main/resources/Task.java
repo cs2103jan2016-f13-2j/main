@@ -21,6 +21,7 @@ public class Task implements Serializable {
 	   private String taskDetails;
 	   private Date taskDate;
 	   private Time taskTime;
+	   private String taskLocation;
 	
 	    public Task() {
 	        this(null, null);
@@ -85,6 +86,22 @@ public class Task implements Serializable {
 	    
 	    public StringProperty taskDetailsProperty() {
 	        return convertType(taskDetails);
+	    }
+	    
+	    public StringProperty taskTimeProperty() {
+	    	if (taskTime == null) {
+	    		return convertType("-");
+	    	} else {
+	    		return convertType(taskDetails);
+	    	}   
+	    }
+	    
+	    public StringProperty taskDateProperty() {	    	
+	    	if (taskDate == null) {
+	    		return convertType("-");
+	    	} else {
+	    		return convertType(taskDetails);
+	    	}	
 	    }
 	    
 	    public StringProperty convertType(String text) {
