@@ -23,7 +23,7 @@
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="417.0">
                                  <children>
                                     <TextField fx:id="commandText" layoutX="10.0" layoutY="480.0" onAction="#onEnter" prefHeight="25.0" prefWidth="398.0" />
-                                    <TableView fx:id="taskTable" layoutY="-24.0" prefHeight="479.0" prefWidth="417.0">
+                                    <TableView fx:id="taskTable" prefHeight="440.0" prefWidth="417.0">
                                       <columns>
                                         <TableColumn fx:id="taskNameColumn" prefWidth="25.0" resizable="false" text="No." />
                                         <TableColumn fx:id="taskDetailsColumn" prefWidth="209.0" resizable="false" text="Task Details" />
