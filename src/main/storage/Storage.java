@@ -16,18 +16,63 @@ public class Storage {
 
 	private static final String FILE_NAME = "task.txt";
 
-	File taskFile;
-	ArrayList<Task> taskList;
+	private File taskFile;
+	private ArrayList<Task> taskList;
+	
+	private static Storage storage;
+	
+	/**
+	 * Initialises the File, and also the taskList with the contents of the File.
+	 */
 
-	public Storage() {
+	private Storage() {
 		taskList = new ArrayList<Task>();
 		
 		getFile(FILE_NAME);
 		//decryptTaskFile();
-		//initTaskArrayList(taskList);
-		readFileIntoTaskArrayList(taskFile, taskList);
+		readFileToTaskArrayList(taskFile, taskList);
+	}
+	
+	//Public Methods
+	
+	/**
+	 * Creates a Storage object for use if it doesn't exist.
+	 * @return the Storage object.
+	 */
+	
+	public static Storage getStorage() {
+		if (storage == null) {
+			storage = new Storage();
+		}
+		
+		return storage;
+	}
+	
+	/**
+	 * Writes the existing taskList to file.
+	 */
+	
+	public void saveFile() {
+		writeTaskArrayListToFile(taskList, taskFile);
+		//encryptTaskFile();
+	}
+	
+	/**
+	 * Allows access to the taskList.
+	 * @return the taskList object reference.
+	 */
+
+	public ArrayList<Task> getTaskList() {
+		return taskList;
 	}
 
+	//Private methods
+	
+	/**
+	 * Retrieves the file object and creates one if it doesn't exist.
+	 * @param fileName : The file path String
+	 */
+	
 	private void getFile(String fileName) {
 		taskFile = new File(fileName);
 
@@ -57,12 +102,8 @@ public class Storage {
 	private void decryptTaskFile() {
 		FileSecurity.decrypt(taskFile, SECURITY_KEY);
 	}
-	
-	private void initTaskArrayList(ArrayList<Task> list) {
-		list = new ArrayList<Task>();
-	}
 
-	private void readFileIntoTaskArrayList(File file, ArrayList<Task> list) {
+	private void readFileToTaskArrayList(File file, ArrayList<Task> list) {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 
@@ -93,19 +134,5 @@ public class Storage {
 		catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	public void saveFile() {
-		writeTaskArrayListToFile(taskList, taskFile);
-		//encryptTaskFile();
-	}
-
-	public ArrayList<Task> getTaskList() {
-		return taskList;
-	}
-	
-	public void setTaskList(ArrayList<Task> taskList) {
-		this.taskList = taskList;
 	}
 }
