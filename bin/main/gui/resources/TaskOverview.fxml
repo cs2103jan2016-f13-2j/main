@@ -10,7 +10,7 @@
 <?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.TaskOverviewController">
+<AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.TaskOverviewController">
    <children>
       <SplitPane dividerPositions="0.7023411371237458" layoutX="100.0" layoutY="90.0" prefHeight="600.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -20,19 +20,19 @@
                     <tabs>
                       <Tab text="Today">
                         <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="417.0">
                                  <children>
-                                    <TextField fx:id="commandText" layoutX="15.0" layoutY="723.0" onAction="#onEnter" prefHeight="25.0" prefWidth="527.0" />
-                                    <TableView fx:id="taskTable" prefHeight="681.0" prefWidth="557.0">
+                                    <TextField fx:id="commandText" layoutX="10.0" layoutY="480.0" onAction="#onEnter" prefHeight="25.0" prefWidth="398.0" />
+                                    <TableView fx:id="taskTable" layoutY="-24.0" prefHeight="479.0" prefWidth="417.0">
                                       <columns>
                                         <TableColumn fx:id="taskNameColumn" prefWidth="25.0" resizable="false" text="No." />
-                                        <TableColumn fx:id="taskDetailsColumn" prefWidth="255.0" resizable="false" text="Task Details" />
-                                          <TableColumn fx:id="taskDateColumn" maxWidth="197.0" minWidth="0.0" resizable="false" text="Date" />
-                                          <TableColumn fx:id="taskTimeColumn" minWidth="0.0" prefWidth="50.0" resizable="false" text="Time" />
-                                          <TableColumn fx:id="taskLocationColumn" prefWidth="146.0" resizable="false" text="Location" />
+                                        <TableColumn fx:id="taskDetailsColumn" prefWidth="209.0" resizable="false" text="Task Details" />
+                                          <TableColumn fx:id="taskDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="34.0" resizable="false" text="Date" />
+                                          <TableColumn fx:id="taskTimeColumn" minWidth="0.0" prefWidth="51.4000244140625" resizable="false" text="Time" />
+                                          <TableColumn fx:id="taskLocationColumn" prefWidth="96.0" resizable="false" text="Location" />
                                       </columns>
                                     </TableView>
-                                    <Label layoutX="221.0" layoutY="696.0" prefHeight="17.0" prefWidth="115.0" text="Instant Feedback" textAlignment="CENTER" />
+                                    <Label layoutX="151.0" layoutY="463.0" prefHeight="17.0" prefWidth="115.0" text="Instant Feedback" textAlignment="CENTER" />
                                  </children>
                               </AnchorPane>
                         </content>
