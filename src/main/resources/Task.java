@@ -92,7 +92,7 @@ public class Task implements Serializable {
 	    	if (taskTime == null) {
 	    		return convertType("-");
 	    	} else {
-	    		return convertType(taskDetails);
+	    		return convertType(taskTime.getTime());
 	    	}   
 	    }
 	    
@@ -100,7 +100,7 @@ public class Task implements Serializable {
 	    	if (taskDate == null) {
 	    		return convertType("-");
 	    	} else {
-	    		return convertType(taskDetails);
+	    		return convertType(taskDate.getDate());
 	    	}	
 	    }
 	    
