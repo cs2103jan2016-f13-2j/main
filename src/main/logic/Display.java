@@ -10,7 +10,7 @@ public class Display implements Command {
 
 	public Display(UserInput userInput) {
 		this.userInput = userInput;
-		storage = new Storage();
+		storage = Storage.getStorage();
 	}
 
 

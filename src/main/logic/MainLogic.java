@@ -25,7 +25,7 @@ public class MainLogic {
 	//-----Constructor-----
 	public MainLogic(UserInput input) {
 		//Initialize variables
-		storage = new Storage();
+		storage = Storage.getStorage();
 		updateTaskList();
 		userInput = input;
 	}

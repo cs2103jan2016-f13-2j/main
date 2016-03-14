@@ -14,7 +14,7 @@ public class Sort implements Command {
 
 	public Sort(UserInput userInput) {
 		this.userInput = userInput;
-		storage = new Storage();
+		storage = Storage.getStorage();
 		taskList = new ArrayList<Task>();
 	}
 

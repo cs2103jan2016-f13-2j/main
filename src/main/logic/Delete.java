@@ -14,7 +14,7 @@ public class Delete implements Command {
 
 	public Delete(UserInput userInput) {
 		this.userInput = userInput;
-		storage = new Storage();
+		storage = Storage.getStorage();
 		taskList = new ArrayList<Task>();
 	}
 

@@ -14,7 +14,7 @@ public class Exit implements Command {
 
 	public Exit(UserInput userInput) {
 		this.userInput = userInput;
-		storage = new Storage();
+		storage = Storage.getStorage();
 		taskList = new ArrayList<Task>();
 	}
 
