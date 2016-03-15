@@ -75,6 +75,8 @@ public class FlexiCommands {
 				return "incomplete";
 			case "set":
 				return "set";
+			case "home":
+				return "home";
 			default:
 				return command;	
 		}

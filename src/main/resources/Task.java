@@ -22,9 +22,11 @@ public class Task implements Serializable {
 	   private Date taskDate;
 	   private Time taskTime;
 	   private String taskLocation;
+	   private int priority;
+	   private int taskType;	//1-Event, 2-Floating, 3-Recurring
 	
 	    public Task() {
-	        this(null, null);
+	        this(null, null, 3);
 	    }
 	   
 	    /**
@@ -33,11 +35,14 @@ public class Task implements Serializable {
 	     * @param firstName
 	     * @param lastName
 	     */
-	    public Task(String taskName, String taskDetails) {
+	    public Task(String taskName, String taskDetails, int type) {
 	        this.taskName = taskName;
 	        this.taskDetails = taskDetails;
 	        taskDate = null;
 	        taskTime = null;
+	        taskLocation = null;
+	        priority = 3;
+	        taskType = type;
 	    }
 	    
 	    public String getTaskName(){
@@ -55,6 +60,19 @@ public class Task implements Serializable {
 	    public Time getTaskTime() {
 	    	return taskTime;
 	    }
+	    
+	    public String getTaskLocation() {
+	    	return taskLocation;
+	    }
+	    
+	    public int getPriority() {
+	    	return priority;
+	    }
+	    
+	    public int getTaskType() {
+	    	return taskType;
+	    }
+	    
 	    
 	     public void setTaskName(String taskName){
 	    	this.taskName = taskName;
@@ -79,6 +97,19 @@ public class Task implements Serializable {
 	    public void setTaskTime(int hour, int minute) {
 	    	this.setTaskTime(new Time(hour, minute));
 	    }
+	    
+	    public void setTaskLocation(String newLocation) {
+	    	taskLocation = newLocation;
+	    }
+	    
+	    public void setPriority(int priority) {
+	    	this.priority = priority;
+	    }
+	    
+	    public void setTaskType(int type) {
+	    	taskType = type;
+	    }
+	    
 	    
 	    public StringProperty taskNameProperty() {
 	        return convertType(taskName);

@@ -1,6 +1,6 @@
 package main.resources;
 
-public class Date {
+public class Date implements Comparable<Date> {
 	
 	int day;
 	int month;
@@ -38,5 +38,19 @@ public class Date {
 	
 	public void setYear(int newYear) {
 		year = newYear;
+	}
+
+	@Override
+	public int compareTo(Date date) {
+		if (this.year != date.getYear()) {
+			return this.year - date.getYear();
+		}
+		else if (this.month != date.getMonth()) {
+			return this.month - date.getMonth();
+		}
+		
+		else {
+			return this.day - date.getDay();
+		}
 	}
 }

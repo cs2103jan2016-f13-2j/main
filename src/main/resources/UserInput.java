@@ -1,5 +1,7 @@
 package main.resources;
 
+import java.util.ArrayList;
+
 public class UserInput {
 	
 	String rawInput;
@@ -7,6 +9,9 @@ public class UserInput {
 	int deleteNumber;
 	int[] editNumber;
 	String details;
+	String searchTerm;
+	int sortType;
+	ArrayList<Task> taskList;
 	Task task;
 	
 	//Constructors
@@ -17,6 +22,9 @@ public class UserInput {
 		deleteNumber = -1;
 		editNumber = new int[2];
 		details = null;
+		sortType = 1;
+		searchTerm = null;
+		taskList = new ArrayList<Task>();
 	}
 	
 	
@@ -46,6 +54,18 @@ public class UserInput {
 		return details;
 	}
 	
+	public String getSearchTerm() {
+		return searchTerm;
+	}
+	
+	public int getSortType() {
+		return sortType;
+	}
+	
+	public ArrayList<Task> getTaskList() {
+		return taskList;
+	}
+	
 	
 	//Setters
 	public void setCommand(String command) {
@@ -67,6 +87,18 @@ public class UserInput {
 	
 	public void setDetails(String details) {
 		this.details = details;
+	}
+	
+	public void setSearchTerm(String term) {
+		searchTerm = term;
+	}
+	
+	public void setSortType(int type) {
+		sortType = type;
+	}
+	
+	public void setTaskList(ArrayList<Task> taskList) {
+		this.taskList = taskList;
 	}
 
 }

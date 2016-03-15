@@ -1,6 +1,8 @@
 package main.logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import main.resources.Task;
 import main.resources.UserInput;
@@ -20,6 +22,28 @@ public class Sort implements Command {
 
 	@Override
 	public void execute() {
+		switch (userInput.getSortType()) {
+		case 1: {	//Alphabetical
+			taskList = storage.getTaskList();
+			List<Task> list = new ArrayList<Task>();
+			for (Task t : taskList) {
+				list.add(t);
+			}
+			
+			//Collections.sort(list);
+			storage.saveFile();
+			break;
+		}
+		case 2: {	//Date (Default)
+			break;
+		}
+		case 3: {	//Priority
+			break;
+		}
+		default: {
+			break;
+		}
+		}
 	
 	}
 

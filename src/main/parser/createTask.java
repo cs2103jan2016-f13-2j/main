@@ -14,9 +14,9 @@ public class createTask {
 		return null;
 	}
 	
-	public final static Task createEvent(String taskType, String taskContent) {
+	public final static Task createEvent(String taskType, String taskContent, int type) {
 		String taskName = taskType+" task";
-		Task task = new Task(taskName, taskContent);
+		Task task = new Task(taskName, taskContent, type);
 		return task;
 	}
 	

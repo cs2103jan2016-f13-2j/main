@@ -87,9 +87,8 @@ public class TaskOverviewController {
 
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
-		MainLogic mainLogic = new MainLogic(userInput);
-		mainLogic.run();
-		ArrayList<Task> temp = mainLogic.getTaskList();
+		MainLogic.run(userInput);
+		ArrayList<Task> temp = MainLogic.getTaskList();
 		for (int i=0; i<temp.size(); i++) {
 			list.add(temp.get(i));
 		}
@@ -122,12 +121,10 @@ public class TaskOverviewController {
 		String command = commandText.getText(); //string received from user.
 		//System.out.println(command);
 		UserInput userInput = new UserInput(command);
-		MainLogic mainLogic = new MainLogic(userInput);
-		mainLogic.run();
+		MainLogic.run(userInput);
 
 		mainApp.showTaskOverview(); 
 		commandText.setText("");
-
 	}    
 
 	/**

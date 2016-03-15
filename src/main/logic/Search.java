@@ -20,7 +20,20 @@ public class Search implements Command {
 
 	@Override
 	public void execute() {
-	
+		if (userInput.getSearchTerm().length() == 0) {
+			userInput.setTaskList(storage.getTaskList());
+		}
+		
+		else {
+			ArrayList<Task> searchResults = new ArrayList<Task>();
+			for (Task t : storage.getTaskList()) {
+				if ((t.getTaskName()).contains(userInput.getSearchTerm()) ||
+						t.getTaskDetails().contains(userInput.getSearchTerm())) {
+					searchResults.add(t);
+				}
+			}
+			MainLogic.setDisplayList(searchResults);
+		}
 	}
 
 	@Override

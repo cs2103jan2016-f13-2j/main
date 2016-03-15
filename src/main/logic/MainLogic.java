@@ -13,24 +13,26 @@ public class MainLogic {
 
 	//-----Variables-----
 
-	//Running Program Variables
-	Storage storage;
-	ArrayList<Task> taskList;
-
 	//Global Variables
-	ArrayList<String> inputCommand;
-	Command command;
-	UserInput userInput;
+	private static Storage storage;
+	private static ArrayList<Task> taskList;
+	private static ArrayList<Task> displayList;
+	private static ArrayList<String> inputCommand;
+	private static Command command;
+	private static UserInput userInput;
+	private static MainLogic mainLogic;
 
 	//-----Constructor-----
-	public MainLogic(UserInput input) {
+	public MainLogic() {
 		//Initialize variables
 		storage = Storage.getStorage();
 		updateTaskList();
-		userInput = input;
+		setDisplayList(taskList);
 	}
 	
-	public void run() {
+	public static void run(UserInput input) {
+		initializeMainLogic();
+		setUserInput(input);
 		runParser();
 		createCommandObject();
 		executeCommand();
@@ -38,7 +40,7 @@ public class MainLogic {
 	}
 	
 	//-----Private methods-----
-	private void createCommandObject() {
+	private static void createCommandObject() {
 		switch (getCommand()) {
 		case "add": {
 			command = new Add(userInput);
@@ -68,37 +70,60 @@ public class MainLogic {
 			break;
 		}
 		
+		case "home": {
+			displayList = storage.getTaskList();
+		}
+		
 		case "exit": {
 			command = new Exit(userInput);
 			break;
 		}
+		
 		default: {
-			//return error
+			System.out.println("ERROR"); //To be changed
 			break;
 		}
 		}
 	}
 	
-	private void runParser() {
+	private static void initializeMainLogic() {
+		if (mainLogic == null) {
+			MainLogic.createMainLogic();
+		}
+	}
+	
+	private static void setUserInput(UserInput input) {
+		userInput = input;
+	}
+	
+	private static void runParser() {
 		userInput = Parser.resetUserInput(userInput);
 	}
 	
-	private void executeCommand() {
+	private static void executeCommand() {
 		command.execute();
 	}
 
-	private void updateTaskList() {
-		taskList = storage.getTaskList();
+	private static void updateTaskList() {
+		taskList = storage.getTaskList();	
 	}
 	
-	private String getCommand() {
+	private static String getCommand() {
 		return FlexiCommands.flexiCommands(userInput.getCommand().toLowerCase());
+	}
+
+	private static void createMainLogic() {
+		mainLogic = new MainLogic();
 	}
 	
 
 	//-----Public Methods-----
-	public ArrayList<Task> getTaskList() {
-		return taskList;
+	public static ArrayList<Task> getTaskList() {
+		return displayList;	
+	}
+	
+	public static void setDisplayList(ArrayList<Task> newList) {
+		displayList = newList;
 	}
 	
 	/*

@@ -1,4 +1,4 @@
-
+	
 
 package main.parser;
 
@@ -50,6 +50,16 @@ public class Parser {
 			userInput.setDetails(details[2]);
 			break;
 		}
+		case "search": {
+			String term = inputCommand.get(1);
+			userInput.setCommand("search");
+			userInput.setSearchTerm(term);
+			break;
+		}
+		case "home": {
+			userInput.setCommand("home");
+			break;
+		}
 
 		case "display": {
 			userInput.setCommand("display");
@@ -78,7 +88,7 @@ public class Parser {
 				task = createTask.createDeadline(taskType, taskContent);
 				break;
 			case "event":
-				task = createTask.createEvent(taskType, taskContent);
+				task = createTask.createEvent(taskType, taskContent, 1);
 				break;
 			case "floating":
 				task = createTask.createFloating(taskType, taskContent);
