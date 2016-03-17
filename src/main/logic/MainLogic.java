@@ -4,9 +4,10 @@ import java.util.*;
 
 import main.storage.Storage;
 import main.parser.Parser;
+import main.parser.Shortcuts;
 import main.resources.Task;
 import main.resources.UserInput;
-import main.parser.FlexiCommands;
+
 
 
 public class MainLogic {
@@ -109,7 +110,7 @@ public class MainLogic {
 	}
 	
 	private static String getCommand() {
-		return FlexiCommands.flexiCommands(userInput.getCommand().toLowerCase());
+		return Shortcuts.shortcuts(userInput.getCommand().toLowerCase());
 	}
 
 	private static void createMainLogic() {

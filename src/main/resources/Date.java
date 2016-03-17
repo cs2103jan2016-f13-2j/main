@@ -12,6 +12,10 @@ public class Date implements Comparable<Date> {
 		this.year = year;
 	}
 	
+	public Date() {
+		this(0,0,0);
+	}
+	
 	public int getDay() {
 		return day;
 	}

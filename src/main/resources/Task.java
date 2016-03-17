@@ -23,7 +23,7 @@ public class Task implements Serializable {
 	   private Time taskTime;
 	   private String taskLocation;
 	   private int priority;
-	   private int taskType;	//1-Event, 2-Floating, 3-Recurring
+	   private int taskType;	//1-Event, 2-Floating, 3-Recurring 4-Deadline
 	
 	    public Task() {
 	        this(null, null, 3);

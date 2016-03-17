@@ -10,6 +10,10 @@ public class Time {
 		this.minute = minute;
 	}
 	
+	public Time() {
+		this(0,0);
+	}
+	
 	public int getHour() {
 		return hour;
 	}

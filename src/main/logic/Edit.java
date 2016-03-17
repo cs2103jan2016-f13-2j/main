@@ -23,16 +23,19 @@ public class Edit implements Command {
 		taskList = storage.getTaskList();
 		Task taskToEdit = taskList.get(userInput.getEditNumber()[0]-1);
 		switch (userInput.getEditNumber()[1]) {
-		case 1: {	//taskName
-			taskToEdit.setTaskName(userInput.getDetails());
+		case 1: {	//task time
+			taskToEdit.setTaskTime(userInput.getTime());
 			break;
 		}
-		case 2: {	//taskDetails
-			taskToEdit.setTaskDetails(userInput.getDetails());
+		case 2: {	//task date
+			taskToEdit.setTaskDate(userInput.getDate());
 			break;
+		}
+		case 3: {	//task location
+			taskToEdit.setTaskLocation(userInput.getLocation());
 		}
 		default: {
-			
+			//Do something
 		}
 		}
 		

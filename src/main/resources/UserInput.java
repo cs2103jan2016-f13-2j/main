@@ -6,31 +6,58 @@ public class UserInput {
 	
 	String rawInput;
 	String command;
-	int deleteNumber;
-	int[] editNumber;
-	String details;
-	String searchTerm;
-	int sortType;
-	ArrayList<Task> taskList;
+	
+	//Add
 	Task task;
+	
+	//Delete
+	int deleteNumber;
+	
+	//Edit
+	int[] editNumber;
+	Time time;
+	Date date;
+	String location;
+	String details;
+	int priority;
+	
+	//Search
+	String searchTerm;
+	ArrayList<Task> taskList;
+	
+	//Sort
+	int sortType;
+	
 	
 	//Constructors
 	public UserInput(String raw) {
 		rawInput = raw;
+		time = new Time();
+		date = new Date();
+		details = null;
 		command = null;
 		task = null;
 		deleteNumber = -1;
 		editNumber = new int[2];
-		details = null;
-		sortType = 1;
+		location = null;
+		sortType = -1;
 		searchTerm = null;
 		taskList = new ArrayList<Task>();
+		priority = 0;
 	}
 	
 	
 	//Getters
 	public String getRawInput() {
 		return rawInput;
+	}
+	
+	public String getDetails() {
+		return details;
+	}
+	
+	public int getPriority() {
+		return priority ;
 	}
 	
 	public String getCommand() {
@@ -50,9 +77,19 @@ public class UserInput {
 	}
 	
 
-	public String getDetails() {
-		return details;
+	public String getLocation() {
+		return location;
 	}
+	
+	public Time getTime(){
+		return time;
+	}
+	
+	public Date getDate(){
+		return date;
+	}
+	
+	
 	
 	public String getSearchTerm() {
 		return searchTerm;
@@ -72,6 +109,10 @@ public class UserInput {
 		this.command = command;
 	}
 	
+	public void setDetails(String details) {
+		this.details = details;
+	}
+	
 	public void setTask(Task task) {
 		this.task = task;
 	}
@@ -85,12 +126,24 @@ public class UserInput {
 		editNumber[1] = number2;
 	}
 	
-	public void setDetails(String details) {
-		this.details = details;
+	public void setLocation(String location){
+		this.location=location;
+	}
+	
+	public void setDate(Date date){
+		this.date=date;
+	}
+	
+	public void setTime(Time time) {
+		this.time = time;
 	}
 	
 	public void setSearchTerm(String term) {
 		searchTerm = term;
+	}
+	
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 	
 	public void setSortType(int type) {
