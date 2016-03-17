@@ -135,6 +135,14 @@ public class Task implements Serializable {
 	    	}	
 	    }
 	    
+	    public StringProperty taskLocationProperty() {
+	    	if (taskLocation == null) {
+	    		return convertType("-");
+	    	} else {
+	    		return convertType(taskLocation);
+	    	}	
+	    }
+	    
 	    public StringProperty convertType(String text) {
 	    	return new SimpleStringProperty(text);
 	    }

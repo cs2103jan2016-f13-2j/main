@@ -66,7 +66,7 @@ public class TaskOverviewController {
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
 		taskDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
 		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
-	//	taskLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
+		taskLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
 		
 	}
 
@@ -84,7 +84,7 @@ public class TaskOverviewController {
 
 
 	}
-
+//convert arralist to observable list
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
