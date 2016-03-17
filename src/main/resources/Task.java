@@ -17,6 +17,7 @@ public class Task implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//define and set a task class, ie a class entry
+	   private String taskNumber;
 	   private String taskName;
 	   private String taskDetails;
 	   private Date taskDate;
@@ -43,10 +44,15 @@ public class Task implements Serializable {
 	        taskLocation = null;
 	        priority = 3;
 	        taskType = type;
+	        taskNumber = null;
 	    }
 	    
 	    public String getTaskName(){
 	    	return this.taskName;
+	    }
+	    
+	    public String getTaskNumber(){
+	    	return this.taskNumber;
 	    }
 	    
 	    public String getTaskDetails(){
@@ -77,6 +83,10 @@ public class Task implements Serializable {
 	     public void setTaskName(String taskName){
 	    	this.taskName = taskName;
 	    }
+	    
+	     public void setTaskNumber(String taskNumber){
+		    	this.taskNumber = taskNumber;
+		    }
 	     
 	    public void setTaskDetails(String taskDetails){
 	    	this.taskDetails = taskDetails;
@@ -113,6 +123,10 @@ public class Task implements Serializable {
 	    
 	    public StringProperty taskNameProperty() {
 	        return convertType(taskName);
+	    }
+	    
+	    public StringProperty taskNumberProperty() {
+	        return convertType(taskNumber);
 	    }
 	    
 	    public StringProperty taskDetailsProperty() {
