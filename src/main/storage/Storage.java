@@ -7,10 +7,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import main.resources.Task;
 
 public class Storage {
+	
+	Logger logger = Logger.getLogger("Storage");
 	//Key must be exactly 16 bytes long.
 	private final String SECURITY_KEY = "maryhadalittlela";
 
@@ -43,6 +47,7 @@ public class Storage {
 	public static Storage getStorage() {
 		if (storage == null) {
 			storage = new Storage();
+;
 		}
 		
 		return storage;
@@ -55,6 +60,7 @@ public class Storage {
 	public void saveFile() {
 		writeTaskArrayListToFile(taskList, taskFile);
 		//encryptTaskFile();
+		logger.log(Level.INFO, "taskFile saved successfully.");
 	}
 	
 	/**
@@ -78,6 +84,7 @@ public class Storage {
 
 		if (!taskFile.exists()) {
 			createNewFile(taskFile);
+			logger.log(Level.INFO, "New taskFile created.");
 		}
 	}
 
@@ -116,7 +123,8 @@ public class Storage {
 			in.close();
 		}
 		catch (IOException | ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Unable to read from taskFile.");
+			//e.printStackTrace();
 		}
 	}
 	
@@ -132,7 +140,8 @@ public class Storage {
 			out.close();
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Unable to write to taskFile.");
+			//e.printStackTrace();
 		}
 	}
 }
