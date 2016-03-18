@@ -3,6 +3,8 @@ package main.gui;
 import java.awt.SystemTray;
 import java.io.IOException;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -30,6 +32,7 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
+    Logger logger = Logger.getLogger("UI");
  // ... AFTER THE OTHER VARIABLES ...
 
     /**
@@ -66,8 +69,6 @@ public class MainApp extends Application {
 
     // ... THE REST OF THE CLASS ...
     
-
-    
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -75,6 +76,7 @@ public class MainApp extends Application {
         initRootLayout();
 
         showTaskOverview();
+        logger.log(Level.INFO, "UI Opened Successfully.");
     }
 
     /**
@@ -101,6 +103,8 @@ public class MainApp extends Application {
      */
     public void showTaskOverview() {
         try {
+        	int a = 12, d = 12;
+        	assert a >= 0 && d <= 10;
             // Load Task overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource(FXML_TASK_OVERVIEW));

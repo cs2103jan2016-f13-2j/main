@@ -137,7 +137,15 @@ public class Task implements Serializable {
 	    	if (taskTime == null) {
 	    		return convertType("-");
 	    	} else {
-	    		return convertType(taskTime.getTime());
+	    		if(taskTime.getHour()<10 && taskTime.getMinute()<10){
+	    			return convertType("0"+taskTime.getHour() + ":0" + taskTime.getMinute());
+	    		} else if (taskTime.getHour()<10 && taskTime.getMinute() > 9) {
+	    			return convertType("0"+taskTime.getHour() + ":" + taskTime.getMinute());
+	    		} else if (taskTime.getHour()>9 && taskTime.getMinute() > 9) {
+	    			return convertType(taskTime.getTime());
+	    		} else {
+	    			return convertType(taskTime.getHour() + ":0" + taskTime.getMinute());
+	    		}
 	    	}   
 	    }
 	    
