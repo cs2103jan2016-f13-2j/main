@@ -1,6 +1,8 @@
 package main.logic;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import main.storage.Storage;
 import main.parser.Parser;
@@ -22,6 +24,8 @@ public class MainLogic {
 	private static Command command;
 	private static UserInput userInput;
 	private static MainLogic mainLogic;
+	
+	static Logger logger = Logger.getLogger("MainLogic");
 
 	//-----Constructor-----
 	public MainLogic() {
@@ -42,6 +46,7 @@ public class MainLogic {
 	
 	//-----Private methods-----
 	private static void createCommandObject() {
+		logger.log(Level.INFO, "Command "+getCommand().toUpperCase());
 		switch (getCommand()) {
 		case "add": {
 			command = new Add(userInput);

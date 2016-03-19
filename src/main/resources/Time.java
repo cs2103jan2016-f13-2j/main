@@ -22,7 +22,11 @@ public class Time {
 		return minute;
 	}
 	
-	public String getTime() {
+	public Time getTime() {
+		return this;
+	}
+	
+	public String getTimeString() {
 		return hour+":"+minute;
 	}
 	

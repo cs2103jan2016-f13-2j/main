@@ -142,7 +142,7 @@ public class Task implements Serializable {
 	    		} else if (taskTime.getHour()<10 && taskTime.getMinute() > 9) {
 	    			return convertType("0"+taskTime.getHour() + ":" + taskTime.getMinute());
 	    		} else if (taskTime.getHour()>9 && taskTime.getMinute() > 9) {
-	    			return convertType(taskTime.getTime());
+	    			return convertType(taskTime.getTimeString());
 	    		} else {
 	    			return convertType(taskTime.getHour() + ":0" + taskTime.getMinute());
 	    		}
@@ -153,7 +153,7 @@ public class Task implements Serializable {
 	    	if (taskDate == null) {
 	    		return convertType("-");
 	    	} else {
-	    		return convertType(taskDate.getDate());
+	    		return convertType(taskDate.getDateString());
 	    	}	
 	    }
 	    

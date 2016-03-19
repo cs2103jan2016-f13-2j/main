@@ -28,7 +28,11 @@ public class Date implements Comparable<Date> {
 		return year;
 	}
 	
-	public String getDate() {
+	public Date getDate() {
+		return this;
+	}
+	
+	public String getDateString() {
 		return day+"-"+month+"-"+year;
 	}
 	

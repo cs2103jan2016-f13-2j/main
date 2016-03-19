@@ -21,12 +21,11 @@ public class UserInput {
 	String details;
 	int priority;
 	
-	//Search
+	//Search and sort
 	String searchTerm;
+	int sortType;
 	ArrayList<Task> taskList;
 	
-	//Sort
-	int sortType;
 	
 	
 	//Constructors
