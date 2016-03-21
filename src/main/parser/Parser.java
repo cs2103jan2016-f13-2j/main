@@ -50,7 +50,7 @@ public class Parser {
 			userInput.setCommand("edit");
 			int editPart = getNumber(inputCommand.get(2));
 			userInput.setEdit(editNumber, editPart);
-			passEditPart(inputCommand,userInput,editNumber);
+			passEditPart(inputCommand,userInput,editPart);
 			break;
 		}
 		case "search": {
@@ -167,10 +167,10 @@ public class Parser {
 			case "-t"://time
 				n = 7;
 				break;
-			case "l"://location
+			case "-l"://location
 				n = 8;
 				break;
-			case "p"://priority
+			case "-p"://priority
 				n = 9;
 				break;
 			default:
@@ -182,7 +182,7 @@ public class Parser {
 	private static void passEditPart(ArrayList<String> commands, UserInput userInput, Integer n){
 		switch(n){
 		case 1:
-			String details = createTask.getDetail(commands, 2, commands.size());
+			String details = createTask.getDetail(commands, 3, commands.size());
 			userInput.setDetails(details);
 			break;
 		case 2:
@@ -210,7 +210,8 @@ public class Parser {
 			userInput.setTime(time);
 			break;
 		case 8:
-			String location = createTask.getLocation(commands, 2, commands.size());
+			String location = createTask.getLocation(commands, 3, commands.size());
+			System.out.println(location);
 			userInput.setDetails(location);
 			break;
 		case 9:
