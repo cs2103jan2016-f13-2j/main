@@ -103,8 +103,6 @@ public class MainApp extends Application {
      */
     public void showTaskOverview() {
         try {
-        	int a = 12, d = 12;
-        	assert a >= 0 && d <= 10;
             // Load Task overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainApp.class.getResource(FXML_TASK_OVERVIEW));
