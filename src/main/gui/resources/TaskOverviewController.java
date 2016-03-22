@@ -25,7 +25,7 @@ public class TaskOverviewController {
 	@FXML
 	private TableView<Task> taskTable;
 	@FXML
-	private TableColumn<Task, String> taskNameColumn;
+	private TableColumn<Task, String> taskNumberColumn;
 	@FXML
 	private TableColumn<Task, String> taskDetailsColumn;
 	@FXML
@@ -62,7 +62,7 @@ public class TaskOverviewController {
 	@FXML
 	private void initialize() {
 		// Initialize the task table with the two columns.
-		taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().taskNameProperty());
+		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
 		taskDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
 		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
@@ -91,8 +91,20 @@ public class TaskOverviewController {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
 		ArrayList<Task> temp = MainLogic.getTaskList();
+		
+		numberTaskArrayList(temp);
+		
 		for (int i=0; i<temp.size(); i++) {
 			list.add(temp.get(i));
+		}
+	}
+	
+	private void numberTaskArrayList(ArrayList<Task> list) {
+		int taskNum = 1;
+		
+		for (Task t : list) {
+			t.setTaskNumber(taskNum + "");
+			taskNum++;
 		}
 	}
 

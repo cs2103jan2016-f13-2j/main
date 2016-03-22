@@ -19,7 +19,7 @@
                         <TextField fx:id="commandText" layoutX="10.0" layoutY="480.0" onAction="#onEnter" prefHeight="25.0" prefWidth="398.0" />
                         <TableView fx:id="taskTable" layoutX="1.0" layoutY="21.0" maxHeight="600.0" maxWidth="800.0" minHeight="200.0" minWidth="417.0" prefHeight="200.0" prefWidth="417.0" AnchorPane.bottomAnchor="-21.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="21.0">
                           <columns>
-                            <TableColumn fx:id="taskNameColumn" prefWidth="25.0" resizable="false" text="No." />
+                            <TableColumn fx:id="taskNumberColumn" prefWidth="25.0" resizable="false" text="No." />
                             <TableColumn fx:id="taskDetailsColumn" prefWidth="209.0" resizable="false" text="Task Details" />
                               <TableColumn fx:id="taskDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="34.0" resizable="false" text="Date" />
                               <TableColumn fx:id="taskTimeColumn" minWidth="0.0" prefWidth="51.4000244140625" resizable="false" text="Time" />
