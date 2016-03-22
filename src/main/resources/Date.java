@@ -1,6 +1,6 @@
 package main.resources;
 
-public class Date implements Comparable<Date> {
+public class Date implements Comparable<Date>, Serializable {
 	
 	int day;
 	int month;
