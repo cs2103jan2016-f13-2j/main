@@ -3,6 +3,8 @@ package main.logic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import main.resources.Task;
 import main.resources.TaskComparator;
@@ -14,6 +16,7 @@ public class Sort implements Command {
 	UserInput userInput;
 	Storage storage;
 	ArrayList<Task> taskList;
+	static Logger logger = Logger.getLogger("Sort");
 
 	public Sort(UserInput userInput) {
 		this.userInput = userInput;
@@ -23,13 +26,14 @@ public class Sort implements Command {
 
 	@Override
 	public void execute() {
+		logger.log(Level.INFO, "Command SORT");
 		taskList = storage.getTaskList();
 		switch (userInput.getSortType()) {
 		case 1: {	//task details
 			Collections.sort(taskList, new TaskComparator(1));
 			break;
 		}
-		case 6: {	//task date
+		case 6: case 7: {	//task date/time
 			Collections.sort(taskList, new TaskComparator(6));
 			break;
 		}
@@ -48,9 +52,6 @@ public class Sort implements Command {
 		
 		storage.saveFile();
 		userInput.setTaskList(taskList);
-		for (int i=0; i<taskList.size(); i++) {
-			System.out.println(taskList.get(i).getTaskDetails());
-		}
 	}
 
 	@Override

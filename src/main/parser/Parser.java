@@ -211,8 +211,7 @@ public class Parser {
 			break;
 		case 8:
 			String location = createTask.getLocation(commands, 3, commands.size());
-			System.out.println(location);
-			userInput.setDetails(location);
+			userInput.setLocation(location);
 			break;
 		case 9:
 			int priority = Integer.parseInt(commands.get(3));

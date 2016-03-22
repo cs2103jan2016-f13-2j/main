@@ -1,6 +1,8 @@
 package main.logic;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import main.resources.Task;
 import main.resources.UserInput;
@@ -11,6 +13,7 @@ public class Search implements Command {
 	UserInput userInput;
 	Storage storage;
 	ArrayList<Task> taskList;
+	static Logger logger = Logger.getLogger("Search");
 
 	public Search(UserInput userInput) {
 		this.userInput = userInput;
@@ -20,6 +23,7 @@ public class Search implements Command {
 
 	@Override
 	public void execute() {
+		logger.log(Level.INFO, "Command SEARCH");
 		if (userInput.getSearchTerm().length() == 0) {
 			userInput.setTaskList(storage.getTaskList());
 		}

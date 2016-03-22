@@ -24,6 +24,8 @@ public class MainLogic {
 	private static Command command;
 	private static UserInput userInput;
 	private static MainLogic mainLogic;
+	private static int sortType;
+	private static int numTasks;
 	
 	static Logger logger = Logger.getLogger("MainLogic");
 
@@ -33,20 +35,23 @@ public class MainLogic {
 		storage = Storage.getStorage();
 		updateTaskList();
 		setDisplayList(taskList);
+		sortType = 6;
+		numTasks = 0;
 	}
 	
 	public static void run(UserInput input) {
+		logger.log(Level.INFO, "MainLogic START");
 		initializeMainLogic();
 		setUserInput(input);
 		runParser();
 		createCommandObject();
 		executeCommand();
 		updateTaskList();
+		logger.log(Level.INFO, "MainLogic END");
 	}
 	
 	//-----Private methods-----
 	private static void createCommandObject() {
-		logger.log(Level.INFO, "Command "+getCommand().toUpperCase());
 		switch (getCommand()) {
 		case "add": {
 			command = new Add(userInput);
@@ -62,12 +67,14 @@ public class MainLogic {
 		}
 
 		case "display": {
+			userInput.setSortType(sortType);
 			command = new Display(userInput);
 			break;
 		}
 		
 		case "sort": {
 			command = new Sort(userInput);
+			sortType = userInput.getSortType();
 			break;
 		}
 		
@@ -80,13 +87,8 @@ public class MainLogic {
 			displayList = storage.getTaskList();
 		}
 		
-		case "exit": {
-			command = new Exit(userInput);
-			break;
-		}
-		
 		default: {
-			System.out.println("ERROR"); //To be changed
+			logger.log(Level.WARNING, "Command not found");
 			break;
 		}
 		}
@@ -125,7 +127,8 @@ public class MainLogic {
 
 	//-----Public Methods-----
 	public static ArrayList<Task> getTaskList() {
-		return displayList;	
+		numTasks = displayList.size();
+		return displayList;
 	}
 	
 	public static void setDisplayList(ArrayList<Task> newList) {
