@@ -18,7 +18,7 @@ public class Storage {
 	//Key must be exactly 16 bytes long.
 	private final String SECURITY_KEY = "maryhadalittlela";
 
-	private static final String FILE_NAME = "task.txt";
+	private static String FILE_NAME = "task.txt";
 
 	private File taskFile;
 	private ArrayList<Task> taskList;
@@ -55,12 +55,15 @@ public class Storage {
 	
 	/**
 	 * Writes the existing taskList to file.
+	 * @return true if successfully saved, false if exception thrown.
 	 */
 	
-	public void saveFile() {
-		writeTaskArrayListToFile(taskList, taskFile);
+	public boolean saveFile() {
+		boolean result = writeTaskArrayListToFile(taskList, taskFile);
 		//encryptTaskFile();
 		logger.log(Level.INFO, "taskFile saved successfully.");
+		
+		return result;
 	}
 	
 	/**
@@ -70,6 +73,17 @@ public class Storage {
 
 	public ArrayList<Task> getTaskList() {
 		return taskList;
+	}
+	
+	/**
+	 * For testing purposes.
+	 * 
+	 * Sets the FILE_NAME to the test file path.
+	 * @param string : The file path of the test file.
+	 */
+	
+	public static void setFileName(String string) {
+		FILE_NAME = string;
 	}
 
 	//Private methods
@@ -83,12 +97,20 @@ public class Storage {
 		taskFile = new File(fileName);
 
 		if (!taskFile.exists()) {
+			assert(!taskFile.exists());
 			createNewFile(taskFile);
+			assert(taskFile.exists());
 			logger.log(Level.INFO, "New taskFile created.");
 		}
 	}
+	
+	/**
+	 * Creates a new file in the current directory.
+	 * @param file : The file to be created/
+	 * @return true if successfully created, false if exception thrown.
+	 */
 
-	private void createNewFile(File file) {
+	private boolean createNewFile(File file) {
 		try {
 			file.createNewFile();
 			
@@ -98,8 +120,13 @@ public class Storage {
 			out.close();
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			logger.log(Level.WARNING, "Unable to create new file.");
+			//e.printStackTrace();
+			return false;
 		}
+		
+		assert(file.exists());
+		return true;
 	}
 
 	private void encryptTaskFile() {
@@ -109,8 +136,15 @@ public class Storage {
 	private void decryptTaskFile() {
 		FileSecurity.decrypt(taskFile, SECURITY_KEY);
 	}
+	
+	/**
+	 * Reads content of file into list for manipulation by other classes.
+	 * @param file : The file to be read.
+	 * @param list : The list for contents to be put into.
+	 * @return true if successfully read, false if exception thrown.
+	 */
 
-	private void readFileToTaskArrayList(File file, ArrayList<Task> list) {
+	private boolean readFileToTaskArrayList(File file, ArrayList<Task> list) {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
 
@@ -125,10 +159,21 @@ public class Storage {
 		catch (IOException | ClassNotFoundException e) {
 			logger.log(Level.WARNING, "Unable to read from taskFile.");
 			//e.printStackTrace();
+			
+			return false;
 		}
+		
+		return true;
 	}
 	
-	private void writeTaskArrayListToFile(ArrayList<Task> list, File file) {
+	/**
+	 * Writes the contents of existing task list to file.
+	 * @param list : The list to be written to file.
+	 * @param file : The destination file to be written to.
+	 * @return true if successfully written, false if exception thrown.
+	 */
+	
+	private boolean writeTaskArrayListToFile(ArrayList<Task> list, File file) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
 			
@@ -142,6 +187,10 @@ public class Storage {
 		catch (IOException e) {
 			logger.log(Level.WARNING, "Unable to write to taskFile.");
 			//e.printStackTrace();
+			
+			return false;
 		}
+		
+		return true;
 	}
 }
