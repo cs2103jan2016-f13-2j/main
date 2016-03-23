@@ -25,7 +25,7 @@
                               <TableColumn fx:id="taskLocationColumn" prefWidth="96.0" resizable="false" text="Location" />
                           </columns>
                         </TableView>
-                        <Label layoutX="151.0" layoutY="463.0" prefHeight="17.0" prefWidth="115.0" text="Instant Feedback" textAlignment="CENTER" />
+                        <Label fx:id="instantFeedback" layoutX="11.0" layoutY="455.0" prefHeight="25.0" prefWidth="398.0" textAlignment="CENTER" />
                         <Label layoutX="14.0" layoutY="6.0" text="Deadlines" />
                      </children>
                   </AnchorPane>

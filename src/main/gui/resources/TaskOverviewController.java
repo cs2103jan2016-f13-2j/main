@@ -34,6 +34,8 @@ public class TaskOverviewController {
 	private TableColumn<Task, String> taskTimeColumn;
 	@FXML
 	private TableColumn<Task, String> taskLocationColumn;
+	
+	@FXML private Label instantFeedback;
 
 	//@FXML
 	//private Label taskNameLabel;
@@ -79,7 +81,7 @@ public class TaskOverviewController {
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
-
+		instantFeedback.setText("Please enter a command");
 		// Add observable list data to the table
 		getTaskListFromFile();
 		taskTable.setItems(list);
@@ -133,12 +135,12 @@ public class TaskOverviewController {
 	 */
 	public void onEnter(){
 		String command = commandText.getText(); //string received from user.
+		instantFeedback.setText("please enter a valid command");
+		commandText.setText("");
 		//System.out.println(command);
 		UserInput userInput = new UserInput(command);
 		MainLogic.run(userInput);
-
 		mainApp.showTaskOverview(); 
-		commandText.setText("");
 	}    
 
 	/**
