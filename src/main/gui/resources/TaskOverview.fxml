@@ -5,7 +5,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.SepiaTone?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.TaskOverviewController">
@@ -45,16 +44,13 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
                   <Label layoutX="7.0" layoutY="6.0" text="Floating Tasks" />
-                  <TableView fx:id="taskTable11" layoutX="-5.0" layoutY="29.0" prefHeight="519.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+                  <TableView fx:id="taskTable11" layoutX="-5.0" layoutY="21.0" prefHeight="527.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="21.0">
                      <columns>
                         <TableColumn fx:id="taskNameColumn11" prefWidth="25.0" resizable="false" text="No." />
                         <TableColumn fx:id="taskDetailsColumn11" prefWidth="209.0" resizable="false" text="Task Details" />
                      </columns>
                   </TableView>
                </children>
-               <effect>
-                  <SepiaTone />
-               </effect>
             </AnchorPane>
         </items>
       </SplitPane>
