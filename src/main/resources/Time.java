@@ -1,6 +1,8 @@
 package main.resources;
 
-public class Time {
+import java.io.Serializable;
+
+public class Time implements Serializable {
 	
 	int hour;
 	int minute;

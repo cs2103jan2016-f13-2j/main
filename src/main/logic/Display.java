@@ -1,5 +1,8 @@
 package main.logic;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import main.resources.UserInput;
 import main.storage.Storage;
 
@@ -7,6 +10,7 @@ public class Display implements Command {
 	
 	UserInput userInput;
 	Storage storage;
+	static Logger logger = Logger.getLogger("Display");
 
 	public Display(UserInput userInput) {
 		this.userInput = userInput;
@@ -16,7 +20,10 @@ public class Display implements Command {
 
 	@Override
 	public void execute() {
-		storage.saveFile();
+		logger.log(Level.INFO, "Command DISPLAY");
+		Command command = new Sort(userInput);
+		command.execute();
+		storage.saveFile();		
 	}
 
 	@Override

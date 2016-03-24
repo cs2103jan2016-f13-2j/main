@@ -25,7 +25,7 @@ public class TaskOverviewController {
 	@FXML
 	private TableView<Task> taskTable;
 	@FXML
-	private TableColumn<Task, String> taskNameColumn;
+	private TableColumn<Task, String> taskNumberColumn;
 	@FXML
 	private TableColumn<Task, String> taskDetailsColumn;
 	@FXML
@@ -34,6 +34,8 @@ public class TaskOverviewController {
 	private TableColumn<Task, String> taskTimeColumn;
 	@FXML
 	private TableColumn<Task, String> taskLocationColumn;
+	
+	@FXML private Label instantFeedback;
 
 	//@FXML
 	//private Label taskNameLabel;
@@ -62,7 +64,7 @@ public class TaskOverviewController {
 	@FXML
 	private void initialize() {
 		// Initialize the task table with the two columns.
-		taskNameColumn.setCellValueFactory(cellData -> cellData.getValue().taskNameProperty());
+		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
 		taskDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
 		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
@@ -79,7 +81,7 @@ public class TaskOverviewController {
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
-
+		instantFeedback.setText("Please enter a command");
 		// Add observable list data to the table
 		getTaskListFromFile();
 		taskTable.setItems(list);
@@ -91,8 +93,20 @@ public class TaskOverviewController {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
 		ArrayList<Task> temp = MainLogic.getTaskList();
+		
+		numberTaskArrayList(temp);
+		
 		for (int i=0; i<temp.size(); i++) {
 			list.add(temp.get(i));
+		}
+	}
+	
+	private void numberTaskArrayList(ArrayList<Task> list) {
+		int taskNum = 1;
+		
+		for (Task t : list) {
+			t.setTaskNumber(taskNum + "");
+			taskNum++;
 		}
 	}
 
@@ -121,12 +135,12 @@ public class TaskOverviewController {
 	 */
 	public void onEnter(){
 		String command = commandText.getText(); //string received from user.
+		instantFeedback.setText("please enter a valid command");
+		commandText.setText("");
 		//System.out.println(command);
 		UserInput userInput = new UserInput(command);
 		MainLogic.run(userInput);
-
 		mainApp.showTaskOverview(); 
-		commandText.setText("");
 	}    
 
 	/**
