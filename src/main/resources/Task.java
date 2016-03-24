@@ -25,6 +25,8 @@ public class Task implements Serializable {
 	   private String taskLocation;
 	   private int priority;
 	   private int taskType;	//1-Event, 2-Floating, 3-Recurring 4-Deadline
+	   private int recurTime;
+	   private int recurFrequency; //1-daily 2-weekly 3-monthly 4-yearly
 	
 	    public Task() {
 	        this(null, null, 3);
@@ -45,6 +47,16 @@ public class Task implements Serializable {
 	        priority = 3;
 	        taskType = type;
 	        taskNumber = null;
+	        recurTime = -1;
+	        recurFrequency = -1;
+	    }
+	    
+	    public int getRecurTime(){
+	    	return recurTime;
+	    }
+	    
+	    public int getRecurFrequency(){
+	    	return recurFrequency;
 	    }
 	    
 	    public String getTaskName(){
@@ -118,6 +130,14 @@ public class Task implements Serializable {
 	    
 	    public void setTaskType(int type) {
 	    	taskType = type;
+	    }
+	    
+	    public void setRecurTime(int recurTime){
+	    	this.recurTime = recurTime;
+	    }
+	    
+	    public void setRecurFrequency(int recurFrequency){
+	    	this.recurFrequency = recurFrequency;
 	    }
 	    
 	    
