@@ -44,7 +44,7 @@ public class Storage {
 	 * @return the Storage object.
 	 */
 	
-	public static Storage getStorage() {
+	public static Storage getInstance() {
 		if (storage == null) {
 			storage = new Storage();
 ;

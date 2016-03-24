@@ -14,7 +14,7 @@ public class Display implements Command {
 
 	public Display(UserInput userInput) {
 		this.userInput = userInput;
-		storage = Storage.getStorage();
+		storage = Storage.getInstance();
 	}
 
 

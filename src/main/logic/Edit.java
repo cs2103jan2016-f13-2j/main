@@ -17,7 +17,7 @@ public class Edit implements Command {
 
 	public Edit(UserInput userInput) {
 		this.userInput = userInput;
-		storage = Storage.getStorage();
+		storage = Storage.getInstance();
 		taskList = new ArrayList<Task>();
 	}
 

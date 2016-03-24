@@ -17,7 +17,7 @@ public class Search implements Command {
 
 	public Search(UserInput userInput) {
 		this.userInput = userInput;
-		storage = Storage.getStorage();
+		storage = Storage.getInstance();
 		taskList = new ArrayList<Task>();
 	}
 

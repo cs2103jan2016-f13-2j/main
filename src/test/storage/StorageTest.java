@@ -40,14 +40,14 @@ public class StorageTest {
 	
 	@Test
 	public void test1() {
-		Storage storage = Storage.getStorage();
+		Storage storage = Storage.getInstance();
 		
 		assert(file.exists());
 	}
 	
 	@Test
 	public void test2() {
-		Storage storage = Storage.getStorage();
+		Storage storage = Storage.getInstance();
 		
 		boolean result = storage.saveFile();
 		
@@ -55,7 +55,7 @@ public class StorageTest {
 	}
 	
 	public void test3() {
-		Storage storage = Storage.getStorage();
+		Storage storage = Storage.getInstance();
 		Task task = new Task();
 		
 		task.setTaskDetails("This is a test task.");

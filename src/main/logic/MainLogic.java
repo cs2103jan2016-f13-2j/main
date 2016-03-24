@@ -32,7 +32,7 @@ public class MainLogic {
 	//-----Constructor-----
 	public MainLogic() {
 		//Initialize variables
-		storage = Storage.getStorage();
+		storage = Storage.getInstance();
 		updateTaskList();
 		setDisplayList(taskList);
 		sortType = 6;

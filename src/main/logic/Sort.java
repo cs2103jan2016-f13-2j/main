@@ -20,7 +20,7 @@ public class Sort implements Command {
 
 	public Sort(UserInput userInput) {
 		this.userInput = userInput;
-		storage = Storage.getStorage();
+		storage = Storage.getInstance();
 		taskList = new ArrayList<Task>();
 	}
 
