@@ -17,19 +17,31 @@ public class createTask {
 	private static final String BY = "by";
 	private static final String TO = "to";
 	private static final String AT = "at";
+	private static final String Priority = "p";
 		
 	public final static Task createDeadline(String taskType, ArrayList<String> info) {
 		String taskName = taskType+" task";
 		Task task = new Task();
 		int indexOfBy = info.indexOf(BY);
 		int length = info.size();
+		int indexOfP = 0;
+		
+		if(info.contains(Priority)){
+			indexOfP = info.indexOf(Priority);
+			String priority = info.get(indexOfP+1);
+			task.setPriority(getPriority(priority));
+		} else {
+			indexOfP = length;
+			task.setPriority(5);
+		}
+
 		String detail = getDetail(info,1,indexOfBy);
 		String dateAndTime = info.get(indexOfBy+1);
 		if(info.contains(AT)){
 			int indexOfAt = info.indexOf(AT);
 			Time time = getTime(dateAndTime);
 			Date date = getDate(dateAndTime);
-			String location = getLocation(info,indexOfAt+1,length);
+			String location = getLocation(info,indexOfAt+1,indexOfP);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
 			task.setTaskDate(date);
@@ -55,6 +67,16 @@ public class createTask {
 		int indexOfFrom = info.indexOf(FROM);
 		int indexOfTo = info.indexOf(TO);
 		int length = info.size();
+		int indexOfP = 0;
+		if(info.contains(Priority)){
+			indexOfP = info.indexOf(Priority);
+			String priority = info.get(indexOfP+1);
+			task.setPriority(getPriority(priority));
+		} else {
+			indexOfP = length;
+			task.setPriority(5);
+		}
+		
 		String detail = getDetail(info,1,indexOfFrom);
 		String startDateAndTime = info.get(indexOfFrom+1);
 		String endDateAndTime = info.get(indexOfTo+1);
@@ -64,7 +86,7 @@ public class createTask {
 			Date startDate = getDate(startDateAndTime);
 			Time endTime = getTime(endDateAndTime);
 			Date endDate = getDate(endDateAndTime);
-			String location = getLocation(info,indexOfAt+1,length);
+			String location = getLocation(info,indexOfAt+1,indexOfP);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
 			task.setTaskDate(startDate);
@@ -89,15 +111,28 @@ public class createTask {
 		String taskName = taskType+" task";
 		Task task = new Task();
 		int length = info.size();
-		String detail = getDetail(info,1,length);
+		
+		
+		int indexOfP = 0;
+		if(info.contains(Priority)){
+			indexOfP = info.indexOf(Priority);
+			String priority = info.get(indexOfP+1);
+			task.setPriority(getPriority(priority));
+		} else {
+			indexOfP = length;
+			task.setPriority(5);
+		}
+		
 		if(info.contains(AT)){ //info has location
 			int indexOfAt = info.indexOf(AT);
-			String location = getLocation(info,indexOfAt+1,length);
+			String detail = getDetail(info,1,indexOfAt);
+			String location = getLocation(info,indexOfAt+1,indexOfP);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);;
 			task.setTaskLocation(location);
 			task.setTaskType(2);
 		} else { //info does not have location
+			String detail = getDetail(info,1,length);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
 			task.setTaskType(2);
@@ -176,5 +211,9 @@ public class createTask {
 			}
 		}
 		return date;
+	}
+	
+	public static int getPriority(String p){
+		return Integer.parseInt(p);
 	}
 }
