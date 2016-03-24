@@ -16,6 +16,7 @@ public class Parser {
 	private static final String FROM = "from";
 	private static final String BY = "by";
 	private static final String TO = "to";
+	private static final String RECURRING = "recurring";
 	
 	
 	public final static ArrayList<String> retrieveCommand(String inputFromLogic){
@@ -31,6 +32,12 @@ public class Parser {
 	public final static UserInput resetUserInput (UserInput userInput){
 		ArrayList<String> inputCommand = retrieveCommand(userInput.getRawInput());
 		switch (Shortcuts.shortcuts(inputCommand.get(0).toLowerCase())) {
+		case "recurring": {
+			Task newTask = createTask.createRecurring(RECURRING, inputCommand);
+			userInput.setTask(newTask);
+			userInput.setCommand("recurring");
+			break;
+		}
 		case "add": {
 			Task newTask = createTaskForAdd(inputCommand);
 			userInput.setTask(newTask);
@@ -132,11 +139,14 @@ public class Parser {
 	
 	public static String identifyTaskType(ArrayList<String> listFromLogic ) {
 		
-		if(listFromLogic.contains(BY)) {
-			return "deadline";
+		if(listFromLogic.contains(RECURRING)) {
+			return "recurring";
 		}
 		else if(listFromLogic.contains(FROM) && listFromLogic.contains(TO)) {
 			return "event";
+		} 		
+		else if(listFromLogic.contains(BY)) {
+			return "deadline";
 		}
 		else {
 			return "floating";
