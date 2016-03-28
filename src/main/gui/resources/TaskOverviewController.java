@@ -35,6 +35,26 @@ public class TaskOverviewController {
 	@FXML
 	private TableColumn<Task, String> taskLocationColumn;
 	
+	@FXML
+	private TableView<Task> eventTable;
+	@FXML
+	private TableColumn<Task, String> eventNumberColumn;
+	@FXML
+	private TableColumn<Task, String> eventDetailsColumn;
+	@FXML
+	private TableColumn<Task, String> eventDateColumn;
+	@FXML
+	private TableColumn<Task, String> eventTimeColumn;
+	@FXML
+	private TableColumn<Task, String> eventLocationColumn;
+	
+	@FXML
+	private TableView<Task> floatingTable;
+	@FXML
+	private TableColumn<Task, String> floatingNumberColumn;
+	@FXML
+	private TableColumn<Task, String> floatingDetailsColumn;
+	
 	@FXML private Label instantFeedback;
 
 	//@FXML
