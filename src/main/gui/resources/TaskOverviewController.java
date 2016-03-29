@@ -22,6 +22,8 @@ public class TaskOverviewController {
 	
 	private static final String CMD_DISPLAY = "display";
 	
+	public boolean x = true;
+	
 	@FXML
 	private TableView<Task> taskTable;
 	@FXML
@@ -155,7 +157,13 @@ public class TaskOverviewController {
 	 */
 	public void onEnter(){
 		String command = commandText.getText(); //string received from user.
+		if(x) {
 		instantFeedback.setText("please enter a valid command");
+		x = false;
+		} else {
+			instantFeedback.setText("Error, : " +command+ " not entered");
+			x = true;
+		}
 		commandText.setText("");
 		//System.out.println(command);
 		UserInput userInput = new UserInput(command);
