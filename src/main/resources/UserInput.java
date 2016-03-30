@@ -12,7 +12,7 @@ public class UserInput {
 	
 	//Delete
 	int deleteNumber;
-	int deleteType; // 1-deadline 2-event 3-floating
+	int deleteType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
 	
 	//Edit
 	int[] editNumber;
