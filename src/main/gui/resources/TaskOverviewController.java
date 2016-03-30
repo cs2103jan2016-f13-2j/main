@@ -141,11 +141,16 @@ public class TaskOverviewController {
 		ArrayList<ArrayList<Task>> temp = MainLogic.getTaskList();
 		
 		numberTaskArrayList(temp); 
-		for (int k = 0; k< totalList.size(); k++){ //0:deadlinelist 1: event 2:floating
-			for (int j = 0; j < temp.size(); j++) { // 0:?? 1: ?? 2: ??
-				for (int i=0; i < temp.get(j).size(); i++) {//0:?? 1:?? 2:??
-					//if else statements here. But I need to know what temp represents.
-					totalList.get(k).add(temp.get(j).get(i));
+		for (int k = 0; k< totalList.size(); k++){ 
+			for (int j = 0; j < temp.size(); j++) {
+				for (int i=0; i < temp.get(j).size(); i++) {
+					if (k == 0 && j == 3) {
+						totalList.get(0).add(temp.get(3).get(i));
+					} else if (k == 1 && j == 0) {
+						totalList.get(1).add(temp.get(0).get(i));
+					} else if (k == 2 && j == 1) {
+						totalList.get(2).add(temp.get(1).get(i));
+					}
 				}
 			}
 		}
