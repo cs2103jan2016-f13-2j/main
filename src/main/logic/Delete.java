@@ -24,8 +24,19 @@ public class Delete implements Command {
 	@Override
 	public void execute() {
 		logger.log(Level.INFO, "Command DELETE");
+		int count = 0;
+		System.out.println(userInput.getDeleteType()+" "+userInput.getDeleteNumber());
 		taskList = storage.getTaskList();
-		taskList.remove(userInput.getDeleteNumber()-1);
+		for (int i=0; i<taskList.size(); i++) {
+			Task task = taskList.get(i);
+			if (task.getTaskType() == userInput.getDeleteType()) {
+				count++;
+				 if(count == userInput.getDeleteNumber()) {
+					 System.out.println(task.getTaskDetails());
+					 taskList.remove(i);
+				 }
+			}
+		}
 		storage.saveFile();
 	}
 
