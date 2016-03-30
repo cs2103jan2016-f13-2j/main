@@ -35,8 +35,8 @@
                         <TableColumn fx:id="eventNumberColumn" prefWidth="25.0" resizable="false" text="No." />
                         <TableColumn fx:id="eventDetailsColumn" prefWidth="172.4000244140625" resizable="false" text="Event Details" />
                         <TableColumn fx:id="eventStartDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="74.79998779296875" resizable="false" text="Start Date" />
-                        <TableColumn fx:id="eventEndDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="71.20001220703125" resizable="false" text="End Date" />
                         <TableColumn fx:id="eventStartTimeColumn" minWidth="0.0" prefWidth="71.0" resizable="false" text="Start Time" />
+                        <TableColumn fx:id="eventEndDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="71.20001220703125" resizable="false" text="End Date" />
                         <TableColumn fx:id="eventEndTimeColumn" minWidth="0.0" prefWidth="70.4000244140625" resizable="false" text="End Time" />
                         <TableColumn fx:id="eventLocationColumn" prefWidth="251.5999755859375" resizable="false" text="Location" />
                      </columns>

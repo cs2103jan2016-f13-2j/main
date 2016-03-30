@@ -100,8 +100,8 @@ public class TaskOverviewController {
 		// Initialize the task table with the two columns.
 		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
-		taskDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskEndDateProperty());
-		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskEndTimeProperty());
+		taskDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskStartDateProperty());
+		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskStartTimeProperty());
 		taskLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
 		
 		eventNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
