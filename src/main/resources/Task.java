@@ -20,8 +20,10 @@ public class Task implements Serializable {
 	   private String taskNumber;
 	   private String taskName;
 	   private String taskDetails;
-	   private Date taskDate;
-	   private Time taskTime;
+	   private Date taskStartDate;
+	   private Time taskStartTime;
+	   private Date taskEndDate;
+	   private Time taskEndTime;
 	   private String taskLocation;
 	   private int priority;
 	   private int taskType;	//1-Event, 2-Floating, 3-Recurring 4-Deadline
@@ -41,8 +43,10 @@ public class Task implements Serializable {
 	    public Task(String taskName, String taskDetails, int type) {
 	        this.taskName = taskName;
 	        this.taskDetails = taskDetails;
-	        taskDate = null;
-	        taskTime = null;
+	        taskStartDate = null;
+	        taskStartTime = null;
+	        taskEndDate = null;
+	        taskEndTime = null;
 	        taskLocation = null;
 	        priority = 3;
 	        taskType = type;
@@ -72,13 +76,22 @@ public class Task implements Serializable {
 	    	return this.taskDetails;
 	    }
 	    
-	    public Date getTaskDate() {
-	    	return taskDate;
+	    public Date getTaskStartDate() {
+	    	return taskStartDate;
 	    }
 	    
-	    public Time getTaskTime() {
-	    	return taskTime;
+	    public Time getTaskStartTime() {
+	    	return taskStartTime;
 	    }
+	    
+	    public Date getTaskEndDate() {
+	    	return taskEndDate;
+	    }
+	    
+	    public Time getTaskEndTime() {
+	    	return taskEndTime;
+	    }
+	    
 	    
 	    public String getTaskLocation() {
 	    	return taskLocation;
@@ -109,20 +122,28 @@ public class Task implements Serializable {
 	    	this.taskDetails = taskDetails;
 	    }
 	    
-	    public void setTaskDate(Date date) {
-	    	taskDate = date;
+	    public void setTaskStartDate(Date date) {
+	    	taskStartDate = date;
 	    }
 	    
-	    public void setTaskDate(int day, int month, int year) {
-	    	this.setTaskDate(new Date(day, month, year));
+	    public void setTaskEndDate(Date date) {
+	    	taskEndDate = date;
 	    }
 	    
-	    public void setTaskTime(Time time) {
-	    	taskTime = time;
+	    public void setTaskEndTime(Time time) {
+	    	taskEndTime = time;
 	    }
 	    
-	    public void setTaskTime(int hour, int minute) {
-	    	this.setTaskTime(new Time(hour, minute));
+	    public void setTaskStartDate(int day, int month, int year) {
+	    	this.setTaskStartDate(new Date(day, month, year));
+	    }
+	    
+	    public void setTaskStartTime(Time time) {
+	    	taskStartTime = time;
+	    }
+	    
+	    public void setTaskStartTime(int hour, int minute) {
+	    	this.setTaskStartTime(new Time(hour, minute));
 	    }
 	    
 	    public void setTaskLocation(String newLocation) {
@@ -162,27 +183,50 @@ public class Task implements Serializable {
 	        return convertType(taskDetails);
 	    }
 	    
-	    public StringProperty taskTimeProperty() {
-	    	if (taskTime == null) {
+	    public StringProperty taskStartTimeProperty() {
+	    	if (taskStartTime == null) {
 	    		return convertType("-");
 	    	} else {
-	    		if(taskTime.getHour()<10 && taskTime.getMinute()<10){
-	    			return convertType("0"+taskTime.getHour() + ":0" + taskTime.getMinute());
-	    		} else if (taskTime.getHour()<10 && taskTime.getMinute() > 9) {
-	    			return convertType("0"+taskTime.getHour() + ":" + taskTime.getMinute());
-	    		} else if (taskTime.getHour()>9 && taskTime.getMinute() > 9) {
-	    			return convertType(taskTime.getTimeString());
+	    		if(taskStartTime.getHour()<10 && taskStartTime.getMinute()<10){
+	    			return convertType("0"+taskStartTime.getHour() + ":0" + taskStartTime.getMinute());
+	    		} else if (taskStartTime.getHour()<10 && taskStartTime.getMinute() > 9) {
+	    			return convertType("0"+taskStartTime.getHour() + ":" + taskStartTime.getMinute());
+	    		} else if (taskStartTime.getHour()>9 && taskStartTime.getMinute() > 9) {
+	    			return convertType(taskStartTime.getTimeString());
 	    		} else {
-	    			return convertType(taskTime.getHour() + ":0" + taskTime.getMinute());
+	    			return convertType(taskStartTime.getHour() + ":0" + taskStartTime.getMinute());
+	    		}
+	    	}   
+	    } 
+	    public StringProperty taskEndTimeProperty() {
+	    	if (taskEndTime == null) {
+	    		return convertType("-");
+	    	} else {
+	    		if(taskEndTime.getHour()<10 && taskEndTime.getMinute()<10){
+	    			return convertType("0"+taskEndTime.getHour() + ":0" + taskEndTime.getMinute());
+	    		} else if (taskEndTime.getHour()<10 && taskEndTime.getMinute() > 9) {
+	    			return convertType("0"+taskEndTime.getHour() + ":" + taskEndTime.getMinute());
+	    		} else if (taskEndTime.getHour()>9 && taskEndTime.getMinute() > 9) {
+	    			return convertType(taskEndTime.getTimeString());
+	    		} else {
+	    			return convertType(taskEndTime.getHour() + ":0" + taskEndTime.getMinute());
 	    		}
 	    	}   
 	    }
 	    
-	    public StringProperty taskDateProperty() {	    	
-	    	if (taskDate == null) {
+	    public StringProperty taskStartDateProperty() {	    	
+	    	if (taskStartDate == null) {
 	    		return convertType("-");
 	    	} else {
-	    		return convertType(taskDate.getDateString());
+	    		return convertType(taskStartDate.getDateString());
+	    	}	
+	    }
+	    
+	    public StringProperty taskEndDateProperty() {	    	
+	    	if (taskEndDate == null) {
+	    		return convertType("-");
+	    	} else {
+	    		return convertType(taskEndDate.getDateString());
 	    	}	
 	    }
 	    

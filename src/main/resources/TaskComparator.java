@@ -31,33 +31,33 @@ public class TaskComparator implements Comparator<Task> {
 			}
 		}
 		case 6: {	//task date
-			if (task0.getTaskDate() == null) {
+			if (task0.getTaskStartDate() == null) {
 				return 1;
 			}
 			
-			else if (task1.getTaskDate() == null) {
+			else if (task1.getTaskStartDate() == null) {
 				return -1;
 			}
 			
-			else if (!task0.getTaskDate().equals(task1.getTaskDate())) {
-				return task0.getTaskDate().compareTo(task1.getTaskDate());
+			else if (!task0.getTaskStartDate().equals(task1.getTaskStartDate())) {
+				return task0.getTaskStartDate().compareTo(task1.getTaskStartDate());
 			}
 			
 			else {
-				return task0.getTaskTime().compareTo(task1.getTaskTime());
+				return task0.getTaskStartTime().compareTo(task1.getTaskStartTime());
 			}
 		}
 		case 7: {	//task time
-			if (task0.getTaskTime() == null) {
+			if (task0.getTaskStartTime() == null) {
 				return 1;
 			}
 			
-			else if (task1.getTaskTime() == null) {
+			else if (task1.getTaskStartTime() == null) {
 				return -1;
 			}
 			
-			else if (!task0.getTaskTime().equals(task1.getTaskTime())) {
-				return task0.getTaskTime().compareTo(task1.getTaskTime());
+			else if (!task0.getTaskStartTime().equals(task1.getTaskStartTime())) {
+				return task0.getTaskStartTime().compareTo(task1.getTaskStartTime());
 			}
 			
 			else {
