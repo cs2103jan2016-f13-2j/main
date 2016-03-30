@@ -47,9 +47,10 @@ public class Parser {
 		case "delete": {
 			//deleteTask();
 			userInput.setCommand("delete");
-			userInput.setDelete(Integer.parseInt(inputCommand.get(1)));
+			String details = inputCommand.get(1);
+			userInput.setDeleteNumber(deleteNumber(details));
+			userInput.setDeleteType(deleteType(details));
 			break;
-
 		}
 		case "edit": {
 			//editTask();
@@ -188,6 +189,28 @@ public class Parser {
 		}
 		return n;
 	} 
+	
+	public static int deleteType(String s){
+		int type = -1;
+		switch(s.substring(0,1)){
+		case "d":
+			type = 1;
+			break;
+		case "e":
+			type = 2;
+			break;
+		case "f":
+			type = 3;
+			break;
+		default:
+			break;
+		}
+		return type;
+	}
+	
+	public static int deleteNumber(String s){
+		return Integer.parseInt(s.substring(1,2));
+	}
 	
 	private static void passEditPart(ArrayList<String> commands, UserInput userInput, Integer n){
 		switch(n){

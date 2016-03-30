@@ -12,6 +12,7 @@ public class UserInput {
 	
 	//Delete
 	int deleteNumber;
+	int deleteType; // 1-deadline 2-event 3-floating
 	
 	//Edit
 	int[] editNumber;
@@ -43,10 +44,15 @@ public class UserInput {
 		searchTerm = null;
 		taskList = new ArrayList<Task>();
 		priority = 0;
+		deleteType = -1;
 	}
 	
 	
 	//Getters
+	public int getDeleteType(){
+		return deleteType;
+	}
+	
 	public String getRawInput() {
 		return rawInput;
 	}
@@ -104,6 +110,10 @@ public class UserInput {
 	
 	
 	//Setters
+	public void setDeleteType(int deleteType){
+		this.deleteType = deleteType;
+	}
+	
 	public void setCommand(String command) {
 		this.command = command;
 	}
@@ -116,7 +126,7 @@ public class UserInput {
 		this.task = task;
 	}
 	
-	public void setDelete(int number) {
+	public void setDeleteNumber(int number) {
 		deleteNumber = number;
 	}
 	
