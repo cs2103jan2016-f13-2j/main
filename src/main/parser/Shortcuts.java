@@ -38,6 +38,10 @@ public class Shortcuts {
 		case "recur":
 		case "r":
 			return "recurring";
+		case "undo":
+			return "undo";
+		case "redo":
+			return "redo";
 		default:
 			return command;
 		}

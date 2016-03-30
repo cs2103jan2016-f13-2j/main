@@ -110,6 +110,10 @@ public class UserInput {
 	
 	
 	//Setters
+	public void setRawInput(String input) {
+		this.rawInput = input;
+	}
+	
 	public void setDeleteType(int deleteType){
 		this.deleteType = deleteType;
 	}

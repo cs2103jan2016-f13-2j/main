@@ -77,14 +77,17 @@ public class Parser {
 			userInput.setCommand("home");
 			break;
 		}
-
 		case "display": {
 			userInput.setCommand("display");
 			break;
 
 		}
-		case "exit": {
-			userInput.setCommand("exit");
+		case "undo": {
+			userInput.setCommand("undo");
+			break;
+		}
+		case "redo": {
+			userInput.setCommand("redo");
 			break;
 		}
 		}

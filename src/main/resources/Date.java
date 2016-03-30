@@ -11,6 +11,9 @@ public class Date implements Comparable<Date>, Serializable {
 	public Date(int day, int month, int year) {
 		this.day = day;
 		this.month = month;
+		if (year < 2000) {
+			year += 2000;
+		}
 		this.year = year;
 	}
 	
@@ -47,7 +50,10 @@ public class Date implements Comparable<Date>, Serializable {
 	}
 	
 	public void setYear(int newYear) {
-		year = newYear;
+		if (newYear < 2000) {
+			newYear += 2000;
+		}
+		this.year = newYear;
 	}
 
 	@Override

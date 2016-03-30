@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import main.storage.Storage;
 import main.parser.Parser;
 import main.parser.Shortcuts;
+import main.resources.History;
 import main.resources.Task;
 import main.resources.UserInput;
 
@@ -24,6 +25,7 @@ public class MainLogic {
 	private static Command command;
 	private static UserInput userInput;
 	private static MainLogic mainLogic;
+	private static History history;
 	private static int sortType;
 	private static int numTasks;
 	
@@ -33,6 +35,7 @@ public class MainLogic {
 	public MainLogic() {
 		//Initialize variables
 		storage = Storage.getInstance();
+		history = History.getHistory();
 		updateTaskList();
 		setDisplayList(taskList);
 		sortType = 6;
@@ -55,14 +58,17 @@ public class MainLogic {
 		switch (getCommand()) {
 		case "add": {
 			command = new Add(userInput);
+			//history.updateHistory(userInput.getRawInput(), storage.getTaskList());
 			break;
 		}
 		case "delete": {
 			command = new Delete(userInput);
+			//history.updateHistory(userInput.getRawInput(), storage.getTaskList());
 			break;
 		}
 		case "edit": {
 			command = new Edit(userInput);
+			//history.updateHistory(userInput.getRawInput(), storage.getTaskList());
 			break;
 		}
 
@@ -83,8 +89,25 @@ public class MainLogic {
 			break;
 		}
 		
+		case "recurring": {
+			command = new Add(userInput);
+			//history.updateHistory(userInput.getRawInput(), storage.getTaskList());
+			break;
+		}
+		
 		case "home": {
 			displayList = storage.getTaskList();
+			break;
+		}
+		
+		case "undo": {
+			undoCommand();
+			break;
+		}
+		
+		case "redo": {
+			redoCommand();
+			break;
 		}
 		
 		default: {
@@ -120,6 +143,17 @@ public class MainLogic {
 		return Shortcuts.shortcuts(userInput.getCommand().toLowerCase());
 	}
 
+	private static void undoCommand() {
+		/*displayList = history.updateHistoryUndo();
+		storage.setTaskList(displayList);
+		storage.saveFile();*/
+	}
+	
+	private static void redoCommand() {
+		/*userInput.setRawInput(history.updateHistoryRedo());
+		MainLogic.run(userInput);*/
+	}
+
 	private static void createMainLogic() {
 		mainLogic = new MainLogic();
 	}
@@ -146,7 +180,21 @@ public class MainLogic {
 				break;
 			}
 			case 3: {	//recurring
-				recurringList.add(task);
+				if (task.getTaskEndDate()== null && 
+						task.getTaskStartDate()== null) {	//floating
+					task.setTaskType(2);
+					floatList.add(task);
+				}
+				
+				else if (task.getTaskStartDate() == null) {	//deadline
+					task.setTaskType(4);
+					deadlineList.add(task);
+				}
+				
+				else {	//event
+					task.setTaskType(1);
+					eventList.add(task);
+				}
 				break;
 			}
 			case 4: {	//deadline
