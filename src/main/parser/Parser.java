@@ -194,13 +194,13 @@ public class Parser {
 		int type = -1;
 		switch(s.substring(0,1)){
 		case "d":
-			type = 1;
+			type = 4;
 			break;
 		case "e":
-			type = 2;
+			type = 1;
 			break;
 		case "f":
-			type = 3;
+			type = 2;
 			break;
 		default:
 			break;

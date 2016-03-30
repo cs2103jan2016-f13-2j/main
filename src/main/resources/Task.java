@@ -27,7 +27,7 @@ public class Task implements Serializable {
 	   private int taskType;	//1-Event, 2-Floating, 3-Recurring 4-Deadline
 	   private int recurTime;
 	   private int recurFrequency; //1-daily 2-weekly 3-monthly 4-yearly
-	
+	   private boolean complete;
 	    public Task() {
 	        this(null, null, 3);
 	    }
@@ -49,6 +49,7 @@ public class Task implements Serializable {
 	        taskNumber = null;
 	        recurTime = -1;
 	        recurFrequency = -1;
+	        complete = false;
 	    }
 	    
 	    public int getRecurTime(){
@@ -89,6 +90,10 @@ public class Task implements Serializable {
 	    
 	    public int getTaskType() {
 	    	return taskType;
+	    }
+	    
+	    public boolean getComplete(){
+	    	return complete;
 	    }
 	    
 	    
@@ -138,6 +143,10 @@ public class Task implements Serializable {
 	    
 	    public void setRecurFrequency(int recurFrequency){
 	    	this.recurFrequency = recurFrequency;
+	    }
+	    
+	    public void setComplete(boolean b){
+	    	this.complete = b;
 	    }
 	    
 	    
