@@ -59,8 +59,8 @@ public class StorageTest {
 		Task task = new Task();
 		
 		task.setTaskDetails("This is a test task.");
-		task.setTaskDate(1, 2, 3456);
-		task.setTaskTime(new Time(12, 34));
+		task.setTaskStartDate(1, 2, 3456);
+		task.setTaskStartTime(new Time(12, 34));
 		task.setTaskLocation("This is a test location.");
 		task.setTaskType(0);
 		
