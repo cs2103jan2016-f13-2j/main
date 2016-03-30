@@ -100,16 +100,16 @@ public class TaskOverviewController {
 		// Initialize the task table with the two columns.
 		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
-		taskDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
-		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
+		taskDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskEndDateProperty());
+		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskEndTimeProperty());
 		taskLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
 		
 		eventNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		eventDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
-		eventStartDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
-		eventEndDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
-		eventStartTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
-		eventEndTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
+		eventStartDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskStartDateProperty());
+		eventEndDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskEndDateProperty());
+		eventStartTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskStartTimeProperty());
+		eventEndTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskEndTimeProperty());
 		eventLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
 		
 		floatingNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());

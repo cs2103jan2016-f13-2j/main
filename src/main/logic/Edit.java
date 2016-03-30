@@ -32,14 +32,14 @@ public class Edit implements Command {
 			break;
 		}
 		case 6: {	//task date
-			taskToEdit.setTaskDate(userInput.getDate());
+			taskToEdit.setTaskStartDate(userInput.getDate());
 			if (taskToEdit.getTaskType() == 2) {	//floating
 				taskToEdit.setTaskType(4);	//deadline
 			}
 			break;
 		}
 		case 7: {	//task time
-			taskToEdit.setTaskTime(userInput.getTime());
+			taskToEdit.setTaskStartTime(userInput.getTime());
 			if (taskToEdit.getTaskType() == 2) {	//floating
 				taskToEdit.setTaskType(4);	//deadline
 			}

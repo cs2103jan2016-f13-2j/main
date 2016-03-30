@@ -50,8 +50,8 @@ public class createTask {
 			String location = getLocation(info,indexOfAt+1,indexOfP);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
-			task.setTaskDate(date);
-			task.setTaskTime(time);
+			task.setTaskStartDate(date);
+			task.setTaskStartTime(time);
 			task.setTaskLocation(location);
 			task.setTaskType(4);
 			
@@ -60,8 +60,8 @@ public class createTask {
 			Date date = getDate(dateAndTime);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
-			task.setTaskDate(date);
-			task.setTaskTime(time);
+			task.setTaskStartDate(date);
+			task.setTaskStartTime(time);
 			task.setTaskType(4);
 		}
 		return task;
@@ -95,19 +95,23 @@ public class createTask {
 			String location = getLocation(info,indexOfAt+1,indexOfP);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
-			task.setTaskDate(startDate);
-			task.setTaskTime(startTime);
+			task.setTaskStartDate(startDate);
+			task.setTaskStartTime(startTime);
+			task.setTaskEndDate(endDate);
+			task.setTaskEndTime(endTime);
 			task.setTaskLocation(location);
 			task.setTaskType(1);	
 		} else {
 			Time startTime = getTime(startDateAndTime);
 			Date startDate = getDate(startDateAndTime);
 			Time endTime = getTime(endDateAndTime);
-			Date ednDate = getDate(endDateAndTime);
+			Date endDate = getDate(endDateAndTime);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
-			task.setTaskDate(startDate);
-			task.setTaskTime(startTime);
+			task.setTaskStartDate(startDate);
+			task.setTaskStartTime(startTime);
+			task.setTaskEndDate(endDate);
+			task.setTaskEndTime(endTime);
 			task.setTaskType(1);
 		}
 		return task;
@@ -175,8 +179,8 @@ public class createTask {
 			String location = getLocation(info,indexOfAt+1,indexOfP);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
-			task.setTaskDate(date);
-			task.setTaskTime(time);
+			task.setTaskStartDate(date);
+			task.setTaskStartTime(time);
 			task.setTaskLocation(location);
 			task.setTaskType(3);
 			
@@ -185,8 +189,8 @@ public class createTask {
 			Date date = getDate(dateAndTime);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
-			task.setTaskDate(date);
-			task.setTaskTime(time);
+			task.setTaskStartDate(date);
+			task.setTaskStartTime(time);
 			task.setTaskType(3);
 		}
 		return task;
