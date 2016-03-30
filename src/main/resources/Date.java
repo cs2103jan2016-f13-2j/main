@@ -63,4 +63,20 @@ public class Date implements Comparable<Date>, Serializable {
 			return this.day - date.getDay();
 		}
 	}
+	
+	public boolean equals(Date date){
+	  if (date == null) {
+		  return false;
+	  }
+	  
+	  else {
+		  if(date instanceof Date) {
+			  Date obj = (Date) date;
+			  return this.year == obj.getYear() && 
+					  this.month == obj.getMonth() && 
+					  this.day == obj.getDay();
+		  }
+		  return false;
+	  }
+	}
 }

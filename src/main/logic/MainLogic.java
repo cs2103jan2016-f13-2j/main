@@ -126,48 +126,44 @@ public class MainLogic {
 	
 
 	//-----Public Methods-----
-	public static ArrayList<Task> getTaskList() {
+	public static ArrayList<ArrayList<Task>> getTaskList() {
 		numTasks = displayList.size();
-		return displayList;
+		ArrayList<ArrayList<Task>> newList = new ArrayList<ArrayList<Task>>();
+		ArrayList<Task> eventList = new ArrayList<Task>();
+		ArrayList<Task> floatList = new ArrayList<Task>();
+		ArrayList<Task> recurringList = new ArrayList<Task>();
+		ArrayList<Task> deadlineList = new ArrayList<Task>();
+		
+		for (int i=0; i<numTasks; i++) {
+			Task task = displayList.get(i);
+			switch (task.getTaskType()) {
+			case 1: {	//event
+				eventList.add(task);
+				break;
+			}
+			case 2: {	//floating
+				floatList.add(task);
+				break;
+			}
+			case 3: {	//recurring
+				recurringList.add(task);
+				break;
+			}
+			case 4: {	//deadline
+				deadlineList.add(task);
+				break;
+			}
+			}
+		}
+		newList.add(eventList);
+		newList.add(floatList);
+		newList.add(recurringList);
+		newList.add(deadlineList);
+		
+		return newList;
 	}
 	
 	public static void setDisplayList(ArrayList<Task> newList) {
 		displayList = newList;
 	}
-	
-	/*
-	private void sortTask() {
-		Collections.sort(taskList, taskComparator);
-		saveFile();
-	}
-
-	public static void searchTasks(String searchWords) {
-		ArrayList<String> searchResults = new ArrayList<String>();
-		for (Task t : taskList) {
-			if ((t.getTaskDetails()).contains(searchWords)) {
-				searchResults.add(t.getTaskDetails());
-			}
-		}
-		displayTasks(searchResults);
-	}
-
-	public static void displayTasks(ArrayList<String> toDisplay) {
-		if (toDisplay.size() == 0) {
-			showToUser(MESSAGE_NO_FINDING_RESULTS);
-		} else {
-			for (int i = 1; i <= toDisplay.size(); i++) {
-				showToUser(String.format(MESSAGE_DISPLAY_TASK, i, toDisplay.get(i - 1)));
-			}
-		}
-	}
-
-	public static final Comparator<Task> taskComparator = new Comparator<Task>() {
-
-		@Override
-		public int compare(Task t1, Task t2) {
-			return (t1.getTaskDetails()).compareToIgnoreCase(t2.getTaskDetails());
-		}
-
-	};
-	 */
 }

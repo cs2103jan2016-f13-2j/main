@@ -44,6 +44,23 @@ public class TaskComparator implements Comparator<Task> {
 			}
 			
 			else {
+				return task0.getTaskTime().compareTo(task1.getTaskTime());
+			}
+		}
+		case 7: {	//task time
+			if (task0.getTaskTime() == null) {
+				return 1;
+			}
+			
+			else if (task1.getTaskTime() == null) {
+				return -1;
+			}
+			
+			else if (!task0.getTaskTime().equals(task1.getTaskTime())) {
+				return task0.getTaskTime().compareTo(task1.getTaskTime());
+			}
+			
+			else {
 				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
 			}
 		}

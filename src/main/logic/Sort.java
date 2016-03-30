@@ -33,8 +33,12 @@ public class Sort implements Command {
 			Collections.sort(taskList, new TaskComparator(1));
 			break;
 		}
-		case 6: case 7: {	//task date/time
+		case 6: {	//task date
 			Collections.sort(taskList, new TaskComparator(6));
+			break;
+		}
+		case 7: {	//task time
+			Collections.sort(taskList, new TaskComparator(7));
 			break;
 		}
 		case 8: {	//task location

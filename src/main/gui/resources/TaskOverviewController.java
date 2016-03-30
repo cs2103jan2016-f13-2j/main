@@ -68,6 +68,14 @@ public class TaskOverviewController {
 	private TextField commandText;
 
 	private ObservableList<Task> list = FXCollections.observableArrayList();
+	private ObservableList<Task> eventList = FXCollections.observableArrayList();
+	private ObservableList<Task> floatingList = FXCollections.observableArrayList();
+	
+	private ArrayList<ObservableList<Task>> totalList = new ArrayList<ObservableList<Task>>();
+
+	
+	
+	private ArrayList<TableView<Task>> allTables = new ArrayList<TableView<Task>>();
 
 	// Reference to the main application.
 	private MainApp mainApp;
@@ -92,6 +100,14 @@ public class TaskOverviewController {
 		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
 		taskLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
 		
+		eventNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
+		eventDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
+		eventDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
+		eventTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
+		eventLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
+		
+		floatingNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
+		floatingDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
 	}
 
 
@@ -102,35 +118,50 @@ public class TaskOverviewController {
 	 * @param mainApp
 	 */
 	public void setMainApp(MainApp mainApp) {
+		totalList.add(list);
+		totalList.add(eventList);
+		totalList.add(floatingList);
+		allTables.add(taskTable);
+		allTables.add(eventTable);
+		allTables.add(floatingTable);
 		this.mainApp = mainApp;
 		instantFeedback.setText("Please enter a command");
 		// Add observable list data to the table
 		getTaskListFromFile();
-		taskTable.setItems(list);
+		for (int i = 0; i < totalList.size(); i++) {
+		allTables.get(i).setItems(totalList.get(i));
+		}
 
 
 	}
-//convert arralist to observable list
+//convert arraylist to observable list
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
-		ArrayList<Task> temp = MainLogic.getTaskList();
+		ArrayList<ArrayList<Task>> temp = MainLogic.getTaskList();
 		
-		numberTaskArrayList(temp);
-		
-		for (int i=0; i<temp.size(); i++) {
-			list.add(temp.get(i));
+		numberTaskArrayList(temp); 
+		for (int k = 0; k< totalList.size(); k++){ //0:deadlinelist 1: event 2:floating
+			for (int j = 0; j < temp.size(); j++) { // 0:?? 1: ?? 2: ??
+				for (int i=0; i < temp.get(j).size(); i++) {//0:?? 1:?? 2:??
+					//if else statements here. But I need to know what temp represents.
+					totalList.get(k).add(temp.get(j).get(i));
+				}
+			}
 		}
 	}
 	
-	private void numberTaskArrayList(ArrayList<Task> list) {
+	private void numberTaskArrayList(ArrayList<ArrayList<Task>> list) {
 		int taskNum = 1;
 		
-		for (Task t : list) {
-			t.setTaskNumber(taskNum + "");
-			taskNum++;
+		for (ArrayList<Task> listT : list) {
+				taskNum = 1;
+				for (Task t : listT) {
+					t.setTaskNumber(taskNum + "");
+					taskNum++;
+				}
+			}
 		}
-	}
 
 	/**
 	 * Called when the user clicks on the delete button.

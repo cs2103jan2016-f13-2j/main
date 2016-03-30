@@ -2,8 +2,12 @@ package main.resources;
 
 import java.io.Serializable;
 
-public class Time implements Serializable {
+public class Time implements Comparable<Time>, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int hour;
 	int minute;
 	
@@ -44,5 +48,32 @@ public class Time implements Serializable {
 		hour = newHour;
 		minute = newMinute;
 	}
+
+	@Override
+	public int compareTo(Time time) {
+		if (this.hour != time.getHour()) {
+			return this.hour - time.getHour();
+		}
+		
+		else {
+			return this.minute - time.getMinute();
+		}
+	}
+	
+	public boolean equals(Time time){
+		  if (time == null) {
+			  return false;
+		  }
+		  
+		  else {
+			  if(time instanceof Time) {
+				  Time obj = (Time) time;
+				  return this.hour == obj.getHour() && 
+						  this.minute == obj.getMinute();
+			  }
+			  
+			  return false;
+		  }
+		}
 
 }
