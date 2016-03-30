@@ -44,9 +44,13 @@ public class TaskOverviewController {
 	@FXML
 	private TableColumn<Task, String> eventDetailsColumn;
 	@FXML
-	private TableColumn<Task, String> eventDateColumn;
+	private TableColumn<Task, String> eventStartDateColumn;
 	@FXML
-	private TableColumn<Task, String> eventTimeColumn;
+	private TableColumn<Task, String> eventEndDateColumn;
+	@FXML
+	private TableColumn<Task, String> eventStartTimeColumn;
+	@FXML
+	private TableColumn<Task, String> eventEndTimeColumn;
 	@FXML
 	private TableColumn<Task, String> eventLocationColumn;
 	
@@ -102,8 +106,10 @@ public class TaskOverviewController {
 		
 		eventNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		eventDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
-		eventDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
-		eventTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
+		eventStartDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
+		eventEndDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskDateProperty());
+		eventStartTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
+		eventEndTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskTimeProperty());
 		eventLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
 		
 		floatingNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
