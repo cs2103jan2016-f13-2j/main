@@ -30,12 +30,37 @@ public class Search implements Command {
 		
 		else {
 			ArrayList<Task> searchResults = new ArrayList<Task>();
+			String searchTerm = userInput.getSearchTerm().toLowerCase();
 			for (Task t : storage.getTaskList()) {
-				if ((t.getTaskName()).contains(userInput.getSearchTerm()) ||
-						t.getTaskDetails().contains(userInput.getSearchTerm())) {
+				if (t.getTaskLocation() != null && t.getTaskLocation().toLowerCase().contains(searchTerm)) {
 					searchResults.add(t);
 				}
+				
+				else if (t.getTaskDetails() != null && t.getTaskDetails().toLowerCase().contains(searchTerm)) {
+					searchResults.add(t);
+				}
+				
+				else if (t.getTaskLocation() != null && t.getTaskLocation().toLowerCase().contains(searchTerm)) {
+					searchResults.add(t);
+				}
+				
+				else if (t.getTaskStartTime() != null && t.getTaskStartTime().getTimeString().contains(searchTerm)) {
+					searchResults.add(t);
+				}
+				
+				else if (t.getTaskEndTime() != null && t.getTaskEndTime().getTimeString().contains(searchTerm)) {
+					searchResults.add(t);
+				}
+				
+				else if (t.getTaskStartDate() != null && t.getTaskStartDate().getDateString().contains(searchTerm)) {
+					searchResults.add(t);
+				}
+				
+				else if (t.getTaskEndDate() != null && t.getTaskEndDate().getDateString().contains(searchTerm)) {
+					searchResults.add(t);
+				}			
 			}
+			
 			MainLogic.setDisplayList(searchResults);
 		}
 	}

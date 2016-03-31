@@ -20,12 +20,13 @@ public class MainLogic {
 	private static Storage storage;
 	private static ArrayList<Task> taskList;
 	private static ArrayList<Task> displayList;
-	private static ArrayList<String> inputCommand;
 	private static Command command;
 	private static UserInput userInput;
 	private static MainLogic mainLogic;
 	private static int sortType;
 	private static int numTasks;
+	private static Stack<Command> commandList;
+	private static Stack<Command> undoedCommandList;
 	
 	static Logger logger = Logger.getLogger("MainLogic");
 
@@ -37,6 +38,8 @@ public class MainLogic {
 		setDisplayList(taskList);
 		sortType = 6;
 		numTasks = 0;
+		commandList = new Stack<Command>();
+		undoedCommandList = new Stack<Command>();
 	}
 	
 	public static void run(UserInput input) {
@@ -55,17 +58,20 @@ public class MainLogic {
 		switch (getCommand()) {
 		case "add": {
 			command = new Add(userInput);
-			//history.updateHistory(userInput.getRawInput(), storage.getTaskList());
+			commandList.push(command);
+			clearUndoStack();
 			break;
 		}
 		case "delete": {
 			command = new Delete(userInput);
-			//history.updateHistory(userInput.getRawInput(), storage.getTaskList());
+			commandList.push(command);
+			clearUndoStack();
 			break;
 		}
 		case "edit": {
 			command = new Edit(userInput);
-			//history.updateHistory(userInput.getRawInput(), storage.getTaskList());
+			commandList.push(command);
+			clearUndoStack();
 			break;
 		}
 
@@ -88,7 +94,8 @@ public class MainLogic {
 		
 		case "recurring": {
 			command = new Add(userInput);
-			//history.updateHistory(userInput.getRawInput(), storage.getTaskList());
+			commandList.push(command);
+			clearUndoStack();
 			break;
 		}
 		
@@ -142,14 +149,23 @@ public class MainLogic {
 	}
 
 	private static void undoCommand() {
-		/*displayList = history.updateHistoryUndo();
-		storage.setTaskList(displayList);
-		storage.saveFile();*/
+		if (!commandList.empty()) {
+			Command command = commandList.pop();
+			undoedCommandList.push(command);
+			command.undo();
+		}
+	}
+	
+	private static void clearUndoStack() {
+		undoedCommandList = new Stack<Command>();
 	}
 	
 	private static void redoCommand() {
-		/*userInput.setRawInput(history.updateHistoryRedo());
-		MainLogic.run(userInput);*/
+		if (!undoedCommandList.empty()) {
+			Command command = undoedCommandList.pop();
+			commandList.push(command);
+			command.redo();
+		}
 	}
 
 	private static void createMainLogic() {
