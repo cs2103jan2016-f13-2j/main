@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import main.resources.Date;
 import main.resources.Task;
+import main.resources.Time;
 import main.resources.UserInput;
 import main.storage.Storage;
 
@@ -26,31 +28,44 @@ public class Edit implements Command {
 		logger.log(Level.INFO, "Command EDIT");
 		taskList = storage.getTaskList();
 		Task taskToEdit = taskList.get(userInput.getEditNumber()[0]-1);
+		
 		switch (userInput.getEditNumber()[1]) {
 		case 1: {	//task detail
+			String originalData = taskToEdit.getTaskDetails();
 			taskToEdit.setTaskDetails(userInput.getDetails());
+			userInput.setDetails(originalData);
 			break;
 		}
-		case 6: {	//task date
+		case 2: {	//task date
+			Date originalData = taskToEdit.getTaskStartDate();
 			taskToEdit.setTaskStartDate(userInput.getDate());
 			if (taskToEdit.getTaskType() == 2) {	//floating
 				taskToEdit.setTaskType(4);	//deadline
 			}
+			userInput.setDate(originalData);
 			break;
 		}
-		case 7: {	//task time
+		case 3: {	//task time
+			Time originalData = taskToEdit.getTaskStartTime();
 			taskToEdit.setTaskStartTime(userInput.getTime());
 			if (taskToEdit.getTaskType() == 2) {	//floating
 				taskToEdit.setTaskType(4);	//deadline
 			}
+			userInput.setTime(originalData);
 			break;
 		}
-		case 8: {	//task location
+		case 6: {	//task location
+			String originalData = taskToEdit.getTaskLocation();
+			System.out.println(originalData);
 			taskToEdit.setTaskLocation(userInput.getLocation());
+			System.out.println(userInput.getLocation());
+			userInput.setLocation(originalData);
 			break;
 		}
-		case 9: {
+		case 7: {	//task priority
+			int originalData = taskToEdit.getPriority();
 			taskToEdit.setPriority(userInput.getPriority());
+			userInput.setPriority(originalData);
 			break;
 		}
 		default: {
@@ -58,19 +73,92 @@ public class Edit implements Command {
 		}
 		}
 		
+		userInput.setTask(taskToEdit);
+	
 		storage.saveFile();
 		
 	}
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-		
+		taskList = storage.getTaskList();
+		for (Task t : taskList) {
+			if (t.equals(userInput.getTask())) {
+				switch (userInput.getEditNumber()[1]) {
+				case 1: {	//task detail
+					String originalData = t.getTaskDetails();					
+					t.setTaskDetails(userInput.getDetails());
+					userInput.setDetails(originalData);
+					break;
+				}
+				case 2: {	//task date
+					Date originalData = t.getTaskStartDate();
+					t.setTaskStartDate(userInput.getDate());
+					userInput.setDate(originalData);
+					break;
+				}
+				case 3: {	//task time
+					Time originalData = t.getTaskStartTime();
+					t.setTaskStartTime(userInput.getTime());
+					userInput.setTime(originalData);
+					break;
+				}
+				case 6: {	//task location
+					String originalData = t.getTaskLocation();
+					t.setTaskLocation(userInput.getLocation());
+					userInput.setLocation(originalData);
+					break;
+				}
+				case 7: {	//task priority
+					int originalData = t.getPriority();
+					t.setPriority(userInput.getPriority());
+					userInput.setPriority(originalData);
+					break;
+				}
+			}		
+		}
 	}
+}
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
+		taskList = storage.getTaskList();
+		for (Task t : taskList) {
+			if (t.equals(userInput.getTask())) {
+				switch (userInput.getEditNumber()[1]) {
+				case 1: {	//task detail
+					String originalData = t.getTaskDetails();					
+					t.setTaskDetails(userInput.getDetails());
+					userInput.setDetails(originalData);
+					break;
+				}
+				case 2: {	//task date
+					Date originalData = t.getTaskStartDate();
+					t.setTaskStartDate(userInput.getDate());
+					userInput.setDate(originalData);
+					break;
+				}
+				case 3: {	//task time
+					Time originalData = t.getTaskStartTime();
+					t.setTaskStartTime(userInput.getTime());
+					userInput.setTime(originalData);
+					break;
+				}
+				case 6: {	//task location
+					String originalData = t.getTaskLocation();
+					t.setTaskLocation(userInput.getLocation());
+					userInput.setLocation(originalData);
+					break;
+				}
+				case 7: {	//task priority
+					int originalData = t.getPriority();
+					t.setPriority(userInput.getPriority());
+					userInput.setPriority(originalData);
+					break;
+				}
+			}		
+		}
+	}
 		
 	}
 }

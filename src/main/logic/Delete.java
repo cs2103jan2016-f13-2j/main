@@ -31,6 +31,7 @@ public class Delete implements Command {
 			if (task.getTaskType() == userInput.getDeleteType()) {
 				count++;
 				 if(count == userInput.getDeleteNumber()) {
+					 userInput.setTask(taskList.get(i));
 					 taskList.remove(i);
 				 }
 			}
@@ -40,13 +41,15 @@ public class Delete implements Command {
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-		
+		taskList = storage.getTaskList();
+		taskList.add(userInput.getTask());
+		storage.saveFile();
 	}
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-		
+		taskList = storage.getTaskList();
+		taskList.remove(userInput.getTask());
+		storage.saveFile();
 	}
 }

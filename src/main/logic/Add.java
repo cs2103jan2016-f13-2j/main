@@ -31,14 +31,17 @@ public class Add implements Command {
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
+		taskList = storage.getTaskList();
+		taskList.remove(userInput.getTask());
+		storage.saveFile();
 		
 	}
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-		
+		taskList = storage.getTaskList();
+		taskList.add(userInput.getTask());
+		storage.saveFile();		
 	}
 
 }
