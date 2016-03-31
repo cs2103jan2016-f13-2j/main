@@ -169,17 +169,17 @@ public class TaskOverviewController {
 		            } else {
 		                setText(item);
 		                if (item.equals("1")) {
-		                	setText("HIGH");
+		                	setText("H");
 		                    setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: red");
 		                } else if (item.equals("2")) {
-		                	setText("MED");
-		                    setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: green");
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
 		                } else {
-		                	setText("LOW");
+		                	setText("L");
 		                	setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: yellow");
+		                    setStyle("");
 		                }
 		            }
 		        }
@@ -198,17 +198,17 @@ public class TaskOverviewController {
 		            } else {
 		                setText(item);
 		                if (item.equals("1")) {
-		                	setText("HIGH");
+		                	setText("H");
 		                    setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: red");
 		                } else if (item.equals("2")) {
-		                	setText("MED");
-		                    setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: green");
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
 		                } else {
-		                	setText("LOW");
+		                	setText("L");
 		                	setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: yellow");
+		                    setStyle("");
 		                }
 		            }
 		        }
@@ -227,17 +227,17 @@ public class TaskOverviewController {
 		            } else {
 		                setText(item);
 		                if (item.equals("1")) {
-		                	setText("HIGH");
-		                    setTextFill(Color.WHITE);
+		                	setText("H");
+		                	setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: red");
 		                } else if (item.equals("2")) {
-		                	setText("MED");
-		                    setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: green");
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
 		                } else {
-		                	setText("LOW");
+		                	setText("L");
 		                	setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: yellow");
+		                    setStyle("");
 		                }
 		            }
 		        }
