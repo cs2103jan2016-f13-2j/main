@@ -31,6 +31,7 @@ public class MainLogic {
 	private static Stack<Command> undoedCommandList;
 	private static Date currentDate;
 	private static Time currentTime;
+	private static boolean success;
 	
 	static Logger logger = Logger.getLogger("MainLogic");
 
@@ -50,12 +51,23 @@ public class MainLogic {
 	
 	public static void run(UserInput input) {
 		logger.log(Level.INFO, "MainLogic START");
-		initializeMainLogic();
-		setUserInput(input);
-		runParser();
-		createCommandObject();
-		executeCommand();
-		updateTaskList();
+		success = true;
+		try {
+			initializeMainLogic();
+			System.out.println("1");
+			setUserInput(input);
+			System.out.println("2");
+			runParser();
+			System.out.println("3");
+			createCommandObject();
+			System.out.println("4");
+			executeCommand();
+			System.out.println("5");
+			updateTaskList();
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "MainLogic ERROR");
+			success = false;
+		}
 		logger.log(Level.INFO, "MainLogic END");
 	}
 	
@@ -188,16 +200,6 @@ public class MainLogic {
 		int day = cal.get(Calendar.DAY_OF_MONTH);
 		currentDate = new Date(day, month, year);
 	}
-	
-	private static Time getCurrentTime() {
-		setCurrentTime();
-		return currentTime;
-	}
-	
-	private static Date getCurrentDate() {
-		setCurrentDate();
-		return currentDate;
-	}
 
 	private static void createMainLogic() {
 		mainLogic = new MainLogic();
@@ -302,6 +304,20 @@ public class MainLogic {
 		newList.add(deadlineList);
 		
 		return newList;
+	}
+	
+	public static Time getCurrentTime() {
+		setCurrentTime();
+		return currentTime;
+	}
+	
+	public static Date getCurrentDate() {
+		setCurrentDate();
+		return currentDate;
+	}
+	
+	public static boolean isSuccessful() {
+		return success;
 	}
 	
 	public static void setDisplayList(ArrayList<Task> newList) {
