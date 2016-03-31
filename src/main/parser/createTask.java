@@ -224,7 +224,7 @@ public class createTask {
 			}
 		}
 		
-		
+		task.setRecurring(true);
 
 		return task;
 	}

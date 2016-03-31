@@ -188,6 +188,16 @@ public class MainLogic {
 		int day = cal.get(Calendar.DAY_OF_MONTH);
 		currentDate = new Date(day, month, year);
 	}
+	
+	private static Time getCurrentTime() {
+		setCurrentTime();
+		return currentTime;
+	}
+	
+	private static Date getCurrentDate() {
+		setCurrentDate();
+		return currentDate;
+	}
 
 	private static void createMainLogic() {
 		mainLogic = new MainLogic();
@@ -200,23 +210,75 @@ public class MainLogic {
 		ArrayList<ArrayList<Task>> newList = new ArrayList<ArrayList<Task>>();
 		ArrayList<Task> eventList = new ArrayList<Task>();
 		ArrayList<Task> floatList = new ArrayList<Task>();
-		ArrayList<Task> recurringList = new ArrayList<Task>();
 		ArrayList<Task> deadlineList = new ArrayList<Task>();
-		
-		setCurrentTime();
-		setCurrentDate();
-		System.out.println("Date "+currentDate.getDateString()+". Time "+currentTime.getTimeString());
 		
 		for (int i=0; i<numTasks; i++) {
 			Task task = displayList.get(i);
+			setCurrentTime();
+			setCurrentDate();
 			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(currentDate) < 0) {
-				task.setComplete(true);
-				continue;
+				if (task.isRecurring() && task.getRecurTime() > 0) {
+					task.setRecurTime(task.getRecurTime() - 1);
+					Date date = task.getTaskStartDate();
+					switch (task.getRecurFrequency()) {
+					case 1: {	//daily
+						date.setDay(date.getDay() + 1);
+						break;
+					}
+					case 2: {	//weekly
+						date.setDay(date.getDay() + 7);
+						break;
+					}
+					case 3: {	//monthly
+						date.setMonth(date.getMonth() + 1);
+						break;
+					}
+					case 4: {	//yearly
+						date.setYear(date.getYear() + 1);
+						break;
+					}
+					}
+					task.setTaskStartDate(date);
+				}
+				
+				else {
+					task.setExpired(true);
+				}
 			}
 			
-			if (task.getTaskStartTime() != null && task.getTaskStartTime().compareTo(currentTime) < 0) {
-				task.setComplete(true);
-				continue;
+			else if (task.getTaskStartDate() != null &&
+						task.getTaskStartDate().compareTo(currentDate) == 0 && 
+							task.getTaskStartTime() != null && 
+								task.getTaskStartTime().compareTo(currentTime) < 0) {
+				if (task.isRecurring()) {
+					if (task.isRecurring() && task.getRecurTime() > 0) {
+						task.setRecurTime(task.getRecurTime() - 1);
+						Date date = task.getTaskStartDate();
+						switch (task.getRecurFrequency()) {
+						case 1: {	//daily
+							date.setDay(date.getDay() + 1);
+							break;
+						}
+						case 2: {	//weekly
+							date.setDay(date.getDay() + 7);
+							break;
+						}
+						case 3: {	//monthly
+							date.setMonth(date.getMonth() + 1);
+							break;
+						}
+						case 4: {	//yearly
+							date.setYear(date.getYear() + 1);
+							break;
+						}
+						}
+						task.setTaskStartDate(date);
+					}
+				}
+				
+				else {
+					task.setExpired(true);
+				}
 			}
 			
 			switch (task.getTaskType()) {
@@ -228,33 +290,15 @@ public class MainLogic {
 				floatList.add(task);
 				break;
 			}
-			case 3: {	//recurring
-				if (task.getTaskEndDate()== null && 
-						task.getTaskStartDate()== null) {	//floating
-					task.setTaskType(2);
-					floatList.add(task);
-				}
-				
-				else if (task.getTaskStartDate() == null) {	//deadline
-					task.setTaskType(4);
-					deadlineList.add(task);
-				}
-				
-				else {	//event
-					task.setTaskType(1);
-					eventList.add(task);
-				}
-				break;
-			}
 			case 4: {	//deadline
 				deadlineList.add(task);
 				break;
 			}
 			}
 		}
+		
 		newList.add(eventList);
 		newList.add(floatList);
-		newList.add(recurringList);
 		newList.add(deadlineList);
 		
 		return newList;
