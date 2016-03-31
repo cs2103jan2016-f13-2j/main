@@ -12,7 +12,7 @@ public class UserInput {
 	
 	//Delete
 	int deleteNumber;
-	int deleteType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
+	int taskType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
 	
 	//Edit
 	int[] editNumber;
@@ -44,13 +44,13 @@ public class UserInput {
 		searchTerm = null;
 		taskList = new ArrayList<Task>();
 		priority = 0;
-		deleteType = -1;
+		taskType = -1;
 	}
 	
 	
 	//Getters
-	public int getDeleteType(){
-		return deleteType;
+	public int getTaskType(){
+		return taskType;
 	}
 	
 	public String getRawInput() {
@@ -114,8 +114,8 @@ public class UserInput {
 		this.rawInput = input;
 	}
 	
-	public void setDeleteType(int deleteType){
-		this.deleteType = deleteType;
+	public void setTaskType(int deleteType){
+		this.taskType = deleteType;
 	}
 	
 	public void setCommand(String command) {

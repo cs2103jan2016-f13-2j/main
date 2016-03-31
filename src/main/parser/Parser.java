@@ -5,6 +5,7 @@ package main.parser;
 import java.util.ArrayList;
 
 import main.resources.Date;
+import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.Time;
 import main.resources.UserInput;
@@ -18,6 +19,8 @@ public class Parser {
 	private static final String TO = "to";
 	private static final String RECURRING = "recurring";
 	
+	private static Feedback feedback;
+	
 	
 	public final static ArrayList<String> retrieveCommand(String inputFromLogic){
 		
@@ -30,6 +33,8 @@ public class Parser {
 
 	
 	public final static UserInput resetUserInput (UserInput userInput){
+		feedback = Feedback.getInstance();
+		
 		ArrayList<String> inputCommand = retrieveCommand(userInput.getRawInput());
 		switch (Shortcuts.shortcuts(inputCommand.get(0).toLowerCase())) {
 		case "recurring":
@@ -49,7 +54,7 @@ public class Parser {
 			userInput.setCommand("delete");
 			String details = inputCommand.get(1);
 			userInput.setDeleteNumber(deleteNumber(details));
-			userInput.setDeleteType(deleteType(details));
+			userInput.setTaskType(deleteType(details));
 			break;
 		
 		case "edit":
@@ -192,6 +197,8 @@ public class Parser {
 			default:
 				break;
 		}
+		feedback.setSortString(command);
+		
 		return n;
 	} 
 	

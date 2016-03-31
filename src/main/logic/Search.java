@@ -4,20 +4,26 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.UserInput;
 import main.storage.Storage;
 
 public class Search implements Command {
 	
-	UserInput userInput;
-	Storage storage;
-	ArrayList<Task> taskList;
-	static Logger logger = Logger.getLogger("Search");
+	private static final String MSG_SUCCESS = "Searching for text containing \"%1$s\".";
+	private static final String MSG_FAIL_NO_SEARCH_TERM = "Error: No search term entered.";
+	
+	private UserInput userInput;
+	private static Storage storage;
+	private static Feedback feedback;
+	private ArrayList<Task> taskList;
+	private static Logger logger = Logger.getLogger("Search");
 
 	public Search(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
+		feedback = Feedback.getInstance();
 		taskList = new ArrayList<Task>();
 	}
 
@@ -26,6 +32,7 @@ public class Search implements Command {
 		logger.log(Level.INFO, "Command SEARCH");
 		if (userInput.getSearchTerm().length() == 0) {
 			userInput.setTaskList(storage.getTaskList());
+			feedback.setMessage(MSG_FAIL_NO_SEARCH_TERM);
 		}
 		
 		else {
@@ -62,6 +69,7 @@ public class Search implements Command {
 			}
 			
 			MainLogic.setDisplayList(searchResults);
+			feedback.setMessage(String.format(MSG_SUCCESS, userInput.getSearchTerm()));
 		}
 	}
 

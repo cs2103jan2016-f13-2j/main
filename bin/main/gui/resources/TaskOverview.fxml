@@ -13,7 +13,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TextField fx:id="commandText" layoutX="26.0" layoutY="559.0" onAction="#onEnter" prefHeight="25.0" prefWidth="701.0" AnchorPane.topAnchor="559.0" />
+                  <TextField fx:id="commandText" layoutX="26.0" layoutY="559.0" onAction="#onEnter" prefHeight="25.0" prefWidth="867.0" AnchorPane.topAnchor="559.0" />
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="417.0">
                      <children>
                         <TableView fx:id="taskTable" layoutX="14.0" layoutY="21.0" prefHeight="233.0" prefWidth="882.0" AnchorPane.bottomAnchor="-54.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="-479.0" AnchorPane.topAnchor="21.0">
