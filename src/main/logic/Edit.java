@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import main.resources.Date;
+import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.Time;
 import main.resources.UserInput;
@@ -12,14 +13,20 @@ import main.storage.Storage;
 
 public class Edit implements Command {
 	
-	UserInput userInput;
-	Storage storage;
-	ArrayList<Task> taskList;
-	static Logger logger = Logger.getLogger("Edit");
+	private static final String MSG_SUCCESS = "Editted task successfully.";
+	private static final String MSG_FAIL_INDEX_OOB = "Error: Index out of bounds. Unable to edit.";
+	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after edit command.";
+	
+	private UserInput userInput;
+	private static Storage storage;
+	private static Feedback feedback;
+	private ArrayList<Task> taskList;
+	private static Logger logger = Logger.getLogger("Edit");
 
 	public Edit(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
+		feedback = Feedback.getInstance();
 		taskList = new ArrayList<Task>();
 	}
 
@@ -30,13 +37,13 @@ public class Edit implements Command {
 		Task taskToEdit = findTask();
 		for (int i=1; i<userInput.getEditNumber().size(); i++) {
 			switch (userInput.getEditNumber().get(i)) {
-			case 1: {	//task detail
+			case 1:	//task detail
 				String originalData = taskToEdit.getTaskDetails();
 				taskToEdit.setTaskDetails(userInput.getDetails());
 				userInput.setDetails(originalData);
 				break;
-			}
-			case 2: {	//task date
+			
+			case 2: //task date
 				Date originalData = taskToEdit.getTaskStartDate();
 				taskToEdit.setTaskStartDate(userInput.getStartDate());
 				if (taskToEdit.getTaskType() == 2) {	//floating
@@ -44,8 +51,8 @@ public class Edit implements Command {
 				}
 				userInput.setStartDate(originalData);
 				break;
-			}
-			case 3: {	//task time
+			
+			case 3:	//task time
 				Time originalData = taskToEdit.getTaskStartTime();
 				taskToEdit.setTaskStartTime(userInput.getStartTime());
 				if (taskToEdit.getTaskType() == 2) {	//floating
@@ -53,26 +60,34 @@ public class Edit implements Command {
 				}
 				userInput.setStartTime(originalData);
 				break;
-			}
-			case 6: {	//task location
+			
+			case 6: //task location
 				String originalData = taskToEdit.getTaskLocation();
 				System.out.println(originalData);
 				taskToEdit.setTaskLocation(userInput.getLocation());
 				System.out.println(userInput.getLocation());
 				userInput.setLocation(originalData);
 				break;
-			}
-			case 7: {	//task priority
+			
+			case 7:	//task priority
 				int originalData = taskToEdit.getPriority();
 				taskToEdit.setPriority(userInput.getPriority());
 				userInput.setPriority(originalData);
 				break;
-			}
+				
+			default:
+				feedback.setMessage(MSG_FAIL_INDEX_OOB);
+				return;
 			}
 			
 			userInput.setTask(taskToEdit);
 			
-			storage.saveFile();
+			if (!storage.saveFile()) {
+				feedback.setMessage(MSG_FAIL_FILE_SAVE);
+			}
+			else {
+				feedback.setMessage(String.format(MSG_SUCCESS);
+			}
 		}
 	}
 
