@@ -90,6 +90,10 @@ public class Parser {
 			userInput.setCommand("redo");
 			break;
 		}
+		default: {
+			userInput.setCommand(userInput.getRawInput());
+			break;
+		}
 		}
 		return userInput;
 

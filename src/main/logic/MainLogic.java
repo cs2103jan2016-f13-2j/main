@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import main.storage.Storage;
 import main.parser.Parser;
 import main.parser.Shortcuts;
-import main.resources.History;
 import main.resources.Task;
 import main.resources.UserInput;
 
@@ -25,7 +24,6 @@ public class MainLogic {
 	private static Command command;
 	private static UserInput userInput;
 	private static MainLogic mainLogic;
-	private static History history;
 	private static int sortType;
 	private static int numTasks;
 	
@@ -35,7 +33,6 @@ public class MainLogic {
 	public MainLogic() {
 		//Initialize variables
 		storage = Storage.getInstance();
-		history = History.getHistory();
 		updateTaskList();
 		setDisplayList(taskList);
 		sortType = 6;
@@ -111,7 +108,8 @@ public class MainLogic {
 		}
 		
 		default: {
-			logger.log(Level.WARNING, "Command not found");
+			userInput.setSearchTerm(userInput.getCommand());
+			command = new Search(userInput);
 			break;
 		}
 		}
