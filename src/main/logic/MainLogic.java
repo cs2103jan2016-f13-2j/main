@@ -8,6 +8,8 @@ import main.storage.Storage;
 import main.parser.Parser;
 import main.parser.Shortcuts;
 import main.resources.Task;
+import main.resources.Time;
+import main.resources.Date;
 import main.resources.UserInput;
 
 
@@ -27,6 +29,8 @@ public class MainLogic {
 	private static int numTasks;
 	private static Stack<Command> commandList;
 	private static Stack<Command> undoedCommandList;
+	private static Date currentDate;
+	private static Time currentTime;
 	
 	static Logger logger = Logger.getLogger("MainLogic");
 
@@ -40,6 +44,8 @@ public class MainLogic {
 		numTasks = 0;
 		commandList = new Stack<Command>();
 		undoedCommandList = new Stack<Command>();
+		currentDate = null;
+		currentTime = null;
 	}
 	
 	public static void run(UserInput input) {
@@ -167,6 +173,21 @@ public class MainLogic {
 			command.redo();
 		}
 	}
+	
+	private static void setCurrentTime() {
+		Calendar cal = Calendar.getInstance();
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int minute = cal.get(Calendar.MINUTE);
+		currentTime = new Time(hour, minute);   
+	}
+	
+	private static void setCurrentDate() {
+		Calendar cal = Calendar.getInstance();
+		int year = cal.get(Calendar.YEAR);
+		int month = cal.get(Calendar.MONTH) + 1;
+		int day = cal.get(Calendar.DAY_OF_MONTH);
+		currentDate = new Date(day, month, year);
+	}
 
 	private static void createMainLogic() {
 		mainLogic = new MainLogic();
@@ -182,8 +203,22 @@ public class MainLogic {
 		ArrayList<Task> recurringList = new ArrayList<Task>();
 		ArrayList<Task> deadlineList = new ArrayList<Task>();
 		
+		setCurrentTime();
+		setCurrentDate();
+		System.out.println("Date "+currentDate.getDateString()+". Time "+currentTime.getTimeString());
+		
 		for (int i=0; i<numTasks; i++) {
 			Task task = displayList.get(i);
+			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(currentDate) < 0) {
+				task.setComplete(true);
+				continue;
+			}
+			
+			if (task.getTaskStartTime() != null && task.getTaskStartTime().compareTo(currentTime) < 0) {
+				task.setComplete(true);
+				continue;
+			}
+			
 			switch (task.getTaskType()) {
 			case 1: {	//event
 				eventList.add(task);

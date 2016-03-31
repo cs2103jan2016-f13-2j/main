@@ -30,9 +30,10 @@ public class Task implements Serializable {
 	   private int recurTime;
 	   private int recurFrequency; //1-daily 2-weekly 3-monthly 4-yearly
 	   private boolean complete;
-	    public Task() {
+	   
+	   public Task() {
 	        this(null, null, 3);
-	    }
+	   }
 	   
 	    /**
 	     * Constructor with some initial data.
@@ -169,7 +170,6 @@ public class Task implements Serializable {
 	    public void setComplete(boolean b){
 	    	this.complete = b;
 	    }
-	    
 	    
 	    public StringProperty taskNameProperty() {
 	        return convertType(taskName);
