@@ -71,6 +71,8 @@ public class TaskOverviewController {
 	private TableColumn<Task, String> floatingDetailsColumn;
 	
 	@FXML private Label instantFeedback;
+	
+	@FXML private Label todayDate;
 
 	//@FXML
 	//private Label taskNameLabel;
