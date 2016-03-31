@@ -14,11 +14,11 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="586.0" prefWidth="865.0" styleClass="background">
                <children>
-                  <Label layoutX="3.0" layoutY="4.0" text="Deadlines" />
+                  <Label layoutY="-1.0" text="Deadlines" />
                   <TextField fx:id="commandText" layoutX="22.0" layoutY="551.0" onAction="#onEnter" prefHeight="37.0" prefWidth="719.0" AnchorPane.topAnchor="551.0" />
                   <Label layoutY="261.0" text="Events" />
                   <Label fx:id="instantFeedback" layoutX="26.0" layoutY="526.0" prefHeight="25.0" prefWidth="712.0" textAlignment="CENTER" />
-                  <TableView fx:id="eventTable" layoutX="5.0" layoutY="284.0" prefHeight="240.0" prefWidth="890.0" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="284.0">
+                  <TableView fx:id="eventTable" layoutX="5.0" layoutY="284.0" prefHeight="230.0" prefWidth="890.0" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="284.0">
                      <columns>
                         <TableColumn fx:id="eventNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="eventPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
@@ -31,8 +31,8 @@
                      </columns>
                   </TableView>
                   <Ellipse fill="#424242" layoutX="821.0" layoutY="562.0" radiusX="72.0" radiusY="28.0" stroke="#a1a1a1" strokeType="INSIDE" />
-                  <Label fx:id="todayDate" layoutX="762.0" layoutY="552.0" prefHeight="21.0" prefWidth="118.0" text="Date Label" />
-                  <TableView fx:id="taskTable" layoutY="25.0" prefHeight="234.0" prefWidth="890.0" AnchorPane.bottomAnchor="340.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+                  <Label fx:id="todayDate" layoutX="762.0" layoutY="552.0" prefHeight="21.0" prefWidth="118.0" styleClass="label-date" text="Date Label" />
+                  <TableView fx:id="taskTable" layoutY="29.0" prefHeight="230.0" prefWidth="890.0" AnchorPane.bottomAnchor="340.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
                     <columns>
                       <TableColumn fx:id="taskNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="taskPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
@@ -46,14 +46,14 @@
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
                <children>
-                  <TableView fx:id="floatingTable" layoutX="-5.0" layoutY="23.0" prefHeight="576.0" prefWidth="305.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="23.0">
+                  <TableView fx:id="floatingTable" layoutX="-5.0" layoutY="28.0" prefHeight="571.0" prefWidth="302.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
                      <columns>
                         <TableColumn fx:id="floatingNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="floatingPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
-                        <TableColumn fx:id="floatingDetailsColumn" minWidth="-1.0" prefWidth="211.0" resizable="false" sortable="false" text="Floating Task Details" />
+                        <TableColumn fx:id="floatingDetailsColumn" minWidth="-1.0" prefWidth="196.0" resizable="false" sortable="false" text="Floating Task Details" />
                      </columns>
                   </TableView>
-                  <Label text="Floating Tasks" />
+                  <Label layoutY="-1.0" text="Floating Tasks" />
                </children>
             </AnchorPane>
         </items>
