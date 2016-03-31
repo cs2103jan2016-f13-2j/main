@@ -256,8 +256,8 @@ public class TaskOverviewController {
 		for (int k = 0; k< totalList.size(); k++){ 
 			for (int j = 0; j < temp.size(); j++) {
 				for (int i=0; i < temp.get(j).size(); i++) {
-					if (k == 0 && j == 3) {
-						totalList.get(0).add(temp.get(3).get(i));
+					if (k == 0 && j == 2) {
+						totalList.get(0).add(temp.get(2).get(i));
 					} else if (k == 1 && j == 0) {
 						totalList.get(1).add(temp.get(0).get(i));
 					} else if (k == 2 && j == 1) {
