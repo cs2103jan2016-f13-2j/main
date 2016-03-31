@@ -26,13 +26,16 @@ public class Task implements Serializable {
 	   private Time taskEndTime;
 	   private String taskLocation;
 	   private int priority;
-	   private int taskType;	//1-Event, 2-Floating, 3-Recurring 4-Deadline
+	   private int taskType;	//1-Event, 2-Floating, 3-Deadline
 	   private int recurTime;
 	   private int recurFrequency; //1-daily 2-weekly 3-monthly 4-yearly
 	   private boolean complete;
-	    public Task() {
+	   private boolean expired;
+	   private boolean recurring;
+	   
+	   public Task() {
 	        this(null, null, 3);
-	    }
+	   }
 	   
 	    /**
 	     * Constructor with some initial data.
@@ -54,6 +57,8 @@ public class Task implements Serializable {
 	        recurTime = -1;
 	        recurFrequency = -1;
 	        complete = false;
+	        expired = false;
+	        recurring = false;
 	    }
 	    
 	    public int getRecurTime(){
@@ -105,8 +110,16 @@ public class Task implements Serializable {
 	    	return taskType;
 	    }
 	    
-	    public boolean getComplete(){
+	    public boolean isComplete(){
 	    	return complete;
+	    }
+	    
+	    public boolean isExpired() {
+	    	return expired;
+	    }
+	    
+	    public boolean isRecurring() {
+	    	return recurring;
 	    }
 	    
 	    
@@ -170,6 +183,14 @@ public class Task implements Serializable {
 	    	this.complete = b;
 	    }
 	    
+	    public void setExpired(boolean b) {
+	    	this.expired = b;
+	    }
+	    
+	    public void setRecurring(boolean b) {
+	    	this.recurring = b;
+	    }
+	    
 	    
 	    public StringProperty taskNameProperty() {
 	        return convertType(taskName);
@@ -177,6 +198,10 @@ public class Task implements Serializable {
 	    
 	    public StringProperty taskNumberProperty() {
 	        return convertType(taskNumber);
+	    }
+	    
+	    public StringProperty taskPNumberProperty() {
+	        return convertType(Integer.toString(priority));
 	    }
 	    
 	    public StringProperty taskDetailsProperty() {

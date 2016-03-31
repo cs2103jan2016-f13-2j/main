@@ -32,65 +32,65 @@ public class Parser {
 	public final static UserInput resetUserInput (UserInput userInput){
 		ArrayList<String> inputCommand = retrieveCommand(userInput.getRawInput());
 		switch (Shortcuts.shortcuts(inputCommand.get(0).toLowerCase())) {
-		case "recurring": {
-			Task newTask = createTask.createRecurring(RECURRING, inputCommand);
-			userInput.setTask(newTask);
+		case "recurring":
+			Task recurringTask = createTask.createRecurring(RECURRING, inputCommand);
+			userInput.setTask(recurringTask);
 			userInput.setCommand("recurring");
 			break;
-		}
-		case "add": {
-			Task newTask = createTaskForAdd(inputCommand);
-			userInput.setTask(newTask);
+		
+		case "add":
+			Task addTask = createTaskForAdd(inputCommand);
+			userInput.setTask(addTask);
 			userInput.setCommand("add");
 			break;
-		}
-		case "delete": {
+
+
+		
+		case "delete":
 			userInput.setCommand("delete");
 			String details = inputCommand.get(1);
 			userInput.setDeleteNumber(deleteNumber(details));
 			userInput.setTaskType(deleteType(details));
 			break;
-		}
-		case "edit": {
+			
+		case "edit": 
 			String type_Num = inputCommand.get(1);
 			userInput.setEdit(deleteNumber(type_Num));
 			userInput.setTaskType(deleteType(type_Num));
 			passEditPart(inputCommand,userInput);
-			break;
-		}
-		case "search": {
+			break;	
+			
+		case "search":
 			String term = inputCommand.get(1);
 			userInput.setCommand("search");
 			userInput.setSearchTerm(term);
 			break;
-		}
-		case "sort": {
+		
+		case "sort":
 			userInput.setCommand("sort");
 			int sortType = getNumber(inputCommand.get(1));
 			userInput.setSortType(sortType);
 			break;
-		}
-		case "home": {
+		
+		case "home":
 			userInput.setCommand("home");
 			break;
-		}
-		case "display": {
+		
+		case "display":
 			userInput.setCommand("display");
 			break;
 
-		}
-		case "undo": {
+		
+		case "undo":
 			userInput.setCommand("undo");
 			break;
-		}
-		case "redo": {
+			
+		case "redo":
 			userInput.setCommand("redo");
 			break;
-		}
-		default: {
+			
+		default:
 			userInput.setCommand(userInput.getRawInput());
-			break;
-		}
 		}
 		return userInput;
 
@@ -279,7 +279,6 @@ public class Parser {
 		
 	}
 
-	
 	//removes all unnecessary whitespaces to 1 whitespace
 	private final static String formatInputForValidParsing (String input) {
 		return input.replaceAll("\\s+", WHITESPACE).trim();

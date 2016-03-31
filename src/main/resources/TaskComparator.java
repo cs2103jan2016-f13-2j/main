@@ -43,6 +43,19 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getTaskStartDate().compareTo(task1.getTaskStartDate());
 			}
 			
+			else if (task0.getTaskStartTime() == null &&
+						task1.getTaskStartTime() == null) {
+				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
+			}
+			
+			else if (task0.getTaskStartTime() == null) {
+				return 1;
+			}
+			
+			else if (task1.getTaskStartTime() == null) {
+				return -1;
+			}
+			
 			else {
 				return task0.getTaskStartTime().compareTo(task1.getTaskStartTime());
 			}

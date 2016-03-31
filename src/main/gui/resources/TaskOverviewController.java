@@ -10,11 +10,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import main.gui.MainApp;
 import main.logic.MainLogic;
+import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.UserInput;
 
@@ -29,6 +32,8 @@ public class TaskOverviewController {
 	@FXML
 	private TableColumn<Task, String> taskNumberColumn;
 	@FXML
+	private TableColumn<Task, String> taskPNumberColumn;
+	@FXML
 	private TableColumn<Task, String> taskDetailsColumn;
 	@FXML
 	private TableColumn<Task, String> taskDateColumn;
@@ -41,6 +46,8 @@ public class TaskOverviewController {
 	private TableView<Task> eventTable;
 	@FXML
 	private TableColumn<Task, String> eventNumberColumn;
+	@FXML
+	private TableColumn<Task, String> eventPNumberColumn;
 	@FXML
 	private TableColumn<Task, String> eventDetailsColumn;
 	@FXML
@@ -58,6 +65,8 @@ public class TaskOverviewController {
 	private TableView<Task> floatingTable;
 	@FXML
 	private TableColumn<Task, String> floatingNumberColumn;
+	@FXML
+	private TableColumn<Task, String> floatingPNumberColumn;
 	@FXML
 	private TableColumn<Task, String> floatingDetailsColumn;
 	
@@ -80,6 +89,8 @@ public class TaskOverviewController {
 	
 	
 	private ArrayList<TableView<Task>> allTables = new ArrayList<TableView<Task>>();
+	
+	Feedback feedback;
 
 	// Reference to the main application.
 	private MainApp mainApp;
@@ -99,12 +110,14 @@ public class TaskOverviewController {
 	private void initialize() {
 		// Initialize the task table with the two columns.
 		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
+		taskPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
 		taskDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskStartDateProperty());
 		taskTimeColumn.setCellValueFactory(cellData -> cellData.getValue().taskStartTimeProperty());
 		taskLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
 		
 		eventNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
+		eventPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		eventDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
 		eventStartDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskStartDateProperty());
 		eventEndDateColumn.setCellValueFactory(cellData -> cellData.getValue().taskEndDateProperty());
@@ -113,6 +126,7 @@ public class TaskOverviewController {
 		eventLocationColumn.setCellValueFactory(cellData -> cellData.getValue().taskLocationProperty());
 		
 		floatingNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
+		floatingPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		floatingDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
 	}
 
@@ -131,15 +145,107 @@ public class TaskOverviewController {
 		allTables.add(eventTable);
 		allTables.add(floatingTable);
 		this.mainApp = mainApp;
-		instantFeedback.setText("Please enter a command");
+		
+		feedback = Feedback.getInstance();
+		instantFeedback.setText(feedback.getMessage());
+		
 		// Add observable list data to the table
 		getTaskListFromFile();
 		for (int i = 0; i < totalList.size(); i++) {
 		allTables.get(i).setItems(totalList.get(i));
 		}
+		
+	
+		
+		taskPNumberColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
 
+		            if (item == null || empty) {
+		            	 setText("-");
+		                 setStyle("");
+		            } else {
+		                setText(item);
+		                if (item.equals("1")) {
+		                	setText("H");
+		                    setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: red");
+		                } else if (item.equals("2")) {
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
+		                } else {
+		                	setText("L");
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		            }
+		        }
+		    };
+		});
+		
+		eventPNumberColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
 
+		            if (item == null || empty) {
+		            	 setText("-");
+		                 setStyle("");
+		            } else {
+		                setText(item);
+		                if (item.equals("1")) {
+		                	setText("H");
+		                    setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: red");
+		                } else if (item.equals("2")) {
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
+		                } else {
+		                	setText("L");
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		            }
+		        }
+		    };
+		});
+		
+		floatingPNumberColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		            	 setText("-");
+		                 setStyle("");
+		            } else {
+		                setText(item);
+		                if (item.equals("1")) {
+		                	setText("H");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: red");
+		                } else if (item.equals("2")) {
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
+		                } else {
+		                	setText("L");
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		            }
+		        }
+		    };
+		});
 	}
+	
+	
 //convert arraylist to observable list
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
@@ -150,8 +256,8 @@ public class TaskOverviewController {
 		for (int k = 0; k< totalList.size(); k++){ 
 			for (int j = 0; j < temp.size(); j++) {
 				for (int i=0; i < temp.get(j).size(); i++) {
-					if (k == 0 && j == 3) {
-						totalList.get(0).add(temp.get(3).get(i));
+					if (k == 0 && j == 2) {
+						totalList.get(0).add(temp.get(2).get(i));
 					} else if (k == 1 && j == 0) {
 						totalList.get(1).add(temp.get(0).get(i));
 					} else if (k == 2 && j == 1) {
@@ -199,6 +305,7 @@ public class TaskOverviewController {
 	 */
 	public void onEnter(){
 		String command = commandText.getText(); //string received from user.
+		/**
 		if(x) {
 		instantFeedback.setText("please enter a valid command");
 		x = false;
@@ -206,10 +313,12 @@ public class TaskOverviewController {
 			instantFeedback.setText("Error, : " +command+ " not entered");
 			x = true;
 		}
+		/**/
 		commandText.setText("");
 		//System.out.println(command);
 		UserInput userInput = new UserInput(command);
 		MainLogic.run(userInput);
+		
 		mainApp.showTaskOverview(); 
 	}    
 
