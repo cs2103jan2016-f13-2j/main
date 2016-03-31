@@ -43,24 +43,23 @@ public class Parser {
 			userInput.setTask(addTask);
 			userInput.setCommand("add");
 			break;
+
+
 		
 		case "delete":
-			//deleteTask();
 			userInput.setCommand("delete");
 			String details = inputCommand.get(1);
 			userInput.setDeleteNumber(deleteNumber(details));
-			userInput.setDeleteType(deleteType(details));
+			userInput.setTaskType(deleteType(details));
 			break;
-		
-		case "edit":
-			//editTask();
-			int editNumber = Integer.parseInt(inputCommand.get(1));
-			userInput.setCommand("edit");
-			int editPart = getNumber(inputCommand.get(2));
-			userInput.setEdit(editNumber, editPart);
-			passEditPart(inputCommand,userInput,editPart);
-			break;
-		
+			
+		case "edit": 
+			String type_Num = inputCommand.get(1);
+			userInput.setEdit(deleteNumber(type_Num));
+			userInput.setTaskType(deleteType(type_Num));
+			passEditPart(inputCommand,userInput);
+			break;	
+			
 		case "search":
 			String term = inputCommand.get(1);
 			userInput.setCommand("search");
@@ -162,32 +161,33 @@ public class Parser {
 	private static Integer getNumber(String command){
 		int n = -1;
 		switch(command){
-			case "-de"://detail
+			case "-de":
+			case "de"://detail
 				n = 1;
 				break;
-			case "-sd"://start date
+			case "-sd":
+			case "sd"://start date
 				n = 2;
 				break;
-			case "-st"://start time
+			case "-st":
+			case "st"://start time
 				n = 3;
 				break;
-			case "-ed"://end date
+			case "-ed":
+			case "ed"://end date
 				n = 4;
 				break;
-			case "-et"://end time
+			case "-et":
+			case "et"://end time
 				n = 5;
 				break;
-			case "-d"://date
+			case "-l":
+			case "l"://location
 				n = 6;
 				break;
-			case "-t"://time
+			case "-p":
+			case "p"://priority
 				n = 7;
-				break;
-			case "-l"://location
-				n = 8;
-				break;
-			case "-p"://priority
-				n = 9;
 				break;
 			default:
 				break;
@@ -217,50 +217,68 @@ public class Parser {
 		return Integer.parseInt(s.substring(1,2));
 	}
 	
-	private static void passEditPart(ArrayList<String> commands, UserInput userInput, Integer n){
-		switch(n){
-		case 1:
-			String details = createTask.getDetail(commands, 3, commands.size());
-			userInput.setDetails(details);
-			break;
-		case 2:
-			Date startDate = createTask.getDate(commands.get(3));
-			userInput.setDate(startDate);
-			break;
-		case 3:
-			Time startTime = createTask.getTime(commands.get(3));
-			userInput.setTime(startTime);
-			break;
-		case 4:
-			Date endDate = createTask.getDate(commands.get(3));
-			userInput.setDate(endDate);
-			break;
-		case 5:
-			Time endTime = createTask.getTime(commands.get(3));
-			userInput.setTime(endTime);
-			break;
-		case 6:
-			Date date = createTask.getDate(commands.get(3));
-			userInput.setDate(date);
-			break;
-		case 7:
-			Time time = createTask.getTime(commands.get(3));
-			userInput.setTime(time);
-			break;
-		case 8:
-			String location = createTask.getLocation(commands, 3, commands.size());
-			userInput.setLocation(location);
-			break;
-		case 9:
-			int priority = Integer.parseInt(commands.get(3));
-			userInput.setPriority(priority);
-			break;
-		default:
-			break;
+	private static int findNextCommand(ArrayList<String> commands, int n){
+		int k = -1;
+		for(int i=n; i<commands.size(); i++){
+			if(commands.get(i).contains("-")){
+				k = i;
+				return k;
+			} 
 		}
+		
+		return k;
+	}
+	
+	private static void passEditPart(ArrayList<String> commands, UserInput userInput){
+		int i = 2;
+		while(i<commands.size()){
+			int n = getNumber(commands.get(i));
+			userInput.setEdit(n);
+			int nextI = findNextCommand(commands,i);
+			int tempI;
+			if(nextI==-1){
+				tempI = i;
+				i = commands.size();
+			} else {
+				tempI = i;
+				i = nextI;
+			}
+			switch(n){
+			case 1:
+				String details = createTask.getDetail(commands, tempI, i);
+				userInput.setDetails(details);
+				break;
+			case 2:
+				Date startDate = createTask.getDate(commands.get(i));
+				userInput.setStartDate(startDate);
+				break;
+			case 3:
+				Time startTime = createTask.getTime(commands.get(i));
+				userInput.setStartTime(startTime);
+				break;
+			case 4:
+				Date endDate = createTask.getDate(commands.get(i));
+				userInput.setEndDate(endDate);
+				break;
+			case 5:
+				Time endTime = createTask.getTime(commands.get(i));
+				userInput.setEndTime(endTime);
+				break;
+			case 6:
+				String location = createTask.getLocation(commands, tempI, i);
+				userInput.setLocation(location);
+				break;
+			case 7:
+				int priority = Integer.parseInt(commands.get(i));
+				userInput.setPriority(priority);
+				break;
+			default:
+				break;
+			}
+		}
+		
 	}
 
-	
 	//removes all unnecessary whitespaces to 1 whitespace
 	private final static String formatInputForValidParsing (String input) {
 		return input.replaceAll("\\s+", WHITESPACE).trim();

@@ -44,7 +44,7 @@ public class Delete implements Command {
 		taskList = storage.getTaskList();
 		for (int i=0; i<taskList.size(); i++) {
 			Task task = taskList.get(i);
-			if (task.getTaskType() == userInput.getDeleteType()) {
+			if (task.getTaskType() == userInput.getTaskType()) {
 				count++;
 				 if(count == userInput.getDeleteNumber()) {
 					 userInput.setTask(taskList.get(i));
@@ -70,7 +70,7 @@ public class Delete implements Command {
 	private String getTaskType() {
 		String type;
 		
-		switch(userInput.getDeleteType()) {
+		switch(userInput.getTaskType()) {
 		case 1:
 			type = TYPE_EVENT;
 			break;
