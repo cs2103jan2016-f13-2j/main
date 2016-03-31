@@ -4,6 +4,7 @@ package main.parser;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import main.resources.Date;
 import main.resources.Task;
@@ -251,27 +252,47 @@ public class createTask {
 		Time time = new Time();
 		if(dateAndTime.contains(";")){  //has both time and date
 			String dAndT[] = dateAndTime.split(";");
-			if(dAndT[0].contains(":")){  //time first then date
-				String hAndM[] = dAndT[0].split(":");
-				time.setHour(Integer.parseInt(hAndM[0]));
-				time.setMinute(Integer.parseInt(hAndM[1]));
-			} else {   //date first then time
-				String hAndM[] = dAndT[1].split(":");
-				time.setHour(Integer.parseInt(hAndM[0]));
-				time.setMinute(Integer.parseInt(hAndM[1]));
+			if(dAndT[0].contains("/")){  //date first then time			
+				handleDiffTimeFormat(dAndT[1],time);
+			} else {   //time first then date
+				handleDiffTimeFormat(dAndT[0],time);
 			}
 		} else {  //has either time or date
-			if(dateAndTime.contains(":")){ // only has time
-				String hAndM[] = dateAndTime.split(":");
-				time.setHour(Integer.parseInt(hAndM[0]));
-				time.setMinute(Integer.parseInt(hAndM[1]));
-			} else {  //does not have time info
+			if(dateAndTime.contains("/")){ //does not have time info
 				time = null;
+			} else {  //only has time
+				handleDiffTimeFormat(dateAndTime,time);
 			}
 		}
 		return time;
 	}
 	
+	private static void handleDiffTimeFormat(String timeInfo,Time time){
+		if(timeInfo.contains(":")){
+			String hAndM[] = timeInfo.split(":");
+			time.setHour(Integer.parseInt(hAndM[0]));
+			time.setMinute(Integer.parseInt(hAndM[1]));
+		} else if(timeInfo.contains("m")){
+			if(timeInfo.contains("am")){
+				String h[] = timeInfo.split("am");
+				time.setHour(Integer.parseInt(h[0]));
+				time.setMinute(0);
+			} else {
+				String h[] = timeInfo.split("pm");
+				time.setHour(Integer.parseInt(h[0])+12);
+				time.setMinute(0);
+			}
+		} else {
+			if(timeInfo.length()==3){
+				time.setHour(Integer.parseInt(timeInfo.substring(0,1)));
+				time.setMinute(Integer.parseInt(timeInfo.substring(1,3)));
+			} else {
+				time.setHour(Integer.parseInt(timeInfo.substring(0,2)));
+				time.setMinute(Integer.parseInt(timeInfo.substring(2,4)));
+			}
+		}
+
+	}
 
 
 	public static Date getDate(String dateAndTime){
@@ -290,18 +311,37 @@ public class createTask {
 				date.setYear(Integer.parseInt(dmy[2]));
 			}
 		} else {  //has either time or date
-			if(dateAndTime.contains(":")){ //does not have time info
-				date = null;
-			} else {  //only have date info
+			if(dateAndTime.contains("/")){ //only have date info
 				String dmy[] = dateAndTime.split("/");
 				date.setDay(Integer.parseInt(dmy[0]));
 				date.setMonth(Integer.parseInt(dmy[1]));
 				date.setYear(Integer.parseInt(dmy[2]));
+			} else {  //does not have time info
+				Time t1 = getTime(dateAndTime);
+				Time t2 = new Time(Calendar.getInstance().get(Calendar.HOUR),Calendar.getInstance().get(Calendar.MINUTE));
+				if(compareTwoTime(t1,t2)){
+					date.setDay(Calendar.getInstance().get(Calendar.DATE));
+					date.setMonth(Calendar.getInstance().get(Calendar.MONTH)+1);
+					date.setYear(Calendar.getInstance().get(Calendar.YEAR));
+				} else {
+					date.setDay(Calendar.getInstance().get(Calendar.DATE)+1);
+					date.setMonth(Calendar.getInstance().get(Calendar.MONTH)+1);
+					date.setYear(Calendar.getInstance().get(Calendar.YEAR));
+				}
 			}
 		}
 		return date;
 	}
 	
+	private static boolean compareTwoTime(Time t1, Time t2){
+		int t1TotalM = t1.getHour()*60+t1.getMinute();
+		int t2TotalM = t2.getHour()*60+t2.getMinute();
+		if(t1TotalM>t2TotalM){
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public static int getPriority(String p){
 		return Integer.parseInt(p);
