@@ -179,6 +179,10 @@ public class Task implements Serializable {
 	        return convertType(taskNumber);
 	    }
 	    
+	    public StringProperty taskPNumberProperty() {
+	        return convertType(Integer.toString(priority));
+	    }
+	    
 	    public StringProperty taskDetailsProperty() {
 	        return convertType(taskDetails);
 	    }
