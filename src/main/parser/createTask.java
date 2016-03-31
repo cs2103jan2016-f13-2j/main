@@ -38,7 +38,7 @@ public class createTask {
 			task.setPriority(getPriority(priority));
 		} else {
 			indexOfP = length;
-			task.setPriority(5);
+			task.setPriority(3);
 		}
 
 		String detail = getDetail(info,1,indexOfBy);
@@ -80,7 +80,7 @@ public class createTask {
 			task.setPriority(getPriority(priority));
 		} else {
 			indexOfP = length;
-			task.setPriority(5);
+			task.setPriority(3);
 		}
 		
 		String detail = getDetail(info,1,indexOfFrom);
@@ -130,7 +130,7 @@ public class createTask {
 			task.setPriority(getPriority(priority));
 		} else {
 			indexOfP = length;
-			task.setPriority(5);
+			task.setPriority(3);
 		}
 		
 		if(info.contains(AT)){ //info has location
@@ -194,7 +194,7 @@ public class createTask {
 				task.setPriority(getPriority(priority));
 			} else {
 				indexOfP = indexOfFor;
-				task.setPriority(5);
+				task.setPriority(3);
 			}
 
 		} else {
@@ -216,7 +216,7 @@ public class createTask {
 				} else {
 					indexOfP = indexOfFor;
 					detail = getDetail(info,2,indexOfP);
-					task.setPriority(5);
+					task.setPriority(3);
 				}
 				task.setTaskName(taskName);
 				task.setTaskDetails(detail);
