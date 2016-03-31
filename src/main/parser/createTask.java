@@ -156,43 +156,76 @@ public class createTask {
 		int indexOfBy = info.indexOf(BY);
 		int indexOfFor = info.indexOf(FOR);
 		int indexOfP = 0;
-		
+		String detail;
+		String dateAndTime;
 		int fre = getFrequency(info.get(1));
 		task.setRecurFrequency(fre);
 		task.setRecurTime(Integer.parseInt(info.get(indexOfFor+1)));
 		
-		if(info.contains(PRIORITY)){
-			indexOfP = info.indexOf(PRIORITY);
-			String priority = info.get(indexOfP+1);
-			task.setPriority(getPriority(priority));
-		} else {
-			indexOfP = indexOfFor;
-			task.setPriority(5);
-		}
-
-		String detail = getDetail(info,2,indexOfBy);
-		String dateAndTime = info.get(indexOfBy+1);
-		if(info.contains(AT)){
-			int indexOfAt = info.indexOf(AT);
-			Time time = getTime(dateAndTime);
-			Date date = getDate(dateAndTime);
-			String location = getLocation(info,indexOfAt+1,indexOfP);
-			task.setTaskName(taskName);
-			task.setTaskDetails(detail);
-			task.setTaskStartDate(date);
-			task.setTaskStartTime(time);
-			task.setTaskLocation(location);
-			task.setTaskType(3);
+		
+		if(info.contains(BY)){
+			detail = getDetail(info,2,indexOfBy);
+			dateAndTime = info.get(indexOfBy+1);
+			if(info.contains(AT)){
+				int indexOfAt = info.indexOf(AT);
+				Time time = getTime(dateAndTime);
+				Date date = getDate(dateAndTime);
+				String location = getLocation(info,indexOfAt+1,indexOfP);
+				task.setTaskName(taskName);
+				task.setTaskDetails(detail);
+				task.setTaskStartDate(date);
+				task.setTaskStartTime(time);
+				task.setTaskLocation(location);
+				task.setTaskType(3);
+				
+			} else {
+				Time time = getTime(dateAndTime);
+				Date date = getDate(dateAndTime);
+				task.setTaskName(taskName);
+				task.setTaskDetails(detail);
+				task.setTaskStartDate(date);
+				task.setTaskStartTime(time);
+				task.setTaskType(3);
+			}
 			
+			if(info.contains(PRIORITY)){
+				indexOfP = info.indexOf(PRIORITY);
+				String priority = info.get(indexOfP+1);
+				task.setPriority(getPriority(priority));
+			} else {
+				indexOfP = indexOfFor;
+				task.setPriority(5);
+			}
+
 		} else {
-			Time time = getTime(dateAndTime);
-			Date date = getDate(dateAndTime);
-			task.setTaskName(taskName);
-			task.setTaskDetails(detail);
-			task.setTaskStartDate(date);
-			task.setTaskStartTime(time);
-			task.setTaskType(3);
+			if(info.contains(AT)){
+				int indexOfAt = info.indexOf(AT);
+				detail = getDetail(info,2,indexOfAt);
+				String location = getLocation(info,indexOfAt+1,indexOfP);
+				task.setTaskName(taskName);
+				task.setTaskDetails(detail);
+				task.setTaskLocation(location);
+				task.setTaskType(3);
+				
+			} else {
+				if(info.contains(PRIORITY)){
+					indexOfP = info.indexOf(PRIORITY);
+					detail = getDetail(info,2,indexOfP);
+					String priority = info.get(indexOfP+1);
+					task.setPriority(getPriority(priority));
+				} else {
+					indexOfP = indexOfFor;
+					detail = getDetail(info,2,indexOfP);
+					task.setPriority(5);
+				}
+				task.setTaskName(taskName);
+				task.setTaskDetails(detail);
+				task.setTaskType(3);
+			}
 		}
+		
+		
+
 		return task;
 	}
 	
