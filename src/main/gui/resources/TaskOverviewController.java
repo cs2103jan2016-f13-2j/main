@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import main.gui.MainApp;
 import main.logic.MainLogic;
+import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.UserInput;
 
@@ -80,6 +81,8 @@ public class TaskOverviewController {
 	
 	
 	private ArrayList<TableView<Task>> allTables = new ArrayList<TableView<Task>>();
+	
+	Feedback feedback;
 
 	// Reference to the main application.
 	private MainApp mainApp;
@@ -131,7 +134,10 @@ public class TaskOverviewController {
 		allTables.add(eventTable);
 		allTables.add(floatingTable);
 		this.mainApp = mainApp;
-		instantFeedback.setText("Please enter a command");
+		
+		feedback = Feedback.getInstance();
+		instantFeedback.setText(feedback.getMessage());
+		
 		// Add observable list data to the table
 		getTaskListFromFile();
 		for (int i = 0; i < totalList.size(); i++) {
@@ -199,6 +205,7 @@ public class TaskOverviewController {
 	 */
 	public void onEnter(){
 		String command = commandText.getText(); //string received from user.
+		/**
 		if(x) {
 		instantFeedback.setText("please enter a valid command");
 		x = false;
@@ -206,10 +213,12 @@ public class TaskOverviewController {
 			instantFeedback.setText("Error, : " +command+ " not entered");
 			x = true;
 		}
+		/**/
 		commandText.setText("");
 		//System.out.println(command);
 		UserInput userInput = new UserInput(command);
 		MainLogic.run(userInput);
+		
 		mainApp.showTaskOverview(); 
 	}    
 

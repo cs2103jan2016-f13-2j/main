@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import main.resources.Task;
 
 public class Storage {
+	private static Storage storage;
 	
 	Logger logger = Logger.getLogger("Storage");
 	//Key must be exactly 16 bytes long.
@@ -22,8 +23,7 @@ public class Storage {
 
 	private File taskFile;
 	private ArrayList<Task> taskList;
-	
-	private static Storage storage;
+
 	
 	/**
 	 * Initialises the File, and also the taskList with the contents of the File.
