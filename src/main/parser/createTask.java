@@ -38,7 +38,7 @@ public class createTask {
 			task.setPriority(getPriority(priority));
 		} else {
 			indexOfP = length;
-			task.setPriority(5);
+			task.setPriority(3);
 		}
 
 		String detail = getDetail(info,1,indexOfBy);
@@ -80,7 +80,7 @@ public class createTask {
 			task.setPriority(getPriority(priority));
 		} else {
 			indexOfP = length;
-			task.setPriority(5);
+			task.setPriority(3);
 		}
 		
 		String detail = getDetail(info,1,indexOfFrom);
@@ -130,7 +130,7 @@ public class createTask {
 			task.setPriority(getPriority(priority));
 		} else {
 			indexOfP = length;
-			task.setPriority(5);
+			task.setPriority(3);
 		}
 		
 		if(info.contains(AT)){ //info has location
@@ -153,7 +153,6 @@ public class createTask {
 	public final static Task createRecurring(String taskType, ArrayList<String> info) {
 		String taskName = taskType+" task";
 		Task task = new Task();
-		int indexOfBy = info.indexOf(BY);
 		int indexOfFor = info.indexOf(FOR);
 		int indexOfP = 0;
 		String detail;
@@ -164,6 +163,7 @@ public class createTask {
 		
 		
 		if(info.contains(BY)){
+			int indexOfBy = info.indexOf(BY);
 			detail = getDetail(info,2,indexOfBy);
 			dateAndTime = info.get(indexOfBy+1);
 			if(info.contains(AT)){
@@ -176,7 +176,7 @@ public class createTask {
 				task.setTaskStartDate(date);
 				task.setTaskStartTime(time);
 				task.setTaskLocation(location);
-				task.setTaskType(3);
+				task.setTaskType(4);
 				
 			} else {
 				Time time = getTime(dateAndTime);
@@ -185,7 +185,7 @@ public class createTask {
 				task.setTaskDetails(detail);
 				task.setTaskStartDate(date);
 				task.setTaskStartTime(time);
-				task.setTaskType(3);
+				task.setTaskType(4);
 			}
 			
 			if(info.contains(PRIORITY)){
@@ -194,7 +194,7 @@ public class createTask {
 				task.setPriority(getPriority(priority));
 			} else {
 				indexOfP = indexOfFor;
-				task.setPriority(5);
+				task.setPriority(3);
 			}
 
 		} else {
@@ -205,7 +205,7 @@ public class createTask {
 				task.setTaskName(taskName);
 				task.setTaskDetails(detail);
 				task.setTaskLocation(location);
-				task.setTaskType(3);
+				task.setTaskType(2);
 				
 			} else {
 				if(info.contains(PRIORITY)){
@@ -216,15 +216,15 @@ public class createTask {
 				} else {
 					indexOfP = indexOfFor;
 					detail = getDetail(info,2,indexOfP);
-					task.setPriority(5);
+					task.setPriority(3);
 				}
 				task.setTaskName(taskName);
 				task.setTaskDetails(detail);
-				task.setTaskType(3);
+				task.setTaskType(2);
 			}
 		}
 		
-		
+		task.setRecurring(true);
 
 		return task;
 	}

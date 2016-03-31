@@ -71,6 +71,8 @@ public class TaskOverviewController {
 	private TableColumn<Task, String> floatingDetailsColumn;
 	
 	@FXML private Label instantFeedback;
+	
+	@FXML private Label todayDate;
 
 	//@FXML
 	//private Label taskNameLabel;
@@ -169,17 +171,17 @@ public class TaskOverviewController {
 		            } else {
 		                setText(item);
 		                if (item.equals("1")) {
-		                	setText("HIGH");
+		                	setText("H");
 		                    setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: red");
 		                } else if (item.equals("2")) {
-		                	setText("MED");
-		                    setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: green");
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
 		                } else {
-		                	setText("LOW");
+		                	setText("L");
 		                	setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: yellow");
+		                    setStyle("");
 		                }
 		            }
 		        }
@@ -198,17 +200,17 @@ public class TaskOverviewController {
 		            } else {
 		                setText(item);
 		                if (item.equals("1")) {
-		                	setText("HIGH");
+		                	setText("H");
 		                    setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: red");
 		                } else if (item.equals("2")) {
-		                	setText("MED");
-		                    setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: green");
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
 		                } else {
-		                	setText("LOW");
+		                	setText("L");
 		                	setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: yellow");
+		                    setStyle("");
 		                }
 		            }
 		        }
@@ -227,17 +229,17 @@ public class TaskOverviewController {
 		            } else {
 		                setText(item);
 		                if (item.equals("1")) {
-		                	setText("HIGH");
-		                    setTextFill(Color.WHITE);
+		                	setText("H");
+		                	setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: red");
 		                } else if (item.equals("2")) {
-		                	setText("MED");
-		                    setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: green");
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
 		                } else {
-		                	setText("LOW");
+		                	setText("L");
 		                	setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: yellow");
+		                    setStyle("");
 		                }
 		            }
 		        }
@@ -256,8 +258,8 @@ public class TaskOverviewController {
 		for (int k = 0; k< totalList.size(); k++){ 
 			for (int j = 0; j < temp.size(); j++) {
 				for (int i=0; i < temp.get(j).size(); i++) {
-					if (k == 0 && j == 3) {
-						totalList.get(0).add(temp.get(3).get(i));
+					if (k == 0 && j == 2) {
+						totalList.get(0).add(temp.get(2).get(i));
 					} else if (k == 1 && j == 0) {
 						totalList.get(1).add(temp.get(0).get(i));
 					} else if (k == 2 && j == 1) {

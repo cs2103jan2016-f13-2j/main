@@ -10,14 +10,17 @@ public class UserInput {
 	//Add
 	Task task;
 	
+	
+	int taskType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
 	//Delete
 	int deleteNumber;
-	int taskType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
 	
 	//Edit
-	int[] editNumber;
-	Time time;
-	Date date;
+	ArrayList<Integer> editNumber;
+	Time startTime;
+	Date startDate;
+	Time endTime;
+	Date endDate;
 	String location;
 	String details;
 	int priority;
@@ -32,13 +35,15 @@ public class UserInput {
 	//Constructors
 	public UserInput(String raw) {
 		rawInput = raw;
-		time = new Time();
-		date = new Date();
+		startTime = new Time();
+		startDate = new Date();
+		endTime = new Time();
+		endDate = new Date();
 		details = null;
 		command = null;
 		task = null;
 		deleteNumber = -1;
-		editNumber = new int[2];
+		editNumber = new ArrayList<Integer> ();
 		location = null;
 		sortType = -1;
 		searchTerm = null;
@@ -77,7 +82,7 @@ public class UserInput {
 		return deleteNumber;
 	}
 	
-	public int[] getEditNumber() {
+	public ArrayList<Integer> getEditNumber() {
 		return editNumber;
 	}
 	
@@ -86,12 +91,20 @@ public class UserInput {
 		return location;
 	}
 	
-	public Time getTime(){
-		return time;
+	public Time getStartTime(){
+		return startTime;
 	}
 	
-	public Date getDate(){
-		return date;
+	public Date getStartDate(){
+		return startDate;
+	}
+	
+	public Time getEndTime(){
+		return endTime;
+	}
+	
+	public Date getEndDate(){
+		return endDate;
 	}
 	
 	
@@ -134,21 +147,28 @@ public class UserInput {
 		deleteNumber = number;
 	}
 	
-	public void setEdit(int number, int number2) {
-		editNumber[0] = number;
-		editNumber[1] = number2;
+	public void setEdit(int n) {
+		editNumber.add(n);
 	}
 	
 	public void setLocation(String location){
 		this.location=location;
 	}
 	
-	public void setDate(Date date){
-		this.date=date;
+	public void setStartDate(Date date){
+		this.startDate=date;
 	}
 	
-	public void setTime(Time time) {
-		this.time = time;
+	public void setStartTime(Time time) {
+		this.startTime = time;
+	}
+	
+	public void setEndDate(Date date){
+		this.endDate=date;
+	}
+	
+	public void setEndTime(Time time) {
+		this.endTime = time;
 	}
 	
 	public void setSearchTerm(String term) {
