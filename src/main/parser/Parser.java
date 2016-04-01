@@ -229,7 +229,7 @@ public class Parser {
 	}
 	
 	public static int deleteNumber(String s){
-		return Integer.parseInt(s.substring(1,2));
+		return Integer.parseInt(s.substring(1,s.length()));
 	}
 	
 	private static int findNextCommand(ArrayList<String> commands, int n){//for edit
