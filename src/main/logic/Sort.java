@@ -40,7 +40,6 @@ public class Sort implements Command {
 	public void execute() {
 		logger.log(Level.INFO, "Command SORT");
 		taskList = storage.getTaskList();
-		System.out.println(userInput.getSortType());
 		switch (userInput.getSortType()) {
 		case 1:	//task details
 			Collections.sort(taskList, new TaskComparator(1));
