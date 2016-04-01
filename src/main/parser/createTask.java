@@ -125,25 +125,37 @@ public class createTask {
 		
 		
 		int indexOfP = 0;
-		if(info.contains(PRIORITY)){
-			indexOfP = info.indexOf(PRIORITY);
-			String priority = info.get(indexOfP+1);
-			task.setPriority(getPriority(priority));
-		} else {
-			indexOfP = length;
-			task.setPriority(3);
-		}
+
 		
 		if(info.contains(AT)){ //info has location
 			int indexOfAt = info.indexOf(AT);
 			String detail = getDetail(info,1,indexOfAt);
 			String location = getLocation(info,indexOfAt+1,indexOfP);
+			if(info.contains(PRIORITY)){
+				indexOfP = info.indexOf(PRIORITY);
+				String priority = info.get(indexOfP+1);
+				task.setPriority(getPriority(priority));
+			} else {
+				indexOfP = length;
+				task.setPriority(3);
+			}
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);;
 			task.setTaskLocation(location);
 			task.setTaskType(2);
 		} else { //info does not have location
-			String detail = getDetail(info,1,length);
+			String detail;
+			if(info.contains(PRIORITY)){
+				indexOfP = info.indexOf(PRIORITY);
+				detail = getDetail(info,1,indexOfP);
+				String priority = info.get(indexOfP+1);
+				task.setPriority(getPriority(priority));
+			} else {
+				indexOfP = length;
+				task.setPriority(3);
+				detail = getDetail(info,1,length);
+			}
+			
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
 			task.setTaskType(2);
