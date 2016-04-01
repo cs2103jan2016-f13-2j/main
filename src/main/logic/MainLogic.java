@@ -73,15 +73,20 @@ public class MainLogic {
 			command = new Add(userInput);
 			commandList.push(command);
 			clearUndoStack();
+			displayList = storage.getTaskList();
 			break;
 		}
 		case "delete": {
+			userInput.setTask(findTask());
+			displayList.remove(findTask());
 			command = new Delete(userInput);
 			commandList.push(command);
 			clearUndoStack();
 			break;
 		}
 		case "edit": {
+			userInput.setTask(findTask());
+			displayList.remove(findTask());
 			command = new Edit(userInput);
 			commandList.push(command);
 			clearUndoStack();
@@ -184,6 +189,22 @@ public class MainLogic {
 			commandList.push(command);
 			command.redo();
 		}
+	}
+	
+	private static Task findTask() {
+		int count = 0;
+		taskList = displayList;
+		for (int i=0; i<taskList.size(); i++) {
+			Task task = taskList.get(i);
+			if (task.getTaskType() == userInput.getTaskType()) {
+				count++;
+				 if(count == userInput.getDeleteNumber()) {
+					 return taskList.get(i);
+				 }
+			}
+		}
+		
+		return null;
 	}
 	
 	private static void setCurrentTime() {

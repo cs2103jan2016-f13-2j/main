@@ -270,20 +270,19 @@ public class Edit implements Command {
 			}
 		}		
 	}
-
+	
 	private Task findTask() {
 		int count = 0;
 		for (int i=0; i<taskList.size(); i++) {
 			Task task = taskList.get(i);
 			if (task.getTaskType() == userInput.getTaskType()) {
 				count++;
-				if(count == userInput.getEditNumber().get(0)) {
+				 if(count == userInput.getEditNumber().get(0)) {
 					return task;
-				}
+				 }
 			}
 		}
-
+		
 		return null;
 	}
-
 }
