@@ -184,12 +184,23 @@ public class createTask {
 				int indexOfAt = info.indexOf(AT);
 				Time time = getTime(dateAndTime);
 				Date date = getDate(dateAndTime);
-				String location = getLocation(info,indexOfAt+1,indexOfP);
+				if(info.contains(PRIORITY)){
+					indexOfP = info.indexOf(PRIORITY);
+					String priority = info.get(indexOfP+1);
+					task.setPriority(getPriority(priority));
+					String location = getLocation(info,indexOfAt+1,indexOfP);
+					task.setTaskLocation(location);
+				} else {
+					indexOfP = indexOfFor;
+					task.setPriority(3);
+					String location = getLocation(info,indexOfAt+1,indexOfP);
+					task.setTaskLocation(location);
+				}
 				task.setTaskName(taskName);
 				task.setTaskDetails(detail);
 				task.setTaskStartDate(date);
 				task.setTaskStartTime(time);
-				task.setTaskLocation(location);
+				
 				task.setTaskType(4);
 				
 			} else {
@@ -200,16 +211,18 @@ public class createTask {
 				task.setTaskStartDate(date);
 				task.setTaskStartTime(time);
 				task.setTaskType(4);
+				
+				if(info.contains(PRIORITY)){
+					indexOfP = info.indexOf(PRIORITY);
+					String priority = info.get(indexOfP+1);
+					task.setPriority(getPriority(priority));
+				} else {
+					indexOfP = indexOfFor;
+					task.setPriority(3);
+				}
 			}
 			
-			if(info.contains(PRIORITY)){
-				indexOfP = info.indexOf(PRIORITY);
-				String priority = info.get(indexOfP+1);
-				task.setPriority(getPriority(priority));
-			} else {
-				indexOfP = indexOfFor;
-				task.setPriority(3);
-			}
+
 
 		} else if(info.contains(FROM)){
 			int indexOfFrom = info.indexOf(FROM);
