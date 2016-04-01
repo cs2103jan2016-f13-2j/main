@@ -42,6 +42,8 @@ public class Shortcuts {
 			return "undo";
 		case "redo":
 			return "redo";
+		case "set":
+			return "set";
 		default:
 			return command;
 		}

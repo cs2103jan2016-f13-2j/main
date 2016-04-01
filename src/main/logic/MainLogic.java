@@ -127,6 +127,11 @@ public class MainLogic {
 			break;
 		}
 		
+		case "set": {
+			storage.changeDirectory(userInput.getDirectory());
+			break;
+		}
+		
 		default: {
 			userInput.setSearchTerm(userInput.getCommand());
 			command = new Search(userInput);

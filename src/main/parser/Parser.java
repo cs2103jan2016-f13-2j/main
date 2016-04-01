@@ -18,6 +18,8 @@ public class Parser {
 	private static final String BY = "by";
 	private static final String TO = "to";
 	private static final String RECURRING = "recurring";
+	private static final String COMPLETE  = "complete";
+	private static final String UNCOMPLETE  = "uncomplete";
 	
 	private static Feedback feedback;
 	
@@ -49,22 +51,20 @@ public class Parser {
 			userInput.setCommand("add");
 			break;
 
-
 		
 		case "delete":
 			userInput.setCommand("delete");
-			String details = inputCommand.get(1);
-			userInput.setDeleteNumber(deleteNumber(details));
-			userInput.setTaskType(deleteType(details));
+			ArrayList<int[]> deleteList = new ArrayList<int[]>();
+			passDeletePart(inputCommand,userInput,deleteList);
 			break;
 			
 		case "edit": 
 			userInput.setCommand("edit");
-			ArrayList<Integer> list = new ArrayList<Integer>();
+			ArrayList<Integer> editList = new ArrayList<Integer>();
 			String type_Num = inputCommand.get(1);
-			list.add(deleteNumber(type_Num));
+			editList.add(deleteNumber(type_Num));
 			userInput.setTaskType(deleteType(type_Num));
-			passEditPart(inputCommand,userInput,list);
+			passEditPart(inputCommand,userInput,editList);
 			break;	
 			
 		case "search":
@@ -95,7 +95,9 @@ public class Parser {
 		case "redo":
 			userInput.setCommand("redo");
 			break;
-			
+		case "set":
+			userInput.setCommand("set");
+			userInput.setDirectory(inputCommand.get(1));	
 		default:
 			userInput.setCommand(userInput.getRawInput());
 		}
@@ -196,6 +198,10 @@ public class Parser {
 			case "p"://priority
 				n = 7;
 				break;
+			case "-c":
+			case "c":
+				n = 8;
+				break;
 			default:
 				break;
 		}
@@ -226,7 +232,7 @@ public class Parser {
 		return Integer.parseInt(s.substring(1,2));
 	}
 	
-	private static int findNextCommand(ArrayList<String> commands, int n){
+	private static int findNextCommand(ArrayList<String> commands, int n){//for edit
 		int k = -1;
 		for(int i=n+1; i<commands.size(); i++){
 			if(commands.get(i).contains("-")){
@@ -238,8 +244,18 @@ public class Parser {
 		return k;
 	}
 	
+	private static void passDeletePart(ArrayList<String> commands, UserInput userInput, ArrayList<int[]> list){
+		for(int i=1; i<commands.size(); i++){
+			int[] arr = new int[2];
+			arr[0] = deleteType(commands.get(i));
+			arr[1] = deleteNumber(commands.get(i));
+			list.add(arr);
+		}
+		userInput.setDeleteNumber(list);
+	}
+	
 	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list){
-		System.out.println("floating task?:"+userInput.getTaskType());
+		//System.out.println("floating task?:"+userInput.getTaskType());
 		int i = 2;
 		while(i<commands.size()){
 			int n = getNumber(commands.get(i));
@@ -284,6 +300,13 @@ public class Parser {
 			case 7:
 				int priority = Integer.parseInt(commands.get(tempI+1));
 				userInput.setPriority(priority);
+				break;
+			case 8:
+				if(commands.get(tempI+1).equals("COMPLETE")){
+					userInput.setComplete(true);
+				} else {
+					userInput.setComplete(false);
+				}		
 				break;
 			default:
 				break;

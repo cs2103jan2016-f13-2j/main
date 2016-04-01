@@ -11,7 +11,7 @@ import main.storage.Storage;
 
 public class Add implements Command {
 	
-	private static final String MSG_SUCCESS = "Added new %1$s task \"%2$s\"";
+	private static final String MSG_SUCCESS = "Added new %1$s task \"%2$s\".";
 	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after add command.";
 	
 	private static final String TYPE_DEADLINE = "Deadline";

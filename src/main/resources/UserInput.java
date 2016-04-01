@@ -13,7 +13,7 @@ public class UserInput {
 	
 	int taskType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
 	//Delete
-	int deleteNumber;
+	ArrayList<int[]> deleteNumber;
 	
 	//Edit
 	ArrayList<Integer> editNumber;
@@ -23,12 +23,16 @@ public class UserInput {
 	Date endDate;
 	String location;
 	String details;
+	boolean complete;
 	int priority;
 	
 	//Search and sort
 	String searchTerm;
 	int sortType;
 	ArrayList<Task> taskList;
+	
+	//set 
+	String directory;
 	
 	
 	
@@ -42,7 +46,7 @@ public class UserInput {
 		details = null;
 		command = null;
 		task = null;
-		deleteNumber = -1;
+		deleteNumber = new ArrayList<int[]>();
 		editNumber = new ArrayList<Integer> ();
 		location = null;
 		sortType = -1;
@@ -50,10 +54,15 @@ public class UserInput {
 		taskList = new ArrayList<Task>();
 		priority = 0;
 		taskType = -1;
+		complete = false;
 	}
 	
 	
 	//Getters
+	public boolean getComplete(){
+		return complete;
+	}
+	
 	public int getTaskType(){
 		return taskType;
 	}
@@ -78,7 +87,7 @@ public class UserInput {
 		return task;
 	}
 	
-	public int getDeleteNumber() {
+	public ArrayList<int[]> getDeleteNumber() {
 		return deleteNumber;
 	}
 	
@@ -121,8 +130,21 @@ public class UserInput {
 		return taskList;
 	}
 	
+	public String getDirectory(){
+		return directory;
+	}
+	
 	
 	//Setters
+	public void setDirectory(String path){
+		this.directory = path;
+	}
+	
+	public void setComplete(boolean c){
+		complete = c;
+	}
+	
+	
 	public void setRawInput(String input) {
 		this.rawInput = input;
 	}
@@ -143,8 +165,8 @@ public class UserInput {
 		this.task = task;
 	}
 	
-	public void setDeleteNumber(int number) {
-		deleteNumber = number;
+	public void setDeleteNumber(ArrayList<int[]> list) {
+		deleteNumber = list;
 	}
 	
 	public void setEdit(ArrayList<Integer> list) {

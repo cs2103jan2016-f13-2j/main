@@ -125,25 +125,37 @@ public class createTask {
 		
 		
 		int indexOfP = 0;
-		if(info.contains(PRIORITY)){
-			indexOfP = info.indexOf(PRIORITY);
-			String priority = info.get(indexOfP+1);
-			task.setPriority(getPriority(priority));
-		} else {
-			indexOfP = length;
-			task.setPriority(3);
-		}
+
 		
 		if(info.contains(AT)){ //info has location
 			int indexOfAt = info.indexOf(AT);
 			String detail = getDetail(info,1,indexOfAt);
 			String location = getLocation(info,indexOfAt+1,indexOfP);
+			if(info.contains(PRIORITY)){
+				indexOfP = info.indexOf(PRIORITY);
+				String priority = info.get(indexOfP+1);
+				task.setPriority(getPriority(priority));
+			} else {
+				indexOfP = length;
+				task.setPriority(3);
+			}
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);;
 			task.setTaskLocation(location);
 			task.setTaskType(2);
 		} else { //info does not have location
-			String detail = getDetail(info,1,length);
+			String detail;
+			if(info.contains(PRIORITY)){
+				indexOfP = info.indexOf(PRIORITY);
+				detail = getDetail(info,1,indexOfP);
+				String priority = info.get(indexOfP+1);
+				task.setPriority(getPriority(priority));
+			} else {
+				indexOfP = length;
+				task.setPriority(3);
+				detail = getDetail(info,1,length);
+			}
+			
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
 			task.setTaskType(2);
@@ -158,6 +170,7 @@ public class createTask {
 		int indexOfP = 0;
 		String detail;
 		String dateAndTime;
+		String endDateAndTime;
 		int fre = getFrequency(info.get(1));
 		task.setRecurFrequency(fre);
 		task.setRecurTime(Integer.parseInt(info.get(indexOfFor+1)));
@@ -171,12 +184,23 @@ public class createTask {
 				int indexOfAt = info.indexOf(AT);
 				Time time = getTime(dateAndTime);
 				Date date = getDate(dateAndTime);
-				String location = getLocation(info,indexOfAt+1,indexOfP);
+				if(info.contains(PRIORITY)){
+					indexOfP = info.indexOf(PRIORITY);
+					String priority = info.get(indexOfP+1);
+					task.setPriority(getPriority(priority));
+					String location = getLocation(info,indexOfAt+1,indexOfP);
+					task.setTaskLocation(location);
+				} else {
+					indexOfP = indexOfFor;
+					task.setPriority(3);
+					String location = getLocation(info,indexOfAt+1,indexOfP);
+					task.setTaskLocation(location);
+				}
 				task.setTaskName(taskName);
 				task.setTaskDetails(detail);
 				task.setTaskStartDate(date);
 				task.setTaskStartTime(time);
-				task.setTaskLocation(location);
+				
 				task.setTaskType(4);
 				
 			} else {
@@ -187,17 +211,73 @@ public class createTask {
 				task.setTaskStartDate(date);
 				task.setTaskStartTime(time);
 				task.setTaskType(4);
+				
+				if(info.contains(PRIORITY)){
+					indexOfP = info.indexOf(PRIORITY);
+					String priority = info.get(indexOfP+1);
+					task.setPriority(getPriority(priority));
+				} else {
+					indexOfP = indexOfFor;
+					task.setPriority(3);
+				}
 			}
 			
-			if(info.contains(PRIORITY)){
-				indexOfP = info.indexOf(PRIORITY);
-				String priority = info.get(indexOfP+1);
-				task.setPriority(getPriority(priority));
-			} else {
-				indexOfP = indexOfFor;
-				task.setPriority(3);
-			}
 
+
+		} else if(info.contains(FROM)){
+			int indexOfFrom = info.indexOf(FROM);
+			int indexOfTo = info.indexOf(TO);
+			detail = getDetail(info,2,indexOfFrom);
+			dateAndTime = info.get(indexOfFrom+1);
+			endDateAndTime = info.get(indexOfTo+1);
+			if(info.contains(AT)){
+				int indexOfAt = info.indexOf(AT);
+				Time startTime = getTime(dateAndTime);
+				Date startDate = getDate(dateAndTime);
+				Time endTime = getTime(endDateAndTime);
+				Date endDate = getDate(endDateAndTime);
+				if(info.contains(PRIORITY)){
+					indexOfP = info.indexOf(PRIORITY);
+					String priority = info.get(indexOfP+1);
+					String location = getLocation(info,indexOfAt+1,indexOfP);
+					task.setTaskLocation(location);
+					task.setPriority(getPriority(priority));
+				} else {
+					indexOfP = indexOfFor;
+					task.setPriority(3);
+					String location = getLocation(info,indexOfAt+1,indexOfFor);
+					task.setTaskLocation(location);
+				}	
+				task.setTaskName(taskName);
+				task.setTaskDetails(detail);
+				task.setTaskStartDate(startDate);
+				task.setTaskStartTime(startTime);
+				task.setTaskEndDate(endDate);
+				task.setTaskEndTime(endTime);
+				
+				//System.out.println(location);
+				task.setTaskType(1);
+			} else {
+				Time startTime = getTime(dateAndTime);
+				Date startDate = getDate(dateAndTime);
+				Time endTime = getTime(endDateAndTime);
+				Date endDate = getDate(endDateAndTime);
+				task.setTaskName(taskName);
+				task.setTaskDetails(detail);
+				task.setTaskStartDate(startDate);
+				task.setTaskStartTime(startTime);
+				task.setTaskEndDate(endDate);
+				task.setTaskEndTime(endTime);
+				task.setTaskType(1);
+				if(info.contains(PRIORITY)){
+					indexOfP = info.indexOf(PRIORITY);
+					String priority = info.get(indexOfP+1);
+					task.setPriority(getPriority(priority));
+				} else {
+					indexOfP = indexOfFor;
+					task.setPriority(3);
+				}	
+			}
 		} else {
 			if(info.contains(AT)){
 				int indexOfAt = info.indexOf(AT);
@@ -224,9 +304,8 @@ public class createTask {
 				task.setTaskType(2);
 			}
 		}
-		
+	
 		task.setRecurring(true);
-
 		return task;
 	}
 	
