@@ -78,7 +78,6 @@ public class MainApp extends Application {
         primaryStage.setMaximized(false);
         primaryStage.setResizable(false);
         initRootLayout();
-
         showTaskOverview();
         logger.log(Level.INFO, "UI Opened Successfully.");
     }

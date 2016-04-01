@@ -157,6 +157,7 @@ public class TaskOverviewController {
 		allTables.get(i).setItems(totalList.get(i));
 		}
 		
+		
 	
 		
 		taskPNumberColumn.setCellFactory(column -> {
@@ -187,6 +188,49 @@ public class TaskOverviewController {
 		        }
 		    };
 		});
+		
+		
+		taskDateColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		            	 setText("");
+		                 setStyle("");
+		            } else {
+		            	boolean expired = false;
+		            	String[] date = item.split("-");
+		            	String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
+		            	if(Integer.parseInt(date[2]) < Integer.parseInt(currDate[2])) {
+		            		expired = true;
+		            	} else if (date[2].equals(currDate[2])){
+		            		if(Integer.parseInt(date[1]) < Integer.parseInt(currDate[1])) {
+		            			expired = true;
+		            		} else if(date[1].equals(currDate[1])) {
+		            			if(Integer.parseInt(date[0]) < Integer.parseInt(currDate[0])) {
+		            				expired = true;
+		            			}
+		            		}
+		            		
+		            	}
+		            	
+		                setText(item);
+		                if (expired) {
+		                    setTextFill(Color.BLACK);
+		                    setStyle("-fx-background-color: transparent, derive(#DCDCDC,20%);");
+						} else {
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		            }
+		        }
+		    };
+		});
+		
+		
+
 		
 		eventPNumberColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
