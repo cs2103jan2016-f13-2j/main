@@ -35,7 +35,7 @@ public class Edit implements Command {
 	@Override
 	public void execute() {
 		boolean success = false;
-		
+		boolean changedTaskType = false;
 		logger.log(Level.INFO, "Command EDIT");
 		taskList = storage.getTaskList();
 		Task taskToEdit = findTask();
@@ -52,6 +52,10 @@ public class Edit implements Command {
 				Date originalData = taskToEdit.getTaskStartDate();
 				taskToEdit.setTaskStartDate(userInput.getStartDate());
 				if (taskToEdit.getTaskType() == 2) {	//floating
+					if (!changedTaskType) {
+						userInput.setTaskType(2);
+						changedTaskType = true;
+					}
 					taskToEdit.setTaskType(4);	//deadline
 				}
 				userInput.setStartDate(originalData);
@@ -62,6 +66,10 @@ public class Edit implements Command {
 				Time originalData = taskToEdit.getTaskStartTime();
 				taskToEdit.setTaskStartTime(userInput.getStartTime());
 				if (taskToEdit.getTaskType() == 2) {	//floating
+					if (!changedTaskType) {
+						userInput.setTaskType(2);
+						changedTaskType = true;
+					}
 					taskToEdit.setTaskType(4);	//deadline
 				}
 				userInput.setStartTime(originalData);
@@ -76,6 +84,10 @@ public class Edit implements Command {
 				}
 				taskToEdit.setTaskEndDate(userInput.getEndDate());
 				if (taskToEdit.getTaskType() == 4) {	//deadline
+					if (!changedTaskType) {
+						userInput.setTaskType(4);
+						changedTaskType = true;
+					}
 					taskToEdit.setTaskType(1);	//event
 				}
 				userInput.setEndDate(originalData);
@@ -90,6 +102,10 @@ public class Edit implements Command {
 				}
 				taskToEdit.setTaskEndDate(userInput.getEndDate());
 				if (taskToEdit.getTaskType() == 4) {	//deadline
+					if (!changedTaskType) {
+						userInput.setTaskType(4);
+						changedTaskType = true;
+					}
 					taskToEdit.setTaskType(1);	//event
 				}
 				userInput.setEndTime(originalData);
@@ -112,6 +128,11 @@ public class Edit implements Command {
 				success = true;
 				break;
 			}
+			case 8: {	//is complete
+				boolean originalData = taskToEdit.isComplete();
+				taskToEdit.setComplete(userInput.getComplete());
+				userInput.setComplete(originalData);
+			}
 			default:
 				feedback.setMessage(MSG_INVALID_EDIT_TYPE);
 				return;
@@ -130,6 +151,7 @@ public class Edit implements Command {
 
 	@Override
 	public void undo() {
+		boolean undoedTaskType = false;
 		taskList = storage.getTaskList();
 		for (Task t : taskList) {
 			if (t.equals(userInput.getTask())) {
@@ -144,12 +166,24 @@ public class Edit implements Command {
 					case 2: {	//task date
 						Date originalData = t.getTaskStartDate();
 						t.setTaskStartDate(userInput.getStartDate());
+						if (!undoedTaskType) {
+							int type = userInput.getTaskType();
+							userInput.setTaskType(t.getTaskType());
+							t.setTaskType(type);
+							undoedTaskType = true;
+						}
 						userInput.setStartDate(originalData);
 						break;
 					}
 					case 3: {	//task time
 						Time originalData = t.getTaskStartTime();
 						t.setTaskStartTime(userInput.getStartTime());
+						if (!undoedTaskType) {
+							int type = userInput.getTaskType();
+							userInput.setTaskType(t.getTaskType());
+							t.setTaskType(type);
+							undoedTaskType = true;
+						}
 						userInput.setStartTime(originalData);
 						break;
 					}
@@ -164,6 +198,11 @@ public class Edit implements Command {
 						t.setPriority(userInput.getPriority());
 						userInput.setPriority(originalData);
 						break;
+					}
+					case 8: {	//is complete
+						boolean originalData = t.isComplete();
+						t.setComplete(userInput.getComplete());
+						userInput.setComplete(originalData);
 					}
 					}	
 				}
@@ -174,6 +213,7 @@ public class Edit implements Command {
 	@Override
 	public void redo() {
 		taskList = storage.getTaskList();
+		boolean undoedTaskType = false;
 		for (Task t : taskList) {
 			if (t.equals(userInput.getTask())) {
 				for (int i=1; i<userInput.getEditNumber().size(); i++) {
@@ -187,12 +227,24 @@ public class Edit implements Command {
 					case 2: {	//task date
 						Date originalData = t.getTaskStartDate();
 						t.setTaskStartDate(userInput.getStartDate());
+						if (!undoedTaskType) {
+							int type = userInput.getTaskType();
+							userInput.setTaskType(t.getTaskType());
+							t.setTaskType(type);
+							undoedTaskType = true;
+						}
 						userInput.setStartDate(originalData);
 						break;
 					}
 					case 3: {	//task time
 						Time originalData = t.getTaskStartTime();
 						t.setTaskStartTime(userInput.getStartTime());
+						if (!undoedTaskType) {
+							int type = userInput.getTaskType();
+							userInput.setTaskType(t.getTaskType());
+							t.setTaskType(type);
+							undoedTaskType = true;
+						}
 						userInput.setStartTime(originalData);
 						break;
 					}
@@ -207,6 +259,11 @@ public class Edit implements Command {
 						t.setPriority(userInput.getPriority());
 						userInput.setPriority(originalData);
 						break;
+					}
+					case 8: {	//is complete
+						boolean originalData = t.isComplete();
+						t.setComplete(userInput.getComplete());
+						userInput.setComplete(originalData);
 					}
 					}	
 				}
