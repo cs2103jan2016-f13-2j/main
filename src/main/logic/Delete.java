@@ -40,19 +40,9 @@ public class Delete implements Command {
 		boolean success = false;
 		
 		logger.log(Level.INFO, "Command DELETE");
-		int count = 0;
 		taskList = storage.getTaskList();
-		for (int i=0; i<taskList.size(); i++) {
-			Task task = taskList.get(i);
-			if (task.getTaskType() == userInput.getTaskType()) {
-				count++;
-				 if(count == userInput.getDeleteNumber()) {
-					 userInput.setTask(taskList.get(i));
-					 taskList.remove(i);
-					 success = true;
-				 }
-			}
-		}
+		success = true;
+		
 		
 		if (!storage.saveFile()) {
 			feedback.setMessage(MSG_FAIL_FILE_SAVE);
