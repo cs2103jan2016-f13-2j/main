@@ -15,7 +15,6 @@ public class UserInput {
 	//Delete
 	int deleteNumber;
 	
-	
 	//Edit
 	ArrayList<Integer> editNumber;
 	Time startTime;
