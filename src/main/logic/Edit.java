@@ -37,13 +37,13 @@ public class Edit implements Command {
 		Task taskToEdit = findTask();
 		for (int i=1; i<userInput.getEditNumber().size(); i++) {
 			switch (userInput.getEditNumber().get(i)) {
-			case 1:	//task detail
+			case 1:	{	//task detail
 				String originalData = taskToEdit.getTaskDetails();
 				taskToEdit.setTaskDetails(userInput.getDetails());
 				userInput.setDetails(originalData);
 				break;
-			
-			case 2: //task date
+			}
+			case 2: {	//task date
 				Date originalData = taskToEdit.getTaskStartDate();
 				taskToEdit.setTaskStartDate(userInput.getStartDate());
 				if (taskToEdit.getTaskType() == 2) {	//floating
@@ -51,8 +51,8 @@ public class Edit implements Command {
 				}
 				userInput.setStartDate(originalData);
 				break;
-			
-			case 3:	//task time
+			}
+			case 3:	{	//task time
 				Time originalData = taskToEdit.getTaskStartTime();
 				taskToEdit.setTaskStartTime(userInput.getStartTime());
 				if (taskToEdit.getTaskType() == 2) {	//floating
@@ -60,21 +60,21 @@ public class Edit implements Command {
 				}
 				userInput.setStartTime(originalData);
 				break;
-			
-			case 6: //task location
+			}
+			case 6: {	//task location
 				String originalData = taskToEdit.getTaskLocation();
 				System.out.println(originalData);
 				taskToEdit.setTaskLocation(userInput.getLocation());
 				System.out.println(userInput.getLocation());
 				userInput.setLocation(originalData);
 				break;
-			
-			case 7:	//task priority
+			}
+			case 7:	{	//task priority
 				int originalData = taskToEdit.getPriority();
 				taskToEdit.setPriority(userInput.getPriority());
 				userInput.setPriority(originalData);
 				break;
-				
+			}
 			default:
 				feedback.setMessage(MSG_FAIL_INDEX_OOB);
 				return;
@@ -86,7 +86,7 @@ public class Edit implements Command {
 				feedback.setMessage(MSG_FAIL_FILE_SAVE);
 			}
 			else {
-				feedback.setMessage(String.format(MSG_SUCCESS);
+				feedback.setMessage(String.format(MSG_SUCCESS));
 			}
 		}
 	}
