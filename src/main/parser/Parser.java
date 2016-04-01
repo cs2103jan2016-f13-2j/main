@@ -59,10 +59,12 @@ public class Parser {
 			break;
 			
 		case "edit": 
+			userInput.setCommand("edit");
+			ArrayList<Integer> list = new ArrayList<Integer>();
 			String type_Num = inputCommand.get(1);
-			userInput.setEdit(deleteNumber(type_Num));
+			list.add(deleteNumber(type_Num));
 			userInput.setTaskType(deleteType(type_Num));
-			passEditPart(inputCommand,userInput);
+			passEditPart(inputCommand,userInput,list);
 			break;	
 			
 		case "search":
@@ -236,13 +238,13 @@ public class Parser {
 		return k;
 	}
 	
-	private static void passEditPart(ArrayList<String> commands, UserInput userInput){
+	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list){
 		System.out.println("floating task?:"+userInput.getTaskType());
 		int i = 2;
 		while(i<commands.size()){
 			int n = getNumber(commands.get(i));
-			userInput.setEdit(n);
-			System.out.println("shown:"+n);
+			list.add(n);
+			//System.out.println("shown:"+n);
 			int nextI = findNextCommand(commands,i);
 			int tempI;
 			if(nextI==-1){
@@ -256,8 +258,8 @@ public class Parser {
 			case 1:
 				String details = createTask.getDetail(commands, tempI+1, i);	
 				userInput.setDetails(details);
-				System.out.println(userInput.getDetails());
-				System.out.println("show first task type:"+userInput.getEditNumber().get(1));
+				//System.out.println(userInput.getDetails());
+				//System.out.println("show first task type:"+userInput.getEditNumber().get(1));
 				break;
 			case 2:
 				Date startDate = createTask.getDate(commands.get(tempI+1));
@@ -287,6 +289,7 @@ public class Parser {
 				break;
 			}
 		}
+		userInput.setEdit(list);
 		
 	}
 
