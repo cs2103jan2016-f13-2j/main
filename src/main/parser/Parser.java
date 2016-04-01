@@ -226,7 +226,7 @@ public class Parser {
 	
 	private static int findNextCommand(ArrayList<String> commands, int n){
 		int k = -1;
-		for(int i=n; i<commands.size(); i++){
+		for(int i=n+1; i<commands.size(); i++){
 			if(commands.get(i).contains("-")){
 				k = i;
 				return k;
@@ -237,10 +237,12 @@ public class Parser {
 	}
 	
 	private static void passEditPart(ArrayList<String> commands, UserInput userInput){
+		System.out.println("floating task?:"+userInput.getTaskType());
 		int i = 2;
 		while(i<commands.size()){
 			int n = getNumber(commands.get(i));
 			userInput.setEdit(n);
+			System.out.println("shown:"+n);
 			int nextI = findNextCommand(commands,i);
 			int tempI;
 			if(nextI==-1){
@@ -252,31 +254,33 @@ public class Parser {
 			}
 			switch(n){
 			case 1:
-				String details = createTask.getDetail(commands, tempI, i);
+				String details = createTask.getDetail(commands, tempI+1, i);	
 				userInput.setDetails(details);
+				System.out.println(userInput.getDetails());
+				System.out.println("show first task type:"+userInput.getEditNumber().get(1));
 				break;
 			case 2:
-				Date startDate = createTask.getDate(commands.get(i));
+				Date startDate = createTask.getDate(commands.get(tempI+1));
 				userInput.setStartDate(startDate);
 				break;
 			case 3:
-				Time startTime = createTask.getTime(commands.get(i));
+				Time startTime = createTask.getTime(commands.get(tempI+1));
 				userInput.setStartTime(startTime);
 				break;
 			case 4:
-				Date endDate = createTask.getDate(commands.get(i));
+				Date endDate = createTask.getDate(commands.get(tempI+1));
 				userInput.setEndDate(endDate);
 				break;
 			case 5:
-				Time endTime = createTask.getTime(commands.get(i));
+				Time endTime = createTask.getTime(commands.get(tempI+1));
 				userInput.setEndTime(endTime);
 				break;
 			case 6:
-				String location = createTask.getLocation(commands, tempI, i);
+				String location = createTask.getLocation(commands, tempI+1, i);
 				userInput.setLocation(location);
 				break;
 			case 7:
-				int priority = Integer.parseInt(commands.get(i));
+				int priority = Integer.parseInt(commands.get(tempI+1));
 				userInput.setPriority(priority);
 				break;
 			default:
