@@ -166,7 +166,7 @@ public class TaskOverviewController {
 		            super.updateItem(item, empty);
 
 		            if (item == null || empty) {
-		            	 setText("-");
+		            	 setText("");
 		                 setStyle("");
 		            } else {
 		                setText(item);
@@ -195,7 +195,7 @@ public class TaskOverviewController {
 		            super.updateItem(item, empty);
 
 		            if (item == null || empty) {
-		            	 setText("-");
+		            	 setText("");
 		                 setStyle("");
 		            } else {
 		                setText(item);
@@ -224,7 +224,7 @@ public class TaskOverviewController {
 		            super.updateItem(item, empty);
 
 		            if (item == null || empty) {
-		            	 setText("-");
+		            	 setText("");
 		                 setStyle("");
 		            } else {
 		                setText(item);

@@ -10,6 +10,14 @@
     -fx-opacity: 0.6;
 }
 
+.label-feedback {
+    -fx-font-size: 13pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: black;
+    -fx-opacity: 0.7;
+}
+
+
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
