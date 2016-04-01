@@ -32,7 +32,7 @@ public class Storage {
 	private Storage() {
 		taskList = new ArrayList<Task>();
 		
-		getFile(FILE_NAME);
+		retreiveFile(FILE_NAME);
 		//decryptTaskFile();
 		readFileToTaskArrayList(taskFile, taskList);
 	}
@@ -47,10 +47,21 @@ public class Storage {
 	public static Storage getInstance() {
 		if (storage == null) {
 			storage = new Storage();
-;
 		}
 		
 		return storage;
+	}
+	
+
+	/**
+	 * For testing purposes.
+	 * 
+	 * Sets the FILE_NAME to the test file path.
+	 * @param string : The file path of the test file.
+	 */
+	
+	public static void setFileName(String string) {
+		FILE_NAME = string;
 	}
 	
 	/**
@@ -75,16 +86,10 @@ public class Storage {
 		return taskList;
 	}
 	
-	/**
-	 * For testing purposes.
-	 * 
-	 * Sets the FILE_NAME to the test file path.
-	 * @param string : The file path of the test file.
-	 */
-	
-	public static void setFileName(String string) {
-		FILE_NAME = string;
+	public void changeDirectory(String directory) {
+		
 	}
+	
 
 	//Private methods
 	
@@ -93,7 +98,7 @@ public class Storage {
 	 * @param fileName : The file path String
 	 */
 	
-	private void getFile(String fileName) {
+	private void retreiveFile(String fileName) {
 		taskFile = new File(fileName);
 
 		if (!taskFile.exists()) {

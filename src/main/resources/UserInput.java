@@ -23,6 +23,7 @@ public class UserInput {
 	Date endDate;
 	String location;
 	String details;
+	boolean complete;
 	int priority;
 	
 	//Search and sort
@@ -50,10 +51,15 @@ public class UserInput {
 		taskList = new ArrayList<Task>();
 		priority = 0;
 		taskType = -1;
+		complete = false;
 	}
 	
 	
 	//Getters
+	public boolean getComplete(){
+		return complete;
+	}
+	
 	public int getTaskType(){
 		return taskType;
 	}
@@ -123,6 +129,11 @@ public class UserInput {
 	
 	
 	//Setters
+	public void setComplete(boolean c){
+		complete = c;
+	}
+	
+	
 	public void setRawInput(String input) {
 		this.rawInput = input;
 	}

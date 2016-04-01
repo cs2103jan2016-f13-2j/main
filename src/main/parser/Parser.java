@@ -18,6 +18,8 @@ public class Parser {
 	private static final String BY = "by";
 	private static final String TO = "to";
 	private static final String RECURRING = "recurring";
+	private static final String COMPLETE  = "complete";
+	private static final String UNCOMPLETE  = "uncomplete";
 	
 	private static Feedback feedback;
 	
@@ -48,7 +50,6 @@ public class Parser {
 			userInput.setTask(addTask);
 			userInput.setCommand("add");
 			break;
-
 
 		
 		case "delete":
@@ -196,6 +197,10 @@ public class Parser {
 			case "p"://priority
 				n = 7;
 				break;
+			case "-c":
+			case "c":
+				n = 8;
+				break;
 			default:
 				break;
 		}
@@ -284,6 +289,13 @@ public class Parser {
 			case 7:
 				int priority = Integer.parseInt(commands.get(tempI+1));
 				userInput.setPriority(priority);
+				break;
+			case 8:
+				if(commands.get(tempI+1).equals("COMPLETE")){
+					userInput.setComplete(true);
+				} else {
+					userInput.setComplete(false);
+				}		
 				break;
 			default:
 				break;
