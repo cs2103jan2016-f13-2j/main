@@ -31,6 +31,9 @@ public class UserInput {
 	int sortType;
 	ArrayList<Task> taskList;
 	
+	//set 
+	String directory;
+	
 	
 	
 	//Constructors
@@ -127,8 +130,16 @@ public class UserInput {
 		return taskList;
 	}
 	
+	public String getDirectory(){
+		return directory;
+	}
+	
 	
 	//Setters
+	public void setDirectory(String path){
+		this.directory = path;
+	}
+	
 	public void setComplete(boolean c){
 		complete = c;
 	}
