@@ -14,7 +14,7 @@ import main.storage.Storage;
 public class Edit implements Command {
 
 	private static final String MSG_SUCCESS = "Editted task successfully.";
-	private static final String MSG_INVALID_EDIT_TYPE = "Error: Index out of bounds. Unable to edit.";
+	private static final String MSG_INVALID_EDIT_TYPE = "Error: Invalid edit task.";
 	private static final String MSG_FAIL_NO_START_DATE = "Error: Cannot add end date to floating task without start date.";
 	private static final String MSG_FAIL_NO_START_TIME = "Error: Cannot add end time to floating task without start time.";
 	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after edit command.";

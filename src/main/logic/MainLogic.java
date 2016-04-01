@@ -41,7 +41,7 @@ public class MainLogic {
 		storage = Storage.getInstance();
 		updateTaskList();
 		setDisplayList(taskList);
-		sortType = 6;
+		sortType = 2;
 		numTasks = 0;
 		commandList = new Stack<Command>();
 		undoedCommandList = new Stack<Command>();
