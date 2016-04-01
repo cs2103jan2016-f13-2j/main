@@ -18,8 +18,8 @@ public class Sort implements Command {
 	private static final String MSG_FAIL_INVALID_SORT_TYPE = "Error: \"%1$s\" is an invalid sort category.";
 
 	private static final String TYPE_DETAIL = "details";
-	private static final String TYPE_START_DATE = "date/time";
-	private static final String TYPE_START_TIME = "date/time";
+	private static final String TYPE_START_DATE = "date";
+	private static final String TYPE_START_TIME = "time";
 	private static final String TYPE_LOCATION = "location";
 	private static final String TYPE_PRIORITY = "priority";
 
