@@ -13,7 +13,7 @@ public class UserInput {
 	
 	int taskType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
 	//Delete
-	int deleteNumber;
+	ArrayList<int[]> deleteNumber;
 	
 	//Edit
 	ArrayList<Integer> editNumber;
@@ -46,7 +46,7 @@ public class UserInput {
 		details = null;
 		command = null;
 		task = null;
-		deleteNumber = -1;
+		deleteNumber = new ArrayList<int[]>();
 		editNumber = new ArrayList<Integer> ();
 		location = null;
 		sortType = -1;
@@ -87,7 +87,7 @@ public class UserInput {
 		return task;
 	}
 	
-	public int getDeleteNumber() {
+	public ArrayList<int[]> getDeleteNumber() {
 		return deleteNumber;
 	}
 	
@@ -165,8 +165,8 @@ public class UserInput {
 		this.task = task;
 	}
 	
-	public void setDeleteNumber(int number) {
-		deleteNumber = number;
+	public void setDeleteNumber(ArrayList<int[]> list) {
+		deleteNumber = list;
 	}
 	
 	public void setEdit(ArrayList<Integer> list) {
