@@ -30,7 +30,7 @@
                      </columns>
                   </TableView>
                   <Ellipse fill="#424242" layoutX="821.0" layoutY="562.0" radiusX="72.0" radiusY="28.0" stroke="#a1a1a1" strokeType="INSIDE" />
-                  <Label fx:id="todayDate" layoutX="762.0" layoutY="552.0" prefHeight="21.0" prefWidth="118.0" styleClass="label-date" text="Date Label" />
+                  <Label fx:id="todayDate" alignment="CENTER" layoutX="769.0" layoutY="547.0" prefHeight="30.0" prefWidth="105.0" styleClass="label-date" />
                   <TableView fx:id="taskTable" editable="true" layoutY="29.0" prefHeight="227.0" prefWidth="890.0" AnchorPane.bottomAnchor="339.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
                     <columns>
                       <TableColumn fx:id="taskNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />

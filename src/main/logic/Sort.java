@@ -18,8 +18,8 @@ public class Sort implements Command {
 	private static final String MSG_FAIL_INVALID_SORT_TYPE = "Error: \"%1$s\" is an invalid sort category.";
 
 	private static final String TYPE_DETAIL = "details";
-	private static final String TYPE_START_DATE = "date/time";
-	private static final String TYPE_START_TIME = "date/time";
+	private static final String TYPE_START_DATE = "date";
+	private static final String TYPE_START_TIME = "time";
 	private static final String TYPE_LOCATION = "location";
 	private static final String TYPE_PRIORITY = "priority";
 
@@ -46,32 +46,27 @@ public class Sort implements Command {
 			break;
 
 		case 2:	//task date
-		case 10://for display sort which leaves no feedback
-			Collections.sort(taskList, new TaskComparator(6));
+			Collections.sort(taskList, new TaskComparator(2));
 			break;
 
 		case 3:	//task time
+			Collections.sort(taskList, new TaskComparator(3));
+			break;
+
+		case 6:	//task location
+			Collections.sort(taskList, new TaskComparator(6));
+			break;
+
+		case 7:	//task priority
 			Collections.sort(taskList, new TaskComparator(7));
-			break;
-
-		case 8:	//task location
-			Collections.sort(taskList, new TaskComparator(8));
-			break;
-
-		case 9:	//task priority
-			Collections.sort(taskList, new TaskComparator(9));
 			break;
 
 		default:
 			feedback.setMessage(String.format(MSG_FAIL_INVALID_SORT_TYPE, feedback.getSortString()));
 			return;
 		}
-		if (userInput.getSortType() == 10) {
-			feedback.setMessage(null);
-		}
-		else {
-			feedback.setMessage(String.format(MSG_SUCCESS, getSortCategoryString()));
-		}
+		
+		feedback.setMessage(String.format(MSG_SUCCESS, getSortCategoryString()));
 		
 		storage.saveFile();
 
@@ -94,11 +89,11 @@ public class Sort implements Command {
 			type = TYPE_START_TIME;
 			break;
 
-		case 8://location
+		case 6://location
 			type = TYPE_LOCATION;
 			break;
 
-		case 9://priority
+		case 7://priority
 			type = TYPE_PRIORITY;
 			break;
 

@@ -147,7 +147,7 @@ public class TaskOverviewController {
 		allTables.add(eventTable);
 		allTables.add(floatingTable);
 		this.mainApp = mainApp;
-		
+		todayDate.setText(MainLogic.getCurrentDate().getDateString());
 		feedback = Feedback.getInstance();
 		instantFeedback.setText(feedback.getMessage());
 		

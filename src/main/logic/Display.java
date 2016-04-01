@@ -21,7 +21,6 @@ public class Display implements Command {
 	@Override
 	public void execute() {
 		logger.log(Level.INFO, "Command DISPLAY");
-		userInput.setSortType(10);
 		Command command = new Sort(userInput);
 		command.execute();
 		storage.saveFile();		
