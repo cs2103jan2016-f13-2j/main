@@ -54,11 +54,11 @@ public class Sort implements Command {
 			Collections.sort(taskList, new TaskComparator(7));
 			break;
 
-		case 8:	//task location
+		case 6:	//task location
 			Collections.sort(taskList, new TaskComparator(8));
 			break;
 
-		case 9:	//task priority
+		case 7:	//task priority
 			Collections.sort(taskList, new TaskComparator(9));
 			break;
 
@@ -67,7 +67,7 @@ public class Sort implements Command {
 			return;
 		}
 		if (userInput.getSortType() == 10) {
-			feedback.setMessage(null);
+			feedback.setMessage("");
 		}
 		else {
 			feedback.setMessage(String.format(MSG_SUCCESS, getSortCategoryString()));
@@ -94,11 +94,11 @@ public class Sort implements Command {
 			type = TYPE_START_TIME;
 			break;
 
-		case 8://location
+		case 6://location
 			type = TYPE_LOCATION;
 			break;
 
-		case 9://priority
+		case 7://priority
 			type = TYPE_PRIORITY;
 			break;
 
