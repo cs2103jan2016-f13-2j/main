@@ -170,6 +170,7 @@ public class createTask {
 		int indexOfP = 0;
 		String detail;
 		String dateAndTime;
+		String endDateAndTime;
 		int fre = getFrequency(info.get(1));
 		task.setRecurFrequency(fre);
 		task.setRecurTime(Integer.parseInt(info.get(indexOfFor+1)));
@@ -210,6 +211,60 @@ public class createTask {
 				task.setPriority(3);
 			}
 
+		} else if(info.contains(FROM)){
+			int indexOfFrom = info.indexOf(FROM);
+			int indexOfTo = info.indexOf(TO);
+			detail = getDetail(info,2,indexOfFrom);
+			dateAndTime = info.get(indexOfFrom+1);
+			endDateAndTime = info.get(indexOfTo+1);
+			if(info.contains(AT)){
+				int indexOfAt = info.indexOf(AT);
+				Time startTime = getTime(dateAndTime);
+				Date startDate = getDate(dateAndTime);
+				Time endTime = getTime(endDateAndTime);
+				Date endDate = getDate(endDateAndTime);
+				if(info.contains(PRIORITY)){
+					indexOfP = info.indexOf(PRIORITY);
+					String priority = info.get(indexOfP+1);
+					String location = getLocation(info,indexOfAt+1,indexOfP);
+					task.setTaskLocation(location);
+					task.setPriority(getPriority(priority));
+				} else {
+					indexOfP = indexOfFor;
+					task.setPriority(3);
+					String location = getLocation(info,indexOfAt+1,indexOfFor);
+					task.setTaskLocation(location);
+				}	
+				task.setTaskName(taskName);
+				task.setTaskDetails(detail);
+				task.setTaskStartDate(startDate);
+				task.setTaskStartTime(startTime);
+				task.setTaskEndDate(endDate);
+				task.setTaskEndTime(endTime);
+				
+				//System.out.println(location);
+				task.setTaskType(1);
+			} else {
+				Time startTime = getTime(dateAndTime);
+				Date startDate = getDate(dateAndTime);
+				Time endTime = getTime(endDateAndTime);
+				Date endDate = getDate(endDateAndTime);
+				task.setTaskName(taskName);
+				task.setTaskDetails(detail);
+				task.setTaskStartDate(startDate);
+				task.setTaskStartTime(startTime);
+				task.setTaskEndDate(endDate);
+				task.setTaskEndTime(endTime);
+				task.setTaskType(1);
+				if(info.contains(PRIORITY)){
+					indexOfP = info.indexOf(PRIORITY);
+					String priority = info.get(indexOfP+1);
+					task.setPriority(getPriority(priority));
+				} else {
+					indexOfP = indexOfFor;
+					task.setPriority(3);
+				}	
+			}
 		} else {
 			if(info.contains(AT)){
 				int indexOfAt = info.indexOf(AT);
@@ -236,9 +291,8 @@ public class createTask {
 				task.setTaskType(2);
 			}
 		}
-		
+	
 		task.setRecurring(true);
-
 		return task;
 	}
 	
