@@ -16,9 +16,8 @@
                <children>
                   <Label layoutY="-1.0" text="Deadlines" />
                   <TextField fx:id="commandText" layoutX="22.0" layoutY="551.0" onAction="#onEnter" prefHeight="37.0" prefWidth="719.0" AnchorPane.topAnchor="551.0" />
-                  <Label layoutY="261.0" text="Events" />
-                  <Label fx:id="instantFeedback" layoutX="26.0" layoutY="526.0" prefHeight="25.0" prefWidth="712.0" styleClass="label-feedback" textAlignment="CENTER" />
-                  <TableView fx:id="eventTable" layoutX="5.0" layoutY="284.0" prefHeight="230.0" prefWidth="890.0" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="284.0">
+                  <Label fx:id="instantFeedback" layoutX="26.0" layoutY="521.0" prefHeight="25.0" prefWidth="712.0" styleClass="label-feedback" textAlignment="CENTER" />
+                  <TableView fx:id="eventTable" layoutY="290.0" prefHeight="227.0" prefWidth="890.0" AnchorPane.bottomAnchor="84.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="290.0">
                      <columns>
                         <TableColumn fx:id="eventNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="eventPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
@@ -32,7 +31,7 @@
                   </TableView>
                   <Ellipse fill="#424242" layoutX="821.0" layoutY="562.0" radiusX="72.0" radiusY="28.0" stroke="#a1a1a1" strokeType="INSIDE" />
                   <Label fx:id="todayDate" layoutX="762.0" layoutY="552.0" prefHeight="21.0" prefWidth="118.0" styleClass="label-date" text="Date Label" />
-                  <TableView fx:id="taskTable" editable="true" layoutY="29.0" prefHeight="230.0" prefWidth="890.0" AnchorPane.bottomAnchor="340.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+                  <TableView fx:id="taskTable" editable="true" layoutY="29.0" prefHeight="227.0" prefWidth="890.0" AnchorPane.bottomAnchor="339.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
                     <columns>
                       <TableColumn fx:id="taskNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="taskPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
@@ -42,6 +41,7 @@
                         <TableColumn fx:id="taskLocationColumn" editable="false" maxWidth="1.7976931348623157E308" prefWidth="301.0" resizable="false" sortable="false" text="Location" />
                     </columns>
                   </TableView>
+                  <Label layoutY="260.0" text="Events" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
