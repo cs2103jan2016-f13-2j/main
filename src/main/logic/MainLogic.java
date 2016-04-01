@@ -54,15 +54,10 @@ public class MainLogic {
 		success = true;
 		try {
 			initializeMainLogic();
-			System.out.println("1");
 			setUserInput(input);
-			System.out.println("2");
 			runParser();
-			System.out.println("3");
 			createCommandObject();
-			System.out.println("4");
 			executeCommand();
-			System.out.println("5");
 			updateTaskList();
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "MainLogic ERROR");

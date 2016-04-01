@@ -30,7 +30,7 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getPriority() - task1.getPriority();
 			}
 		}
-		case 6: {	//task date
+		case 2: {	//task date
 			if (task0.getTaskStartDate() == null) {
 				return 1;
 			}
@@ -60,7 +60,7 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getTaskStartTime().compareTo(task1.getTaskStartTime());
 			}
 		}
-		case 7: {	//task time
+		case 3: {	//task time
 			if (task0.getTaskStartTime() == null) {
 				return 1;
 			}
@@ -77,7 +77,7 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
 			}
 		}
-		case 8: {	//task location
+		case 6: {	//task location
 			if (task0.getTaskLocation()== null) {
 				return 1;
 			}
@@ -94,7 +94,7 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
 			}
 		}
-		case 9: { 	//task priority
+		case 7: { 	//task priority
 			if (task0.getPriority() != task1.getPriority()) {
 				return task0.getPriority() - task1.getPriority();	
 			}
