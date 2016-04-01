@@ -147,8 +147,8 @@ public class UserInput {
 		deleteNumber = number;
 	}
 	
-	public void setEdit(int n) {
-		editNumber.add(n);
+	public void setEdit(ArrayList<Integer> list) {
+		editNumber = list;
 	}
 	
 	public void setLocation(String location){
