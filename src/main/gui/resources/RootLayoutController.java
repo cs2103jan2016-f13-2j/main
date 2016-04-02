@@ -35,6 +35,8 @@ public class RootLayoutController {
     private void handleExit() {
         System.exit(0);
     }
+
+    
     
     /**
      * Minimises the application.

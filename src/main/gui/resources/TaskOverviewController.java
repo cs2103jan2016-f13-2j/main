@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import com.sun.javafx.scene.control.skin.TableViewSkinBase;
 
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +17,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import main.gui.MainApp;
 import main.logic.MainLogic;
@@ -26,6 +31,11 @@ public class TaskOverviewController {
 	private static final String CMD_DISPLAY = "display";
 	
 	public boolean x = true;
+	
+	private Boolean controlPressed = false;
+    private Boolean zPressed = false;
+    private Boolean yPressed = false;
+    private Boolean qPressed = false;
 	
 	@FXML
 	private TableView<Task> taskTable;
@@ -150,15 +160,11 @@ public class TaskOverviewController {
 		todayDate.setText(MainLogic.getCurrentDate().getDateString());
 		feedback = Feedback.getInstance();
 		instantFeedback.setText(feedback.getMessage());
-		
 		// Add observable list data to the table
 		getTaskListFromFile();
 		for (int i = 0; i < totalList.size(); i++) {
 		allTables.get(i).setItems(totalList.get(i));
 		}
-		
-		
-	
 		
 		taskPNumberColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
@@ -188,7 +194,6 @@ public class TaskOverviewController {
 		        }
 		    };
 		});
-		
 		
 		taskDateColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
@@ -228,9 +233,6 @@ public class TaskOverviewController {
 		        }
 		    };
 		});
-		
-		
-
 		
 		eventPNumberColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
@@ -289,6 +291,13 @@ public class TaskOverviewController {
 		        }
 		    };
 		});
+		//Eeshuan, this part reads value as things are typed in
+		commandText.textProperty().addListener((observable, oldValue, newValue) -> {
+		    System.out.println("TextField Text Changed (newValue: " + newValue + ")");
+		});
+	//	commandText.setOnAction((event) -> {
+	//		onEnter();
+	//	});
 	}
 	
 	
@@ -367,7 +376,46 @@ public class TaskOverviewController {
 		
 		mainApp.showTaskOverview(); 
 	}    
+	
+	
+	
+	@FXML
+	void onKeyPressed(KeyEvent keyEvent) {
+	  if (keyEvent.getCode() == KeyCode.CONTROL) { 
+	    System.out.print("ctrl pressed");
+	    controlPressed = true;
+      } else if (keyEvent.getCode() == KeyCode.Z) {
+          zPressed = true;
+      } else if (keyEvent.getCode() == KeyCode.Y) {
+          yPressed = true;
+      } else if (keyEvent.getCode() == KeyCode.Q) {
+          qPressed = true;
+      }
+	  if(controlPressed && zPressed){
+		  commandText.setText("undo");
+		  onEnter();
+	  }
+	  if(controlPressed && yPressed){
+		  commandText.setText("redo");
+		  onEnter();
+	  }
+	  if(controlPressed && qPressed){
+		  System.exit(0);
+	  }
+	}
 
+	@FXML
+	void onKeyReleased(KeyEvent keyEvent) {
+	  if (keyEvent.getCode() == KeyCode.CONTROL) { 
+	    controlPressed = false;
+      } else if (keyEvent.getCode() == KeyCode.Z) {
+          zPressed = false;
+      } else if (keyEvent.getCode() == KeyCode.Y) {
+          yPressed = false;
+      } else if (keyEvent.getCode() == KeyCode.Q) {
+          qPressed = false;
+      }
+	}
 	/**
 	 * Fills all text fields to show details about the task.
 	 * If the specified task is null, all text fields are cleared.

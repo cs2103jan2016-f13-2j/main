@@ -44,20 +44,7 @@ public class MainApp extends Application {
     /**
      * Constructor
      */
-    public MainApp() {
-        // Add some sample data
-        /*
-    	taskData.add(new Task("wash hand", "Muster"));
-        taskData.add(new Task("wash leg", "Mueller"));
-        taskData.add(new Task("wash clothes", "Kurz"));
-        taskData.add(new Task("wash car", "Meier"));
-        taskData.add(new Task("wash nose", "Meyer"));
-        taskData.add(new Task("wash hair", "Kunz"));
-        taskData.add(new Task("wash shoe", "Best"));
-        taskData.add(new Task("wash toilet", "Meier"));
-        taskData.add(new Task("do work", "Mueller"));
-        */
-        
+    public MainApp() {       
     }
 
     /**
