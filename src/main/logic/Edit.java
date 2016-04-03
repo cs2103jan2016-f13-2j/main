@@ -131,8 +131,10 @@ public class Edit implements Command {
 		
 		taskList.remove(taskToEdit);
 		taskList.add(newTask);
-		displayList.remove(taskToEdit);
-		displayList.add(newTask);
+		if (!displayList.equals(taskList)) {
+			displayList.remove(taskToEdit);
+			displayList.add(newTask);
+		}
 		userInput.setTask(newTask);
 	}
 
@@ -143,8 +145,10 @@ public class Edit implements Command {
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		taskList.remove(userInput.getTask());
 		taskList.add(userInput.getTaskToEdit());
-		displayList.remove(userInput.getTask());
-		displayList.add(userInput.getTaskToEdit());
+		if (!displayList.equals(taskList)) {
+			displayList.remove(userInput.getTask());
+			displayList.add(userInput.getTaskToEdit());
+		}
 	}
 
 	@Override
@@ -154,7 +158,9 @@ public class Edit implements Command {
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		taskList.remove(userInput.getTaskToEdit());
 		taskList.add(userInput.getTask());
-		displayList.remove(userInput.getTaskToEdit());
-		displayList.add(userInput.getTask());
+		if (!displayList.equals(taskList)) {
+			displayList.remove(userInput.getTaskToEdit());
+			displayList.add(userInput.getTask());
+		}
 	}
 }

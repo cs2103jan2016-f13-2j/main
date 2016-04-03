@@ -36,8 +36,6 @@ public class UserInput {
 	//set 
 	String directory;
 	
-	
-	
 	//Constructors
 	public UserInput(String raw) {
 		rawInput = raw;

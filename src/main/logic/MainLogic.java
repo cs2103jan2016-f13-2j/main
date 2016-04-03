@@ -112,12 +112,12 @@ public class MainLogic {
 			command = new Add(userInput);
 			commandList.push(command);
 			clearUndoStack();
+			displayList = storage.getTaskList();
 			break;
 		}
 		
 		case "home": {
-			ArrayList<Task> list = copyList();
-			displayList = list;
+			displayList = copyList();
 			break;
 		}
 		
@@ -134,6 +134,10 @@ public class MainLogic {
 		case "set": {
 			storage.changeDirectory(userInput.getDirectory());
 			break;
+		}
+		
+		case "show": {
+			//showList(userInput);
 		}
 		
 		default: {
@@ -163,7 +167,7 @@ public class MainLogic {
 	}
 
 	private static void updateTaskList() {
-		taskList = storage.getTaskList();	
+		taskList = storage.getTaskList();
 	}
 	
 	private static String getCommand() {
@@ -197,7 +201,6 @@ public class MainLogic {
 			if (task.getTaskType() == userInput.getTaskType()) {
 				count++;
 				 if(count == userInput.getEditNumber().get(0)) {
-					System.out.println(task.getTaskDetails());
 					return task;
 				 }
 			}
@@ -222,7 +225,6 @@ public class MainLogic {
 				if (task.getTaskType() == taskType) {
 					count++;
 					 if(count == taskNumber) {
-						System.out.println(task.getTaskDetails());
 						list.add(task);
 					 }
 				}
@@ -273,29 +275,43 @@ public class MainLogic {
 			Task task = displayList.get(i);
 			setCurrentTime();
 			setCurrentDate();
+			Calendar cal = Calendar.getInstance();
 			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(currentDate) < 0) {
 				if (task.isRecurring() && task.getRecurTime() > 0) {
 					task.setRecurTime(task.getRecurTime() - 1);
 					Date date = task.getTaskStartDate();
+					cal.set(date.getYear(), date.getMonth(), date.getDay());
+					cal.add(Calendar.DAY_OF_MONTH, 1);
 					switch (task.getRecurFrequency()) {
 					case 1: {	//daily
-						date.setDay(date.getDay() + 1);
+						cal.add(Calendar.DAY_OF_MONTH, 1);
+						task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+															cal.get(Calendar.MONTH), 
+																cal.get(Calendar.YEAR)));
 						break;
 					}
 					case 2: {	//weekly
-						date.setDay(date.getDay() + 7);
+						cal.add(Calendar.DAY_OF_MONTH, 7);
+						task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+															cal.get(Calendar.MONTH), 
+																cal.get(Calendar.YEAR)));
 						break;
 					}
 					case 3: {	//monthly
-						date.setMonth(date.getMonth() + 1);
+						cal.add(Calendar.MONTH, 1);
+						task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+															cal.get(Calendar.MONTH), 
+																cal.get(Calendar.YEAR)));
 						break;
 					}
 					case 4: {	//yearly
-						date.setYear(date.getYear() + 1);
+						cal.add(Calendar.YEAR, 1);
+						task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+															cal.get(Calendar.MONTH), 
+																cal.get(Calendar.YEAR)));
 						break;
 					}
 					}
-					task.setTaskStartDate(date);
 				}
 				
 				else {
@@ -311,25 +327,38 @@ public class MainLogic {
 					if (task.isRecurring() && task.getRecurTime() > 0) {
 						task.setRecurTime(task.getRecurTime() - 1);
 						Date date = task.getTaskStartDate();
+						cal.set(date.getYear(), date.getMonth(), date.getDay());
+						cal.add(Calendar.DAY_OF_MONTH, 1);
 						switch (task.getRecurFrequency()) {
 						case 1: {	//daily
-							date.setDay(date.getDay() + 1);
+							cal.add(Calendar.DAY_OF_MONTH, 1);
+							task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+																cal.get(Calendar.MONTH), 
+																	cal.get(Calendar.YEAR)));
 							break;
 						}
 						case 2: {	//weekly
-							date.setDay(date.getDay() + 7);
+							cal.add(Calendar.DAY_OF_MONTH, 7);
+							task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+																cal.get(Calendar.MONTH), 
+																	cal.get(Calendar.YEAR)));
 							break;
 						}
 						case 3: {	//monthly
-							date.setMonth(date.getMonth() + 1);
+							cal.add(Calendar.MONTH, 1);
+							task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+																cal.get(Calendar.MONTH), 
+																	cal.get(Calendar.YEAR)));
 							break;
 						}
 						case 4: {	//yearly
-							date.setYear(date.getYear() + 1);
+							cal.add(Calendar.YEAR, 1);
+							task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+																cal.get(Calendar.MONTH), 
+																	cal.get(Calendar.YEAR)));
 							break;
 						}
 						}
-						task.setTaskStartDate(date);
 					}
 				}
 				
@@ -357,7 +386,7 @@ public class MainLogic {
 		newList.add(eventList);
 		newList.add(floatList);
 		newList.add(deadlineList);
-		
+		storage.saveFile();
 		return newList;
 	}
 	
