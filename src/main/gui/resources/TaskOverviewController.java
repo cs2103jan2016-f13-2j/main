@@ -30,12 +30,11 @@ public class TaskOverviewController {
 	
 	private static final String CMD_DISPLAY = "display";
 	
-	public boolean x = true;
-	
 	private Boolean controlPressed = false;
     private Boolean zPressed = false;
     private Boolean yPressed = false;
     private Boolean qPressed = false;
+
 	
 	@FXML
 	private TableView<Task> taskTable;
@@ -223,8 +222,8 @@ public class TaskOverviewController {
 		            	
 		                setText(item);
 		                if (expired) {
-		                    setTextFill(Color.BLACK);
-		                    setStyle("-fx-background-color: transparent, derive(#DCDCDC,20%);");
+		                    setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: transparent, derive(#000000,20%);");
 						} else {
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
@@ -360,20 +359,10 @@ public class TaskOverviewController {
 	 */
 	public void onEnter(){
 		String command = commandText.getText(); //string received from user.
-		/**
-		if(x) {
-		instantFeedback.setText("please enter a valid command");
-		x = false;
-		} else {
-			instantFeedback.setText("Error, : " +command+ " not entered");
-			x = true;
-		}
-		/**/
 		commandText.setText("");
 		//System.out.println(command);
 		UserInput userInput = new UserInput(command);
-		MainLogic.run(userInput);
-		
+		MainLogic.run(userInput);	
 		mainApp.showTaskOverview(); 
 	}    
 	
@@ -390,6 +379,12 @@ public class TaskOverviewController {
           yPressed = true;
       } else if (keyEvent.getCode() == KeyCode.Q) {
           qPressed = true;
+      } else if (keyEvent.getCode() == KeyCode.F11) {
+          mainApp.showHelpOverview();
+      } else if (keyEvent.getCode() == KeyCode.F12) {
+          mainApp.showCompletedOverview();
+      } else if (keyEvent.getCode() == KeyCode.F1) {
+          mainApp.getPrimaryStage().toBack();
       }
 	  if(controlPressed && zPressed){
 		  commandText.setText("undo");
@@ -413,31 +408,7 @@ public class TaskOverviewController {
       } else if (keyEvent.getCode() == KeyCode.Y) {
           yPressed = false;
       } else if (keyEvent.getCode() == KeyCode.Q) {
-          qPressed = false;
+    	  qPressed = false;
       }
 	}
-	/**
-	 * Fills all text fields to show details about the task.
-	 * If the specified task is null, all text fields are cleared.
-	 * 
-	 * @param Task the task or null
-	 * 
-	 * Unused at the moment.
-	 */
-	/**
-	private void showTaskDetails(Task task) {
-		if (task != null) {
-			// Fill the labels with info from the task object.
-			taskNameLabel.setText(task.getTaskName());
-			taskDetailsLabel.setText(task.getTaskDetails());
-
-
-		} else {
-			// task is null, remove all the text.
-			taskNameLabel.setText("");
-			taskDetailsLabel.setText("");
-
-		}
-	}
-	/**/
 }

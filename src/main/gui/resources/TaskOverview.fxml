@@ -7,27 +7,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.TaskOverviewController">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../LightTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.TaskOverviewController">
    <children>
       <BorderPane prefHeight="609.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="608.0" prefWidth="907.0" styleClass="background" BorderPane.alignment="CENTER">
                <children>
-                  <Label layoutY="-1.0" text="Deadlines" />
                   <TextField fx:id="commandText" layoutX="10.0" layoutY="550.0" onAction="#onEnter" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="37.0" prefWidth="745.0" />
-                  <TableView fx:id="eventTable" layoutY="300.0" prefHeight="227.0" prefWidth="890.0" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
-                     <columns>
-                        <TableColumn fx:id="eventNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
-                        <TableColumn fx:id="eventPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
-                        <TableColumn fx:id="eventDetailsColumn" prefWidth="244.00003051757812" sortable="false" text="Event Details" />
-                        <TableColumn fx:id="eventStartDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="Start Date" />
-                        <TableColumn fx:id="eventStartTimeColumn" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="Start Time" />
-                        <TableColumn fx:id="eventEndDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="End Date" />
-                        <TableColumn fx:id="eventEndTimeColumn" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="End Time" />
-                        <TableColumn fx:id="eventLocationColumn" prefWidth="221.0" resizable="false" sortable="false" text="Location" />
-                     </columns>
-                  </TableView>
-                  <Label fx:id="todayDate" alignment="CENTER" layoutX="769.0" layoutY="554.0" prefHeight="30.0" prefWidth="105.0" styleClass="label-date" />
+                  <Label layoutY="-1.0" text="Deadlines" />
+                  <Label fx:id="todayDate" alignment="CENTER" layoutX="759.0" layoutY="550.0" prefHeight="37.0" prefWidth="137.0" styleClass="label-date" />
+                  <Label fx:id="todayDate1" alignment="CENTER" layoutX="759.0" layoutY="535.0" prefHeight="31.0" prefWidth="137.0" styleClass="label-date" text="Today's Date:" />
                   <TableView fx:id="taskTable" editable="true" layoutY="29.0" prefHeight="256.0" prefWidth="865.0" AnchorPane.bottomAnchor="339.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
                     <columns>
                       <TableColumn fx:id="taskNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
@@ -40,6 +29,18 @@
                   </TableView>
                   <Label layoutY="269.0" text="Events" />
                   <Label fx:id="instantFeedback" layoutX="14.0" layoutY="526.0" prefHeight="25.0" prefWidth="712.0" styleClass="label-feedback" textAlignment="CENTER" />
+                  <TableView fx:id="eventTable" layoutY="300.0" prefHeight="227.0" prefWidth="890.0" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="300.0">
+                     <columns>
+                        <TableColumn fx:id="eventNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
+                        <TableColumn fx:id="eventPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
+                        <TableColumn fx:id="eventDetailsColumn" prefWidth="244.00003051757812" sortable="false" text="Event Details" />
+                        <TableColumn fx:id="eventStartDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="Start Date" />
+                        <TableColumn fx:id="eventStartTimeColumn" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="Start Time" />
+                        <TableColumn fx:id="eventEndDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="End Date" />
+                        <TableColumn fx:id="eventEndTimeColumn" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="End Time" />
+                        <TableColumn fx:id="eventLocationColumn" prefWidth="221.0" resizable="false" sortable="false" text="Location" />
+                     </columns>
+                  </TableView>
                </children>
             </AnchorPane>
          </center>

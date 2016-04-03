@@ -26,9 +26,9 @@
 }
 
 .label-date {
-    -fx-font-size: 13pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
+    -fx-font-size: 15pt;
+    -fx-font-family: "Georgia";
+    -fx-text-fill: black;
     -fx-opacity: 1;
 }
 

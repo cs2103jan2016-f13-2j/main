@@ -17,7 +17,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.gui.resources.HelpOverviewController;
 import main.gui.resources.TaskOverviewController;
+import main.gui.resources.CompletedOverviewController;
 import main.resources.Task;
 
 public class MainApp extends Application {
@@ -28,6 +30,8 @@ public class MainApp extends Application {
 	//Layout file paths
 	private static final String FXML_ROOT_LAYOUT = "resources/RootLayout.fxml";
 	private static final String FXML_TASK_OVERVIEW = "resources/TaskOverview.fxml";
+	private static final String FXML_HELP_OVERVIEW = "resources/HelpOverview.fxml";
+	private static final String FXML_COMPLETED_OVERVIEW = "resources/CompletedOverview.fxml";
 	
 
     private Stage primaryStage;
@@ -66,6 +70,7 @@ public class MainApp extends Application {
         primaryStage.setResizable(false);
         initRootLayout();
         showTaskOverview();
+       // showHelpOverview();
         logger.log(Level.INFO, "UI Opened Successfully.");
     }
 
@@ -110,6 +115,45 @@ public class MainApp extends Application {
         }
     }
 
+    public void showHelpOverview() {
+        try {
+            // Load Task overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource(FXML_HELP_OVERVIEW));
+            AnchorPane helpOverview = (AnchorPane) loader.load();
+
+            // Set task overview into the center of root layout.
+            rootLayout.setCenter(helpOverview);
+
+            // Give the controller access to the main app.
+            HelpOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    public void showCompletedOverview() {
+        try {
+            // Load Task overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource(FXML_COMPLETED_OVERVIEW));
+            AnchorPane completedOverview = (AnchorPane) loader.load();
+
+            // Set task overview into the center of root layout.
+            rootLayout.setCenter(completedOverview);
+
+            // Give the controller access to the main app.
+            CompletedOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     /**
      * Returns the main stage.
      * @return
