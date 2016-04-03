@@ -77,6 +77,7 @@ public class Add implements Command {
 
 	@Override
 	public void undo() {
+		logger.log(Level.INFO, "Command UNDO ADD");
 		taskList = storage.getTaskList();
 		taskList.remove(userInput.getTask());
 		storage.saveFile();
@@ -85,6 +86,7 @@ public class Add implements Command {
 
 	@Override
 	public void redo() {
+		logger.log(Level.INFO, "Command REDO ADD");
 		taskList = storage.getTaskList();
 		taskList.add(userInput.getTask());
 		storage.saveFile();		

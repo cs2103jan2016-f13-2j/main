@@ -17,14 +17,13 @@ public class Search implements Command {
 	private UserInput userInput;
 	private static Storage storage;
 	private static Feedback feedback;
-	private ArrayList<Task> taskList;
 	private static Logger logger = Logger.getLogger("Search");
 
 	public Search(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
 		feedback = Feedback.getInstance();
-		taskList = new ArrayList<Task>();
+		new ArrayList<Task>();
 	}
 
 	@Override
@@ -75,13 +74,11 @@ public class Search implements Command {
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
 		
 	}
 

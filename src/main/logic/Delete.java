@@ -41,8 +41,15 @@ public class Delete implements Command {
 		
 		logger.log(Level.INFO, "Command DELETE");
 		taskList = storage.getTaskList();
-		success = true;
+		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		
+		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
+			Task task = userInput.getTasksToDelete().get(i);
+			taskList.remove(task);
+			displayList.remove(task);
+		}
+		
+		success = true;
 		
 		if (!storage.saveFile()) {
 			feedback.setMessage(MSG_FAIL_FILE_SAVE);
@@ -53,7 +60,6 @@ public class Delete implements Command {
 		else {
 			feedback.setMessage(String.format(MSG_FAIL_INDEX_OOB, getTaskTypeString(), userInput.getDeleteNumber()));
 		}
-		
 	}
 	
 	private String getTaskTypeString() {
@@ -86,15 +92,27 @@ public class Delete implements Command {
 
 	@Override
 	public void undo() {
+		logger.log(Level.INFO, "Command UNDO DELETE");
 		taskList = storage.getTaskList();
-		taskList.add(userInput.getTask());
+		ArrayList<Task> displayList = MainLogic.getDisplayList();
+		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
+			Task task = userInput.getTasksToDelete().get(i);
+			taskList.add(task);
+			displayList.add(task);
+		}
 		storage.saveFile();
 	}
 
 	@Override
 	public void redo() {
+		logger.log(Level.INFO, "Command REDO DELETE");
 		taskList = storage.getTaskList();
-		taskList.remove(userInput.getTask());
+		ArrayList<Task> displayList = MainLogic.getDisplayList();
+		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
+			Task task = userInput.getTasksToDelete().get(i);
+			taskList.remove(task);
+			displayList.remove(task);
+		}
 		storage.saveFile();
 	}
 }

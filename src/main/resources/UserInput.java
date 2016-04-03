@@ -14,6 +14,7 @@ public class UserInput {
 	int taskType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
 	//Delete
 	ArrayList<int[]> deleteNumber;
+	ArrayList<Task> taskToDelete;
 	
 	//Edit
 	ArrayList<Integer> editNumber;
@@ -25,6 +26,7 @@ public class UserInput {
 	String details;
 	boolean complete;
 	int priority;
+	Task taskToEdit;
 	
 	//Search and sort
 	String searchTerm;
@@ -134,6 +136,14 @@ public class UserInput {
 		return directory;
 	}
 	
+	public ArrayList<Task> getTasksToDelete() {
+		return taskToDelete;
+	}
+	
+	public Task getTaskToEdit() {
+		return taskToEdit;
+	}
+	
 	
 	//Setters
 	public void setDirectory(String path){
@@ -207,6 +217,15 @@ public class UserInput {
 	
 	public void setTaskList(ArrayList<Task> taskList) {
 		this.taskList = taskList;
+	}
+	
+	public void setTaskToEdit(Task task) {
+		taskToEdit = task;
+	}
+
+	public void setTaskToDelete(ArrayList<Task> list) {
+		taskToDelete = list;
+		
 	}
 
 }

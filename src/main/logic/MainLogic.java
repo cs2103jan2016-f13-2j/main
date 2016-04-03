@@ -77,16 +77,14 @@ public class MainLogic {
 			break;
 		}
 		case "delete": {
-			userInput.setTask(findTask());
-			displayList.remove(findTask());
+			userInput.setTaskToDelete(findDeleteTask());
 			command = new Delete(userInput);
 			commandList.push(command);
 			clearUndoStack();
 			break;
 		}
 		case "edit": {
-			userInput.setTask(findTask());
-			displayList.remove(findTask());
+			userInput.setTaskToEdit(findEditTask());
 			command = new Edit(userInput);
 			commandList.push(command);
 			clearUndoStack();
@@ -118,7 +116,8 @@ public class MainLogic {
 		}
 		
 		case "home": {
-			displayList = storage.getTaskList();
+			ArrayList<Task> list = copyList();
+			displayList = list;
 			break;
 		}
 		
@@ -191,20 +190,55 @@ public class MainLogic {
 		}
 	}
 	
-	private static Task findTask() {
+	private static Task findEditTask() {
 		int count = 0;
-		taskList = displayList;
-		for (int i=0; i<taskList.size(); i++) {
-			Task task = taskList.get(i);
+		for (int i=0; i<displayList.size(); i++) {
+			Task task = displayList.get(i);
 			if (task.getTaskType() == userInput.getTaskType()) {
 				count++;
-				 if(count == userInput.getDeleteNumber()) {
-					 return taskList.get(i);
+				 if(count == userInput.getEditNumber().get(0)) {
+					System.out.println(task.getTaskDetails());
+					return task;
 				 }
 			}
 		}
 		
 		return null;
+	}
+	
+	private static ArrayList<Task> findDeleteTask() {
+		int count;
+		ArrayList<Task> list = new ArrayList<Task>();
+		int taskType = 0;
+		int taskNumber = 0;
+		
+		for (int i=0; i<userInput.getDeleteNumber().size(); i++) {
+			count = 0;
+			taskType = userInput.getDeleteNumber().get(i)[0];
+			taskNumber = userInput.getDeleteNumber().get(i)[1];
+			
+			for (int j=0; j<displayList.size(); j++) {
+				Task task = displayList.get(j);
+				if (task.getTaskType() == taskType) {
+					count++;
+					 if(count == taskNumber) {
+						System.out.println(task.getTaskDetails());
+						list.add(task);
+					 }
+				}
+			}
+		}
+		
+		return list;
+	}
+	
+	private static ArrayList<Task> copyList() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0; i<storage.getTaskList().size(); i++) {
+			list.add(storage.getTaskList().get(i));
+		}
+		
+		return list;
 	}
 	
 	private static void setCurrentTime() {
@@ -343,5 +377,76 @@ public class MainLogic {
 	
 	public static void setDisplayList(ArrayList<Task> newList) {
 		displayList = newList;
+	}
+	
+	public static ArrayList<Task> getDisplayList() {
+		return displayList;
+	}
+	
+	//Lists
+	public static ArrayList<Task> getCompletedTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (task.isComplete()) {
+				list.add(task);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static ArrayList<Task> getIncompletedTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (!task.isComplete()) {
+				list.add(task);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static ArrayList<Task> getTodayTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (task.getTaskStartDate().compareTo(getCurrentDate()) == 0) {
+				list.add(task);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static ArrayList<Task> getExpiredTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (!task.isExpired()) {
+				list.add(task);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static ArrayList<Task> getWeekTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, 7);
+		Date date = new Date(cal.get(Calendar.DAY_OF_MONTH),
+								cal.get(Calendar.MONTH), 
+									cal.get(Calendar.YEAR));
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (task.getTaskStartDate().compareTo(getCurrentDate()) >= 0 ||
+					task.getTaskStartDate().compareTo(date) < 0) {
+				list.add(task);
+			}
+		}
+		
+		return list;
 	}
 }
