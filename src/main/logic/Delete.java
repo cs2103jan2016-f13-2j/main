@@ -98,7 +98,9 @@ public class Delete implements Command {
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task task = userInput.getTasksToDelete().get(i);
 			taskList.add(task);
-			displayList.add(task);
+			if (!displayList.equals(taskList)) {
+				displayList.add(task);
+			}
 		}
 		storage.saveFile();
 	}
