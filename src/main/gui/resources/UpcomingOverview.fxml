@@ -45,15 +45,15 @@
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="120.0" layoutY="6.0" onMouseClicked="#onClickedAllTask" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="245.0" layoutY="6.0" onMouseClicked="#onClickedToday" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ffc41f" height="36.0" layoutX="370.0" layoutY="6.0" onMouseClicked="#onClickedUpcoming" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="495.0" layoutY="6.0" onMouseClicked="#onClickedComplete" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="745.0" layoutY="6.0" onMouseClicked="#onClickedOverdue" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="620.0" layoutY="6.0" onMouseClicked="#onClickedIncomplete" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
-                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="745.0" layoutY="6.0" onMouseClicked="#onClickedHelp" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Label layoutX="138.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="All Task (F1)" />
                   <Label layoutX="379.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Upcoming (F3)" />
-                  <Label layoutX="769.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Help (F12)" />
-                  <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Today (F2)" />
-                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="495.0" layoutY="6.0" onMouseClicked="#onClickedComplete" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
-                  <Label layoutX="626.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Incomplete (F5)" />
                   <Label layoutX="502.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Completed (F4)" />
+                  <Label layoutX="760.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Overdue (F6)" />
+                  <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Today (F2)" />
+                  <Label layoutX="626.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Incomplete (F5)" />
                </children>
             </AnchorPane>
          </center>
@@ -68,6 +68,8 @@
                      </columns>
                   </TableView>
                   <Label layoutX="7.0" layoutY="17.0" text="Floating Task" />
+                                    <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="206.0" layoutY="6.0" onMouseClicked="#onClickedHelp" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="76.0" />
+                  <Label layoutX="210.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Help (F12)" />
                </children>
             </AnchorPane>
          </right>

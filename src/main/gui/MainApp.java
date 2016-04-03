@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import main.gui.resources.CompleteOverviewController;
 import main.gui.resources.HelpOverviewController;
 import main.gui.resources.IncompleteOverviewController;
+import main.gui.resources.OverdueOverviewController;
 import main.gui.resources.TaskOverviewController;
 import main.gui.resources.TodayOverviewController;
 import main.gui.resources.UpcomingOverviewController;
@@ -34,6 +35,7 @@ public class MainApp extends Application {
 	private static final String FXML_INCOMPLETE_OVERVIEW = "resources/IncompleteOverview.fxml";
 	private static final String FXML_TODAY_OVERVIEW = "resources/TodayOverview.fxml";
 	private static final String FXML_UPCOMING_OVERVIEW = "resources/UpcomingOverview.fxml";
+	private static final String FXML_OVERDUE_OVERVIEW = "resources/OverdueOverview.fxml";
 	
 
     private Stage primaryStage;
@@ -213,6 +215,24 @@ public class MainApp extends Application {
         }
     }
     
+    public void showOverdueOverview() {
+        try {
+            // Load Task overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource(FXML_OVERDUE_OVERVIEW));
+            AnchorPane overdueOverview = (AnchorPane) loader.load();
+
+            // Set task overview into the center of root layout.
+            rootLayout.setCenter(overdueOverview);
+
+            // Give the controller access to the main app.
+            OverdueOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Returns the main stage.
      * @return

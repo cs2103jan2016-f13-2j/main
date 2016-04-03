@@ -26,7 +26,7 @@ import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.UserInput;
 
-public class CompleteOverviewController {
+public class OverdueOverviewController {
 	
 	private static final String CMD_DISPLAY = "display";
 	
@@ -110,7 +110,7 @@ public class CompleteOverviewController {
 	 * The constructor.
 	 * The constructor is called before the initialize() method.
 	 */
-	public CompleteOverviewController() {
+	public OverdueOverviewController() {
 	}
 
 	/**

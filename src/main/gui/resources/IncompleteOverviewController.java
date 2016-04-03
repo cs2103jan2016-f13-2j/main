@@ -381,6 +381,8 @@ public class IncompleteOverviewController {
           qPressed = true;
       } else if (keyEvent.getCode() == KeyCode.F12) {
           mainApp.showHelpOverview();
+      } else if (keyEvent.getCode() == KeyCode.F6) {
+          mainApp.showOverdueOverview();
       } else if (keyEvent.getCode() == KeyCode.F5) {
           mainApp.showIncompleteOverview();
       } else if (keyEvent.getCode() == KeyCode.F4) {
@@ -418,6 +420,11 @@ public class IncompleteOverviewController {
       } else if (keyEvent.getCode() == KeyCode.Q) {
     	  qPressed = false;
       }
+	}
+	
+	@FXML 
+	void onClickedOverdue() {
+		mainApp.showOverdueOverview();
 	}
 	
 	@FXML
