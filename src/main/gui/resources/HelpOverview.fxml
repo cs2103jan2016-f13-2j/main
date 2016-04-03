@@ -3,10 +3,22 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" styleClass="background" stylesheets="@../LightTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.HelpOverviewController">
    <children>
       <TextField fx:id="commandText" layoutX="10.0" layoutY="550.0" onAction="#onEnter" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyPressed" prefHeight="37.0" prefWidth="745.0" stylesheets="@../LightTheme.css" />
-      <Label layoutX="577.0" layoutY="-1.0" text="HELP" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ffc41f" height="36.0" layoutX="745.0" layoutY="6.0" onMouseClicked="#onClickedHelp" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+      <Label layoutX="771.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Help (F12)" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="620.0" layoutY="6.0" onMouseClicked="#onClickedIncomplete" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="495.0" layoutY="6.0" onMouseClicked="#onClickedComplete" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="370.0" layoutY="6.0" onMouseClicked="#onClickedUpcoming" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="245.0" layoutY="6.0" onMouseClicked="#onClickedToday" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="120.0" layoutY="6.0" onMouseClicked="#onClickedAllTask" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+      <Label layoutX="138.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="All Task (F1)" />
+      <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Today (F2)" />
+      <Label layoutX="379.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Upcoming (F3)" />
+      <Label layoutX="502.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Completed (F4)" />
+      <Label layoutX="626.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Incomplete (F5)" />
    </children>
 </AnchorPane>

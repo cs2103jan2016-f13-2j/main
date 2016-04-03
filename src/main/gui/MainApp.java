@@ -1,12 +1,8 @@
 package main.gui;
 
-import java.awt.SystemTray;
 import java.io.IOException;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -17,9 +13,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import main.gui.resources.CompleteOverviewController;
 import main.gui.resources.HelpOverviewController;
+import main.gui.resources.IncompleteOverviewController;
 import main.gui.resources.TaskOverviewController;
-import main.gui.resources.CompletedOverviewController;
+import main.gui.resources.TodayOverviewController;
+import main.gui.resources.UpcomingOverviewController;
 import main.resources.Task;
 
 public class MainApp extends Application {
@@ -31,7 +30,10 @@ public class MainApp extends Application {
 	private static final String FXML_ROOT_LAYOUT = "resources/RootLayout.fxml";
 	private static final String FXML_TASK_OVERVIEW = "resources/TaskOverview.fxml";
 	private static final String FXML_HELP_OVERVIEW = "resources/HelpOverview.fxml";
-	private static final String FXML_COMPLETED_OVERVIEW = "resources/CompletedOverview.fxml";
+	private static final String FXML_COMPLETE_OVERVIEW = "resources/CompleteOverview.fxml";
+	private static final String FXML_INCOMPLETE_OVERVIEW = "resources/IncompleteOverview.fxml";
+	private static final String FXML_TODAY_OVERVIEW = "resources/TodayOverview.fxml";
+	private static final String FXML_UPCOMING_OVERVIEW = "resources/UpcomingOverview.fxml";
 	
 
     private Stage primaryStage;
@@ -135,18 +137,75 @@ public class MainApp extends Application {
     }
     
     
-    public void showCompletedOverview() {
+    public void showCompleteOverview() {
         try {
             // Load Task overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource(FXML_COMPLETED_OVERVIEW));
-            AnchorPane completedOverview = (AnchorPane) loader.load();
+            loader.setLocation(MainApp.class.getResource(FXML_COMPLETE_OVERVIEW));
+            AnchorPane completeOverview = (AnchorPane) loader.load();
 
             // Set task overview into the center of root layout.
-            rootLayout.setCenter(completedOverview);
+            rootLayout.setCenter(completeOverview);
 
             // Give the controller access to the main app.
-            CompletedOverviewController controller = loader.getController();
+            CompleteOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showIncompleteOverview() {
+        try {
+            // Load Task overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource(FXML_INCOMPLETE_OVERVIEW));
+            AnchorPane incompleteOverview = (AnchorPane) loader.load();
+
+            // Set task overview into the center of root layout.
+            rootLayout.setCenter(incompleteOverview);
+
+            // Give the controller access to the main app.
+            IncompleteOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showTodayOverview() {
+        try {
+            // Load Task overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource(FXML_TODAY_OVERVIEW));
+            AnchorPane todayOverview = (AnchorPane) loader.load();
+
+            // Set task overview into the center of root layout.
+            rootLayout.setCenter(todayOverview);
+
+            // Give the controller access to the main app.
+            TodayOverviewController controller = loader.getController();
+            controller.setMainApp(this);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void showUpcomingOverview() {
+        try {
+            // Load Task overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource(FXML_UPCOMING_OVERVIEW));
+            AnchorPane upcomingOverview = (AnchorPane) loader.load();
+
+            // Set task overview into the center of root layout.
+            rootLayout.setCenter(upcomingOverview);
+
+            // Give the controller access to the main app.
+            UpcomingOverviewController controller = loader.getController();
             controller.setMainApp(this);
 
         } catch (IOException e) {

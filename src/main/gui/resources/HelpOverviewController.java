@@ -72,13 +72,29 @@ public class HelpOverviewController {
 	          yPressed = true;
 	      } else if (keyEvent.getCode() == KeyCode.Q) {
 	          qPressed = true;
-	      } else if (keyEvent.getCode() == KeyCode.ESCAPE) {
-	          mainApp.showTaskOverview();
 	      } else if (keyEvent.getCode() == KeyCode.F12) {
-	          mainApp.showCompletedOverview();
-	      }  else if (keyEvent.getCode() == KeyCode.F1) {
+	          mainApp.showHelpOverview();
+	      } else if (keyEvent.getCode() == KeyCode.F5) {
+	          mainApp.showIncompleteOverview();
+	      } else if (keyEvent.getCode() == KeyCode.F4) {
+	          mainApp.showCompleteOverview();
+	      } else if (keyEvent.getCode() == KeyCode.F3) {
+	          mainApp.showUpcomingOverview();
+	      } else if (keyEvent.getCode() == KeyCode.F2) {
+	          mainApp.showTodayOverview();
+	      } else if (keyEvent.getCode() == KeyCode.F1) {
+	          mainApp.showTaskOverview();
+	      } else if (keyEvent.getCode() == KeyCode.F11) {
 	          mainApp.getPrimaryStage().toBack();
 	      }
+		  if(controlPressed && zPressed){
+			  commandText.setText("undo");
+			  onEnter();
+		  }
+		  if(controlPressed && yPressed){
+			  commandText.setText("redo");
+			  onEnter();
+		  }
 		  if(controlPressed && qPressed){
 			  System.exit(0);
 		  }
@@ -95,6 +111,37 @@ public class HelpOverviewController {
 	      } else if (keyEvent.getCode() == KeyCode.Q) {
 	    	  qPressed = false;
 	      }
+		}
+		
+		
+		@FXML
+		void onClickedHelp(){
+			mainApp.showHelpOverview();
+		}
+		
+		@FXML
+		void onClickedAllTask(){
+			mainApp.showTaskOverview();
+		}
+		
+		@FXML
+		void onClickedToday(){
+			mainApp.showTodayOverview();
+		}
+		
+		@FXML
+		void onClickedUpcoming(){
+			mainApp.showUpcomingOverview();
+		}
+		
+		@FXML
+		void onClickedComplete(){
+			mainApp.showCompleteOverview();
+		}
+		
+		@FXML
+		void onClickedIncomplete(){
+			mainApp.showIncompleteOverview();
 		}
 	}
 
