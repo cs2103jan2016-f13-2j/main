@@ -6,6 +6,7 @@ public class UserInput {
 	
 	String rawInput;
 	String command;
+	int tab;//1 for first tab, 2 for second tab etc.
 	
 	//Add
 	Task task;
@@ -31,10 +32,11 @@ public class UserInput {
 	//Search and sort
 	String searchTerm;
 	int sortType;
+	boolean displaySort;
 	ArrayList<Task> taskList;
 	
 	//set 
-	String directory;
+	String path;
 	
 	//Constructors
 	public UserInput(String raw) {
@@ -55,6 +57,29 @@ public class UserInput {
 		priority = 0;
 		taskType = -1;
 		complete = false;
+		displaySort = false;
+	}
+	
+	public UserInput(String raw, int tab) {
+		this.tab = tab;
+		rawInput = raw;
+		startTime = new Time();
+		startDate = new Date();
+		endTime = new Time();
+		endDate = new Date();
+		details = null;
+		command = null;
+		task = null;
+		deleteNumber = new ArrayList<int[]>();
+		editNumber = new ArrayList<Integer> ();
+		location = null;
+		sortType = -1;
+		searchTerm = null;
+		taskList = new ArrayList<Task>();
+		priority = 0;
+		taskType = -1;
+		complete = false;
+		displaySort = false;
 	}
 	
 	
@@ -116,8 +141,6 @@ public class UserInput {
 		return endDate;
 	}
 	
-	
-	
 	public String getSearchTerm() {
 		return searchTerm;
 	}
@@ -130,8 +153,8 @@ public class UserInput {
 		return taskList;
 	}
 	
-	public String getDirectory(){
-		return directory;
+	public String getPath(){
+		return path;
 	}
 	
 	public ArrayList<Task> getTasksToDelete() {
@@ -142,10 +165,19 @@ public class UserInput {
 		return taskToEdit;
 	}
 	
+
+	public boolean getDisplaySort() {
+		return displaySort;
+	}
+
+	public int getTab() {
+		return tab;
+	}
+	
 	
 	//Setters
-	public void setDirectory(String path){
-		this.directory = path;
+	public void setPath(String path){
+		this.path = path;
 	}
 	
 	public void setComplete(boolean c){
@@ -223,7 +255,9 @@ public class UserInput {
 
 	public void setTaskToDelete(ArrayList<Task> list) {
 		taskToDelete = list;
-		
 	}
 
+	public void setDisplaySort(boolean displaySort) {
+		this.displaySort = displaySort;
+	}
 }

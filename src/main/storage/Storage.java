@@ -2,6 +2,7 @@ package main.storage;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,17 +11,28 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import main.resources.Feedback;
 import main.resources.Task;
 
 public class Storage {
 	private static Storage storage;
-	
+	private static Feedback feedback;
 	Logger logger = Logger.getLogger("Storage");
-	//Key must be exactly 16 bytes long.
-	private final String SECURITY_KEY = "maryhadalittlela";
 
+	//String constants
 	private static String FILE_NAME = "task.txt";
-
+	private static String DEFAULT = "default";
+	
+	//Message strings
+	private static String MSG_SUCCESS_IMPORT = "Successfully imported file data!";
+	private static String MSG_SUCCESS_EXPORT = "Successfully exported file data!";
+	private static String MSG_FAIL_FILE_NOT_FOUND = "Error: The specified file does not exist.";
+	private static String MSG_FAIL_FILE_EXIST = "Error: A file with the name \"%1$s\" already exists.";
+	private static String MSG_FAIL_DIRECTORY_NOT_FOUND = "Error: Directory does not exist.";
+	private static String MSG_FAIL_RELATIVE_FILE_PATH = "Error: File path must be absolute. Please specify a valid file path.";
+	private static String MSG_FAIL_READ_FILE = "Error: The specified file could not be read.";
+	private static String MSG_FAIL_WRITE_FILE = "Error: Unable to write to file.";
+	
 	private File taskFile;
 	private ArrayList<Task> taskList;
 
@@ -30,14 +42,14 @@ public class Storage {
 	 */
 
 	private Storage() {
+		feedback = Feedback.getInstance();
 		taskList = new ArrayList<Task>();
 		
 		retreiveFile(FILE_NAME);
-		//decryptTaskFile();
 		readFileToTaskArrayList(taskFile, taskList);
 	}
 	
-	//Public Methods
+	//-----Public Methods-----
 	
 	/**
 	 * Creates a Storage object for use if it doesn't exist.
@@ -52,7 +64,15 @@ public class Storage {
 		return storage;
 	}
 	
+	/**
+	 * Allows access to the taskList.
+	 * @return the taskList object reference.
+	 */
 
+	public ArrayList<Task> getTaskList() {
+		return taskList;
+	}
+	
 	/**
 	 * For testing purposes.
 	 * 
@@ -71,27 +91,75 @@ public class Storage {
 	
 	public boolean saveFile() {
 		boolean result = writeTaskArrayListToFile(taskList, taskFile);
-		//encryptTaskFile();
 		logger.log(Level.INFO, "taskFile saved successfully.");
 		
 		return result;
 	}
+
+	/**
+	 * Imports a file from another location to the default location for use.
+	 * @param filePath : The absolute file path of the target file.
+	 * @return true if import was successful, false otherwise.
+	 */
+	public boolean importFile(String filePath) {
+		File file = new File(filePath);
+		ArrayList<Task> list = new ArrayList<Task>();
+		
+		if (!file.exists()) {
+			feedback.setMessage(MSG_FAIL_FILE_NOT_FOUND);
+			logger.log(Level.INFO, "Import file doesn't exist.");
+			return false;
+		}
+		
+		if (readFileToTaskArrayList(file, list) == false) {
+			logger.log(Level.INFO, "Import read failed.");
+			return false;
+		}
+		
+		taskList = list;
+		
+		if (saveFile() == false) {
+			feedback.setMessage(MSG_FAIL_WRITE_FILE);
+			logger.log(Level.WARNING, "Import write failed.");
+			return false;
+		}
+		
+		feedback.setMessage(MSG_SUCCESS_IMPORT);
+		logger.log(Level.INFO, "Import successful.");
+		return true;
+	}
 	
 	/**
-	 * Allows access to the taskList.
-	 * @return the taskList object reference.
+	 * Exports the task file to the specified file path.
+	 * @param filePath : The absolute path of the target file location
+	 * @return true if export was successful, false otherwise.
 	 */
-
-	public ArrayList<Task> getTaskList() {
-		return taskList;
-	}
-	
-	public void changeDirectory(String directory) {
+	public boolean exportFile(String filePath) {
+		File file = new File(filePath);
 		
+		if (!file.isAbsolute()) {
+			feedback.setMessage(MSG_FAIL_RELATIVE_FILE_PATH);
+			return false;
+		}
+
+		if (file.exists()) {
+			feedback.setMessage(MSG_FAIL_FILE_EXIST);
+			logger.log(Level.INFO, "Export file with same name exists.");
+			return false;
+		}
+		
+		if (writeTaskArrayListToFile(taskList, file) == false) {
+			logger.log(Level.WARNING, "Export write failed.");
+			return false;
+		}
+
+		feedback.setMessage(MSG_SUCCESS_EXPORT);
+		logger.log(Level.INFO, "Export successful.");
+		return true;
 	}
 	
 
-	//Private methods
+	//-----Private methods-----
 	
 	/**
 	 * Retrieves the file object and creates one if it doesn't exist.
@@ -133,14 +201,6 @@ public class Storage {
 		assert(file.exists());
 		return true;
 	}
-
-	private void encryptTaskFile() {
-		FileSecurity.encrypt(taskFile, SECURITY_KEY);
-	}
-
-	private void decryptTaskFile() {
-		FileSecurity.decrypt(taskFile, SECURITY_KEY);
-	}
 	
 	/**
 	 * Reads content of file into list for manipulation by other classes.
@@ -162,6 +222,7 @@ public class Storage {
 			in.close();
 		}
 		catch (IOException | ClassNotFoundException e) {
+			feedback.setMessage(MSG_FAIL_READ_FILE);
 			logger.log(Level.WARNING, "Unable to read from taskFile.");
 			//e.printStackTrace();
 			
@@ -189,9 +250,15 @@ public class Storage {
 			out.writeObject(new EofIndicator());
 			out.close();
 		}
+		catch (FileNotFoundException e) {
+			feedback.setMessage(MSG_FAIL_DIRECTORY_NOT_FOUND);
+			
+			return false;
+		}
 		catch (IOException e) {
+			feedback.setMessage(MSG_FAIL_WRITE_FILE);
 			logger.log(Level.WARNING, "Unable to write to taskFile.");
-			//e.printStackTrace();
+			e.printStackTrace();
 			
 			return false;
 		}

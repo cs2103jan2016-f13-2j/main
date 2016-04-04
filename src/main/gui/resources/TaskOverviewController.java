@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.sun.javafx.scene.control.skin.TableViewSkinBase;
 
+import javafx.animation.FadeTransition;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -20,11 +21,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import main.gui.MainApp;
 import main.logic.MainLogic;
 import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.UserInput;
+
 
 public class TaskOverviewController {
 	
@@ -34,6 +37,7 @@ public class TaskOverviewController {
     private Boolean zPressed = false;
     private Boolean yPressed = false;
     private Boolean qPressed = false;
+
 
 	
 	@FXML
@@ -81,12 +85,9 @@ public class TaskOverviewController {
 	
 	@FXML private Label instantFeedback;
 	
+	@FXML private Label overdueCounter;
+	
 	@FXML private Label todayDate;
-
-	//@FXML
-	//private Label taskNameLabel;
-	//@FXML
-	//private Label taskDetailsLabel;
 
 	@FXML
 	private TextField commandText;
@@ -111,6 +112,7 @@ public class TaskOverviewController {
 	 * The constructor is called before the initialize() method.
 	 */
 	public TaskOverviewController() {
+		
 	}
 
 	/**
@@ -119,6 +121,7 @@ public class TaskOverviewController {
 	 */
 	@FXML
 	private void initialize() {
+
 		// Initialize the task table with the two columns.
 		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		taskPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
@@ -139,6 +142,10 @@ public class TaskOverviewController {
 		floatingNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		floatingPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		floatingDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
+		
+		taskTable.setPlaceholder(new Label("No tasks"));
+		eventTable.setPlaceholder(new Label("No tasks"));
+		floatingTable.setPlaceholder(new Label("No tasks"));
 	}
 
 
@@ -161,6 +168,7 @@ public class TaskOverviewController {
 		instantFeedback.setText(feedback.getMessage());
 		// Add observable list data to the table
 		getTaskListFromFile();
+		overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
 		for (int i = 0; i < totalList.size(); i++) {
 		allTables.get(i).setItems(totalList.get(i));
 		}
@@ -205,6 +213,7 @@ public class TaskOverviewController {
 		                 setStyle("");
 		            } else {
 		            	boolean expired = false;
+		            	boolean tomorrow = false;
 		            	String[] date = item.split("-");
 		            	String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
 		            	if(Integer.parseInt(date[2]) < Integer.parseInt(currDate[2])) {
@@ -215,6 +224,8 @@ public class TaskOverviewController {
 		            		} else if(date[1].equals(currDate[1])) {
 		            			if(Integer.parseInt(date[0]) < Integer.parseInt(currDate[0])) {
 		            				expired = true;
+		            			} else if(Integer.parseInt(date[0]) == Integer.parseInt(currDate[0])+1) {
+		            				tomorrow = true;
 		            			}
 		            		}
 		            		
@@ -227,6 +238,9 @@ public class TaskOverviewController {
 						} else {
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
+		                }
+		                if (tomorrow) {
+		                	setText("Tomorrow");
 		                }
 		            }
 		        }
@@ -300,12 +314,11 @@ public class TaskOverviewController {
 	}
 	
 	
-//convert arraylist to observable list
+	//convert arraylist to observable list
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
 		ArrayList<ArrayList<Task>> temp = MainLogic.getTaskList();
-		
 		numberTaskArrayList(temp); 
 		for (int k = 0; k< totalList.size(); k++){ 
 			for (int j = 0; j < temp.size(); j++) {
@@ -334,6 +347,14 @@ public class TaskOverviewController {
 			}
 		}
 
+	private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
+		int counter=0;
+		for (int i = 0; i < array.size(); i++) {
+			counter += array.get(i).size();
+			}
+		return counter;
+	}
+	
 	/**
 	 * Called when the user clicks on the delete button.
 	 */
@@ -361,7 +382,7 @@ public class TaskOverviewController {
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
 		//System.out.println(command);
-		UserInput userInput = new UserInput(command);
+		UserInput userInput = new UserInput(command, 1);
 		MainLogic.run(userInput);	
 		mainApp.showTaskOverview(); 
 	}    
@@ -395,6 +416,9 @@ public class TaskOverviewController {
           mainApp.showTaskOverview();
       } else if (keyEvent.getCode() == KeyCode.F11) {
           mainApp.getPrimaryStage().toBack();
+      } else if (keyEvent.getCode() == KeyCode.ESCAPE) {
+          commandText.setText("home");
+          onEnter();
       }
 	  if(controlPressed && zPressed){
 		  commandText.setText("undo");

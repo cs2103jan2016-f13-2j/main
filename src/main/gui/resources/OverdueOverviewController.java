@@ -139,6 +139,10 @@ public class OverdueOverviewController {
 		floatingNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		floatingPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		floatingDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
+		
+		taskTable.setPlaceholder(new Label("No tasks"));
+		eventTable.setPlaceholder(new Label("No tasks"));
+		floatingTable.setPlaceholder(new Label("No tasks"));
 	}
 
 
@@ -304,7 +308,7 @@ public class OverdueOverviewController {
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
-		ArrayList<ArrayList<Task>> temp = MainLogic.getTaskList();
+		ArrayList<ArrayList<Task>> temp = MainLogic.getExpiredTasks();
 		
 		numberTaskArrayList(temp); 
 		for (int k = 0; k< totalList.size(); k++){ 
@@ -334,6 +338,15 @@ public class OverdueOverviewController {
 			}
 		}
 
+	private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
+		int counter=0;
+		for (int i = 0; i < array.size(); i++) {
+			ArrayList<Task> temp = array.get(i);
+			counter += temp.size();
+			}
+		return counter;
+	}
+	
 	/**
 	 * Called when the user clicks on the delete button.
 	 */
@@ -361,9 +374,9 @@ public class OverdueOverviewController {
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
 		//System.out.println(command);
-		UserInput userInput = new UserInput(command);
+		UserInput userInput = new UserInput(command, 6);
 		MainLogic.run(userInput);	
-		mainApp.showTaskOverview(); 
+		mainApp.showOverdueOverview(); 
 	}    
 	
 	
@@ -395,6 +408,9 @@ public class OverdueOverviewController {
           mainApp.showTaskOverview();
       } else if (keyEvent.getCode() == KeyCode.F11) {
           mainApp.getPrimaryStage().toBack();
+      } else if (keyEvent.getCode() == KeyCode.ESCAPE) {
+          commandText.setText("home");
+          onEnter();
       }
 	  if(controlPressed && zPressed){
 		  commandText.setText("undo");
