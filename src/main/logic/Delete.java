@@ -16,10 +16,10 @@ public class Delete implements Command {
 	private static final String MSG_FAIL_INDEX_OOB = "Error: No such %1$s task with index %2$d.";
 	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after delete command.";
 	
-	private static final String TYPE_DEADLINE = "Deadline";
-	private static final String TYPE_EVENT = "Event";
-	private static final String TYPE_FLOATING = "Floating";
-	private static final String TYPE_RECURRING = "Recurring";
+	private static final String TYPE_DEADLINE = "deadline";
+	private static final String TYPE_EVENT = "event";
+	private static final String TYPE_FLOATING = "floating";
+	private static final String TYPE_RECURRING = "recurring";
 	
 	
 	private UserInput userInput;

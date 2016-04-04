@@ -24,8 +24,8 @@ public class Storage {
 	private static String DEFAULT = "default";
 	
 	//Message strings
-	private static String MSG_SUCCESS_IMPORT = "Successfully imported file data!";
-	private static String MSG_SUCCESS_EXPORT = "Successfully exported file data!";
+	private static String MSG_SUCCESS_IMPORT = "Successfully imported file data from %1$s";
+	private static String MSG_SUCCESS_EXPORT = "Successfully exported file data from %1$s";
 	private static String MSG_FAIL_FILE_NOT_FOUND = "Error: The specified file does not exist.";
 	private static String MSG_FAIL_FILE_EXIST = "Error: A file with the name \"%1$s\" already exists.";
 	private static String MSG_FAIL_DIRECTORY_NOT_FOUND = "Error: Directory does not exist.";
@@ -124,7 +124,7 @@ public class Storage {
 			return false;
 		}
 		
-		feedback.setMessage(MSG_SUCCESS_IMPORT);
+		feedback.setMessage(String.format(MSG_SUCCESS_IMPORT, filePath));
 		logger.log(Level.INFO, "Import successful.");
 		return true;
 	}
@@ -153,7 +153,7 @@ public class Storage {
 			return false;
 		}
 
-		feedback.setMessage(MSG_SUCCESS_EXPORT);
+		feedback.setMessage(String.format(MSG_SUCCESS_EXPORT, filePath));
 		logger.log(Level.INFO, "Export successful.");
 		return true;
 	}

@@ -83,10 +83,7 @@ public class CompleteOverviewController {
 	
 	@FXML private Label todayDate;
 
-	//@FXML
-	//private Label taskNameLabel;
-	//@FXML
-	//private Label taskDetailsLabel;
+	@FXML private Label overdueCounter;
 
 	@FXML
 	private TextField commandText;
@@ -165,6 +162,7 @@ public class CompleteOverviewController {
 		instantFeedback.setText(feedback.getMessage());
 		// Add observable list data to the table
 		getTaskListFromFile();
+		overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
 		for (int i = 0; i < totalList.size(); i++) {
 		allTables.get(i).setItems(totalList.get(i));
 		}
@@ -338,6 +336,14 @@ public class CompleteOverviewController {
 			}
 		}
 
+	private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
+		int counter=0;
+		for (int i = 0; i < array.size(); i++) {
+			counter += array.get(i).size();
+			}
+		return counter;
+	}
+	
 	/**
 	 * Called when the user clicks on the delete button.
 	 */
@@ -385,10 +391,8 @@ public class CompleteOverviewController {
           qPressed = true;
       } else if (keyEvent.getCode() == KeyCode.F12) {
           mainApp.showHelpOverview();
-      } else if (keyEvent.getCode() == KeyCode.F6) {
-          mainApp.showOverdueOverview();
       } else if (keyEvent.getCode() == KeyCode.F5) {
-          mainApp.showIncompleteOverview();
+          mainApp.showOverdueOverview();
       } else if (keyEvent.getCode() == KeyCode.F4) {
           mainApp.showCompleteOverview();
       } else if (keyEvent.getCode() == KeyCode.F3) {
@@ -457,10 +461,5 @@ public class CompleteOverviewController {
 	@FXML
 	void onClickedComplete(){
 		mainApp.showCompleteOverview();
-	}
-	
-	@FXML
-	void onClickedIncomplete(){
-		mainApp.showIncompleteOverview();
 	}
 }
