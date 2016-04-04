@@ -128,7 +128,7 @@ public class MainLogic {
 		}
 		
 		case "set": {
-			storage.changeDirectory(userInput.getDirectory());
+			storage.setDirectory(userInput.getDirectory());
 			break;
 		}
 		

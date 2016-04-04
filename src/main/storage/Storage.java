@@ -14,13 +14,15 @@ import main.resources.Task;
 
 public class Storage {
 	private static Storage storage;
-	
 	Logger logger = Logger.getLogger("Storage");
+	
 	//Key must be exactly 16 bytes long.
 	private final String SECURITY_KEY = "maryhadalittlela";
 
+	//String constants
 	private static String FILE_NAME = "task.txt";
-
+	private static String DEFAULT = "default";
+	
 	private File taskFile;
 	private ArrayList<Task> taskList;
 
@@ -86,8 +88,23 @@ public class Storage {
 		return taskList;
 	}
 	
-	public void changeDirectory(String directory) {
+	public void setDirectory(String directory) {
+		String filePath;
 		
+		if (directory.equals(DEFAULT)) {
+			filePath = ""; 
+		}
+		else {
+			filePath = directory + "\\";	
+		}
+		
+		try {
+			File file = new File(filePath);
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 
