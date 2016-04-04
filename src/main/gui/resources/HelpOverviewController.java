@@ -1,5 +1,7 @@
 package main.gui.resources;
 
+import java.util.ArrayList;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -7,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import main.gui.MainApp;
 import main.logic.MainLogic;
+import main.resources.Task;
 import main.resources.UserInput;
 
 
@@ -23,6 +26,8 @@ public class HelpOverviewController {
 	@FXML 
 	private TextField commandText;
 	
+	@FXML private Label overdueCounter;
+	
 	 private MainApp mainApp;
 
 	    /**
@@ -30,6 +35,7 @@ public class HelpOverviewController {
 	     * The constructor is called before the initialize() method.
 	     */
 	    public HelpOverviewController() {
+	    	
 	    }
 
 	    /**
@@ -47,8 +53,17 @@ public class HelpOverviewController {
 	     */
 	    public void setMainApp(MainApp mainApp) {
 	        this.mainApp = mainApp;
+			overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
 
 	    }
+	    
+		private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
+			int counter=0;
+			for (int i = 0; i < array.size(); i++) {
+				counter += array.get(i).size();
+				}
+			return counter;
+		}
 	    
 		public void onEnter(){
 			String command = commandText.getText(); //string received from user.
@@ -74,10 +89,8 @@ public class HelpOverviewController {
 	          qPressed = true;
 	      } else if (keyEvent.getCode() == KeyCode.F12) {
 	          mainApp.showHelpOverview();
-	      } else if (keyEvent.getCode() == KeyCode.F6) {
-	          mainApp.showOverdueOverview();
 	      } else if (keyEvent.getCode() == KeyCode.F5) {
-	          mainApp.showIncompleteOverview();
+	          mainApp.showOverdueOverview();
 	      } else if (keyEvent.getCode() == KeyCode.F4) {
 	          mainApp.showCompleteOverview();
 	      } else if (keyEvent.getCode() == KeyCode.F3) {
@@ -146,11 +159,6 @@ public class HelpOverviewController {
 		@FXML
 		void onClickedComplete(){
 			mainApp.showCompleteOverview();
-		}
-		
-		@FXML
-		void onClickedIncomplete(){
-			mainApp.showIncompleteOverview();
 		}
 	}
 
