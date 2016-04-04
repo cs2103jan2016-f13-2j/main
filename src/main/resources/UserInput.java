@@ -165,8 +165,13 @@ public class UserInput {
 		return taskToEdit;
 	}
 	
+
 	public boolean getDisplaySort() {
 		return displaySort;
+	}
+
+	public int getTab() {
+		return tab;
 	}
 	
 	
