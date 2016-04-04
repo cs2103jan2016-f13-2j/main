@@ -6,6 +6,7 @@ public class UserInput {
 	
 	String rawInput;
 	String command;
+	int tab;//1 for first tab, 2 for second tab etc.
 	
 	//Add
 	Task task;
@@ -38,6 +39,27 @@ public class UserInput {
 	
 	//Constructors
 	public UserInput(String raw) {
+		rawInput = raw;
+		startTime = new Time();
+		startDate = new Date();
+		endTime = new Time();
+		endDate = new Date();
+		details = null;
+		command = null;
+		task = null;
+		deleteNumber = new ArrayList<int[]>();
+		editNumber = new ArrayList<Integer> ();
+		location = null;
+		sortType = -1;
+		searchTerm = null;
+		taskList = new ArrayList<Task>();
+		priority = 0;
+		taskType = -1;
+		complete = false;
+	}
+	
+	public UserInput(String raw, int tab) {
+		this.tab = tab;
 		rawInput = raw;
 		startTime = new Time();
 		startDate = new Date();

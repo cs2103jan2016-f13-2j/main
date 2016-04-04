@@ -361,9 +361,9 @@ public class TodayOverviewController {
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
 		//System.out.println(command);
-		UserInput userInput = new UserInput(command);
+		UserInput userInput = new UserInput(command, 2);
 		MainLogic.run(userInput);	
-		mainApp.showTaskOverview(); 
+		mainApp.showTodayOverview(); 
 	}    
 	
 	
@@ -395,6 +395,9 @@ public class TodayOverviewController {
           mainApp.showTaskOverview();
       } else if (keyEvent.getCode() == KeyCode.F11) {
           mainApp.getPrimaryStage().toBack();
+      } else if (keyEvent.getCode() == KeyCode.ESCAPE) {
+          commandText.setText("home");
+          onEnter();
       }
 	  if(controlPressed && zPressed){
 		  commandText.setText("undo");
