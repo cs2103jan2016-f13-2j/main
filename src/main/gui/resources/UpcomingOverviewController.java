@@ -139,6 +139,10 @@ public class UpcomingOverviewController {
 		floatingNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		floatingPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		floatingDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
+		
+		taskTable.setPlaceholder(new Label("No tasks"));
+		eventTable.setPlaceholder(new Label("No tasks"));
+		floatingTable.setPlaceholder(new Label("No tasks"));
 	}
 
 
