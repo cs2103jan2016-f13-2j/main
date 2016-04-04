@@ -40,25 +40,31 @@ public class Sort implements Command {
 	public void execute() {
 		logger.log(Level.INFO, "Command SORT");
 		taskList = storage.getTaskList();
+		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		switch (userInput.getSortType()) {
 		case 1:	//task details
 			Collections.sort(taskList, new TaskComparator(1));
+			Collections.sort(displayList, new TaskComparator(1));
 			break;
 
 		case 2:	//task date
 			Collections.sort(taskList, new TaskComparator(2));
+			Collections.sort(displayList, new TaskComparator(2));
 			break;
 
 		case 3:	//task time
 			Collections.sort(taskList, new TaskComparator(3));
+			Collections.sort(displayList, new TaskComparator(3));
 			break;
 
 		case 6:	//task location
 			Collections.sort(taskList, new TaskComparator(6));
+			Collections.sort(displayList, new TaskComparator(6));
 			break;
 
 		case 7:	//task priority
 			Collections.sort(taskList, new TaskComparator(7));
+			Collections.sort(displayList, new TaskComparator(7));
 			break;
 
 		default:
@@ -69,6 +75,7 @@ public class Sort implements Command {
 		feedback.setMessage(String.format(MSG_SUCCESS, getSortCategoryString()));
 		
 		storage.saveFile();
+		MainLogic.setDisplayList(displayList);
 
 		userInput.setTaskList(taskList);
 	}

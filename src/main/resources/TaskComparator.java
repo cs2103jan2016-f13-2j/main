@@ -31,7 +31,12 @@ public class TaskComparator implements Comparator<Task> {
 			}
 		}
 		case 2: {	//task date
-			if (task0.getTaskStartDate() == null) {
+			if (task0.getTaskStartDate() == null && 
+					task1.getTaskStartDate() == null) {
+				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
+			}
+			
+			else if (task0.getTaskStartDate() == null) {
 				return 1;
 			}
 			
@@ -61,7 +66,12 @@ public class TaskComparator implements Comparator<Task> {
 			}
 		}
 		case 3: {	//task time
-			if (task0.getTaskStartTime() == null) {
+			if (task0.getTaskStartTime() == null && 
+					task1.getTaskStartTime() == null) {
+				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
+			}
+			
+			else if (task0.getTaskStartTime() == null) {
 				return 1;
 			}
 			
@@ -78,7 +88,12 @@ public class TaskComparator implements Comparator<Task> {
 			}
 		}
 		case 6: {	//task location
-			if (task0.getTaskLocation()== null) {
+			if (task0.getTaskLocation() == null && 
+					task1.getTaskLocation() == null) {
+				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
+			}
+			
+			else if (task0.getTaskLocation()== null) {
 				return 1;
 			}
 			

@@ -304,7 +304,7 @@ public class UpcomingOverviewController {
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
-		ArrayList<ArrayList<Task>> temp = MainLogic.getTaskList();
+		ArrayList<ArrayList<Task>> temp = MainLogic.getWeekTasks();
 		
 		numberTaskArrayList(temp); 
 		for (int k = 0; k< totalList.size(); k++){ 
@@ -361,9 +361,9 @@ public class UpcomingOverviewController {
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
 		//System.out.println(command);
-		UserInput userInput = new UserInput(command);
+		UserInput userInput = new UserInput(command,3);
 		MainLogic.run(userInput);	
-		mainApp.showTaskOverview(); 
+		mainApp.showUpcomingOverview(); 
 	}    
 	
 	
@@ -395,6 +395,9 @@ public class UpcomingOverviewController {
           mainApp.showTaskOverview();
       } else if (keyEvent.getCode() == KeyCode.F11) {
           mainApp.getPrimaryStage().toBack();
+      } else if (keyEvent.getCode() == KeyCode.ESCAPE) {
+          commandText.setText("home");
+          onEnter();
       }
 	  if(controlPressed && zPressed){
 		  commandText.setText("undo");

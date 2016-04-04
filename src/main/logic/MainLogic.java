@@ -26,7 +26,6 @@ public class MainLogic {
 	private static UserInput userInput;
 	private static MainLogic mainLogic;
 	private static int sortType;
-	private static int numTasks;
 	private static Stack<Command> commandList;
 	private static Stack<Command> undoedCommandList;
 	private static Date currentDate;
@@ -42,7 +41,6 @@ public class MainLogic {
 		updateTaskList();
 		setDisplayList(taskList);
 		sortType = 2;
-		numTasks = 0;
 		commandList = new Stack<Command>();
 		undoedCommandList = new Stack<Command>();
 		currentDate = null;
@@ -73,7 +71,7 @@ public class MainLogic {
 			command = new Add(userInput);
 			commandList.push(command);
 			clearUndoStack();
-			displayList = storage.getTaskList();
+			displayList = storage.getTaskList();		
 			break;
 		}
 		case "delete": {
@@ -270,15 +268,43 @@ public class MainLogic {
 	
 
 	//-----Public Methods-----
-	public static ArrayList<ArrayList<Task>> getTaskList() {
-		numTasks = displayList.size();
+	public static Time getCurrentTime() {
+		setCurrentTime();
+		return currentTime;
+	}
+	
+	public static Date getCurrentDate() {
+		setCurrentDate();
+		return currentDate;
+	}
+	
+	public static String getCurrentDay() {
+		Calendar cal = Calendar.getInstance();
+		String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", 
+				"Friday", "Saturday"};
+		return days[cal.get(Calendar.DAY_OF_WEEK) - 1];
+	}
+	
+	public static boolean isSuccessful() {
+		return success;
+	}
+	
+	public static void setDisplayList(ArrayList<Task> newList) {
+		displayList = newList;
+	}
+	
+	public static ArrayList<Task> getDisplayList() {
+		return displayList;
+	}
+	
+	private static ArrayList<ArrayList<Task>> getFilteredList(ArrayList<Task> list) {
 		ArrayList<ArrayList<Task>> newList = new ArrayList<ArrayList<Task>>();
 		ArrayList<Task> eventList = new ArrayList<Task>();
 		ArrayList<Task> floatList = new ArrayList<Task>();
 		ArrayList<Task> deadlineList = new ArrayList<Task>();
 		
-		for (int i=0; i<numTasks; i++) {
-			Task task = displayList.get(i);
+		for (int i=0; i<list.size(); i++) {
+			Task task = list.get(i);
 			setCurrentTime();
 			setCurrentDate();
 			Calendar cal = Calendar.getInstance();
@@ -396,30 +422,12 @@ public class MainLogic {
 		return newList;
 	}
 	
-	public static Time getCurrentTime() {
-		setCurrentTime();
-		return currentTime;
-	}
-	
-	public static Date getCurrentDate() {
-		setCurrentDate();
-		return currentDate;
-	}
-	
-	public static boolean isSuccessful() {
-		return success;
-	}
-	
-	public static void setDisplayList(ArrayList<Task> newList) {
-		displayList = newList;
-	}
-	
-	public static ArrayList<Task> getDisplayList() {
-		return displayList;
-	}
-	
 	//Lists
-	public static ArrayList<Task> getCompletedTasks() {
+	public static ArrayList<ArrayList<Task>> getTaskList() {
+		return getFilteredList(displayList);
+	}
+	
+	public static ArrayList<ArrayList<Task>> getCompletedTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<storage.getTaskList().size(); i++) {
 			Task task = storage.getTaskList().get(i);
@@ -428,10 +436,10 @@ public class MainLogic {
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 	
-	public static ArrayList<Task> getIncompletedTasks() {
+	public static ArrayList<ArrayList<Task>> getIncompletedTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<storage.getTaskList().size(); i++) {
 			Task task = storage.getTaskList().get(i);
@@ -440,22 +448,22 @@ public class MainLogic {
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 	
-	public static ArrayList<Task> getTodayTasks() {
+	public static ArrayList<ArrayList<Task>> getTodayTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<storage.getTaskList().size(); i++) {
 			Task task = storage.getTaskList().get(i);
-			if (task.getTaskStartDate().compareTo(getCurrentDate()) == 0) {
+			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(getCurrentDate()) == 0) {
 				list.add(task);
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 	
-	public static ArrayList<Task> getExpiredTasks() {
+	public static ArrayList<ArrayList<Task>> getExpiredTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<storage.getTaskList().size(); i++) {
 			Task task = storage.getTaskList().get(i);
@@ -464,10 +472,10 @@ public class MainLogic {
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 	
-	public static ArrayList<Task> getWeekTasks() {
+	public static ArrayList<ArrayList<Task>> getWeekTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, 7);
@@ -476,12 +484,12 @@ public class MainLogic {
 									cal.get(Calendar.YEAR));
 		for (int i=0 ;i<storage.getTaskList().size(); i++) {
 			Task task = storage.getTaskList().get(i);
-			if (task.getTaskStartDate().compareTo(getCurrentDate()) >= 0 ||
+			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(getCurrentDate()) >= 0 ||
 					task.getTaskStartDate().compareTo(date) < 0) {
 				list.add(task);
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 }
