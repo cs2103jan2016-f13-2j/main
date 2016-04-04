@@ -26,7 +26,7 @@ import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.UserInput;
 
-public class TaskOverviewController {
+public class IncompleteOverviewController {
 	
 	private static final String CMD_DISPLAY = "display";
 	
@@ -110,7 +110,7 @@ public class TaskOverviewController {
 	 * The constructor.
 	 * The constructor is called before the initialize() method.
 	 */
-	public TaskOverviewController() {
+	public IncompleteOverviewController() {
 	}
 
 	/**

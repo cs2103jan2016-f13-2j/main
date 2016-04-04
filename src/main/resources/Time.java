@@ -33,7 +33,7 @@ public class Time implements Comparable<Time>, Serializable {
 	}
 	
 	public String getTimeString() {
-		if (minute == 0) {
+		if (minute < 10) {
 			return hour+":0"+minute;
 		}
 		

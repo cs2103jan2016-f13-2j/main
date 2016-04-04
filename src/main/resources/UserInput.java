@@ -13,7 +13,8 @@ public class UserInput {
 	
 	int taskType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
 	//Delete
-	int deleteNumber;
+	ArrayList<int[]> deleteNumber;
+	ArrayList<Task> taskToDelete;
 	
 	//Edit
 	ArrayList<Integer> editNumber;
@@ -25,6 +26,7 @@ public class UserInput {
 	String details;
 	boolean complete;
 	int priority;
+	Task taskToEdit;
 	
 	//Search and sort
 	String searchTerm;
@@ -32,9 +34,7 @@ public class UserInput {
 	ArrayList<Task> taskList;
 	
 	//set 
-	String directory;
-	
-	
+	String path;
 	
 	//Constructors
 	public UserInput(String raw) {
@@ -46,7 +46,7 @@ public class UserInput {
 		details = null;
 		command = null;
 		task = null;
-		deleteNumber = -1;
+		deleteNumber = new ArrayList<int[]>();
 		editNumber = new ArrayList<Integer> ();
 		location = null;
 		sortType = -1;
@@ -87,7 +87,7 @@ public class UserInput {
 		return task;
 	}
 	
-	public int getDeleteNumber() {
+	public ArrayList<int[]> getDeleteNumber() {
 		return deleteNumber;
 	}
 	
@@ -130,14 +130,22 @@ public class UserInput {
 		return taskList;
 	}
 	
-	public String getDirectory(){
-		return directory;
+	public String getPath(){
+		return path;
+	}
+	
+	public ArrayList<Task> getTasksToDelete() {
+		return taskToDelete;
+	}
+	
+	public Task getTaskToEdit() {
+		return taskToEdit;
 	}
 	
 	
 	//Setters
-	public void setDirectory(String path){
-		this.directory = path;
+	public void setPath(String path){
+		this.path = path;
 	}
 	
 	public void setComplete(boolean c){
@@ -165,8 +173,8 @@ public class UserInput {
 		this.task = task;
 	}
 	
-	public void setDeleteNumber(int number) {
-		deleteNumber = number;
+	public void setDeleteNumber(ArrayList<int[]> list) {
+		deleteNumber = list;
 	}
 	
 	public void setEdit(ArrayList<Integer> list) {
@@ -207,6 +215,15 @@ public class UserInput {
 	
 	public void setTaskList(ArrayList<Task> taskList) {
 		this.taskList = taskList;
+	}
+	
+	public void setTaskToEdit(Task task) {
+		taskToEdit = task;
+	}
+
+	public void setTaskToDelete(ArrayList<Task> list) {
+		taskToDelete = list;
+		
 	}
 
 }

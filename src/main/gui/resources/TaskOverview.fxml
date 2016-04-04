@@ -1,23 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Ellipse?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.TaskOverviewController">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../LightTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.TaskOverviewController">
    <children>
-      <SplitPane dividerPositions="0.7453109575518263" layoutX="1.0" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../DarkTheme.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="586.0" prefWidth="865.0" styleClass="background">
+      <BorderPane prefHeight="609.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <center>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="608.0" prefWidth="907.0" styleClass="background" BorderPane.alignment="CENTER">
                <children>
-                  <Label layoutY="-1.0" text="Deadlines" />
-                  <TextField fx:id="commandText" layoutX="22.0" layoutY="551.0" onAction="#onEnter" prefHeight="37.0" prefWidth="719.0" AnchorPane.topAnchor="551.0" />
-                  <Label fx:id="instantFeedback" layoutX="26.0" layoutY="521.0" prefHeight="25.0" prefWidth="712.0" styleClass="label-feedback" textAlignment="CENTER" />
-                  <TableView fx:id="eventTable" layoutY="290.0" prefHeight="227.0" prefWidth="890.0" AnchorPane.bottomAnchor="84.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="290.0">
+                  <TextField fx:id="commandText" layoutX="10.0" layoutY="550.0" onAction="#onEnter" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="37.0" prefWidth="745.0" />
+                  <Label layoutY="17.0" text="Deadlines" />
+                  <Label fx:id="todayDate" alignment="CENTER" layoutX="759.0" layoutY="550.0" prefHeight="37.0" prefWidth="137.0" styleClass="label-date" />
+                  <Label fx:id="todayDate1" alignment="CENTER" layoutX="759.0" layoutY="535.0" prefHeight="31.0" prefWidth="137.0" styleClass="label-date" text="Today's Date:" />
+                  <TableView fx:id="taskTable" editable="true" layoutY="47.0" prefHeight="200.0" prefWidth="865.0" AnchorPane.bottomAnchor="321.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
+                    <columns>
+                      <TableColumn fx:id="taskNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
+                        <TableColumn fx:id="taskPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
+                      <TableColumn fx:id="taskDetailsColumn" prefWidth="318.4000244140625" sortable="false" text="Task Details" />
+                        <TableColumn fx:id="taskDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="Date" />
+                        <TableColumn fx:id="taskTimeColumn" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="Time" />
+                        <TableColumn fx:id="taskLocationColumn" editable="false" maxWidth="1.7976931348623157E308" prefWidth="311.0" resizable="false" sortable="false" text="Location" />
+                    </columns>
+                  </TableView>
+                  <Label layoutY="279.0" text="Events" />
+                  <Label fx:id="instantFeedback" layoutX="14.0" layoutY="526.0" prefHeight="25.0" prefWidth="712.0" styleClass="label-feedback" textAlignment="CENTER" />
+                  <TableView fx:id="eventTable" layoutY="309.0" prefHeight="200.0" prefWidth="890.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="309.0">
                      <columns>
                         <TableColumn fx:id="eventNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="eventPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
@@ -26,37 +39,41 @@
                         <TableColumn fx:id="eventStartTimeColumn" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="Start Time" />
                         <TableColumn fx:id="eventEndDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="End Date" />
                         <TableColumn fx:id="eventEndTimeColumn" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="End Time" />
-                        <TableColumn fx:id="eventLocationColumn" prefWidth="211.0" resizable="false" sortable="false" text="Location" />
+                        <TableColumn fx:id="eventLocationColumn" prefWidth="221.0" resizable="false" sortable="false" text="Location" />
                      </columns>
                   </TableView>
-                  <Ellipse fill="#424242" layoutX="821.0" layoutY="562.0" radiusX="72.0" radiusY="28.0" stroke="#a1a1a1" strokeType="INSIDE" />
-                  <Label fx:id="todayDate" alignment="CENTER" layoutX="769.0" layoutY="547.0" prefHeight="30.0" prefWidth="105.0" styleClass="label-date" />
-                  <TableView fx:id="taskTable" editable="true" layoutY="29.0" prefHeight="227.0" prefWidth="890.0" AnchorPane.bottomAnchor="339.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
-                    <columns>
-                      <TableColumn fx:id="taskNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
-                        <TableColumn fx:id="taskPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
-                      <TableColumn fx:id="taskDetailsColumn" prefWidth="318.4000244140625" sortable="false" text="Task Details" />
-                        <TableColumn fx:id="taskDateColumn" maxWidth="197.0" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="Date" />
-                        <TableColumn fx:id="taskTimeColumn" minWidth="0.0" prefWidth="82.0" resizable="false" sortable="false" text="Time" />
-                        <TableColumn fx:id="taskLocationColumn" editable="false" maxWidth="1.7976931348623157E308" prefWidth="301.0" resizable="false" sortable="false" text="Location" />
-                    </columns>
-                  </TableView>
-                  <Label layoutY="260.0" text="Events" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ffc41f" height="36.0" layoutX="120.0" layoutY="6.0" onMouseClicked="#onClickedAllTask" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="245.0" layoutY="6.0" onMouseClicked="#onClickedToday" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="370.0" layoutY="6.0" onMouseClicked="#onClickedUpcoming" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="495.0" layoutY="6.0" onMouseClicked="#onClickedComplete" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="745.0" layoutY="6.0" onMouseClicked="#onClickedOverdue" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="620.0" layoutY="6.0" onMouseClicked="#onClickedIncomplete" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Label layoutX="138.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="All Task (F1)" />
+                  <Label layoutX="379.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Upcoming (F3)" />
+                  <Label layoutX="502.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Completed (F4)" />
+                  <Label layoutX="760.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Overdue (F6)" />
+                  <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Today (F2)" />
+                  <Label layoutX="626.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Incomplete (F5)" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#d71717" height="12.0" layoutX="746.0" layoutY="8.0" onMouseClicked="#onClickedOverdue" stroke="BLACK" strokeType="INSIDE" width="18.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="background">
+         </center>
+         <right>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="609.0" prefWidth="300.0" styleClass="background" BorderPane.alignment="CENTER">
                <children>
-                  <TableView fx:id="floatingTable" layoutX="-5.0" layoutY="28.0" prefHeight="571.0" prefWidth="302.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+                  <TableView fx:id="floatingTable" layoutX="7.0" layoutY="47.0" prefHeight="553.0" prefWidth="293.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
                      <columns>
                         <TableColumn fx:id="floatingNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="floatingPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
                         <TableColumn fx:id="floatingDetailsColumn" minWidth="-1.0" prefWidth="196.0" resizable="false" sortable="false" text="Floating Task Details" />
                      </columns>
                   </TableView>
-                  <Label layoutY="-1.0" text="Floating Tasks" />
+                  <Label layoutX="7.0" layoutY="17.0" text="Floating Task" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="206.0" layoutY="6.0" onMouseClicked="#onClickedHelp" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="76.0" />
+                  <Label layoutX="210.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Help (F12)" />
                </children>
             </AnchorPane>
-        </items>
-      </SplitPane>
+         </right>
+      </BorderPane>
    </children>
 </AnchorPane>

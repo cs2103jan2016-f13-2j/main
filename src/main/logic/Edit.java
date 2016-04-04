@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import main.resources.Date;
 import main.resources.Feedback;
 import main.resources.Task;
-import main.resources.Time;
 import main.resources.UserInput;
 import main.storage.Storage;
 
@@ -35,80 +33,85 @@ public class Edit implements Command {
 	@Override
 	public void execute() {
 		boolean success = false;
-		
+		boolean changedTaskType = false;
 		logger.log(Level.INFO, "Command EDIT");
 		taskList = storage.getTaskList();
-		Task taskToEdit = findTask();
+		ArrayList<Task> displayList = MainLogic.getDisplayList();
+		Task taskToEdit = userInput.getTaskToEdit();
+		userInput.setTaskToEdit(taskToEdit);
+		Task newTask = Task.duplicateTask(taskToEdit);
+		
 		for (int i=1; i<userInput.getEditNumber().size(); i++) {
 			switch (userInput.getEditNumber().get(i)) {
 			case 1:	{	//task detail
-				String originalData = taskToEdit.getTaskDetails();
-				taskToEdit.setTaskDetails(userInput.getDetails());
-				userInput.setDetails(originalData);
+				newTask.setTaskDetails(userInput.getDetails());
 				success = true;
 				break;
 			}
 			case 2: {	//task start date
-				Date originalData = taskToEdit.getTaskStartDate();
-				taskToEdit.setTaskStartDate(userInput.getStartDate());
-				if (taskToEdit.getTaskType() == 2) {	//floating
-					taskToEdit.setTaskType(4);	//deadline
+				if (newTask.getTaskType() == 2) {	//floating
+					if (!changedTaskType) {
+						changedTaskType = true;
+					}
+					newTask.setTaskType(4);	//deadline
 				}
-				userInput.setStartDate(originalData);
+				newTask.setTaskStartDate(userInput.getStartDate());
 				success = true;
 				break;
 			}
 			case 3:	{	//task start time
-				Time originalData = taskToEdit.getTaskStartTime();
-				taskToEdit.setTaskStartTime(userInput.getStartTime());
-				if (taskToEdit.getTaskType() == 2) {	//floating
-					taskToEdit.setTaskType(4);	//deadline
+				if (newTask.getTaskType() == 2) {	//floating
+					if (!changedTaskType) {
+						changedTaskType = true;
+					}
+					newTask.setTaskType(4);	//deadline
 				}
-				userInput.setStartTime(originalData);
+				newTask.setTaskStartTime(userInput.getStartTime());
 				success = true;
 				break;
 			}
 			case 4:	{	//task end date
-				Date originalData = taskToEdit.getTaskEndDate();
-				if (taskToEdit.getTaskType() == 2) { //floating
+				if (newTask.getTaskType() == 2) { //floating
 					feedback.setMessage(MSG_FAIL_NO_START_DATE);
 					break;
 				}
-				taskToEdit.setTaskEndDate(userInput.getEndDate());
-				if (taskToEdit.getTaskType() == 4) {	//deadline
-					taskToEdit.setTaskType(1);	//event
+				if (newTask.getTaskType() == 4) {	//deadline
+					if (!changedTaskType) {
+						changedTaskType = true;
+					}
+					newTask.setTaskType(1);	//event
 				}
-				userInput.setEndDate(originalData);
+				newTask.setTaskEndDate(userInput.getEndDate());
 				success = true;
 				break;
 			}
 			case 5:	{	//task end time
-				Time originalData = taskToEdit.getTaskEndTime();
-				if (taskToEdit.getTaskType() == 2) { //floating
+				if (newTask.getTaskType() == 2) { //floating
 					feedback.setMessage(MSG_FAIL_NO_START_TIME);
 					break;
 				}
-				taskToEdit.setTaskEndDate(userInput.getEndDate());
-				if (taskToEdit.getTaskType() == 4) {	//deadline
-					taskToEdit.setTaskType(1);	//event
+				if (newTask.getTaskType() == 4) {	//deadline
+					if (!changedTaskType) {
+						changedTaskType = true;
+					}
+					newTask.setTaskType(1);	//event
 				}
-				userInput.setEndTime(originalData);
+				newTask.setTaskEndTime(userInput.getEndTime());
 				success = true;
 				break;
 			}
 			case 6: {	//task location
-				String originalData = taskToEdit.getTaskLocation();
-				System.out.println(originalData);
-				taskToEdit.setTaskLocation(userInput.getLocation());
-				System.out.println(userInput.getLocation());
-				userInput.setLocation(originalData);
+				newTask.setTaskLocation(userInput.getLocation());
 				success = true;
 				break;
 			}
 			case 7:	{	//task priority
-				int originalData = taskToEdit.getPriority();
-				taskToEdit.setPriority(userInput.getPriority());
-				userInput.setPriority(originalData);
+				newTask.setPriority(userInput.getPriority());
+				success = true;
+				break;
+			}
+			case 8: {	//is complete
+				newTask.setComplete(userInput.getComplete());
 				success = true;
 				break;
 			}
@@ -117,7 +120,6 @@ public class Edit implements Command {
 				return;
 			}
 
-			userInput.setTask(taskToEdit);
 
 			if (!storage.saveFile()) {
 				feedback.setMessage(MSG_FAIL_FILE_SAVE);
@@ -126,107 +128,39 @@ public class Edit implements Command {
 				feedback.setMessage(String.format(MSG_SUCCESS));
 			}
 		}
+		
+		taskList.remove(taskToEdit);
+		taskList.add(newTask);
+		if (!displayList.equals(taskList)) {
+			displayList.remove(taskToEdit);
+			displayList.add(newTask);
+		}
+		userInput.setTask(newTask);
 	}
 
 	@Override
 	public void undo() {
+		logger.log(Level.INFO, "Command UNDO EDIT");
 		taskList = storage.getTaskList();
-		for (Task t : taskList) {
-			if (t.equals(userInput.getTask())) {
-				for (int i=1; i<userInput.getEditNumber().size(); i++) {
-					switch (userInput.getEditNumber().get(i)) {
-					case 1: {	//task detail
-						String originalData = t.getTaskDetails();					
-						t.setTaskDetails(userInput.getDetails());
-						userInput.setDetails(originalData);
-						break;
-					}
-					case 2: {	//task date
-						Date originalData = t.getTaskStartDate();
-						t.setTaskStartDate(userInput.getStartDate());
-						userInput.setStartDate(originalData);
-						break;
-					}
-					case 3: {	//task time
-						Time originalData = t.getTaskStartTime();
-						t.setTaskStartTime(userInput.getStartTime());
-						userInput.setStartTime(originalData);
-						break;
-					}
-					case 6: {	//task location
-						String originalData = t.getTaskLocation();
-						t.setTaskLocation(userInput.getLocation());
-						userInput.setLocation(originalData);
-						break;
-					}
-					case 7: {	//task priority
-						int originalData = t.getPriority();
-						t.setPriority(userInput.getPriority());
-						userInput.setPriority(originalData);
-						break;
-					}
-					}	
-				}
-			}
+		ArrayList<Task> displayList = MainLogic.getDisplayList();
+		taskList.remove(userInput.getTask());
+		taskList.add(userInput.getTaskToEdit());
+		if (!displayList.equals(taskList)) {
+			displayList.remove(userInput.getTask());
+			displayList.add(userInput.getTaskToEdit());
 		}
 	}
 
 	@Override
 	public void redo() {
+		logger.log(Level.INFO, "Command REDO EDIT");
 		taskList = storage.getTaskList();
-		for (Task t : taskList) {
-			if (t.equals(userInput.getTask())) {
-				for (int i=1; i<userInput.getEditNumber().size(); i++) {
-					switch (userInput.getEditNumber().get(i)) {
-					case 1: {	//task detail
-						String originalData = t.getTaskDetails();					
-						t.setTaskDetails(userInput.getDetails());
-						userInput.setDetails(originalData);
-						break;
-					}
-					case 2: {	//task date
-						Date originalData = t.getTaskStartDate();
-						t.setTaskStartDate(userInput.getStartDate());
-						userInput.setStartDate(originalData);
-						break;
-					}
-					case 3: {	//task time
-						Time originalData = t.getTaskStartTime();
-						t.setTaskStartTime(userInput.getStartTime());
-						userInput.setStartTime(originalData);
-						break;
-					}
-					case 6: {	//task location
-						String originalData = t.getTaskLocation();
-						t.setTaskLocation(userInput.getLocation());
-						userInput.setLocation(originalData);
-						break;
-					}
-					case 7: {	//task priority
-						int originalData = t.getPriority();
-						t.setPriority(userInput.getPriority());
-						userInput.setPriority(originalData);
-						break;
-					}
-					}	
-				}
-			}
-		}		
-	}
-
-	private Task findTask() {
-		int count = 0;
-		for (int i=0; i<taskList.size(); i++) {
-			Task task = taskList.get(i);
-			if (task.getTaskType() == userInput.getTaskType()) {
-				count++;
-				if(count == userInput.getEditNumber().get(0)) {
-					return task;
-				}
-			}
+		ArrayList<Task> displayList = MainLogic.getDisplayList();
+		taskList.remove(userInput.getTaskToEdit());
+		taskList.add(userInput.getTask());
+		if (!displayList.equals(taskList)) {
+			displayList.remove(userInput.getTaskToEdit());
+			displayList.add(userInput.getTask());
 		}
-
-		return null;
 	}
-
 }

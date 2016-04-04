@@ -73,15 +73,18 @@ public class MainLogic {
 			command = new Add(userInput);
 			commandList.push(command);
 			clearUndoStack();
+			displayList = storage.getTaskList();
 			break;
 		}
 		case "delete": {
+			userInput.setTaskToDelete(findDeleteTask());
 			command = new Delete(userInput);
 			commandList.push(command);
 			clearUndoStack();
 			break;
 		}
 		case "edit": {
+			userInput.setTaskToEdit(findEditTask());
 			command = new Edit(userInput);
 			commandList.push(command);
 			clearUndoStack();
@@ -109,11 +112,12 @@ public class MainLogic {
 			command = new Add(userInput);
 			commandList.push(command);
 			clearUndoStack();
+			displayList = storage.getTaskList();
 			break;
 		}
 		
 		case "home": {
-			displayList = storage.getTaskList();
+			displayList = copyList();
 			break;
 		}
 		
@@ -127,9 +131,19 @@ public class MainLogic {
 			break;
 		}
 		
-		case "set": {
-			storage.setDirectory(userInput.getDirectory());
+		case "import": {
+			storage.importFile(userInput.getPath());
+			displayList = storage.getTaskList();
 			break;
+		}
+		
+		case "export": {
+			storage.exportFile(userInput.getPath());
+			break;
+		}
+		
+		case "show": {
+			//showList(userInput);
 		}
 		
 		default: {
@@ -159,7 +173,7 @@ public class MainLogic {
 	}
 
 	private static void updateTaskList() {
-		taskList = storage.getTaskList();	
+		taskList = storage.getTaskList();
 	}
 	
 	private static String getCommand() {
@@ -184,6 +198,55 @@ public class MainLogic {
 			commandList.push(command);
 			command.redo();
 		}
+	}
+	
+	private static Task findEditTask() {
+		int count = 0;
+		for (int i=0; i<displayList.size(); i++) {
+			Task task = displayList.get(i);
+			if (task.getTaskType() == userInput.getTaskType()) {
+				count++;
+				 if(count == userInput.getEditNumber().get(0)) {
+					return task;
+				 }
+			}
+		}
+		
+		return null;
+	}
+	
+	private static ArrayList<Task> findDeleteTask() {
+		int count;
+		ArrayList<Task> list = new ArrayList<Task>();
+		int taskType = 0;
+		int taskNumber = 0;
+		
+		for (int i=0; i<userInput.getDeleteNumber().size(); i++) {
+			count = 0;
+			taskType = userInput.getDeleteNumber().get(i)[0];
+			taskNumber = userInput.getDeleteNumber().get(i)[1];
+			
+			for (int j=0; j<displayList.size(); j++) {
+				Task task = displayList.get(j);
+				if (task.getTaskType() == taskType) {
+					count++;
+					 if(count == taskNumber) {
+						list.add(task);
+					 }
+				}
+			}
+		}
+		
+		return list;
+	}
+	
+	private static ArrayList<Task> copyList() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0; i<storage.getTaskList().size(); i++) {
+			list.add(storage.getTaskList().get(i));
+		}
+		
+		return list;
 	}
 	
 	private static void setCurrentTime() {
@@ -218,29 +281,43 @@ public class MainLogic {
 			Task task = displayList.get(i);
 			setCurrentTime();
 			setCurrentDate();
+			Calendar cal = Calendar.getInstance();
 			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(currentDate) < 0) {
 				if (task.isRecurring() && task.getRecurTime() > 0) {
 					task.setRecurTime(task.getRecurTime() - 1);
 					Date date = task.getTaskStartDate();
+					cal.set(date.getYear(), date.getMonth(), date.getDay());
+					cal.add(Calendar.DAY_OF_MONTH, 1);
 					switch (task.getRecurFrequency()) {
 					case 1: {	//daily
-						date.setDay(date.getDay() + 1);
+						cal.add(Calendar.DAY_OF_MONTH, 1);
+						task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+															cal.get(Calendar.MONTH), 
+																cal.get(Calendar.YEAR)));
 						break;
 					}
 					case 2: {	//weekly
-						date.setDay(date.getDay() + 7);
+						cal.add(Calendar.DAY_OF_MONTH, 7);
+						task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+															cal.get(Calendar.MONTH), 
+																cal.get(Calendar.YEAR)));
 						break;
 					}
 					case 3: {	//monthly
-						date.setMonth(date.getMonth() + 1);
+						cal.add(Calendar.MONTH, 1);
+						task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+															cal.get(Calendar.MONTH), 
+																cal.get(Calendar.YEAR)));
 						break;
 					}
 					case 4: {	//yearly
-						date.setYear(date.getYear() + 1);
+						cal.add(Calendar.YEAR, 1);
+						task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+															cal.get(Calendar.MONTH), 
+																cal.get(Calendar.YEAR)));
 						break;
 					}
 					}
-					task.setTaskStartDate(date);
 				}
 				
 				else {
@@ -256,25 +333,38 @@ public class MainLogic {
 					if (task.isRecurring() && task.getRecurTime() > 0) {
 						task.setRecurTime(task.getRecurTime() - 1);
 						Date date = task.getTaskStartDate();
+						cal.set(date.getYear(), date.getMonth(), date.getDay());
+						cal.add(Calendar.DAY_OF_MONTH, 1);
 						switch (task.getRecurFrequency()) {
 						case 1: {	//daily
-							date.setDay(date.getDay() + 1);
+							cal.add(Calendar.DAY_OF_MONTH, 1);
+							task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+																cal.get(Calendar.MONTH), 
+																	cal.get(Calendar.YEAR)));
 							break;
 						}
 						case 2: {	//weekly
-							date.setDay(date.getDay() + 7);
+							cal.add(Calendar.DAY_OF_MONTH, 7);
+							task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+																cal.get(Calendar.MONTH), 
+																	cal.get(Calendar.YEAR)));
 							break;
 						}
 						case 3: {	//monthly
-							date.setMonth(date.getMonth() + 1);
+							cal.add(Calendar.MONTH, 1);
+							task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+																cal.get(Calendar.MONTH), 
+																	cal.get(Calendar.YEAR)));
 							break;
 						}
 						case 4: {	//yearly
-							date.setYear(date.getYear() + 1);
+							cal.add(Calendar.YEAR, 1);
+							task.setTaskStartDate(new Date(cal.get(Calendar.DAY_OF_MONTH), 
+																cal.get(Calendar.MONTH), 
+																	cal.get(Calendar.YEAR)));
 							break;
 						}
 						}
-						task.setTaskStartDate(date);
 					}
 				}
 				
@@ -302,7 +392,7 @@ public class MainLogic {
 		newList.add(eventList);
 		newList.add(floatList);
 		newList.add(deadlineList);
-		
+		storage.saveFile();
 		return newList;
 	}
 	
@@ -322,5 +412,76 @@ public class MainLogic {
 	
 	public static void setDisplayList(ArrayList<Task> newList) {
 		displayList = newList;
+	}
+	
+	public static ArrayList<Task> getDisplayList() {
+		return displayList;
+	}
+	
+	//Lists
+	public static ArrayList<Task> getCompletedTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (task.isComplete()) {
+				list.add(task);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static ArrayList<Task> getIncompletedTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (!task.isComplete()) {
+				list.add(task);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static ArrayList<Task> getTodayTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (task.getTaskStartDate().compareTo(getCurrentDate()) == 0) {
+				list.add(task);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static ArrayList<Task> getExpiredTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (!task.isExpired()) {
+				list.add(task);
+			}
+		}
+		
+		return list;
+	}
+	
+	public static ArrayList<Task> getWeekTasks() {
+		ArrayList<Task> list = new ArrayList<Task>();
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, 7);
+		Date date = new Date(cal.get(Calendar.DAY_OF_MONTH),
+								cal.get(Calendar.MONTH), 
+									cal.get(Calendar.YEAR));
+		for (int i=0 ;i<storage.getTaskList().size(); i++) {
+			Task task = storage.getTaskList().get(i);
+			if (task.getTaskStartDate().compareTo(getCurrentDate()) >= 0 ||
+					task.getTaskStartDate().compareTo(date) < 0) {
+				list.add(task);
+			}
+		}
+		
+		return list;
 	}
 }

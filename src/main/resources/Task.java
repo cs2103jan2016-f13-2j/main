@@ -264,6 +264,28 @@ public class Task implements Serializable {
 	    }
 	    
 	    public StringProperty convertType(String text) {
-	    	return new SimpleStringProperty(text);
+	    	return new SimpleStringProperty(text);	
+	    }
+	    
+	    public static Task duplicateTask(Task task) {
+	    	Task newTask = new Task();
+	    	
+	    	newTask.setTaskName(task.getTaskName());
+	    	newTask.setTaskDetails(task.getTaskDetails());
+	    	newTask.setTaskStartDate(task.getTaskStartDate());
+	        newTask.setTaskStartTime(task.getTaskStartTime());
+	        newTask.setTaskEndDate(task.getTaskEndDate());
+	        newTask.setTaskEndTime(task.getTaskEndTime());
+	        newTask.setTaskLocation(task.getTaskLocation());
+	        newTask.setPriority(task.getPriority());
+	        newTask.setTaskType(task.getTaskType());
+	        newTask.setTaskNumber(task.getTaskNumber());
+	        newTask.setRecurTime(task.getRecurTime());
+	        newTask.setRecurFrequency(task.getRecurFrequency());
+	        newTask.setComplete(task.isComplete());
+	        newTask.setExpired(task.isExpired());
+	        newTask.setRecurring(task.isRecurring());
+	    	
+	    	return newTask;
 	    }
 }

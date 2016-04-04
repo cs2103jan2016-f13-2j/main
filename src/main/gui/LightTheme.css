@@ -10,6 +10,13 @@
     -fx-opacity: 0.6;
 }
 
+.label-tabs {
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: black;
+    -fx-opacity: 0.6;
+}
+
 .label-feedback {
     -fx-font-size: 13pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -26,9 +33,9 @@
 }
 
 .label-date {
-    -fx-font-size: 13pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
+    -fx-font-size: 15pt;
+    -fx-font-family: "Georgia";
+    -fx-text-fill: black;
     -fx-opacity: 1;
 }
 
