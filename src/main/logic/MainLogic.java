@@ -429,8 +429,8 @@ public class MainLogic {
 	
 	public static ArrayList<ArrayList<Task>> getCompletedTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
-		for (int i=0 ;i<storage.getTaskList().size(); i++) {
-			Task task = storage.getTaskList().get(i);
+		for (int i=0 ;i<displayList.size(); i++) {
+			Task task = displayList.get(i);
 			if (task.isComplete()) {
 				list.add(task);
 			}
@@ -441,8 +441,8 @@ public class MainLogic {
 	
 	public static ArrayList<ArrayList<Task>> getIncompletedTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
-		for (int i=0 ;i<storage.getTaskList().size(); i++) {
-			Task task = storage.getTaskList().get(i);
+		for (int i=0 ;i<displayList.size(); i++) {
+			Task task = displayList.get(i);
 			if (!task.isComplete()) {
 				list.add(task);
 			}
@@ -453,8 +453,8 @@ public class MainLogic {
 	
 	public static ArrayList<ArrayList<Task>> getTodayTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
-		for (int i=0 ;i<storage.getTaskList().size(); i++) {
-			Task task = storage.getTaskList().get(i);
+		for (int i=0 ;i<displayList.size(); i++) {
+			Task task = displayList.get(i);
 			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(getCurrentDate()) == 0) {
 				list.add(task);
 			}
@@ -465,9 +465,9 @@ public class MainLogic {
 	
 	public static ArrayList<ArrayList<Task>> getExpiredTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
-		for (int i=0 ;i<storage.getTaskList().size(); i++) {
-			Task task = storage.getTaskList().get(i);
-			if (!task.isExpired()) {
+		for (int i=0 ;i<displayList.size(); i++) {
+			Task task = displayList.get(i);
+			if (task.isExpired()) {
 				list.add(task);
 			}
 		}
@@ -482,10 +482,10 @@ public class MainLogic {
 		Date date = new Date(cal.get(Calendar.DAY_OF_MONTH),
 								cal.get(Calendar.MONTH), 
 									cal.get(Calendar.YEAR));
-		for (int i=0 ;i<storage.getTaskList().size(); i++) {
-			Task task = storage.getTaskList().get(i);
-			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(getCurrentDate()) >= 0 ||
-					task.getTaskStartDate().compareTo(date) < 0) {
+		for (int i=0 ;i<displayList.size(); i++) {
+			Task task = displayList.get(i);
+			if (task.getTaskStartDate() != null && (task.getTaskStartDate().compareTo(getCurrentDate()) >= 0 ||
+					task.getTaskStartDate().compareTo(date) < 0)) {
 				list.add(task);
 			}
 		}
