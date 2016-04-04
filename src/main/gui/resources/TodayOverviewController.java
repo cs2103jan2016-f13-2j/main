@@ -304,7 +304,7 @@ public class TodayOverviewController {
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
-		ArrayList<ArrayList<Task>> temp = MainLogic.getTaskList();
+		ArrayList<ArrayList<Task>> temp = MainLogic.getTodayTasks();
 		
 		numberTaskArrayList(temp); 
 		for (int k = 0; k< totalList.size(); k++){ 
