@@ -26,9 +26,10 @@
 
 .label-counter {
     -fx-font-size: 6pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Arial";
     -fx-text-fill: white;
-    -fx-opacity: 0.7;
+    -fx-font-weight: bold;
+    -fx-opacity: 1;
 }
 
 

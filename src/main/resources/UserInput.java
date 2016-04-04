@@ -164,6 +164,10 @@ public class UserInput {
 		return taskToEdit;
 	}
 	
+	public int getTab() {
+		return tab;
+	}
+	
 	
 	//Setters
 	public void setPath(String path){

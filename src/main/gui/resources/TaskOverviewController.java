@@ -162,9 +162,9 @@ public class TaskOverviewController {
 		todayDate.setText(MainLogic.getCurrentDate().getDateString());
 		feedback = Feedback.getInstance();
 		instantFeedback.setText(feedback.getMessage());
-		//overdueCounter.setText("" + getNoOfTasks(MainLogic.getExpiredTasks()));
 		// Add observable list data to the table
 		getTaskListFromFile();
+		overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
 		for (int i = 0; i < totalList.size(); i++) {
 		allTables.get(i).setItems(totalList.get(i));
 		}
@@ -209,6 +209,7 @@ public class TaskOverviewController {
 		                 setStyle("");
 		            } else {
 		            	boolean expired = false;
+		            	boolean tomorrow = false;
 		            	String[] date = item.split("-");
 		            	String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
 		            	if(Integer.parseInt(date[2]) < Integer.parseInt(currDate[2])) {
@@ -219,6 +220,8 @@ public class TaskOverviewController {
 		            		} else if(date[1].equals(currDate[1])) {
 		            			if(Integer.parseInt(date[0]) < Integer.parseInt(currDate[0])) {
 		            				expired = true;
+		            			} else if(Integer.parseInt(date[0]) == Integer.parseInt(currDate[0])+1) {
+		            				tomorrow = true;
 		            			}
 		            		}
 		            		
@@ -231,6 +234,9 @@ public class TaskOverviewController {
 						} else {
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
+		                }
+		                if (tomorrow) {
+		                	setText("Tomorrow");
 		                }
 		            }
 		        }
@@ -309,7 +315,6 @@ public class TaskOverviewController {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
 		ArrayList<ArrayList<Task>> temp = MainLogic.getTaskList();
-		
 		numberTaskArrayList(temp); 
 		for (int k = 0; k< totalList.size(); k++){ 
 			for (int j = 0; j < temp.size(); j++) {
@@ -341,8 +346,7 @@ public class TaskOverviewController {
 	private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
 		int counter=0;
 		for (int i = 0; i < array.size(); i++) {
-			ArrayList<Task> temp = array.get(i);
-			counter += temp.size();
+			counter += array.get(i).size();
 			}
 		return counter;
 	}
