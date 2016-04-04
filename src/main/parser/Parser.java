@@ -95,12 +95,10 @@ public class Parser {
 		case "redo":
 			userInput.setCommand("redo");
 			break;
-<<<<<<< HEAD
-		case "set":
+		/*case "set":
 			userInput.setCommand("set");
 			userInput.setDirectory(inputCommand.get(1));	
 			break;
-=======
 			
 		case "import":
 			userInput.setCommand("import");
@@ -110,9 +108,8 @@ public class Parser {
 		case "export":
 			userInput.setCommand("export");
 			userInput.setPath(inputCommand.get(1));
-			break;
+			break;*/
 			
->>>>>>> 621ed4652b38c16c911baea0c8f566346244fb2f
 		default:
 			userInput.setCommand(userInput.getRawInput());
 			break;

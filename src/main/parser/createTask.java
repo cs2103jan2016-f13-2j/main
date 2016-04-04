@@ -14,7 +14,7 @@ public class createTask {
 	private static final String BY = "by";
 	private static final String TO = "to";
 	private static final String AT = "at";
-	private static final String PRIORITY = "p";
+	private static final String PRIORITY = "-p";
 	private static final String DAILY = "daily";
 	private static final String WEEKLY = "weekly";
 	private static final String MONTHLY = "monthly";
@@ -342,9 +342,11 @@ public class createTask {
 		Time time = new Time();
 		if (dateAndTime.contains(";")) { // has both time and date
 			String dAndT[] = dateAndTime.split(";");
+			//System.out.println(dAndT[0]);
 			if (!isTime(dAndT[0])) { // date first then time
 				handleDiffTimeFormat(dAndT[1], time);
 			} else { // time first then date
+				//System.out.println("check isTimr");
 				handleDiffTimeFormat(dAndT[0], time);
 			}
 		} else { // has either time or date
@@ -392,15 +394,18 @@ public class createTask {
 	public static Date getDate(String dateAndTime) {
 		Date date = new Date();
 		if (dateAndTime.contains(";")) { // has both time and date
+			//System.out.println("i want to see");
 			String dAndT[] = dateAndTime.split(";");
 			if (!isTime(dAndT[0])) { // date first then time
+				//System.out.println("i donot want to see");
 				handleDiffDateFormat(dAndT[0], date);
 			} else { // time first then date
+				//System.out.println("i want to see");
 				handleDiffDateFormat(dAndT[1], date);
 			}
 		} else { // has either time or date
 			if (!isTime(dateAndTime)) { // only have date info
-				System.out.println("ÎÒ²ÙÄãÂè±Æ");
+				//System.out.println("ÎÒ²ÙÄãÂè±Æ");
 				handleDiffDateFormat(dateAndTime, date);
 			} else { // does not have date info
 				Time t1 = getTime(dateAndTime);
@@ -437,6 +442,7 @@ public class createTask {
 			date.setYear(cal.get(Calendar.YEAR));
 		} else if (dates(Shortcuts.diffDateFormat(dateInfo)) != -1) {
 			Calendar cal = Calendar.getInstance();
+			System.out.println("fuck");
 			int infoDayOfWeek = dates(Shortcuts.diffDateFormat(dateInfo));
 			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 			if (infoDayOfWeek >= dayOfWeek) {
@@ -591,7 +597,7 @@ public class createTask {
 
 	private static boolean isTime(String timeInfo) {
 		if (timeInfo.toLowerCase().contains("am") || timeInfo.toLowerCase().contains("pm")
-				|| timeInfo.contains("MIDNIGHT") || timeInfo.contains("NOON") || containsOnlyNumbers(timeInfo)) {
+				|| timeInfo.contains(MIDNIGHT) || timeInfo.contains(NOON) || containsOnlyNumbers(timeInfo)) {
 			return true;
 		} else {
 			return false;
