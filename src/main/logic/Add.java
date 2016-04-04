@@ -14,10 +14,10 @@ public class Add implements Command {
 	private static final String MSG_SUCCESS = "Added new %1$s task \"%2$s\".";
 	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after add command.";
 	
-	private static final String TYPE_DEADLINE = "Deadline";
-	private static final String TYPE_EVENT = "Event";
-	private static final String TYPE_FLOATING = "Floating";
-	private static final String TYPE_RECURRING = "Recurring";
+	private static final String TYPE_DEADLINE = "deadline";
+	private static final String TYPE_EVENT = "event";
+	private static final String TYPE_FLOATING = "floating";
+	private static final String TYPE_RECURRING = "recurring";
 	
 	private UserInput userInput;
 	private static Storage storage;
