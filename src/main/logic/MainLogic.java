@@ -264,14 +264,35 @@ public class MainLogic {
 	
 
 	//-----Public Methods-----
-	public static ArrayList<ArrayList<Task>> getTaskList() {
-		numTasks = displayList.size();
+	public static Time getCurrentTime() {
+		setCurrentTime();
+		return currentTime;
+	}
+	
+	public static Date getCurrentDate() {
+		setCurrentDate();
+		return currentDate;
+	}
+	
+	public static boolean isSuccessful() {
+		return success;
+	}
+	
+	public static void setDisplayList(ArrayList<Task> newList) {
+		displayList = newList;
+	}
+	
+	public static ArrayList<Task> getDisplayList() {
+		return displayList;
+	}
+	
+	private static ArrayList<ArrayList<Task>> getFilteredList(ArrayList<Task> displayList2) {
 		ArrayList<ArrayList<Task>> newList = new ArrayList<ArrayList<Task>>();
 		ArrayList<Task> eventList = new ArrayList<Task>();
 		ArrayList<Task> floatList = new ArrayList<Task>();
 		ArrayList<Task> deadlineList = new ArrayList<Task>();
 		
-		for (int i=0; i<numTasks; i++) {
+		for (int i=0; i<displayList.size(); i++) {
 			Task task = displayList.get(i);
 			setCurrentTime();
 			setCurrentDate();
@@ -390,30 +411,12 @@ public class MainLogic {
 		return newList;
 	}
 	
-	public static Time getCurrentTime() {
-		setCurrentTime();
-		return currentTime;
-	}
-	
-	public static Date getCurrentDate() {
-		setCurrentDate();
-		return currentDate;
-	}
-	
-	public static boolean isSuccessful() {
-		return success;
-	}
-	
-	public static void setDisplayList(ArrayList<Task> newList) {
-		displayList = newList;
-	}
-	
-	public static ArrayList<Task> getDisplayList() {
-		return displayList;
-	}
-	
 	//Lists
-	public static ArrayList<Task> getCompletedTasks() {
+	public static ArrayList<ArrayList<Task>> getTaskList() {
+		return getFilteredList(displayList);
+	}
+	
+	public static ArrayList<ArrayList<Task>> getCompletedTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<storage.getTaskList().size(); i++) {
 			Task task = storage.getTaskList().get(i);
@@ -422,10 +425,10 @@ public class MainLogic {
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 	
-	public static ArrayList<Task> getIncompletedTasks() {
+	public static ArrayList<ArrayList<Task>> getIncompletedTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<storage.getTaskList().size(); i++) {
 			Task task = storage.getTaskList().get(i);
@@ -434,10 +437,10 @@ public class MainLogic {
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 	
-	public static ArrayList<Task> getTodayTasks() {
+	public static ArrayList<ArrayList<Task>> getTodayTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<storage.getTaskList().size(); i++) {
 			Task task = storage.getTaskList().get(i);
@@ -446,10 +449,10 @@ public class MainLogic {
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 	
-	public static ArrayList<Task> getExpiredTasks() {
+	public static ArrayList<ArrayList<Task>> getExpiredTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<storage.getTaskList().size(); i++) {
 			Task task = storage.getTaskList().get(i);
@@ -458,10 +461,10 @@ public class MainLogic {
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 	
-	public static ArrayList<Task> getWeekTasks() {
+	public static ArrayList<ArrayList<Task>> getWeekTasks() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, 7);
@@ -476,6 +479,6 @@ public class MainLogic {
 			}
 		}
 		
-		return list;
+		return getFilteredList(list);
 	}
 }
