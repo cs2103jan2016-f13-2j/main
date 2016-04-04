@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.sun.javafx.scene.control.skin.TableViewSkinBase;
 
+import javafx.animation.FadeTransition;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -20,11 +21,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import main.gui.MainApp;
 import main.logic.MainLogic;
 import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.UserInput;
+
 
 public class TaskOverviewController {
 	
@@ -34,6 +37,7 @@ public class TaskOverviewController {
     private Boolean zPressed = false;
     private Boolean yPressed = false;
     private Boolean qPressed = false;
+
 
 	
 	@FXML
@@ -81,12 +85,9 @@ public class TaskOverviewController {
 	
 	@FXML private Label instantFeedback;
 	
+	@FXML private Label overdueCounter;
+	
 	@FXML private Label todayDate;
-
-	//@FXML
-	//private Label taskNameLabel;
-	//@FXML
-	//private Label taskDetailsLabel;
 
 	@FXML
 	private TextField commandText;
@@ -111,6 +112,7 @@ public class TaskOverviewController {
 	 * The constructor is called before the initialize() method.
 	 */
 	public TaskOverviewController() {
+		
 	}
 
 	/**
@@ -119,6 +121,7 @@ public class TaskOverviewController {
 	 */
 	@FXML
 	private void initialize() {
+
 		// Initialize the task table with the two columns.
 		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		taskPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
@@ -159,6 +162,7 @@ public class TaskOverviewController {
 		todayDate.setText(MainLogic.getCurrentDate().getDateString());
 		feedback = Feedback.getInstance();
 		instantFeedback.setText(feedback.getMessage());
+		//overdueCounter.setText("" + getNoOfTasks(MainLogic.getExpiredTasks()));
 		// Add observable list data to the table
 		getTaskListFromFile();
 		for (int i = 0; i < totalList.size(); i++) {
@@ -334,6 +338,15 @@ public class TaskOverviewController {
 			}
 		}
 
+	private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
+		int counter=0;
+		for (int i = 0; i < array.size(); i++) {
+			ArrayList<Task> temp = array.get(i);
+			counter += temp.size();
+			}
+		return counter;
+	}
+	
 	/**
 	 * Called when the user clicks on the delete button.
 	 */

@@ -334,6 +334,15 @@ public class OverdueOverviewController {
 			}
 		}
 
+	private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
+		int counter=0;
+		for (int i = 0; i < array.size(); i++) {
+			ArrayList<Task> temp = array.get(i);
+			counter += temp.size();
+			}
+		return counter;
+	}
+	
 	/**
 	 * Called when the user clicks on the delete button.
 	 */
