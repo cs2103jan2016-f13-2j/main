@@ -15,7 +15,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import main.gui.resources.CompleteOverviewController;
 import main.gui.resources.HelpOverviewController;
-import main.gui.resources.IncompleteOverviewController;
 import main.gui.resources.OverdueOverviewController;
 import main.gui.resources.TaskOverviewController;
 import main.gui.resources.TodayOverviewController;
@@ -32,7 +31,6 @@ public class MainApp extends Application {
 	private static final String FXML_TASK_OVERVIEW = "resources/TaskOverview.fxml";
 	private static final String FXML_HELP_OVERVIEW = "resources/HelpOverview.fxml";
 	private static final String FXML_COMPLETE_OVERVIEW = "resources/CompleteOverview.fxml";
-	private static final String FXML_INCOMPLETE_OVERVIEW = "resources/IncompleteOverview.fxml";
 	private static final String FXML_TODAY_OVERVIEW = "resources/TodayOverview.fxml";
 	private static final String FXML_UPCOMING_OVERVIEW = "resources/UpcomingOverview.fxml";
 	private static final String FXML_OVERDUE_OVERVIEW = "resources/OverdueOverview.fxml";
@@ -157,26 +155,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-    
-    public void showIncompleteOverview() {
-        try {
-            // Load Task overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(MainApp.class.getResource(FXML_INCOMPLETE_OVERVIEW));
-            AnchorPane incompleteOverview = (AnchorPane) loader.load();
 
-            // Set task overview into the center of root layout.
-            rootLayout.setCenter(incompleteOverview);
-
-            // Give the controller access to the main app.
-            IncompleteOverviewController controller = loader.getController();
-            controller.setMainApp(this);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
     public void showTodayOverview() {
         try {
             // Load Task overview.

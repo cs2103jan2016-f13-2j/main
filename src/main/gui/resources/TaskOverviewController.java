@@ -347,6 +347,7 @@ public class TaskOverviewController {
 			}
 		}
 
+	
 	private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
 		int counter=0;
 		for (int i = 0; i < array.size(); i++) {
@@ -402,10 +403,8 @@ public class TaskOverviewController {
           qPressed = true;
       } else if (keyEvent.getCode() == KeyCode.F12) {
           mainApp.showHelpOverview();
-      } else if (keyEvent.getCode() == KeyCode.F6) {
-          mainApp.showOverdueOverview();
       } else if (keyEvent.getCode() == KeyCode.F5) {
-          mainApp.showIncompleteOverview();
+          mainApp.showOverdueOverview();
       } else if (keyEvent.getCode() == KeyCode.F4) {
           mainApp.showCompleteOverview();
       } else if (keyEvent.getCode() == KeyCode.F3) {
@@ -474,10 +473,5 @@ public class TaskOverviewController {
 	@FXML
 	void onClickedComplete(){
 		mainApp.showCompleteOverview();
-	}
-	
-	@FXML
-	void onClickedIncomplete(){
-		mainApp.showIncompleteOverview();
 	}
 }
