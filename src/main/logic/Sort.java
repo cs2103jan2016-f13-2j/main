@@ -68,12 +68,15 @@ public class Sort implements Command {
 			break;
 
 		default:
-			feedback.setMessage(String.format(MSG_FAIL_INVALID_SORT_TYPE, feedback.getSortString()));
+			if (userInput.getDisplaySort() == false) {
+				feedback.setMessage(String.format(MSG_FAIL_INVALID_SORT_TYPE, feedback.getSortString()));
+			}
 			return;
 		}
-		
-		feedback.setMessage(String.format(MSG_SUCCESS, getSortCategoryString()));
-		
+		if (userInput.getDisplaySort() == false) {
+			feedback.setMessage(String.format(MSG_SUCCESS, getSortCategoryString()));
+		}
+
 		storage.saveFile();
 		MainLogic.setDisplayList(displayList);
 

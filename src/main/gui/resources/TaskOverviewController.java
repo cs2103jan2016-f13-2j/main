@@ -142,6 +142,10 @@ public class TaskOverviewController {
 		floatingNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		floatingPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		floatingDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
+		
+		taskTable.setPlaceholder(new Label("No tasks"));
+		eventTable.setPlaceholder(new Label("No tasks"));
+		floatingTable.setPlaceholder(new Label("No tasks"));
 	}
 
 
@@ -310,7 +314,7 @@ public class TaskOverviewController {
 	}
 	
 	
-//convert arraylist to observable list
+	//convert arraylist to observable list
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
