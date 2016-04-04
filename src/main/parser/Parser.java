@@ -98,8 +98,10 @@ public class Parser {
 		case "set":
 			userInput.setCommand("set");
 			userInput.setDirectory(inputCommand.get(1));	
+			break;
 		default:
 			userInput.setCommand(userInput.getRawInput());
+			break;
 		}
 		return userInput;
 
