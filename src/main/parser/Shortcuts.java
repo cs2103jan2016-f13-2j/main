@@ -48,4 +48,73 @@ public class Shortcuts {
 			return command;
 		}
 	}
+	
+	public static String diffDateFormat(String dateInfo){
+		switch(dateInfo.toLowerCase()){
+		case "tmrw":
+		case "tmr":
+		case "tomorrow":
+			return "tomorrow";
+		case "mon":
+		case "monday":
+			return "monday";
+		case "tues":
+		case "tuesday":
+			return "tuesday";
+		case "wed":
+		case "weds":
+		case "wednesday":
+			return "wednesday";
+		case "thur":
+		case "thurs":
+		case "thursday":
+			return "thursday";
+		case "fri":
+		case "firday":
+			return "friday";
+		case "sat":
+		case "saturday":
+			return "saturday";
+		case "sun":
+		case "sunday":
+			return "sunday";
+		case "january":
+		case "jan":
+			return "January";
+		case "february":
+		case "feb":
+			return "February";
+		case "march":
+		case "mar":
+			return "March";
+		case "april":
+		case "apr":
+			return "April";
+		case "may":
+			return "May";
+		case "june":
+		case "jun":
+			return "June";
+		case "july":
+		case "jul":
+			return "July";
+		case "august":
+		case "aug":
+			return "August";
+		case "september":
+		case "sep":
+			return "September";
+		case "october":
+		case "oct":
+			return "October";
+		case "november":
+		case "nov":
+			return "November";
+		case "december":
+		case "dec":
+			return "December";
+		default:
+			return dateInfo;
+		}
+	}
 }

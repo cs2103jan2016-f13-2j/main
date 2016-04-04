@@ -108,6 +108,7 @@ public class Parser {
 			
 		default:
 			userInput.setCommand(userInput.getRawInput());
+			break;
 		}
 		return userInput;
 
