@@ -300,7 +300,7 @@ public class TaskOverviewController {
 	}
 	
 	
-//convert arraylist to observable list
+	//convert arraylist to observable list
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
