@@ -25,7 +25,7 @@
 }
 
 .label-counter {
-    -fx-font-size: 6pt;
+    -fx-font-size: 10pt;
     -fx-font-family: "Arial";
     -fx-text-fill: white;
     -fx-font-weight: bold;

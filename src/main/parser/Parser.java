@@ -95,10 +95,7 @@ public class Parser {
 		case "redo":
 			userInput.setCommand("redo");
 			break;
-		case "set":
-			userInput.setCommand("set");
-			userInput.setDirectory(inputCommand.get(1));	
-			break;
+
 			
 		case "import":
 			userInput.setCommand("import");
