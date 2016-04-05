@@ -556,7 +556,14 @@ public class MainLogic {
 	}
 	
 	public static ArrayList<Task> getTaskListUnfiltered() {
-		return displayList;
+		ArrayList<Task> list = new ArrayList<Task>();
+		for (int i=0 ;i<displayList.size(); i++) {
+			Task task = displayList.get(i);
+			if (!task.isComplete()) {
+				list.add(task);
+			}
+		}
+		return list;
 	}
 	
 	public static ArrayList<Task> getCompletedTasksUnfiltered() {
@@ -575,8 +582,8 @@ public class MainLogic {
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
 			if (task.getTaskStartDate() != null && 
-					task.getTaskStartDate().compareTo(getCurrentDate()) == 0 ||
-						task.getTaskType() == 2) {
+					(task.getTaskStartDate().compareTo(getCurrentDate()) == 0 ||
+						task.getTaskType() == 2) && !task.isComplete()) {
 				list.add(task);
 			}
 		}
@@ -588,7 +595,7 @@ public class MainLogic {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if (task.isExpired() || task.getTaskType() == 2) {
+			if ((task.isExpired() || task.getTaskType() == 2) && !task.isComplete()) {
 				list.add(task);
 			}
 		}
@@ -605,8 +612,8 @@ public class MainLogic {
 									cal.get(Calendar.YEAR));
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if (task.getTaskStartDate() != null && (task.getTaskStartDate().compareTo(getCurrentDate()) >= 0 ||
-					task.getTaskStartDate().compareTo(date) < 0)  || task.getTaskType() == 2) {
+			if (task.getTaskStartDate() != null && ((task.getTaskStartDate().compareTo(getCurrentDate()) >= 0 ||
+					task.getTaskStartDate().compareTo(date) < 0)  || task.getTaskType() == 2) && !task.isComplete()) {
 				list.add(task);
 			}
 		}
