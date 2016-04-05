@@ -97,14 +97,20 @@ public class Parser {
 			break;
 			
 		case "complete":
+			userInput.setCommand("complete");
 			userInput.setComplete(true);
 			ArrayList<int[]> completeList = new ArrayList<int[]>();
 			passDeletePart(inputCommand,userInput,completeList);
+			break;
 		
 		case "uncomplete":
+			userInput.setCommand("uncomplete");
 			userInput.setComplete(false);
 			ArrayList<int[]> uncompleteList = new ArrayList<int[]>();
 			passDeletePart(inputCommand,userInput,uncompleteList);
+
+			break;
+
 			
 		case "import":
 			userInput.setCommand("import");
