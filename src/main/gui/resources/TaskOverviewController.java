@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -20,7 +21,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.util.Callback;
 import javafx.util.Duration;
 import main.gui.MainApp;
 import main.logic.MainLogic;
@@ -146,6 +150,81 @@ public class TaskOverviewController {
 		taskTable.setPlaceholder(new Label("No tasks"));
 		eventTable.setPlaceholder(new Label("No tasks"));
 		floatingTable.setPlaceholder(new Label("No tasks"));
+		
+		taskDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(taskDetailsColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
+		
+		taskLocationColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(taskLocationColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
+		
+		eventDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(eventDetailsColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
+		
+		eventLocationColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(eventLocationColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
+		
+		floatingDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(floatingDetailsColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
 	}
 
 
