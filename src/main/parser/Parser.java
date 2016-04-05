@@ -95,10 +95,6 @@ public class Parser {
 		case "redo":
 			userInput.setCommand("redo");
 			break;
-<<<<<<< HEAD
-
-=======
->>>>>>> 98f0e3f5bf9ff04b5a55989ad5e0a9bb10e94b7b
 			
 		case "import":
 			userInput.setCommand("import");
