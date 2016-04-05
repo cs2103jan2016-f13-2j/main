@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Rectangle;
 import main.gui.MainApp;
 import main.logic.MainLogic;
 import main.resources.Task;
@@ -27,7 +28,7 @@ public class HelpOverviewController {
 	private TextField commandText;
 	
 	@FXML private Label overdueCounter;
-	
+	@FXML private Rectangle overdueRectangle;
 	 private MainApp mainApp;
 
 	    /**
@@ -53,8 +54,11 @@ public class HelpOverviewController {
 	     */
 	    public void setMainApp(MainApp mainApp) {
 	        this.mainApp = mainApp;
-			overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
-
+			if (getNoOfTasks(MainLogic.getExpiredTasks()) > 0) {
+				overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
+				} else {
+					overdueRectangle.setOpacity(0);
+				}
 	    }
 	    
 		private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
