@@ -20,7 +20,7 @@ public class Storage {
 	Logger logger = Logger.getLogger("Storage");
 
 	//String constants
-	private static String FILE_NAME = "task.txt";
+	private static String FILE_NAME = "task.dat";
 	private static String DEFAULT = "default";
 	
 	//Message strings
