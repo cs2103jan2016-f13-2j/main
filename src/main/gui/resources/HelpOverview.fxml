@@ -11,8 +11,8 @@
 <AnchorPane prefHeight="600.0" prefWidth="1200.0" styleClass="background" stylesheets="@../LightTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.HelpOverviewController">
    <children>
       <TextField fx:id="commandText" layoutX="10.0" layoutY="550.0" onAction="#onEnter" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyPressed" prefHeight="37.0" prefWidth="745.0" stylesheets="@../LightTheme.css" />
-      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ffc41f" height="36.0" layoutX="1116.0" layoutY="6.0" onMouseClicked="#onClickedHelp" stroke="BLACK" strokeType="INSIDE" width="76.0" />
-      <Label layoutX="1120.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Help (F12)" />
+      <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ffc41f" height="36.0" layoutX="1117.0" layoutY="6.0" onMouseClicked="#onClickedHelp" stroke="BLACK" strokeType="INSIDE" width="76.0" />
+      <Label layoutX="1121.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Help (F12)" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="120.0" layoutY="6.0" onMouseClicked="#onClickedAllTask" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="245.0" layoutY="6.0" onMouseClicked="#onClickedToday" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="370.0" layoutY="6.0" onMouseClicked="#onClickedUpcoming" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
