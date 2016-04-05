@@ -96,6 +96,17 @@ public class Parser {
 			userInput.setCommand("redo");
 			break;
 			
+		case "complete":
+			userInput.setComplete(true);
+			ArrayList<int[]> completeList = new ArrayList<int[]>();
+			passDeletePart(inputCommand,userInput,completeList);
+		
+		case "uncomplete":
+			userInput.setComplete(false);
+			ArrayList<int[]> uncompleteList = new ArrayList<int[]>();
+			passDeletePart(inputCommand,userInput,uncompleteList);
+
+			
 		case "import":
 			userInput.setCommand("import");
 			userInput.setPath(inputCommand.get(1));
@@ -252,6 +263,8 @@ public class Parser {
 		
 		return k;
 	}
+	
+	
 	
 	private static void passDeletePart(ArrayList<String> commands, UserInput userInput, ArrayList<int[]> list){
 		for(int i=1; i<commands.size(); i++){

@@ -442,7 +442,6 @@ public class createTask {
 			date.setYear(cal.get(Calendar.YEAR));
 		} else if (dates(Shortcuts.diffDateFormat(dateInfo)) != -1) {
 			Calendar cal = Calendar.getInstance();
-			System.out.println("fuck");
 			int infoDayOfWeek = dates(Shortcuts.diffDateFormat(dateInfo));
 			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
 			if (infoDayOfWeek >= dayOfWeek) {
@@ -459,7 +458,7 @@ public class createTask {
 		} else {
 			System.out.println(Shortcuts.diffDateFormat(dateInfo));
 			if (dateInfo.toLowerCase().contains("st")) {
-				String dAndM[] = dateInfo.toLowerCase().split("st");
+				String dAndM[] = dateInfo.toLowerCase().split("st-");
 				dAndM[1] = dAndM[1].trim();
 				Calendar cal = Calendar.getInstance();
 				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH) + 1)) {
@@ -472,8 +471,8 @@ public class createTask {
 					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
 					date.setYear(cal.get(Calendar.YEAR));
 				}
-			} else if (dateInfo.toLowerCase().contains("ed")) {
-				String dAndM[] = dateInfo.toLowerCase().split("ed");
+			} else if (dateInfo.toLowerCase().contains("nd")) {
+				String dAndM[] = dateInfo.toLowerCase().split("nd-");
 				dAndM[1] = dAndM[1].trim();
 				Calendar cal = Calendar.getInstance();
 				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH) + 1)) {
@@ -487,7 +486,7 @@ public class createTask {
 					date.setYear(cal.get(Calendar.YEAR));
 				}
 			} else if (dateInfo.toLowerCase().contains("rd")) {
-				String dAndM[] = dateInfo.toLowerCase().split("rd");
+				String dAndM[] = dateInfo.toLowerCase().split("rd-");
 				dAndM[1] = dAndM[1].trim();
 				Calendar cal = Calendar.getInstance();
 				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH) + 1)) {
@@ -501,8 +500,9 @@ public class createTask {
 					date.setYear(cal.get(Calendar.YEAR));
 				}
 			} else {
-				String dAndM[] = dateInfo.toLowerCase().split("th");
+				String dAndM[] = dateInfo.toLowerCase().split("th-");
 				dAndM[1] = dAndM[1].trim();
+				System.out.println(dAndM[1]);
 				Calendar cal = Calendar.getInstance();
 				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH))) {
 					date.setDay(Integer.parseInt(dAndM[0]));

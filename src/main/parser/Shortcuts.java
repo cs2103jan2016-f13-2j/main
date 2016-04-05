@@ -38,12 +38,24 @@ public class Shortcuts {
 		case "recur":
 		case "r":
 			return "recurring";
+		//undo command
 		case "undo":
 			return "undo";
+		//redo command
 		case "redo":
 			return "redo";
+		//set command
 		case "set":
 			return "set";
+		//complete command
+		case "complete":
+		case "mark":
+		case "done":
+			return "complete";
+		//uncomplete command
+		case "incomplete":
+		case "uncomplete":
+			return "uncomplete";
 		default:
 			return command;
 		}
