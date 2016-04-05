@@ -95,10 +95,16 @@ public class Parser {
 		case "redo":
 			userInput.setCommand("redo");
 			break;
-		case "set":
-			userInput.setCommand("set");
-			userInput.setDirectory(inputCommand.get(1));	
-			break;
+			
+		case "complete":
+			userInput.setComplete(true);
+			ArrayList<int[]> completeList = new ArrayList<int[]>();
+			passDeletePart(inputCommand,userInput,completeList);
+		
+		case "uncomplete":
+			userInput.setComplete(false);
+			ArrayList<int[]> uncompleteList = new ArrayList<int[]>();
+			passDeletePart(inputCommand,userInput,uncompleteList);
 			
 		case "import":
 			userInput.setCommand("import");
@@ -256,6 +262,8 @@ public class Parser {
 		
 		return k;
 	}
+	
+	
 	
 	private static void passDeletePart(ArrayList<String> commands, UserInput userInput, ArrayList<int[]> list){
 		for(int i=1; i<commands.size(); i++){
