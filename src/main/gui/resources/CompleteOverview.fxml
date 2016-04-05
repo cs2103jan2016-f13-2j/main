@@ -16,9 +16,8 @@
                <children>
                   <TextField fx:id="commandText" layoutX="10.0" layoutY="550.0" onAction="#onEnter" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="37.0" prefWidth="745.0" />
                   <Label layoutY="17.0" text="Deadlines" />
-                  <Label fx:id="todayDate" alignment="CENTER" layoutX="759.0" layoutY="550.0" prefHeight="37.0" prefWidth="137.0" styleClass="label-date" />
-                  <Label fx:id="todayDate1" alignment="CENTER" layoutX="759.0" layoutY="535.0" prefHeight="31.0" prefWidth="137.0" styleClass="label-date" text="Today's Date:" />
-                  <TableView fx:id="taskTable" editable="true" layoutY="47.0" prefHeight="200.0" prefWidth="865.0" AnchorPane.bottomAnchor="321.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
+                  <Label fx:id="todayDate" alignment="CENTER" layoutX="759.0" layoutY="560.0" prefHeight="37.0" prefWidth="137.0" styleClass="label-date" />
+                  <Label fx:id="todayDate1" alignment="CENTER" layoutX="759.0" layoutY="545.0" prefHeight="31.0" prefWidth="137.0" styleClass="label-date" text="Today's Date:" />                <TableView fx:id="taskTable" editable="true" layoutY="47.0" prefHeight="200.0" prefWidth="865.0" AnchorPane.bottomAnchor="321.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
                     <columns>
                       <TableColumn fx:id="taskNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="taskPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
@@ -53,8 +52,7 @@
                   <Label layoutX="635.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Overdue (F5)" />
                   <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Today (F2)" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#d71717" height="19.0" layoutX="724.0" layoutY="5.0" onMouseClicked="#onClickedOverdue" stroke="BLACK" strokeType="INSIDE" width="26.0" />
-                  <Label fx:id="overdueCounter" alignment="CENTER" layoutX="726.0" layoutY="7.0" prefHeight="15.0" prefWidth="23.0" styleClass="label-counter" textAlignment="CENTER" />
-               </children>
+                  <Label fx:id="overdueCounter" alignment="CENTER" layoutX="721.0" layoutY="6.0" prefHeight="12.0" prefWidth="32.0" styleClass="label-counter" textAlignment="CENTER" />               </children>
             </AnchorPane>
          </center>
          <right>
