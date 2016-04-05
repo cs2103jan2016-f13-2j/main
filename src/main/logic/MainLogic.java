@@ -60,6 +60,7 @@ public class MainLogic {
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "MainLogic ERROR");
 			success = false;
+			e.printStackTrace();
 		}
 		logger.log(Level.INFO, "MainLogic END");
 	}
@@ -140,8 +141,14 @@ public class MainLogic {
 			break;
 		}
 		
-		case "show": {
-			//showList(userInput);
+		case "complete": {
+			completeTask(true);
+			break;
+		}
+		
+		case "uncomplete": {
+			completeTask(false);
+			break;
 		}
 		
 		default: {
@@ -236,6 +243,31 @@ public class MainLogic {
 		}
 		
 		return list;
+	}
+	
+	private static void completeTask(boolean complete) {
+		int count;
+		int taskType = 0;
+		int taskNumber = 0;
+		//ArrayList<Task> list = null;
+		
+		for (int i=0; i<userInput.getDeleteNumber().size(); i++) {
+			count = 0;
+			//list = new ArrayList<Task>();
+			taskType = userInput.getDeleteNumber().get(i)[0];
+			taskNumber = userInput.getDeleteNumber().get(i)[1];
+			
+			for (int j=0; j<getList().size(); j++) {
+				Task task = getList().get(j);
+				if (task.getTaskType() == taskType) {
+					count++;
+					 if(count == taskNumber) {
+						//list.add(task);
+						task.setComplete(complete);
+					 }
+				}
+			}
+		}
 	}
 	
 	private static ArrayList<Task> copyList() {
