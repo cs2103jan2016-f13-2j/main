@@ -1,6 +1,7 @@
 package main.gui.resources;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.sun.javafx.scene.control.skin.TableViewSkinBase;
 
@@ -23,8 +24,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
+import javafx.scene.shape.Rectangle;
 import main.gui.MainApp;
 import main.logic.MainLogic;
+import main.resources.Date;
 import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.UserInput;
@@ -87,6 +90,8 @@ public class UpcomingOverviewController {
 	@FXML private Label todayDate;
 
 	@FXML private Label overdueCounter;
+	
+	@FXML private Rectangle overdueRectangle;
 
 	@FXML
 	private TextField commandText;
@@ -240,12 +245,16 @@ public class UpcomingOverviewController {
 		instantFeedback.setText(feedback.getMessage());
 		// Add observable list data to the table
 		getTaskListFromFile();
+		if (getNoOfTasks(MainLogic.getExpiredTasks()) > 0) {
 		overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
+		} else {
+			overdueRectangle.setOpacity(0);
+		}
 		for (int i = 0; i < totalList.size(); i++) {
 		allTables.get(i).setItems(totalList.get(i));
 		}
 		
-		taskPNumberColumn.setCellFactory(column -> {
+		taskDateColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
@@ -255,19 +264,80 @@ public class UpcomingOverviewController {
 		            	 setText("");
 		                 setStyle("");
 		            } else {
+		            	boolean expired = false;
+		            	boolean tomorrow = false;
+		            	String[] date = item.split("-");
+		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
+		            	Calendar cal = Calendar.getInstance();
+		            	cal.add(Calendar.DAY_OF_MONTH, 1);
+		            	Date todayDate = MainLogic.getCurrentDate();
+		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
+									cal.get(Calendar.MONTH) + 1, 
+									cal.get(Calendar.YEAR));
+		            	Date taskDate = new Date(
+		            			Integer.parseInt(date[0]), 
+		            			Integer.parseInt(date[1]), 
+		            			Integer.parseInt(date[2]));
+		            	if(taskDate.compareTo(todayDate) < 0)
+		            		expired = true;
+		            	if(taskDate.equals(tmrwDate)){
+		            		tomorrow = true;
+		            	}
 		                setText(item);
-		                if (item.equals("1")) {
-		                	setText("H");
+		                if (expired) {
 		                    setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: red");
-		                } else if (item.equals("2")) {
-		                	setText("M");
-		                	setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: orange");
-		                } else {
-		                	setText("L");
+		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
+						} else {
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
+		                }
+		                if (tomorrow) {
+		                	setText("Tomorrow");
+		                }
+		            }
+		        }
+		    };
+		});
+		
+		eventStartDateColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		            	 setText("");
+		                 setStyle("");
+		            } else {
+		            	boolean expired = false;
+		            	boolean tomorrow = false;
+		            	String[] date = item.split("-");
+		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
+		            	Calendar cal = Calendar.getInstance();
+		            	cal.add(Calendar.DAY_OF_MONTH, 1);
+		            	Date todayDate = MainLogic.getCurrentDate();
+		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
+									cal.get(Calendar.MONTH) + 1, 
+									cal.get(Calendar.YEAR));
+		            	Date taskDate = new Date(
+		            			Integer.parseInt(date[0]), 
+		            			Integer.parseInt(date[1]), 
+		            			Integer.parseInt(date[2]));
+		            	if(taskDate.compareTo(todayDate) < 0)
+		            		expired = true;
+		            	if(taskDate.equals(tmrwDate)){
+		            		tomorrow = true;
+		            	}
+		                setText(item);
+		                if (expired) {
+		                    setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
+						} else {
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		                if (tomorrow) {
+		                	setText("Tomorrow");
 		                }
 		            }
 		        }

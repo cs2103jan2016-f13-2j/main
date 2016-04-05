@@ -52,8 +52,8 @@
                   <Label layoutX="502.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Completed (F4)" />
                   <Label layoutX="635.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Overdue (F5)" />
                   <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Today (F2)" />
-                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#d71717" height="19.0" layoutX="724.0" layoutY="5.0" onMouseClicked="#onClickedOverdue" stroke="BLACK" strokeType="INSIDE" width="26.0" />
-                  <Label fx:id="overdueCounter" alignment="CENTER" layoutX="721.0" layoutY="6.0" prefHeight="12.0" prefWidth="32.0" styleClass="label-counter" textAlignment="CENTER" />
+                  <Rectangle fx:id="overdueRectangle" arcHeight="50.0" arcWidth="50.0" fill="#d71717" height="19.0" layoutX="724.0" layoutY="5.0" mouseTransparent="true" onMouseClicked="#onClickedOverdue" stroke="BLACK" strokeType="INSIDE" width="26.0" />
+                  <Label fx:id="overdueCounter" alignment="CENTER" layoutX="721.0" layoutY="6.0" mouseTransparent="true" prefHeight="12.0" prefWidth="32.0" styleClass="label-counter" textAlignment="CENTER" />
                </children>
             </AnchorPane>
          </center>
