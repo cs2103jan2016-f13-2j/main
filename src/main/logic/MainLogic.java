@@ -280,10 +280,7 @@ public class MainLogic {
 		case 4: {	//Complete
 			return getCompletedTasksUnfiltered();
 		}
-		case 5: {	//Incomplete
-			return getIncompleteTasksUnfiltered();
-		}
-		case 6: {	//Overdue/Expired
+		case 5: {	//Overdue/Expired
 			return getExpiredTasksUnfiltered();
 		}
 		default: {
@@ -456,10 +453,6 @@ public class MainLogic {
 	public static ArrayList<ArrayList<Task>> getCompletedTasks() {
 		return getFilteredList(getCompletedTasksUnfiltered());
 	}
-	
-	public static ArrayList<ArrayList<Task>> getIncompleteTasks() {
-		return getFilteredList(getIncompleteTasksUnfiltered());
-	}
 
 	public static ArrayList<ArrayList<Task>> getTodayTasks() {
 		return getFilteredList(getTodayTasksUnfiltered());
@@ -488,23 +481,13 @@ public class MainLogic {
 		return list;
 	}
 	
-	public static ArrayList<Task> getIncompleteTasksUnfiltered() {
-		ArrayList<Task> list = new ArrayList<Task>();
-		for (int i=0 ;i<displayList.size(); i++) {
-			Task task = displayList.get(i);
-			if (!task.isComplete()) {
-				list.add(task);
-			}
-		}
-		
-		return list;
-	}
-	
 	public static ArrayList<Task> getTodayTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(getCurrentDate()) == 0) {
+			if (task.getTaskStartDate() != null && 
+					task.getTaskStartDate().compareTo(getCurrentDate()) == 0 ||
+						task.getTaskType() == 2) {
 				list.add(task);
 			}
 		}
@@ -516,7 +499,7 @@ public class MainLogic {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if (task.isExpired()) {
+			if (task.isExpired() || task.getTaskType() == 2) {
 				list.add(task);
 			}
 		}
@@ -534,7 +517,7 @@ public class MainLogic {
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
 			if (task.getTaskStartDate() != null && (task.getTaskStartDate().compareTo(getCurrentDate()) >= 0 ||
-					task.getTaskStartDate().compareTo(date) < 0)) {
+					task.getTaskStartDate().compareTo(date) < 0)  || task.getTaskType() == 2) {
 				list.add(task);
 			}
 		}
