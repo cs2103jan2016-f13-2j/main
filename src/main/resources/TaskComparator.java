@@ -83,6 +83,8 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getTaskStartTime().compareTo(task1.getTaskStartTime());
 			}
 			
+			
+			
 			else {
 				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
 			}
@@ -112,6 +114,39 @@ public class TaskComparator implements Comparator<Task> {
 		case 7: { 	//task priority
 			if (task0.getPriority() != task1.getPriority()) {
 				return task0.getPriority() - task1.getPriority();	
+			}
+			
+			else if (task0.getTaskStartDate() == null && 
+					task1.getTaskStartDate() == null) {
+				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
+			}
+			
+			else if (task0.getTaskStartDate() == null) {
+				return 1;
+			}
+			
+			else if (task1.getTaskStartDate() == null) {
+				return -1;
+			}
+			
+			else if (!task0.getTaskStartDate().equals(task1.getTaskStartDate())) {
+				return task0.getTaskStartDate().compareTo(task1.getTaskStartDate());
+			}
+			
+			else if (task0.getTaskStartTime() == null && task1.getTaskStartTime() == null) {
+				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
+			}
+			
+			else if (task0.getTaskStartTime() == null) {
+				return 1;
+			}
+			
+			else if (task1.getTaskStartTime() == null) {
+				return -1;
+			}
+			
+			else if (!task0.getTaskStartTime().equals(task1.getTaskStartTime())) {
+				return task0.getTaskStartTime().compareTo(task1.getTaskStartTime());
 			}
 			
 			else {
