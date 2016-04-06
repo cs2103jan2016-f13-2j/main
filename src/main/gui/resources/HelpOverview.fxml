@@ -36,22 +36,22 @@
       <Label layoutX="293.0" layoutY="390.0" text="Searching for a task" />
       <Label layoutX="897.0" layoutY="58.0" text="Import/Export" />
       <Label layoutX="919.0" layoutY="208.0" text="Shortcuts" />
-      <Text layoutX="50.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add &lt;TaskDetails&gt; from &lt;StartTime/StartDate&gt; to &lt;EndTime/EndDate&gt; at &lt;Location&gt; p&lt;PriorityNo.&gt;">
+      <Text layoutX="50.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add &lt;TaskDetails&gt; from &lt;StartTime/StartDate&gt; to &lt;EndTime/EndDate&gt; at &lt;Location&gt; -p&lt;PriorityNo.&gt;">
          <font>
             <Font name="Consolas Bold Italic" size="12.0" />
          </font>
       </Text>
-      <Text layoutX="258.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add &lt;TaskDetails&gt; p&lt;PriorityNo.&gt;">
+      <Text layoutX="258.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add &lt;TaskDetails&gt; -p&lt;PriorityNo.&gt;">
          <font>
             <Font name="Consolas Bold Italic" size="12.0" />
          </font>
       </Text>
-      <Text layoutX="26.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add recur &lt;TimePeriod&gt; by &lt;Time/Date&gt; by &lt;Time/Date&gt; at &lt;Location&gt; p&lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
+      <Text layoutX="26.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add recur &lt;TimePeriod&gt; by &lt;Time/Date&gt; by &lt;Time/Date&gt; at &lt;Location&gt; -p&lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
          <font>
             <Font name="Consolas Bold Italic" size="12.0" />
          </font>
       </Text>
-      <Text layoutX="26.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add recur &lt;Timeperiod&gt; from &lt;StartTime/StartDate&gt; to &lt;EndTime/EndDate&gt; at &lt;location&gt; p&lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
+      <Text layoutX="26.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add recur &lt;Timeperiod&gt; from &lt;StartTime/StartDate&gt; to &lt;EndTime/EndDate&gt; at &lt;location&gt; -p&lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
          <font>
             <Font name="Consolas Bold Italic" size="12.0" />
          </font>
