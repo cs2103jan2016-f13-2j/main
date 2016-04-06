@@ -11,7 +11,9 @@ import main.storage.Storage;
 
 public class Add implements Command {
 	
-	private static final String MSG_SUCCESS = "Added new %1$s task \"%2$s\".";
+	private static final String MSG_SUCCESS_ADD = "Added new %1$s task \"%2$s\".";
+	private static final String MSG_SUCCESS_UNDO = "Undid previous command.";
+	private static final String MSG_SUCCESS_REDO = "Redid previous command.";
 	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after add command.";
 	
 	private static final String TYPE_DEADLINE = "deadline";
@@ -43,7 +45,7 @@ public class Add implements Command {
 			feedback.setMessage(MSG_FAIL_FILE_SAVE);
 		}
 		else {
-			feedback.setMessage(String.format(MSG_SUCCESS, getTaskTypeString(), userInput.getTask().getTaskDetails()));
+			feedback.setMessage(String.format(MSG_SUCCESS_ADD, getTaskTypeString(), userInput.getTask().getTaskDetails()));
 		}
 	}
 	
@@ -82,6 +84,7 @@ public class Add implements Command {
 		taskList.remove(userInput.getTask());
 		storage.saveFile();
 		
+		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
 	@Override
@@ -89,7 +92,9 @@ public class Add implements Command {
 		logger.log(Level.INFO, "Command REDO ADD");
 		taskList = storage.getTaskList();
 		taskList.add(userInput.getTask());
-		storage.saveFile();		
+		storage.saveFile();
+		
+		feedback.setMessage(MSG_SUCCESS_REDO);
 	}
 
 }

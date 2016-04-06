@@ -12,7 +12,9 @@ import main.storage.Storage;
 public class Delete implements Command {
 	
 	
-	private static final String MSG_SUCCESS = "Deleted %1$s task %2$d.";
+	private static final String MSG_SUCCESS_DELETE = "Deleted %1$s task %2$d.";
+	private static final String MSG_SUCCESS_UNDO = "Undid previous command.";
+	private static final String MSG_SUCCESS_REDO = "Redid previous command.";
 	private static final String MSG_FAIL_INDEX_OOB = "Error: No such %1$s task with index %2$d.";
 	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after delete command.";
 	
@@ -55,7 +57,7 @@ public class Delete implements Command {
 			feedback.setMessage(MSG_FAIL_FILE_SAVE);
 		}
 		else if (success) {
-			feedback.setMessage(String.format(MSG_SUCCESS, getTaskTypeString(), userInput.getDeleteNumber()));
+			feedback.setMessage(String.format(MSG_SUCCESS_DELETE, getTaskTypeString(), userInput.getDeleteNumber()));
 		}
 		else {
 			feedback.setMessage(String.format(MSG_FAIL_INDEX_OOB, getTaskTypeString(), userInput.getDeleteNumber()));
@@ -103,6 +105,8 @@ public class Delete implements Command {
 			}
 		}
 		storage.saveFile();
+		
+		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
 	@Override
@@ -116,5 +120,7 @@ public class Delete implements Command {
 			displayList.remove(task);
 		}
 		storage.saveFile();
+		
+		feedback.setMessage(MSG_SUCCESS_REDO);
 	}
 }

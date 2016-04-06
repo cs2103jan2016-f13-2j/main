@@ -11,8 +11,10 @@ import main.storage.Storage;
 
 public class Edit implements Command {
 
-	private static final String MSG_SUCCESS = "Editted task successfully.";
-	private static final String MSG_INVALID_EDIT_TYPE = "Error: Invalid edit task.";
+	private static final String MSG_SUCCESS_EDIT = "Editted task successfully.";
+	private static final String MSG_SUCCESS_UNDO = "Undid previous command.";
+	private static final String MSG_SUCCESS_REDO = "Redid previous command.";
+	private static final String MSG_INVALID_EDIT_TYPE = "Error: Invalid edit category.";
 	private static final String MSG_FAIL_NO_START_DATE = "Error: Cannot add end date to floating task without start date.";
 	private static final String MSG_FAIL_NO_START_TIME = "Error: Cannot add end time to floating task without start time.";
 	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after edit command.";
@@ -125,7 +127,7 @@ public class Edit implements Command {
 				feedback.setMessage(MSG_FAIL_FILE_SAVE);
 			}
 			else if (success) {
-				feedback.setMessage(String.format(MSG_SUCCESS));
+				feedback.setMessage(String.format(MSG_SUCCESS_EDIT));
 			}
 		}
 		
@@ -149,6 +151,8 @@ public class Edit implements Command {
 			displayList.remove(userInput.getTask());
 			displayList.add(userInput.getTaskToEdit());
 		}
+		
+		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
 	@Override
@@ -162,5 +166,7 @@ public class Edit implements Command {
 			displayList.remove(userInput.getTaskToEdit());
 			displayList.add(userInput.getTask());
 		}
+		
+		feedback.setMessage(MSG_SUCCESS_REDO);
 	}
 }

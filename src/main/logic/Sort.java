@@ -14,7 +14,7 @@ import main.storage.Storage;
 
 public class Sort implements Command {
 
-	private static final String MSG_SUCCESS = "Sorted tasks by %1$s.";
+	private static final String MSG_SUCCESS_SORT = "Sorted tasks by %1$s.";
 	private static final String MSG_FAIL_INVALID_SORT_TYPE = "Error: \"%1$s\" is an invalid sort category.";
 
 	private static final String TYPE_DETAIL = "details";
@@ -74,7 +74,7 @@ public class Sort implements Command {
 			return;
 		}
 		if (userInput.getDisplaySort() == false) {
-			feedback.setMessage(String.format(MSG_SUCCESS, getSortCategoryString()));
+			feedback.setMessage(String.format(MSG_SUCCESS_SORT, getSortCategoryString()));
 		}
 
 		storage.saveFile();

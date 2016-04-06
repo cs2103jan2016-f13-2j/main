@@ -11,7 +11,7 @@ import main.storage.Storage;
 
 public class Search implements Command {
 	
-	private static final String MSG_SUCCESS = "Searching for text containing \"%1$s\".";
+	private static final String MSG_SUCCESS_SEARCH = "Searching for text containing \"%1$s\".";
 	private static final String MSG_FAIL_NO_SEARCH_TERM = "Error: No search term entered.";
 	
 	private UserInput userInput;
@@ -68,7 +68,7 @@ public class Search implements Command {
 			}
 			
 			MainLogic.setDisplayList(searchResults);
-			feedback.setMessage(String.format(MSG_SUCCESS, userInput.getSearchTerm()));
+			feedback.setMessage(String.format(MSG_SUCCESS_SEARCH, userInput.getSearchTerm()));
 		}
 	}
 
