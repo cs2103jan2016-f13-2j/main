@@ -108,7 +108,6 @@ public class Parser {
 			userInput.setComplete(false);
 			ArrayList<int[]> uncompleteList = new ArrayList<int[]>();
 			passDeletePart(inputCommand,userInput,uncompleteList);
-
 			break;
 
 			
