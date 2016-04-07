@@ -1,11 +1,7 @@
+//@@author A0124487Y
 package main.gui.resources;
 
-import java.io.File;
-
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.FileChooser;
 import main.gui.MainApp;
 
 /**

@@ -1,13 +1,9 @@
+//@@author A0124487Y
 package main.gui.resources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.sun.javafx.scene.control.skin.TableViewSkinBase;
-
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -254,7 +250,7 @@ public class UpcomingOverviewController {
 		allTables.get(i).setItems(totalList.get(i));
 		}
 		
-		taskDateColumn.setCellFactory(column -> {
+		taskPNumberColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
@@ -264,42 +260,26 @@ public class UpcomingOverviewController {
 		            	 setText("");
 		                 setStyle("");
 		            } else {
-		            	boolean expired = false;
-		            	boolean tomorrow = false;
-		            	String[] date = item.split("-");
-		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
-		            	Calendar cal = Calendar.getInstance();
-		            	cal.add(Calendar.DAY_OF_MONTH, 1);
-		            	Date todayDate = MainLogic.getCurrentDate();
-		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
-									cal.get(Calendar.MONTH) + 1, 
-									cal.get(Calendar.YEAR));
-		            	Date taskDate = new Date(
-		            			Integer.parseInt(date[0]), 
-		            			Integer.parseInt(date[1]), 
-		            			Integer.parseInt(date[2]));
-		            	if(taskDate.compareTo(todayDate) < 0)
-		            		expired = true;
-		            	if(taskDate.equals(tmrwDate)){
-		            		tomorrow = true;
-		            	}
 		                setText(item);
-		                if (expired) {
+		                if (item.equals("1")) {
+		                	setText("H");
 		                    setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
-						} else {
+		                    setStyle("-fx-background-color: red");
+		                } else if (item.equals("2")) {
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
+		                } else {
+		                	setText("L");
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
-		                }
-		                if (tomorrow) {
-		                	setText("Tomorrow");
 		                }
 		            }
 		        }
 		    };
 		});
 		
-		eventStartDateColumn.setCellFactory(column -> {
+		taskDateColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
@@ -389,7 +369,7 @@ public class UpcomingOverviewController {
 		    };
 		});
 		
-		taskDateColumn.setCellFactory(column -> {
+		eventStartDateColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
@@ -400,28 +380,34 @@ public class UpcomingOverviewController {
 		                 setStyle("");
 		            } else {
 		            	boolean expired = false;
+		            	boolean tomorrow = false;
 		            	String[] date = item.split("-");
-		            	String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
-		            	if(Integer.parseInt(date[2]) < Integer.parseInt(currDate[2])) {
+		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
+		            	Calendar cal = Calendar.getInstance();
+		            	cal.add(Calendar.DAY_OF_MONTH, 1);
+		            	Date todayDate = MainLogic.getCurrentDate();
+		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
+									cal.get(Calendar.MONTH) + 1, 
+									cal.get(Calendar.YEAR));
+		            	Date taskDate = new Date(
+		            			Integer.parseInt(date[0]), 
+		            			Integer.parseInt(date[1]), 
+		            			Integer.parseInt(date[2]));
+		            	if(taskDate.compareTo(todayDate) < 0)
 		            		expired = true;
-		            	} else if (date[2].equals(currDate[2])){
-		            		if(Integer.parseInt(date[1]) < Integer.parseInt(currDate[1])) {
-		            			expired = true;
-		            		} else if(date[1].equals(currDate[1])) {
-		            			if(Integer.parseInt(date[0]) < Integer.parseInt(currDate[0])) {
-		            				expired = true;
-		            			}
-		            		}
-		            		
+		            	if(taskDate.equals(tmrwDate)){
+		            		tomorrow = true;
 		            	}
-		            	
 		                setText(item);
 		                if (expired) {
 		                    setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: transparent, derive(#000000,20%);");
+		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
 						} else {
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
+		                }
+		                if (tomorrow) {
+		                	setText("Tomorrow");
 		                }
 		            }
 		        }

@@ -1,14 +1,10 @@
+//@@author A0124487Y
 package main.gui.resources;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.sun.javafx.scene.control.skin.TableViewSkinBase;
 
-import javafx.animation.FadeTransition;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -22,12 +18,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import main.gui.MainApp;
 import main.logic.MainLogic;
 import main.resources.Date;
