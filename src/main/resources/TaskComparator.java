@@ -2,6 +2,8 @@ package main.resources;
 
 import java.util.Comparator;
 
+//@@author A0125255L
+
 public class TaskComparator implements Comparator<Task> {
 	
 	int compareType;

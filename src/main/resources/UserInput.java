@@ -2,6 +2,8 @@ package main.resources;
 
 import java.util.ArrayList;
 
+//@@author A0125255L
+
 public class UserInput {
 	
 	String rawInput;

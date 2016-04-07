@@ -2,6 +2,8 @@ package main.resources;
 
 import java.io.Serializable;
 
+//@@author A0125255L
+
 public class Date implements Comparable<Date>, Serializable {
 	
 	int day;
