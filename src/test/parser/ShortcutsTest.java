@@ -1,9 +1,11 @@
-package main.parser;
+package test.parser;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import main.parser.Shortcuts;
+//@@author A0133926A
 public class ShortcutsTest {
 	@Test
 	public void testShortcuts() {
