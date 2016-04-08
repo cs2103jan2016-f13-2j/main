@@ -23,7 +23,6 @@ public class Display implements Command {
 	@Override
 	public void execute() {
 		logger.log(Level.INFO, "Command DISPLAY");
-		userInput.setDisplaySort(true);
 		Command command = new Sort(userInput);
 		command.execute();
 		storage.saveFile();		

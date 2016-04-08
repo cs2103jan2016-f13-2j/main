@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import main.resources.Date;
 import main.resources.Feedback;
 import main.resources.Task;
+import main.resources.Time;
 import main.resources.UserInput;
 import main.storage.Storage;
 
@@ -20,6 +22,9 @@ public class Edit implements Command {
 	private static final String MSG_FAIL_NO_START_DATE = "Error: Cannot add end date to floating task without start date.";
 	private static final String MSG_FAIL_NO_START_TIME = "Error: Cannot add end time to floating task without start time.";
 	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after edit command.";
+	private static final String MSG_FAIL_INVALID_DATE = "Error: Invalid date/time entered.";
+	private static final String MSG_FAIL_START_DATE_LATER_THAN_END_DATE = "Error: End date/time is earlier than start date/time";
+
 
 	private UserInput userInput;
 	private static Storage storage;
@@ -44,7 +49,34 @@ public class Edit implements Command {
 		Task taskToEdit = userInput.getTaskToEdit();
 		userInput.setTaskToEdit(taskToEdit);
 		Task newTask = Task.duplicateTask(taskToEdit);
+
+		Date startDate = newTask.getTaskStartDate();
+		Time startTime = newTask.getTaskStartTime();
+		Date endDate = newTask.getTaskEndDate();
+		Time endTime = newTask.getTaskEndTime();
+
+		if (userInput.getStartDate().isValid()) {
+			startDate = userInput.getStartDate();
+		}
+		if (userInput.getStartTime().isValid()) {
+			startTime = userInput.getStartTime();
+		}
+		if (userInput.getEndDate() .isValid()) {
+			endDate = userInput.getEndDate();
+		}
+		if (userInput.getEndTime().isValid()) {
+			endTime = userInput.getEndTime();
+		}
 		
+		if (!isValidDateAndTime(startDate, startTime, endDate, endTime)) {
+			feedback.setMessage(MSG_FAIL_INVALID_DATE);
+			return;
+		}
+		if (isEndDateEarlierThanStartDate(startDate, startTime, endDate, endTime)) {
+			feedback.setMessage(MSG_FAIL_START_DATE_LATER_THAN_END_DATE);
+			return;
+		}
+
 		for (int i=1; i<userInput.getEditNumber().size(); i++) {
 			switch (userInput.getEditNumber().get(i)) {
 			case 1:	{	//task detail
@@ -132,7 +164,7 @@ public class Edit implements Command {
 				feedback.setMessage(String.format(MSG_SUCCESS_EDIT));
 			}
 		}
-		
+
 		taskList.remove(taskToEdit);
 		taskList.add(newTask);
 		if (!displayList.equals(taskList)) {
@@ -142,6 +174,43 @@ public class Edit implements Command {
 		userInput.setTask(newTask);
 	}
 
+	//@@author A0124711U
+	/**
+	 * Checks if the dates in the tasks are valid and the end date is not earlier than the start date.
+	 * @return true if dates are valid, false otherwise.
+	 */
+	private static boolean isValidDateAndTime(Date startDate, Time startTime, Date endDate, Time endTime) {
+		if (startDate != null && !startDate.isValid() || endDate != null && !endDate.isValid()) {
+			return false;
+		}
+		
+		if (startTime != null && !startTime.isValid() || endTime != null && !endTime.isValid()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Checks if the end date/time is earlier than the start date/time.
+	 * @return true if the end date/time is earlier than start date/time, false otherwise.
+	 */
+	private static boolean isEndDateEarlierThanStartDate(Date startDate, Time startTime, Date endDate, Time endTime) {
+		assert(isValidDateAndTime(startDate, startTime, endDate, endTime));
+		
+		if (startDate != null && endDate != null) {
+			if (startDate.compareTo(endDate) > 0) {
+				return true;
+			}
+			else if (startTime != null && endTime != null && startTime.compareTo(endTime) > 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	//@@author A0125255L
 	@Override
 	public void undo() {
 		logger.log(Level.INFO, "Command UNDO EDIT");
@@ -153,7 +222,7 @@ public class Edit implements Command {
 			displayList.remove(userInput.getTask());
 			displayList.add(userInput.getTaskToEdit());
 		}
-		
+
 		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
@@ -168,7 +237,7 @@ public class Edit implements Command {
 			displayList.remove(userInput.getTaskToEdit());
 			displayList.add(userInput.getTask());
 		}
-		
+
 		feedback.setMessage(MSG_SUCCESS_REDO);
 	}
 }

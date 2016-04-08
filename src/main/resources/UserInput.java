@@ -34,7 +34,6 @@ public class UserInput {
 	//Search and sort
 	String searchTerm;
 	int sortType;
-	boolean displaySort;
 	ArrayList<Task> taskList;
 	
 	//set 
@@ -59,7 +58,6 @@ public class UserInput {
 		priority = 0;
 		taskType = -1;
 		complete = false;
-		displaySort = false;
 	}
 	
 	public UserInput(String raw, int tab) {
@@ -81,7 +79,6 @@ public class UserInput {
 		priority = 0;
 		taskType = -1;
 		complete = false;
-		displaySort = false;
 	}
 	
 	
@@ -165,11 +162,6 @@ public class UserInput {
 	
 	public Task getTaskToEdit() {
 		return taskToEdit;
-	}
-	
-
-	public boolean getDisplaySort() {
-		return displaySort;
 	}
 
 	public int getTab() {
@@ -257,9 +249,5 @@ public class UserInput {
 
 	public void setTaskToDelete(ArrayList<Task> list) {
 		taskToDelete = list;
-	}
-
-	public void setDisplaySort(boolean displaySort) {
-		this.displaySort = displaySort;
 	}
 }

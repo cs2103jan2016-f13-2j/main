@@ -24,7 +24,7 @@ public class Date implements Comparable<Date>, Serializable {
 	}
 
 	public Date() {
-		this(0,0,0);
+		this(-1, -1, -1);
 	}
 
 	public int getDay() {
@@ -67,14 +67,14 @@ public class Date implements Comparable<Date>, Serializable {
 	 * Checks whether the date is a valid calendar date.
 	 * @return true if date is valid calendar date, false otherwise.
 	 */
-	public boolean isValidDate() {
-		if (!isValidYear() || !isValidMonth()
-				|| !isValidDay()) {
+	public boolean isValid() {
+		if (isValidYear() && isValidMonth()
+				&& isValidDay()) {
 			
-			return false;
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 	
 	/**
@@ -82,11 +82,11 @@ public class Date implements Comparable<Date>, Serializable {
 	 * @return true if valid integer, false otherwise.
 	 */
 	private boolean isValidYear() {
-		if (year < 0) {
-			return false;
+		if (year >= 0) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 	
 	/**
@@ -94,11 +94,11 @@ public class Date implements Comparable<Date>, Serializable {
 	 * @return true if month is valid, false otherwise.
 	 */
 	private boolean isValidMonth() {
-		if (month < 1 || month > 12) {
-			return false;
+		if (month >= 1 && month <= 12) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	/**
@@ -106,11 +106,11 @@ public class Date implements Comparable<Date>, Serializable {
 	 * @return true if day is valid, false otherwise.
 	 */
 	private boolean isValidDay() {
-		if (day < 1 || day > maxDayOfMonth()) {
-			return false;
+		if (day >= 1 && day <= maxDayOfMonth()) {
+			return true;
 		}
 
-		return true;
+		return false;
 	}
 	
 	/**
@@ -170,7 +170,7 @@ public class Date implements Comparable<Date>, Serializable {
 	}
 
 	/**
-	 * Calculates if the year is a leap year.
+	 * Calculates if the year is a leap year, given a valid year.
 	 * @return true if year is leap year, false otherwise.
 	 */
 	private boolean isLeapYear() {
