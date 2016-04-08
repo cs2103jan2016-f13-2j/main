@@ -56,16 +56,32 @@ public class Parser {
 		case "delete":
 			userInput.setCommand("delete");
 			ArrayList<int[]> deleteList = new ArrayList<int[]>();
-			passDeletePart(inputCommand,userInput,deleteList);
+			if(inputCommand.contains("all")){
+				userInput.setIsAll(true);
+				int[] arr = new int[2];
+				arr[0] = deleteType(inputCommand.get(2));
+				arr[1] = deleteNumber(inputCommand.get(2));
+				deleteList.add(arr);
+			} else {
+				passDeletePart(inputCommand,userInput,deleteList);
+			}
 			break;
 			
 		case "edit": 
 			userInput.setCommand("edit");
 			ArrayList<Integer> editList = new ArrayList<Integer>();
-			String type_Num = inputCommand.get(1);
-			editList.add(deleteNumber(type_Num));
-			userInput.setTaskType(deleteType(type_Num));
-			passEditPart(inputCommand,userInput,editList);
+			if(inputCommand.contains("all")){
+				userInput.setIsAll(true);
+				String type_Num = inputCommand.get(2);
+				editList.add(deleteNumber(type_Num));
+				userInput.setTaskType(deleteType(type_Num));
+				passEditPart(inputCommand,userInput,editList,3);
+			} else {
+				String type_Num = inputCommand.get(1);
+				editList.add(deleteNumber(type_Num));
+				userInput.setTaskType(deleteType(type_Num));
+				passEditPart(inputCommand,userInput,editList,2);
+			}	
 			break;	
 			
 		case "search":
@@ -281,9 +297,9 @@ public class Parser {
 		userInput.setDeleteNumber(list);
 	}
 	
-	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list){
+	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list,int start){
 		//System.out.println("floating task?:"+userInput.getTaskType());
-		int i = 2;
+		int i = start;
 		while(i<commands.size()){
 			int n = getNumber(commands.get(i));
 			list.add(n);
