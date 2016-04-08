@@ -1,6 +1,7 @@
 
 package main.parser;
 
+//@@author A0133926A
 public class Shortcuts {
 
 	public static String shortcuts(String command) {
