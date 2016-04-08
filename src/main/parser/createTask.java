@@ -631,7 +631,12 @@ public class createTask {
 	}
 
 	public static int getPriority(String p) {
-		return Integer.parseInt(p);
+		int n = Integer.parseInt(p);
+		if(n>=3){
+			return 3;
+		} else {
+			return n;
+		}
 	}
 
 	public static int getFrequency(String fre) {

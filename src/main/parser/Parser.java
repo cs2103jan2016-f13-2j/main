@@ -349,7 +349,7 @@ public class Parser {
 				userInput.setLocation(location);
 				break;
 			case 7:
-				int priority = Integer.parseInt(commands.get(tempI+1));
+				int priority = createTask.getPriority(commands.get(tempI+1));
 				userInput.setPriority(priority);
 				break;
 			case 8:
