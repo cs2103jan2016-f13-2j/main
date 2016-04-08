@@ -270,7 +270,6 @@ public class createTask {
 				task.setTaskEndDate(endDate);
 				task.setTaskEndTime(endTime);
 
-				// System.out.println(location);
 				task.setTaskType(1);
 			} else {
 				Time startTime = getTime(dateAndTime);
@@ -344,11 +343,9 @@ public class createTask {
 		Time time = new Time();
 		if (dateAndTime.contains(";")) { // has both time and date
 			String dAndT[] = dateAndTime.split(";");
-			//System.out.println(dAndT[0]);
 			if (!isTime(dAndT[0])) { // date first then time
 				handleDiffTimeFormat(dAndT[1], time);
 			} else { // time first then date
-				//System.out.println("check isTimr");
 				handleDiffTimeFormat(dAndT[0], time);
 			}
 		} else { // has either time or date
@@ -396,18 +393,15 @@ public class createTask {
 	public static Date getDate(String dateAndTime) {
 		Date date = new Date();
 		if (dateAndTime.contains(";")) { // has both time and date
-			//System.out.println("i want to see");
 			String dAndT[] = dateAndTime.split(";");
 			if (!isTime(dAndT[0])) { // date first then time
-				//System.out.println("i donot want to see");
 				handleDiffDateFormat(dAndT[0], date);
 			} else { // time first then date
-				//System.out.println("i want to see");
 				handleDiffDateFormat(dAndT[1], date);
 			}
 		} else { // has either time or date
 			if (!isTime(dateAndTime)) { // only have date info
-				//System.out.println("ÎÒ²ÙÄãÂè±Æ");
+				
 				handleDiffDateFormat(dateAndTime, date);
 			} else { // does not have date info
 				Time t1 = getTime(dateAndTime);
@@ -458,7 +452,6 @@ public class createTask {
 				date.setYear(cal.get(Calendar.YEAR));
 			}
 		} else {
-			System.out.println(Shortcuts.diffDateFormat(dateInfo));
 			if (dateInfo.toLowerCase().contains("st")) {
 				String dAndM[] = dateInfo.toLowerCase().split("st-");
 				dAndM[1] = dAndM[1].trim();
@@ -501,10 +494,23 @@ public class createTask {
 					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
 					date.setYear(cal.get(Calendar.YEAR));
 				}
-			} else {
+			} else if(dateInfo.toLowerCase().contains("th")){
 				String dAndM[] = dateInfo.toLowerCase().split("th-");
 				dAndM[1] = dAndM[1].trim();
-				System.out.println(dAndM[1]);
+				Calendar cal = Calendar.getInstance();
+				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH))) {
+					date.setDay(Integer.parseInt(dAndM[0]));
+					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+					date.setYear(cal.get(Calendar.YEAR));
+				} else {
+					cal.add(Calendar.YEAR, 1);
+					date.setDay(Integer.parseInt(dAndM[0]));
+					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+					date.setYear(cal.get(Calendar.YEAR));
+				}
+			} else {
+				String dAndM[] = dateInfo.toLowerCase().split("-");
+				dAndM[1] = dAndM[1].trim();
 				Calendar cal = Calendar.getInstance();
 				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH))) {
 					date.setDay(Integer.parseInt(dAndM[0]));
@@ -625,7 +631,12 @@ public class createTask {
 	}
 
 	public static int getPriority(String p) {
-		return Integer.parseInt(p);
+		int n = Integer.parseInt(p);
+		if(n>=3){
+			return 3;
+		} else {
+			return n;
+		}
 	}
 
 	public static int getFrequency(String fre) {

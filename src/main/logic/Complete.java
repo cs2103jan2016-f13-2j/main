@@ -49,7 +49,8 @@ public class Complete implements Command {
 	public void undo() {
 		taskList = storage.getTaskList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
-			Task taskToMark = userInput.getTasksToDelete().get(i);				for (Task t: taskList) {
+			Task taskToMark = userInput.getTasksToDelete().get(i);
+			for (Task t: taskList) {
 				if (taskToMark.equals(t)) {
 					if (userInput.getComplete() == COMPLETE) {
 						t.setComplete(false);

@@ -9,6 +9,7 @@ public class UserInput {
 	String rawInput;
 	String command;
 	int tab;//1 for first tab, 2 for second tab etc.
+	boolean isAll;//for edit and delete recurring task
 	
 	//Add
 	Task task;
@@ -58,6 +59,7 @@ public class UserInput {
 		priority = 0;
 		taskType = -1;
 		complete = false;
+		isAll = false;
 	}
 	
 	public UserInput(String raw, int tab) {
@@ -85,6 +87,10 @@ public class UserInput {
 	//Getters
 	public boolean getComplete(){
 		return complete;
+	}
+	
+	public boolean getIsAll(){
+		return isAll;
 	}
 	
 	public int getTaskType(){
@@ -170,6 +176,10 @@ public class UserInput {
 	
 	
 	//Setters
+	public void setIsAll(boolean a){
+		isAll = a;
+	}
+	
 	public void setPath(String path){
 		this.path = path;
 	}

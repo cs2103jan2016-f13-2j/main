@@ -59,16 +59,33 @@ public class Parser {
 		case "delete":
 			userInput.setCommand("delete");
 			ArrayList<int[]> deleteList = new ArrayList<int[]>();
-			passDeletePart(inputCommand,userInput,deleteList);
+			if(inputCommand.contains("all")){
+				userInput.setIsAll(true);
+				int[] arr = new int[2];
+				arr[0] = deleteType(inputCommand.get(2));
+				arr[1] = deleteNumber(inputCommand.get(2));
+				deleteList.add(arr);
+				userInput.setDeleteNumber(deleteList);
+			} else {
+				passDeletePart(inputCommand,userInput,deleteList);
+			}
 			break;
 			
 		case "edit": 
 			userInput.setCommand("edit");
 			ArrayList<Integer> editList = new ArrayList<Integer>();
-			String type_Num = inputCommand.get(1);
-			editList.add(deleteNumber(type_Num));
-			userInput.setTaskType(deleteType(type_Num));
-			passEditPart(inputCommand,userInput,editList);
+			if(inputCommand.contains("all")){
+				userInput.setIsAll(true);
+				String type_Num = inputCommand.get(2);
+				editList.add(deleteNumber(type_Num));
+				userInput.setTaskType(deleteType(type_Num));
+				passEditPart(inputCommand,userInput,editList,3);
+			} else {
+				String type_Num = inputCommand.get(1);
+				editList.add(deleteNumber(type_Num));
+				userInput.setTaskType(deleteType(type_Num));
+				passEditPart(inputCommand,userInput,editList,2);
+			}	
 			break;	
 			
 		case "search":
@@ -196,7 +213,7 @@ public class Parser {
 
 	private static Integer getNumber(String command){
 		int n = -1;
-		switch(command){
+		switch(command.toLowerCase()){
 			case "-de":
 			case "de"://detail
 				n = 1;
@@ -239,7 +256,7 @@ public class Parser {
 	
 	public static int deleteType(String s){
 		int type = -1;
-		switch(s.substring(0,1)){
+		switch(s.substring(0,1).toLowerCase()){
 		case "d":
 			type = 4;
 			break;
@@ -270,12 +287,12 @@ public class Parser {
 	private static int findNextCommand(ArrayList<String> commands, int n){//for edit
 		int k = -1;
 		for(int i=n+1; i<commands.size(); i++){
-			if(commands.get(i).contains("-")){
+			if(commands.get(i).toLowerCase().contains("-st")||commands.get(i).toLowerCase().contains("-sd")||commands.get(i).toLowerCase().contains("-et")||commands.get(i).toLowerCase().contains("-ed")||commands.get(i).toLowerCase().contains("-p")||commands.get(i).toLowerCase().contains("-l")
+					||commands.get(i).toLowerCase().contains("-de")){
 				k = i;
 				return k;
 			} 
 		}
-		
 		return k;
 	}
 	
@@ -291,13 +308,11 @@ public class Parser {
 		userInput.setDeleteNumber(list);
 	}
 	
-	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list){
-		//System.out.println("floating task?:"+userInput.getTaskType());
-		int i = 2;
+	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list,int start){
+		int i = start;
 		while(i<commands.size()){
 			int n = getNumber(commands.get(i));
 			list.add(n);
-			//System.out.println("shown:"+n);
 			int nextI = findNextCommand(commands,i);
 			int tempI;
 			if(nextI==-1){
@@ -311,10 +326,9 @@ public class Parser {
 			case 1:
 				String details = createTask.getDetail(commands, tempI+1, i);	
 				userInput.setDetails(details);
-				//System.out.println(userInput.getDetails());
-				//System.out.println("show first task type:"+userInput.getEditNumber().get(1));
 				break;
 			case 2:
+				System.out.println(tempI+1);
 				Date startDate = createTask.getDate(commands.get(tempI+1));
 				userInput.setStartDate(startDate);
 				break;
@@ -335,7 +349,7 @@ public class Parser {
 				userInput.setLocation(location);
 				break;
 			case 7:
-				int priority = Integer.parseInt(commands.get(tempI+1));
+				int priority = createTask.getPriority(commands.get(tempI+1));
 				userInput.setPriority(priority);
 				break;
 			case 8:
