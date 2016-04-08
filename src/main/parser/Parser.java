@@ -22,6 +22,9 @@ public class Parser {
 	private static final String COMPLETE  = "complete";
 	private static final String UNCOMPLETE  = "uncomplete";
 	
+	//Feedback strings
+	private static final String MSG_FAIL_NUM_FORMAT_EXCEPTION = "Error: \"%1$s\" is an invalid task number.";
+	
 	private static Feedback feedback;
 	
 	
@@ -56,16 +59,32 @@ public class Parser {
 		case "delete":
 			userInput.setCommand("delete");
 			ArrayList<int[]> deleteList = new ArrayList<int[]>();
-			passDeletePart(inputCommand,userInput,deleteList);
+			if(inputCommand.contains("all")){
+				userInput.setIsAll(true);
+				int[] arr = new int[2];
+				arr[0] = deleteType(inputCommand.get(2));
+				arr[1] = deleteNumber(inputCommand.get(2));
+				deleteList.add(arr);
+			} else {
+				passDeletePart(inputCommand,userInput,deleteList);
+			}
 			break;
 			
 		case "edit": 
 			userInput.setCommand("edit");
 			ArrayList<Integer> editList = new ArrayList<Integer>();
-			String type_Num = inputCommand.get(1);
-			editList.add(deleteNumber(type_Num));
-			userInput.setTaskType(deleteType(type_Num));
-			passEditPart(inputCommand,userInput,editList);
+			if(inputCommand.contains("all")){
+				userInput.setIsAll(true);
+				String type_Num = inputCommand.get(2);
+				editList.add(deleteNumber(type_Num));
+				userInput.setTaskType(deleteType(type_Num));
+				passEditPart(inputCommand,userInput,editList,3);
+			} else {
+				String type_Num = inputCommand.get(1);
+				editList.add(deleteNumber(type_Num));
+				userInput.setTaskType(deleteType(type_Num));
+				passEditPart(inputCommand,userInput,editList,2);
+			}	
 			break;	
 			
 		case "search":
@@ -110,7 +129,6 @@ public class Parser {
 			ArrayList<int[]> uncompleteList = new ArrayList<int[]>();
 			passDeletePart(inputCommand,userInput,uncompleteList);
 			break;
-
 			
 		case "import":
 			userInput.setCommand("import");
@@ -254,7 +272,15 @@ public class Parser {
 	}
 	
 	public static int deleteNumber(String s){
-		return Integer.parseInt(s.substring(1,s.length()));
+		int num = -1;
+		try {
+			num = Integer.parseInt(s.substring(1,s.length()));
+		}
+		catch (NumberFormatException e) {
+			feedback.setMessage(String.format(MSG_FAIL_NUM_FORMAT_EXCEPTION, s));
+		}
+		
+		return num;
 	}
 	
 	private static int findNextCommand(ArrayList<String> commands, int n){//for edit
@@ -281,9 +307,9 @@ public class Parser {
 		userInput.setDeleteNumber(list);
 	}
 	
-	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list){
+	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list,int start){
 		//System.out.println("floating task?:"+userInput.getTaskType());
-		int i = 2;
+		int i = start;
 		while(i<commands.size()){
 			int n = getNumber(commands.get(i));
 			list.add(n);

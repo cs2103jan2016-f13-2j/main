@@ -18,7 +18,7 @@ import main.resources.Task;
 public class Storage {
 	private static Storage storage;
 	private static Feedback feedback;
-	Logger logger = Logger.getLogger("Storage");
+	private static Logger logger = Logger.getLogger("Storage");
 
 	//String constants
 	private static String FILE_NAME = "task.dat";
