@@ -1,9 +1,11 @@
 package main.logic;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import main.resources.Date;
 import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.UserInput;
@@ -41,7 +43,85 @@ public class Add implements Command {
 	public void execute() {
 		logger.log(Level.INFO, "Command ADD");
 		taskList = storage.getTaskList();
-		taskList.add(userInput.getTask());
+		Task task = userInput.getTask();
+		if (task.getTaskStartDate() != null && 
+				(task.getTaskStartDate().compareTo(MainLogic.getCurrentDate()) < 0)) {
+			task.setExpired(true);
+		}
+		
+			taskList.add(task);
+		
+		if (task.isRecurring()) {
+			task.setRecurTime(task.getRecurTime() - 1);
+			Calendar calStart = Calendar.getInstance();
+			Calendar calEnd = Calendar.getInstance();
+			while (task.getRecurTime() > 0) {
+				Task newTask = Task.duplicateTask(task);
+				taskList.add(newTask);
+				task.setRecurTime(task.getRecurTime() - 1);
+				Date dateStart = task.getTaskStartDate();
+				calStart.set(dateStart.getYear(), dateStart.getMonth(), dateStart.getDay());
+				Date dateEnd;
+				if (task.getTaskEndDate() != null) {
+					dateEnd = task.getTaskEndDate();
+					calEnd.set(dateEnd.getYear(), dateEnd.getMonth(), dateEnd.getDay());
+				}
+				switch (task.getRecurFrequency()) {
+				case 1: {	//daily
+					calStart.add(Calendar.DAY_OF_MONTH, 1);
+					calEnd.add(Calendar.DAY_OF_MONTH, 1);
+					task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
+														calStart.get(Calendar.MONTH), 
+															calStart.get(Calendar.YEAR)));
+					if (task.getTaskEndDate() != null) {
+						task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
+								calEnd.get(Calendar.MONTH), 
+									calEnd.get(Calendar.YEAR)));
+					}
+					break;
+				}
+				case 2: {	//weekly
+					calStart.add(Calendar.DAY_OF_MONTH, 7);
+					calEnd.add(Calendar.DAY_OF_MONTH, 7);
+					task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
+														calStart.get(Calendar.MONTH), 
+															calStart.get(Calendar.YEAR)));
+					if (task.getTaskEndDate() != null) {
+						task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
+								calEnd.get(Calendar.MONTH), 
+									calEnd.get(Calendar.YEAR)));
+					}
+					break;
+				}
+				case 3: {	//monthly
+					calStart.add(Calendar.MONTH, 1);
+					calEnd.add(Calendar.MONTH, 1);
+					task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
+														calStart.get(Calendar.MONTH), 
+															calStart.get(Calendar.YEAR)));
+					if (task.getTaskEndDate() != null) {
+						task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
+								calEnd.get(Calendar.MONTH), 
+									calEnd.get(Calendar.YEAR)));
+					}
+					break;
+				}
+				case 4: {	//yearly
+					calStart.add(Calendar.YEAR, 1);
+					calEnd.add(Calendar.YEAR, 1);
+					task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
+														calStart.get(Calendar.MONTH), 
+															calStart.get(Calendar.YEAR)));
+					if (task.getTaskEndDate() != null) {
+						task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
+								calEnd.get(Calendar.MONTH), 
+									calEnd.get(Calendar.YEAR)));
+					}
+					break;
+				}
+				}
+			}
+		}
 		
 		if (!storage.saveFile()) {
 			feedback.setMessage(MSG_FAIL_FILE_SAVE);
