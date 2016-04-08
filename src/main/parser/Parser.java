@@ -21,6 +21,9 @@ public class Parser {
 	private static final String COMPLETE  = "complete";
 	private static final String UNCOMPLETE  = "uncomplete";
 	
+	//Feedback strings
+	private static final String MSG_FAIL_NUM_FORMAT_EXCEPTION = "Error: \"%1$s\" is an invalid task number.";
+	
 	private static Feedback feedback;
 	
 	
@@ -253,7 +256,15 @@ public class Parser {
 	}
 	
 	public static int deleteNumber(String s){
-		return Integer.parseInt(s.substring(1,s.length()));
+		int num = -1;
+		try {
+			num = Integer.parseInt(s.substring(1,s.length()));
+		}
+		catch (NumberFormatException e) {
+			feedback.setMessage(String.format(MSG_FAIL_NUM_FORMAT_EXCEPTION, s));
+		}
+		
+		return num;
 	}
 	
 	private static int findNextCommand(ArrayList<String> commands, int n){//for edit
