@@ -552,6 +552,7 @@ public class TaskOverviewController {
 	 * Called when the user presses enter.
 	 */
 	public void onEnter(){
+		feedback.setMessage(null);
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
 		//System.out.println(command);

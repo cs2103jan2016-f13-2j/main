@@ -142,12 +142,20 @@ public class MainLogic {
 		}
 		
 		case "complete": {
-			completeTask(true);
+			userInput.setTaskToDelete(completeTask());
+			command = new Complete(userInput);
+			commandList.push(command);
+			clearUndoStack();
+			displayList = storage.getTaskList();
 			break;
 		}
 		
 		case "uncomplete": {
-			completeTask(false);
+			userInput.setTaskToDelete(completeTask());
+			command = new Complete(userInput);
+			commandList.push(command);
+			clearUndoStack();
+			displayList = storage.getTaskList();
 			break;
 		}
 		
@@ -245,15 +253,14 @@ public class MainLogic {
 		return list;
 	}
 	
-	private static void completeTask(boolean complete) {
+	private static ArrayList<Task> completeTask() {
 		int count;
 		int taskType = 0;
 		int taskNumber = 0;
-		//ArrayList<Task> list = null;
+		ArrayList<Task> list = new ArrayList<Task>();;
 		
 		for (int i=0; i<userInput.getDeleteNumber().size(); i++) {
 			count = 0;
-			//list = new ArrayList<Task>();
 			taskType = userInput.getDeleteNumber().get(i)[0];
 			taskNumber = userInput.getDeleteNumber().get(i)[1];
 			
@@ -262,12 +269,13 @@ public class MainLogic {
 				if (task.getTaskType() == taskType) {
 					count++;
 					 if(count == taskNumber) {
-						//list.add(task);
-						task.setComplete(complete);
+						list.add(task);
 					 }
 				}
 			}
 		}
+		
+		return list;
 	}
 	
 	private static ArrayList<Task> copyList() {
@@ -576,7 +584,6 @@ public class MainLogic {
 		}
 		return list;
 	}
-	
 	public static ArrayList<Task> getTodayTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
