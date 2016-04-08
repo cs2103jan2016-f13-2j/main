@@ -113,7 +113,6 @@ public class Parser {
 			ArrayList<int[]> uncompleteList = new ArrayList<int[]>();
 			passDeletePart(inputCommand,userInput,uncompleteList);
 			break;
-
 			
 		case "import":
 			userInput.setCommand("import");
