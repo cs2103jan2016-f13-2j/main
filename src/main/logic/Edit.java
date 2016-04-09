@@ -48,6 +48,8 @@ public class Edit implements Command {
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		Task taskToEdit = userInput.getTaskToEdit();
 		userInput.setTaskToEdit(taskToEdit);
+
+
 		Task newTask = Task.duplicateTask(taskToEdit);
 
 		Date startDate = newTask.getTaskStartDate();
@@ -67,7 +69,7 @@ public class Edit implements Command {
 		if (userInput.getEndTime().isValid()) {
 			endTime = userInput.getEndTime();
 		}
-		
+
 		if (!isValidDateAndTime(startDate, startTime, endDate, endTime)) {
 			feedback.setMessage(MSG_FAIL_INVALID_DATE);
 			return;
@@ -84,6 +86,7 @@ public class Edit implements Command {
 				success = true;
 				break;
 			}
+			
 			case 2: {	//task start date
 				if (newTask.getTaskType() == 2) {	//floating
 					if (!changedTaskType) {
@@ -95,6 +98,7 @@ public class Edit implements Command {
 				success = true;
 				break;
 			}
+
 			case 3:	{	//task start time
 				if (newTask.getTaskType() == 2) {	//floating
 					if (!changedTaskType) {
@@ -174,70 +178,70 @@ public class Edit implements Command {
 		userInput.setTask(newTask);
 	}
 
-	//@@author A0124711U
-	/**
-	 * Checks if the dates in the tasks are valid and the end date is not earlier than the start date.
-	 * @return true if dates are valid, false otherwise.
-	 */
-	private static boolean isValidDateAndTime(Date startDate, Time startTime, Date endDate, Time endTime) {
-		if (startDate != null && !startDate.isValid() || endDate != null && !endDate.isValid()) {
-			return false;
-		}
-		
-		if (startTime != null && !startTime.isValid() || endTime != null && !endTime.isValid()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Checks if the end date/time is earlier than the start date/time.
-	 * @return true if the end date/time is earlier than start date/time, false otherwise.
-	 */
-	private static boolean isEndDateEarlierThanStartDate(Date startDate, Time startTime, Date endDate, Time endTime) {
-		assert(isValidDateAndTime(startDate, startTime, endDate, endTime));
-		
-		if (startDate != null && endDate != null) {
-			if (startDate.compareTo(endDate) > 0) {
-				return true;
-			}
-			else if (startTime != null && endTime != null && startTime.compareTo(endTime) > 0) {
-				return true;
-			}
-		}
-
+//@@author A0124711U
+/**
+ * Checks if the dates in the tasks are valid and the end date is not earlier than the start date.
+ * @return true if dates are valid, false otherwise.
+ */
+private static boolean isValidDateAndTime(Date startDate, Time startTime, Date endDate, Time endTime) {
+	if (startDate != null && !startDate.isValid() || endDate != null && !endDate.isValid()) {
 		return false;
 	}
 
-	//@@author A0125255L
-	@Override
-	public void undo() {
-		logger.log(Level.INFO, "Command UNDO EDIT");
-		taskList = storage.getTaskList();
-		ArrayList<Task> displayList = MainLogic.getDisplayList();
-		taskList.remove(userInput.getTask());
-		taskList.add(userInput.getTaskToEdit());
-		if (!displayList.equals(taskList)) {
-			displayList.remove(userInput.getTask());
-			displayList.add(userInput.getTaskToEdit());
-		}
-
-		feedback.setMessage(MSG_SUCCESS_UNDO);
+	if (startTime != null && !startTime.isValid() || endTime != null && !endTime.isValid()) {
+		return false;
 	}
 
-	@Override
-	public void redo() {
-		logger.log(Level.INFO, "Command REDO EDIT");
-		taskList = storage.getTaskList();
-		ArrayList<Task> displayList = MainLogic.getDisplayList();
-		taskList.remove(userInput.getTaskToEdit());
-		taskList.add(userInput.getTask());
-		if (!displayList.equals(taskList)) {
-			displayList.remove(userInput.getTaskToEdit());
-			displayList.add(userInput.getTask());
-		}
+	return true;
+}
 
-		feedback.setMessage(MSG_SUCCESS_REDO);
+/**
+ * Checks if the end date/time is earlier than the start date/time.
+ * @return true if the end date/time is earlier than start date/time, false otherwise.
+ */
+private static boolean isEndDateEarlierThanStartDate(Date startDate, Time startTime, Date endDate, Time endTime) {
+	assert(isValidDateAndTime(startDate, startTime, endDate, endTime));
+
+	if (startDate != null && endDate != null) {
+		if (startDate.compareTo(endDate) > 0) {
+			return true;
+		}
+		else if (startTime != null && endTime != null && startTime.compareTo(endTime) > 0) {
+			return true;
+		}
 	}
+
+	return false;
+}
+
+//@@author A0125255L
+@Override
+public void undo() {
+	logger.log(Level.INFO, "Command UNDO EDIT");
+	taskList = storage.getTaskList();
+	ArrayList<Task> displayList = MainLogic.getDisplayList();
+	taskList.remove(userInput.getTask());
+	taskList.add(userInput.getTaskToEdit());
+	if (!displayList.equals(taskList)) {
+		displayList.remove(userInput.getTask());
+		displayList.add(userInput.getTaskToEdit());
+	}
+
+	feedback.setMessage(MSG_SUCCESS_UNDO);
+}
+
+@Override
+public void redo() {
+	logger.log(Level.INFO, "Command REDO EDIT");
+	taskList = storage.getTaskList();
+	ArrayList<Task> displayList = MainLogic.getDisplayList();
+	taskList.remove(userInput.getTaskToEdit());
+	taskList.add(userInput.getTask());
+	if (!displayList.equals(taskList)) {
+		displayList.remove(userInput.getTaskToEdit());
+		displayList.add(userInput.getTask());
+	}
+
+	feedback.setMessage(MSG_SUCCESS_REDO);
+}
 }
