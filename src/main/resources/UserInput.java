@@ -17,6 +17,7 @@ public class UserInput {
 	
 	int taskType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
 	ArrayList<Task> recurList;
+	boolean displaySort;
 	
 	//Delete
 	ArrayList<int[]> deleteNumber;
@@ -37,7 +38,6 @@ public class UserInput {
 	//Search and sort
 	String searchTerm;
 	int sortType;
-	boolean displaySort;
 	ArrayList<Task> taskList;
 	
 	//set 
@@ -62,8 +62,8 @@ public class UserInput {
 		priority = 0;
 		taskType = -1;
 		complete = false;
-		displaySort = false;
 		isAll = false;
+		displaySort = false;
 		recurList = null;
 	}
 	
@@ -175,11 +175,6 @@ public class UserInput {
 	
 	public Task getTaskToEdit() {
 		return taskToEdit;
-	}
-	
-
-	public boolean getDisplaySort() {
-		return displaySort;
 	}
 
 	public int getTab() {

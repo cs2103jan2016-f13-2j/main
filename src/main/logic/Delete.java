@@ -94,6 +94,7 @@ public class Delete implements Command {
 	private String getTaskTypeString(Task task) {
 		String type;
 		int taskType = task.getTaskType();
+		System.out.println(taskType);
 
 		switch(taskType) {
 		case 1:
@@ -104,13 +105,12 @@ public class Delete implements Command {
 			type = TYPE_FLOATING;
 			break;
 
-		case 3:
+		case 4:
 			type = TYPE_DEADLINE;
 			break;
 
 		default:
 			logger.log(Level.WARNING, "Invalid delete type.");
-			System.out.print(userInput.getTaskType());
 			type = null;
 		}
 

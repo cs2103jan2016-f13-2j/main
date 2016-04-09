@@ -27,7 +27,7 @@ public class Task implements Serializable {
 	   private Time taskEndTime;
 	   private String taskLocation;
 	   private int priority;
-	   private int taskType;	//1-Event, 2-Floating, 3-Deadline
+	   private int taskType;	//1-Event, 2-Floating, 4-Deadline
 	   private int recurTime;
 	   private int recurFrequency; //1-daily 2-weekly 3-monthly 4-yearly
 	   private boolean complete;
