@@ -288,8 +288,9 @@ public class CompleteOverviewController {
 		            	 setText("");
 		                 setStyle("");
 		            } else {
-		            	boolean expired = false;
-		            	boolean tomorrow = false;
+		            	boolean isExpired = false;
+		            	boolean isTomorrow = false;
+		            	boolean isToday = false;
 		            	String[] date = item.split("-");
 		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
 		            	Calendar cal = Calendar.getInstance();
@@ -303,25 +304,28 @@ public class CompleteOverviewController {
 		            			Integer.parseInt(date[1]), 
 		            			Integer.parseInt(date[2]));
 		            	if(taskDate.compareTo(todayDate) < 0)
-		            		expired = true;
-		            	if(taskDate.equals(tmrwDate)){
-		            		tomorrow = true;
-		            	}
+		            		isExpired = true;
+		            	if(taskDate.equals(tmrwDate))
+		            		isTomorrow = true;
+		            	if(taskDate.equals(todayDate))
+		            		isToday = true;
 		                setText(item);
-		                if (expired) {
+		                if (isExpired) {
 		                    setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
 						} else {
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
 		                }
-		                if (tomorrow) {
+		                if (isTomorrow)
 		                	setText("Tomorrow");
-		                }
+		                if (isToday)
+		                	setText("Today");
 		            }
 		        }
 		    };
 		});
+		
 		
 		eventStartDateColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
@@ -333,8 +337,9 @@ public class CompleteOverviewController {
 		            	 setText("");
 		                 setStyle("");
 		            } else {
-		            	boolean expired = false;
-		            	boolean tomorrow = false;
+		            	boolean isExpired = false;
+		            	boolean isTomorrow = false;
+		            	boolean isToday = false;
 		            	String[] date = item.split("-");
 		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
 		            	Calendar cal = Calendar.getInstance();
@@ -348,25 +353,28 @@ public class CompleteOverviewController {
 		            			Integer.parseInt(date[1]), 
 		            			Integer.parseInt(date[2]));
 		            	if(taskDate.compareTo(todayDate) < 0)
-		            		expired = true;
-		            	if(taskDate.equals(tmrwDate)){
-		            		tomorrow = true;
-		            	}
+		            		isExpired = true;
+		            	if(taskDate.equals(tmrwDate))
+		            		isTomorrow = true;
+		            	if(taskDate.equals(todayDate))
+		            		isToday = true;
 		                setText(item);
-		                if (expired) {
+		                if (isExpired) {
 		                    setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
 						} else {
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
 		                }
-		                if (tomorrow) {
+		                if (isTomorrow)
 		                	setText("Tomorrow");
-		                }
+		                if (isToday)
+		                	setText("Today");
 		            }
 		        }
 		    };
 		});
+		
 		
 		eventEndDateColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
@@ -378,8 +386,9 @@ public class CompleteOverviewController {
 		            	 setText("");
 		                 setStyle("");
 		            } else {
-		            	boolean expired = false;
-		            	boolean tomorrow = false;
+		            	boolean isExpired = false;
+		            	boolean isTomorrow = false;
+		            	boolean isToday = false;
 		            	String[] date = item.split("-");
 		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
 		            	Calendar cal = Calendar.getInstance();
@@ -393,25 +402,28 @@ public class CompleteOverviewController {
 		            			Integer.parseInt(date[1]), 
 		            			Integer.parseInt(date[2]));
 		            	if(taskDate.compareTo(todayDate) < 0)
-		            		expired = true;
-		            	if(taskDate.equals(tmrwDate)){
-		            		tomorrow = true;
-		            	}
+		            		isExpired = true;
+		            	if(taskDate.equals(tmrwDate))
+		            		isTomorrow = true;
+		            	if(taskDate.equals(todayDate))
+		            		isToday = true;
 		                setText(item);
-		                if (expired) {
+		                if (isExpired) {
 		                    setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
 						} else {
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
 		                }
-		                if (tomorrow) {
+		                if (isTomorrow)
 		                	setText("Tomorrow");
-		                }
+		                if (isToday)
+		                	setText("Today");
 		            }
 		        }
 		    };
 		});
+		
 		
 		eventPNumberColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
