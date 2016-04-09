@@ -52,8 +52,14 @@ public class Delete implements Command {
 		
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			task = userInput.getTasksToDelete().get(i);
-			taskList.remove(task);
-			displayList.remove(task);
+			if (task.isRecurring()) {
+				task.setDeleted(true);
+			}
+			
+			else {
+				taskList.remove(task);
+				displayList.remove(task);
+			}
 		}
 
 		success = true;
@@ -119,9 +125,15 @@ public class Delete implements Command {
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task task = userInput.getTasksToDelete().get(i);
-			taskList.add(task);
-			if (!displayList.equals(taskList)) {
-				displayList.add(task);
+			if (task.isRecurring()) {
+				task.setDeleted(false);
+			}
+			
+			else {
+				taskList.add(task);
+				if (!displayList.equals(taskList)) {
+					displayList.add(task);
+				}
 			}
 		}
 		storage.saveFile();
@@ -136,8 +148,14 @@ public class Delete implements Command {
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task task = userInput.getTasksToDelete().get(i);
-			taskList.remove(task);
-			displayList.remove(task);
+			if (task.isRecurring()) {
+				task.setDeleted(true);
+			}
+			
+			else {
+				taskList.remove(task);
+				displayList.remove(task);
+			}
 		}
 		storage.saveFile();
 

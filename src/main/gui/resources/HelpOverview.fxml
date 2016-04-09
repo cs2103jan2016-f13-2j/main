@@ -91,27 +91,27 @@
             <VBox prefHeight="115.0" prefWidth="812.0">
                <children>
                   <Label text="Adding a Task" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Deadline Task: Add &lt;TaskDetails&gt; by &lt;Date&gt;;&lt;Time&gt; at &lt;Location&gt; -p&lt;PriorityNo.&gt;">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Deadline Task: Add &lt;TaskDetails&gt; by &lt;Date&gt;;&lt;Time&gt; at &lt;Location&gt; -p &lt;PriorityNo.&gt;">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Event Task: Add &lt;TaskDetails&gt; from &lt;StartDate&gt;;&lt;StartTime&gt; to &lt;EndDate&gt;;&lt;EndTime&gt; at &lt;Location&gt; -p&lt;PriorityNo.&gt;">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Event Task: Add &lt;TaskDetails&gt; from &lt;StartDate&gt;;&lt;StartTime&gt; to &lt;EndDate&gt;;&lt;EndTime&gt; at &lt;Location&gt; -p &lt;PriorityNo.&gt;">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Floating Task: Add &lt;TaskDetails&gt; -p&lt;PriorityNo.&gt;">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Floating Task: Add &lt;TaskDetails&gt; -p &lt;PriorityNo.&gt;">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Recurring Event: Add recur &lt;Frequency&gt; &lt;TaskDetails&gt; by &lt;Date&gt;;&lt;Time&gt; at &lt;Location&gt; -p&lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Recurring Deadline: Add recur &lt;Frequency&gt; &lt;TaskDetails&gt; by &lt;Date&gt;;&lt;Time&gt; at &lt;Location&gt; -p &lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Recurring Deadline: Add recur &lt;Frequency&gt; from &lt;StartTime/StartDate&gt; to &lt;EndTime/EndDate&gt; at &lt;location&gt; -p&lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Recurring Event: Add recur &lt;Frequency&gt; from &lt;StartTime/StartDate&gt; to &lt;EndTime/EndDate&gt; at &lt;location&gt; -p &lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
@@ -168,7 +168,7 @@
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export &lt;AbsoluteFilePath&gt;">
                      <font>
-                        <Font name="Consolas Bold Italic" size="12.0" />
+                        <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
                </children>
@@ -190,7 +190,7 @@
             <VBox prefHeight="52.0" prefWidth="256.0">
                <children>
                   <Label text="&lt;Time/StartTime/EndTime&gt;" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0AM/PM OR 00:00 OR 0000">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0000AM/PM OR 00:00 OR 0000">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
@@ -210,37 +210,37 @@
             <VBox prefHeight="238.0" prefWidth="258.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="154.0" text="&lt;TaskColumn&gt;" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task Details = -de">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task Details = de">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time/StartTime = -st">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time/StartTime = st">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EndTime = -et">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EndTime = et">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="StartDate = -sd">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="StartDate = sd">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EndDate = -ed">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EndDate = ed">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Priority = -p">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Priority = p">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task Details = -l">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task Details = l">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>
@@ -260,7 +260,7 @@
             <VBox prefHeight="52.0" prefWidth="132.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="154.0" text="&lt;Frequency&gt;" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Weekly/Daily">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Weekly/Daily/Yearly">
                      <font>
                         <Font name="Papyrus" size="12.0" />
                      </font>

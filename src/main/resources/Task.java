@@ -2,6 +2,7 @@ package main.resources;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -32,6 +33,9 @@ public class Task implements Serializable {
 	   private boolean complete;
 	   private boolean expired;
 	   private boolean recurring;
+	   private Task head;
+	   private Task nextRecur;
+	   private boolean deleted;
 	   
 	   public Task() {
 	        this(null, null, 3);
@@ -59,6 +63,9 @@ public class Task implements Serializable {
 	        complete = false;
 	        expired = false;
 	        recurring = false;
+	        head = null;
+	        nextRecur = null;
+	        deleted = false;
 	    }
 	    
 	    public int getRecurTime(){
@@ -110,6 +117,14 @@ public class Task implements Serializable {
 	    	return taskType;
 	    }
 	    
+	    public Task getHead() {
+	    	return head;
+	    }
+	    
+	    public Task getNext() {
+	    	return nextRecur;
+	    }
+	    
 	    public boolean isComplete(){
 	    	return complete;
 	    }
@@ -120,6 +135,10 @@ public class Task implements Serializable {
 	    
 	    public boolean isRecurring() {
 	    	return recurring;
+	    }
+	    
+	    public boolean isDeleted() {
+	    	return deleted;
 	    }
 	    
 	    
@@ -179,6 +198,14 @@ public class Task implements Serializable {
 	    	this.recurFrequency = recurFrequency;
 	    }
 	    
+	    public void setHead(Task task) {
+	    	this.head = task;
+	    }
+	    
+	    public void setNext(Task next) {
+	    	this.nextRecur = next;
+	    }
+	    
 	    public void setComplete(boolean b){
 	    	this.complete = b;
 	    }
@@ -189,6 +216,10 @@ public class Task implements Serializable {
 	    
 	    public void setRecurring(boolean b) {
 	    	this.recurring = b;
+	    }
+	    
+	    public void setDeleted(boolean b) {
+	    	this.deleted = b;
 	    }
 	    
 	    
