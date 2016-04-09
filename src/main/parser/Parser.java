@@ -328,7 +328,6 @@ public class Parser {
 				userInput.setDetails(details);
 				break;
 			case 2:
-				System.out.println(tempI+1);
 				Date startDate = createTask.getDate(commands.get(tempI+1));
 				userInput.setStartDate(startDate);
 				break;
