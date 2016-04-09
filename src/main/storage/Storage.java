@@ -56,7 +56,6 @@ public class Storage {
 	 * Creates a Storage object for use if it doesn't exist.
 	 * @return the Storage object.
 	 */
-	
 	public static Storage getInstance() {
 		if (storage == null) {
 			storage = new Storage();
