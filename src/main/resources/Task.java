@@ -34,8 +34,7 @@ public class Task implements Serializable {
 	   private boolean expired;
 	   private boolean recurring;
 	   private Task head;
-	   private Task nextRecur;
-	   private boolean deleted;
+	   private ArrayList<Task> recurList;
 	   
 	   public Task() {
 	        this(null, null, 3);
@@ -64,8 +63,7 @@ public class Task implements Serializable {
 	        expired = false;
 	        recurring = false;
 	        head = null;
-	        nextRecur = null;
-	        deleted = false;
+	        recurList = new ArrayList<Task>();
 	    }
 	    
 	    public int getRecurTime(){
@@ -121,8 +119,8 @@ public class Task implements Serializable {
 	    	return head;
 	    }
 	    
-	    public Task getNext() {
-	    	return nextRecur;
+	    public ArrayList<Task> getRecurList() {
+	    	return recurList;
 	    }
 	    
 	    public boolean isComplete(){
@@ -135,10 +133,6 @@ public class Task implements Serializable {
 	    
 	    public boolean isRecurring() {
 	    	return recurring;
-	    }
-	    
-	    public boolean isDeleted() {
-	    	return deleted;
 	    }
 	    
 	    
@@ -202,8 +196,8 @@ public class Task implements Serializable {
 	    	this.head = task;
 	    }
 	    
-	    public void setNext(Task next) {
-	    	this.nextRecur = next;
+	    public void setRecurList(ArrayList<Task> list) {
+	    	this.recurList = list;
 	    }
 	    
 	    public void setComplete(boolean b){
@@ -216,10 +210,6 @@ public class Task implements Serializable {
 	    
 	    public void setRecurring(boolean b) {
 	    	this.recurring = b;
-	    }
-	    
-	    public void setDeleted(boolean b) {
-	    	this.deleted = b;
 	    }
 	    
 	    
@@ -316,6 +306,8 @@ public class Task implements Serializable {
 	        newTask.setComplete(task.isComplete());
 	        newTask.setExpired(task.isExpired());
 	        newTask.setRecurring(task.isRecurring());
+	        newTask.setHead(task.getHead());
+	        newTask.setRecurList(task.getRecurList());
 	    	
 	    	return newTask;
 	    }

@@ -56,7 +56,6 @@ public class Storage {
 	 * Creates a Storage object for use if it doesn't exist.
 	 * @return the Storage object.
 	 */
-	
 	public static Storage getInstance() {
 		if (storage == null) {
 			storage = new Storage();
@@ -81,8 +80,8 @@ public class Storage {
 	 * @param string : The file path of the test file.
 	 */
 	
-	public static void setFileName(String string) {
-		FILE_NAME = string;
+	public static void setFileName(String fileName) {
+		FILE_NAME = fileName;
 	}
 	
 	/**
@@ -91,10 +90,10 @@ public class Storage {
 	 */
 	
 	public boolean saveFile() {
-		boolean result = writeTaskArrayListToFile(taskList, taskFile);
+		boolean isSuccessful = writeTaskArrayListToFile(taskList, taskFile);
 		logger.log(Level.INFO, "taskFile saved successfully.");
 		
-		return result;
+		return isSuccessful;
 	}
 
 	/**
