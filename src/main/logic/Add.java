@@ -29,6 +29,7 @@ public class Add implements Command {
 	private static Storage storage;
 	private static Feedback feedback;
 	private ArrayList<Task> taskList;
+	private ArrayList<Task> recurList;
 	
 	private static Logger logger = Logger.getLogger("Add");
 
@@ -37,6 +38,7 @@ public class Add implements Command {
 		storage = Storage.getInstance();
 		feedback = Feedback.getInstance();
 		taskList = new ArrayList<Task>();
+		recurList = new ArrayList<Task>();
 	}
 
 	@Override
@@ -50,6 +52,7 @@ public class Add implements Command {
 		}
 		
 			taskList.add(task);
+			recurList.add(task);
 		
 		if (task.isRecurring()) {
 			task.setRecurTime(task.getRecurTime() - 1);
@@ -58,6 +61,7 @@ public class Add implements Command {
 			while (task.getRecurTime() > 0) {
 				Task newTask = Task.duplicateTask(task);
 				taskList.add(newTask);
+				recurList.add(newTask);
 				task.setRecurTime(task.getRecurTime() - 1);
 				Date dateStart = task.getTaskStartDate();
 				calStart.set(dateStart.getYear(), dateStart.getMonth(), dateStart.getDay());
@@ -122,6 +126,16 @@ public class Add implements Command {
 				}
 			}
 		}
+
+		recurList.add(null);
+		for (int i=0; i<recurList.size()-1; i++) {
+			Task t = recurList.get(i);
+			System.out.println(i+" "+t.getTaskDetails());
+			t.setHead(recurList.get(0));
+			t.setNext(recurList.get(i+1));
+		}
+		
+		userInput.setRecurList(recurList);
 		
 		if (!storage.saveFile()) {
 			feedback.setMessage(MSG_FAIL_FILE_SAVE);
@@ -163,7 +177,17 @@ public class Add implements Command {
 	public void undo() {
 		logger.log(Level.INFO, "Command UNDO ADD");
 		taskList = storage.getTaskList();
-		taskList.remove(userInput.getTask());
+		System.out.println("list "+userInput.getRecurList().size());
+		if (userInput.getTask().isRecurring()) {
+			for (int i=0; i<userInput.getRecurList().size() - 1; i++) {
+				Task t = userInput.getRecurList().get(i);
+				taskList.remove(t);
+			}
+		}
+		
+		else {
+			taskList.remove(userInput.getTask());
+		}
 		storage.saveFile();
 		
 		feedback.setMessage(MSG_SUCCESS_UNDO);
@@ -173,7 +197,16 @@ public class Add implements Command {
 	public void redo() {
 		logger.log(Level.INFO, "Command REDO ADD");
 		taskList = storage.getTaskList();
-		taskList.add(userInput.getTask());
+		if (userInput.getTask().isRecurring()) {
+			for (int i=0; i<userInput.getRecurList().size() - 1; i++) {
+				Task t = userInput.getRecurList().get(i);
+				taskList.add(t);
+			}
+		}
+		
+		else {
+			taskList.add(userInput.getTask());
+		}
 		storage.saveFile();
 		
 		feedback.setMessage(MSG_SUCCESS_REDO);

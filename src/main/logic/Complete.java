@@ -1,6 +1,7 @@
 package main.logic;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import main.resources.Feedback;
@@ -26,6 +27,7 @@ public class Complete implements Command {
 	}
 	@Override
 	public void execute() {
+		logger.log(Level.INFO, "Command COMPLETE");
 		taskList = storage.getTaskList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task taskToMark = userInput.getTasksToDelete().get(i);
@@ -47,6 +49,7 @@ public class Complete implements Command {
 
 	@Override
 	public void undo() {
+		logger.log(Level.INFO, "Command COMPLETE UNDO");
 		taskList = storage.getTaskList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task taskToMark = userInput.getTasksToDelete().get(i);
@@ -69,6 +72,7 @@ public class Complete implements Command {
 
 	@Override
 	public void redo() {
+		logger.log(Level.INFO, "Command COMPLETE REDO");
 		taskList = storage.getTaskList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task taskToMark = userInput.getTasksToDelete().get(i);				for (Task t: taskList) {

@@ -43,104 +43,107 @@ public class Edit implements Command {
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		Task taskToEdit = userInput.getTaskToEdit();
 		userInput.setTaskToEdit(taskToEdit);
-		Task newTask = Task.duplicateTask(taskToEdit);
-		
-		for (int i=1; i<userInput.getEditNumber().size(); i++) {
-			switch (userInput.getEditNumber().get(i)) {
-			case 1:	{	//task detail
-				newTask.setTaskDetails(userInput.getDetails());
-				success = true;
-				break;
-			}
-			case 2: {	//task start date
-				if (newTask.getTaskType() == 2) {	//floating
-					if (!changedTaskType) {
-						changedTaskType = true;
-					}
-					newTask.setTaskType(4);	//deadline
-				}
-				newTask.setTaskStartDate(userInput.getStartDate());
-				success = true;
-				break;
-			}
-			case 3:	{	//task start time
-				if (newTask.getTaskType() == 2) {	//floating
-					if (!changedTaskType) {
-						changedTaskType = true;
-					}
-					newTask.setTaskType(4);	//deadline
-				}
-				newTask.setTaskStartTime(userInput.getStartTime());
-				success = true;
-				break;
-			}
-			case 4:	{	//task end date
-				if (newTask.getTaskType() == 2) { //floating
-					feedback.setMessage(MSG_FAIL_NO_START_DATE);
+
+		//for (int j=0; j<taskToEdit.size(); j++) {
+			Task newTask = Task.duplicateTask(taskToEdit);
+
+			for (int i=1; i<userInput.getEditNumber().size(); i++) {
+				switch (userInput.getEditNumber().get(i)) {
+				case 1:	{	//task detail
+					newTask.setTaskDetails(userInput.getDetails());
+					success = true;
 					break;
 				}
-				if (newTask.getTaskType() == 4) {	//deadline
-					if (!changedTaskType) {
-						changedTaskType = true;
+				case 2: {	//task start date
+					if (newTask.getTaskType() == 2) {	//floating
+						if (!changedTaskType) {
+							changedTaskType = true;
+						}
+						newTask.setTaskType(4);	//deadline
 					}
-					newTask.setTaskType(1);	//event
-				}
-				newTask.setTaskEndDate(userInput.getEndDate());
-				success = true;
-				break;
-			}
-			case 5:	{	//task end time
-				if (newTask.getTaskType() == 2) { //floating
-					feedback.setMessage(MSG_FAIL_NO_START_TIME);
+					newTask.setTaskStartDate(userInput.getStartDate());
+					success = true;
 					break;
 				}
-				if (newTask.getTaskType() == 4) {	//deadline
-					if (!changedTaskType) {
-						changedTaskType = true;
+				case 3:	{	//task start time
+					if (newTask.getTaskType() == 2) {	//floating
+						if (!changedTaskType) {
+							changedTaskType = true;
+						}
+						newTask.setTaskType(4);	//deadline
 					}
-					newTask.setTaskType(1);	//event
+					newTask.setTaskStartTime(userInput.getStartTime());
+					success = true;
+					break;
 				}
-				newTask.setTaskEndTime(userInput.getEndTime());
-				success = true;
-				break;
-			}
-			case 6: {	//task location
-				newTask.setTaskLocation(userInput.getLocation());
-				success = true;
-				break;
-			}
-			case 7:	{	//task priority
-				newTask.setPriority(userInput.getPriority());
-				success = true;
-				break;
-			}
-			case 8: {	//is complete
-				newTask.setComplete(userInput.getComplete());
-				success = true;
-				break;
-			}
-			default:
-				feedback.setMessage(MSG_INVALID_EDIT_TYPE);
-				return;
-			}
+				case 4:	{	//task end date
+					if (newTask.getTaskType() == 2) { //floating
+						feedback.setMessage(MSG_FAIL_NO_START_DATE);
+						break;
+					}
+					if (newTask.getTaskType() == 4) {	//deadline
+						if (!changedTaskType) {
+							changedTaskType = true;
+						}
+						newTask.setTaskType(1);	//event
+					}
+					newTask.setTaskEndDate(userInput.getEndDate());
+					success = true;
+					break;
+				}
+				case 5:	{	//task end time
+					if (newTask.getTaskType() == 2) { //floating
+						feedback.setMessage(MSG_FAIL_NO_START_TIME);
+						break;
+					}
+					if (newTask.getTaskType() == 4) {	//deadline
+						if (!changedTaskType) {
+							changedTaskType = true;
+						}
+						newTask.setTaskType(1);	//event
+					}
+					newTask.setTaskEndTime(userInput.getEndTime());
+					success = true;
+					break;
+				}
+				case 6: {	//task location
+					newTask.setTaskLocation(userInput.getLocation());
+					success = true;
+					break;
+				}
+				case 7:	{	//task priority
+					newTask.setPriority(userInput.getPriority());
+					success = true;
+					break;
+				}
+				case 8: {	//is complete
+					newTask.setComplete(userInput.getComplete());
+					success = true;
+					break;
+				}
+				default:
+					feedback.setMessage(MSG_INVALID_EDIT_TYPE);
+					return;
+				}
 
 
-			if (!storage.saveFile()) {
-				feedback.setMessage(MSG_FAIL_FILE_SAVE);
+				if (!storage.saveFile()) {
+					feedback.setMessage(MSG_FAIL_FILE_SAVE);
+				}
+				else if (success) {
+					feedback.setMessage(String.format(MSG_SUCCESS_EDIT));
+				}
 			}
-			else if (success) {
-				feedback.setMessage(String.format(MSG_SUCCESS_EDIT));
+
+			taskList.remove(taskToEdit);
+			taskList.add(newTask);
+			if (!displayList.equals(taskList)) {
+				displayList.remove(taskToEdit);
+				displayList.add(newTask);
 			}
+			userInput.setTask(newTask);
 		}
-		
-		taskList.remove(taskToEdit);
-		taskList.add(newTask);
-		if (!displayList.equals(taskList)) {
-			displayList.remove(taskToEdit);
-			displayList.add(newTask);
-		}
-		userInput.setTask(newTask);
-	}
+	//}
 
 	@Override
 	public void undo() {
@@ -153,7 +156,7 @@ public class Edit implements Command {
 			displayList.remove(userInput.getTask());
 			displayList.add(userInput.getTaskToEdit());
 		}
-		
+
 		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
@@ -168,7 +171,7 @@ public class Edit implements Command {
 			displayList.remove(userInput.getTaskToEdit());
 			displayList.add(userInput.getTask());
 		}
-		
+
 		feedback.setMessage(MSG_SUCCESS_REDO);
 	}
 }

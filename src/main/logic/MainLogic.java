@@ -215,12 +215,20 @@ public class MainLogic {
 	
 	private static Task findEditTask() {
 		int count = 0;
+		//ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0; i<getList().size(); i++) {
 			Task task = getList().get(i);
 			if (task.getTaskType() == userInput.getTaskType()) {
 				count++;
 				 if(count == userInput.getEditNumber().get(0)) {
-					return task;
+					//if (task.isRecurring()) {
+						//task;
+					//}
+					
+					//else {
+						//list.add(task);
+						return task;
+					//}
 				 }
 			}
 		}
@@ -234,6 +242,7 @@ public class MainLogic {
 		int taskType = 0;
 		int taskNumber = 0;
 		
+		System.out.println(userInput.getDeleteNumber().size());
 		for (int i=0; i<userInput.getDeleteNumber().size(); i++) {
 			count = 0;
 			taskType = userInput.getDeleteNumber().get(i)[0];
@@ -244,12 +253,18 @@ public class MainLogic {
 				if (task.getTaskType() == taskType) {
 					count++;
 					 if(count == taskNumber) {
+						// if (task.isRecurring() && userInput.getIsAll()) {
+							 
+						 //}
 						list.add(task);
 					 }
 				}
 			}
 		}
 		
+		for (int i=0; i<list.size(); i++) {
+			System.out.println(i+" "+list.get(i).getTaskDetails());
+		}
 		return list;
 	}
 	
@@ -571,7 +586,7 @@ public class MainLogic {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if (!task.isComplete()) {
+			if (!task.isComplete() && !task.isDeleted()) {
 				list.add(task);
 			}
 		}
@@ -582,7 +597,7 @@ public class MainLogic {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if (task.isComplete()) {
+			if (task.isComplete() && !task.isDeleted()) {
 				list.add(task);
 			}
 		}
@@ -592,7 +607,7 @@ public class MainLogic {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if ((task.getTaskStartDate() != null && 
+			if ((task.getTaskStartDate() != null && !task.isDeleted() &&
 					(task.getTaskStartDate().compareTo(getCurrentDate()) == 0) &&
 						!task.isComplete()) ||
 							task.getTaskType() == 2) {
@@ -607,7 +622,7 @@ public class MainLogic {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if ((task.isExpired() || task.getTaskType() == 2) && !task.isComplete()) {
+			if ((task.isExpired() || task.getTaskType() == 2) && !task.isComplete() && !task.isDeleted()) {
 				list.add(task);
 			}
 		}
@@ -624,7 +639,7 @@ public class MainLogic {
 									cal.get(Calendar.YEAR));
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if ((task.getTaskStartDate() != null && 
+			if ((task.getTaskStartDate() != null && !task.isDeleted() &&
 					((task.getTaskStartDate().compareTo(getCurrentDate()) >= 0) && 
 							(task.getTaskStartDate().compareTo(date) < 0)) &&
 								!task.isComplete()) ||

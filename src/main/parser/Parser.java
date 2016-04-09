@@ -65,6 +65,7 @@ public class Parser {
 				arr[0] = deleteType(inputCommand.get(2));
 				arr[1] = deleteNumber(inputCommand.get(2));
 				deleteList.add(arr);
+				userInput.setDeleteNumber(deleteList);
 			} else {
 				passDeletePart(inputCommand,userInput,deleteList);
 			}

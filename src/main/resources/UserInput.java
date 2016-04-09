@@ -16,6 +16,8 @@ public class UserInput {
 	
 	
 	int taskType; //1-Event, 2-Floating, 3-Recurring 4-Deadline
+	ArrayList<Task> recurList;
+	
 	//Delete
 	ArrayList<int[]> deleteNumber;
 	ArrayList<Task> taskToDelete;
@@ -62,6 +64,7 @@ public class UserInput {
 		complete = false;
 		displaySort = false;
 		isAll = false;
+		recurList = null;
 	}
 	
 	public UserInput(String raw, int tab) {
@@ -84,6 +87,7 @@ public class UserInput {
 		taskType = -1;
 		complete = false;
 		displaySort = false;
+		recurList = null;
 	}
 	
 	
@@ -182,6 +186,10 @@ public class UserInput {
 		return tab;
 	}
 	
+	public ArrayList<Task> getRecurList() {
+		return recurList;
+	}
+	
 	
 	//Setters
 	public void setIsAll(boolean a){
@@ -261,8 +269,8 @@ public class UserInput {
 		this.taskList = taskList;
 	}
 	
-	public void setTaskToEdit(Task task) {
-		taskToEdit = task;
+	public void setTaskToEdit(Task task2) {
+		taskToEdit = task2;
 	}
 
 	public void setTaskToDelete(ArrayList<Task> list) {
@@ -271,5 +279,9 @@ public class UserInput {
 
 	public void setDisplaySort(boolean displaySort) {
 		this.displaySort = displaySort;
+	}
+	
+	public void setRecurList(ArrayList<Task> list) {
+		recurList = list;
 	}
 }
