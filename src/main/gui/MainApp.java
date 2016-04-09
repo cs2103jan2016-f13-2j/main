@@ -73,7 +73,7 @@ public class MainApp extends Application {
     }
 
     /**
-     * Initializes primary stage
+     * Initializes primary stage.
      * @param primaryStage
      */
 	private void initializePrimaryStage(Stage primaryStage) {
