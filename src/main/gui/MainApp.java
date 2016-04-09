@@ -66,16 +66,23 @@ public class MainApp extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        initializePrimaryStage(primaryStage);
+        initRootLayout();
+        showTaskOverview();
+        logger.log(Level.INFO, "UI Opened Successfully.");
+    }
+
+    /**
+     * Initializes primary stage
+     * @param primaryStage
+     */
+	private void initializePrimaryStage(Stage primaryStage) {
+		this.primaryStage = primaryStage;
         this.primaryStage.getIcons().add(new Image("file:TrekkerIcon.png"));
         this.primaryStage.setTitle(WINDOW_TITLE);
         primaryStage.setMaximized(false);
         primaryStage.setResizable(false);
-        initRootLayout();
-        showTaskOverview();
-       // showHelpOverview();
-        logger.log(Level.INFO, "UI Opened Successfully.");
-    }
+	}
 
     /**
      * Initializes the root layout.
@@ -117,7 +124,10 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Shows the help overview inside the root layout.
+     */
     public void showHelpOverview() {
         try {
             // Load Task overview.
@@ -137,7 +147,9 @@ public class MainApp extends Application {
         }
     }
     
-    
+    /**
+     * Shows the completed task overview inside the root layout.
+     */
     public void showCompleteOverview() {
         try {
             // Load Task overview.
@@ -157,6 +169,9 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * Shows today's task overview inside the root layout.
+     */
     public void showTodayOverview() {
         try {
             // Load Task overview.
@@ -176,6 +191,9 @@ public class MainApp extends Application {
         }
     }
     
+    /**
+     * Shows the upcoming task overview inside the root layout.
+     */
     public void showUpcomingOverview() {
         try {
             // Load Task overview.
@@ -195,6 +213,9 @@ public class MainApp extends Application {
         }
     }
     
+    /**
+     * Shows the overdue task overview inside the root layout.
+     */
     public void showOverdueOverview() {
         try {
             // Load Task overview.
@@ -213,6 +234,7 @@ public class MainApp extends Application {
             e.printStackTrace();
         }
     }
+    
     /**
      * Returns the main stage.
      * @return
@@ -220,7 +242,7 @@ public class MainApp extends Application {
     public Stage getPrimaryStage() {
         return primaryStage;
     }
-//aaa
+    
     public static void main(String[] args) {
         launch(args);
     }
