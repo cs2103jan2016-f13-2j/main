@@ -359,20 +359,18 @@ public class createTask {
 	}
 
 	private static void handleDiffTimeFormat(String timeInfo, Time time) {
+		if(timeInfo.contains("am")||timeInfo.contains("pm")){
+			handleDiffTimeFormatPart2(timeInfo,time);
+		} else {
+			handleDiffTimeFormatPart1(timeInfo,time);
+		}
+	}
+	
+	private static void handleDiffTimeFormatPart1(String timeInfo,Time time){
 		if (timeInfo.contains(":")) {
 			String hAndM[] = timeInfo.split(":");
 			time.setHour(Integer.parseInt(hAndM[0]));
 			time.setMinute(Integer.parseInt(hAndM[1]));
-		} else if (timeInfo.toLowerCase().contains("am") || timeInfo.toLowerCase().contains("pm")) {
-			if (timeInfo.toLowerCase().contains("am")) {
-				String h[] = timeInfo.toLowerCase().split("am");
-				time.setHour(Integer.parseInt(h[0]));
-				time.setMinute(0);
-			} else {
-				String h[] = timeInfo.toLowerCase().split("pm");
-				time.setHour(Integer.parseInt(h[0]) + 12);
-				time.setMinute(0);
-			}
 		} else if (timeInfo.equals(MIDNIGHT)) {
 			time.setHour(23);
 			time.setMinute(59);
@@ -388,6 +386,27 @@ public class createTask {
 				time.setMinute(Integer.parseInt(timeInfo.substring(2, 4)));
 			}
 		}
+	}
+	
+	private static void handleDiffTimeFormatPart2(String timeInfo,Time time){
+			if (timeInfo.toLowerCase().contains("am")) {
+				String h[] = timeInfo.toLowerCase().split("am");
+				if(h[0].length()<=2){
+					time.setHour(Integer.parseInt(h[0]));
+					time.setMinute(0);
+				} else {
+					handleDiffTimeFormatPart1(h[0],time);
+				}
+			} else {
+				String h[] = timeInfo.toLowerCase().split("pm");
+				if(h[0].length()<=2){
+					time.setHour(Integer.parseInt(h[0])+12);
+					time.setMinute(0);
+				} else {
+					handleDiffTimeFormatPart1(h[0],time);
+					time.setHour(time.getHour()+12);
+				}
+			}
 	}
 
 	public static Date getDate(String dateAndTime) {
@@ -429,7 +448,19 @@ public class createTask {
 			String dmy[] = dateInfo.split("/");
 			date.setDay(Integer.parseInt(dmy[0]));
 			date.setMonth(Integer.parseInt(dmy[1]));
-			date.setYear(Integer.parseInt(dmy[2]));
+			if(dmy.length==3){
+				date.setYear(Integer.parseInt(dmy[2]));
+			} else {
+				if(compareMonth(Integer.parseInt(dmy[0]),Integer.parseInt(dmy[1]))){
+					Calendar cal = Calendar.getInstance();
+					date.setYear(cal.get(Calendar.YEAR));
+				} else{
+					Calendar cal = Calendar.getInstance();
+					cal.add(Calendar.YEAR, 1);
+					date.setYear(cal.get(Calendar.YEAR));
+				}
+			}
+			
 		} else if (Shortcuts.diffDateFormat(dateInfo).contains(TOMORROW)) {
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DAY_OF_MONTH, 1);
@@ -456,7 +487,7 @@ public class createTask {
 				String dAndM[] = dateInfo.toLowerCase().split("st-");
 				dAndM[1] = dAndM[1].trim();
 				Calendar cal = Calendar.getInstance();
-				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH) + 1)) {
+				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
 					date.setDay(Integer.parseInt(dAndM[0]));
 					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
 					date.setYear(cal.get(Calendar.YEAR));
@@ -470,7 +501,7 @@ public class createTask {
 				String dAndM[] = dateInfo.toLowerCase().split("nd-");
 				dAndM[1] = dAndM[1].trim();
 				Calendar cal = Calendar.getInstance();
-				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH) + 1)) {
+				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
 					date.setDay(Integer.parseInt(dAndM[0]));
 					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
 					date.setYear(cal.get(Calendar.YEAR));
@@ -484,7 +515,7 @@ public class createTask {
 				String dAndM[] = dateInfo.toLowerCase().split("rd-");
 				dAndM[1] = dAndM[1].trim();
 				Calendar cal = Calendar.getInstance();
-				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH) + 1)) {
+				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
 					date.setDay(Integer.parseInt(dAndM[0]));
 					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
 					date.setYear(cal.get(Calendar.YEAR));
@@ -498,7 +529,7 @@ public class createTask {
 				String dAndM[] = dateInfo.toLowerCase().split("th-");
 				dAndM[1] = dAndM[1].trim();
 				Calendar cal = Calendar.getInstance();
-				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH))) {
+				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
 					date.setDay(Integer.parseInt(dAndM[0]));
 					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
 					date.setYear(cal.get(Calendar.YEAR));
@@ -512,7 +543,7 @@ public class createTask {
 				String dAndM[] = dateInfo.toLowerCase().split("-");
 				dAndM[1] = dAndM[1].trim();
 				Calendar cal = Calendar.getInstance();
-				if (months(Shortcuts.diffDateFormat(dAndM[1])) >= (cal.get(Calendar.MONTH))) {
+				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
 					date.setDay(Integer.parseInt(dAndM[0]));
 					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
 					date.setYear(cal.get(Calendar.YEAR));
@@ -523,6 +554,23 @@ public class createTask {
 					date.setYear(cal.get(Calendar.YEAR));
 				}
 			}
+		}
+	}
+	
+	private static boolean compareMonth(int date, int month){
+		Calendar cal = Calendar.getInstance();
+		int curDate = cal.get(Calendar.DAY_OF_MONTH);
+		int curMonth = cal.get(Calendar.MONTH)+1;
+		if(month>curMonth){
+			return true;
+		} else if(month==curMonth){
+			if(date>=curDate){
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
 		}
 	}
 

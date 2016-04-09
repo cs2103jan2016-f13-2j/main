@@ -11,14 +11,21 @@ import main.storage.Storage;
 
 public class Complete implements Command {
 
+	//Feedback Strings
+	private static final String MSG_SUCCESS_COMPLETE = "Task completed.";
+	private static final String MSG_SUCCESS_UNCOMPLETE = "Task uncompleted.";
+	private static final String MSG_FAIL_TASK_COMPLETED = "Error: Task is already completed.";
+	private static final String MSG_FAIL_TASK_UNCOMPLETED = "Error: Task is not completed.";
+	private static final String MSG_FAIL_TASK_OOB = "Error: The specified task could not be found.;"
+	
 	private UserInput userInput;
 	private static Storage storage;
 	private static Feedback feedback;
 	private ArrayList<Task> taskList;
-	
+
 	private static Logger logger = Logger.getLogger("Complete");
 	private static boolean COMPLETE = true;
-	
+
 	public Complete(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
@@ -27,6 +34,8 @@ public class Complete implements Command {
 	}
 	@Override
 	public void execute() {
+		boolean done = false;
+		
 		logger.log(Level.INFO, "Command COMPLETE");
 		taskList = storage.getTaskList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
@@ -34,14 +43,33 @@ public class Complete implements Command {
 			for (Task t: taskList) {
 				if (taskToMark.equals(t)) {
 					if (userInput.getComplete() == COMPLETE) {
-						t.setComplete(true);
-						taskToMark.setComplete(true);
+						if (t.isComplete() == false) {
+							t.setComplete(true);
+							taskToMark.setComplete(true);
+							feedback.setMessage(MSG_SUCCESS_COMPLETE);
+							done = true;
+						}
+						else {
+							feedback.setMessage(MSG_FAIL_TASK_COMPLETED);
+							done = true;
+						}
 					}
-					
 					else {
-						t.setComplete(false);
-						taskToMark.setComplete(false);
+						if (t.isComplete() == true) {
+							t.setComplete(false);
+							taskToMark.setComplete(false);
+							feedback.setMessage(MSG_SUCCESS_UNCOMPLETE);
+							done = true;
+						}
+						else {
+							feedback.setMessage(MSG_FAIL_TASK_UNCOMPLETED);
+							done = true;
+						}
 					}
+				}
+				
+				if (!done) {
+					feedback.setMessage(MSG_FAIL_INDEX_OOB);
 				}
 			}
 		}
@@ -59,7 +87,7 @@ public class Complete implements Command {
 						t.setComplete(false);
 						taskToMark.setComplete(false);
 					}
-					
+
 					else {
 						t.setComplete(true);
 						taskToMark.setComplete(true);
@@ -67,7 +95,7 @@ public class Complete implements Command {
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -81,7 +109,7 @@ public class Complete implements Command {
 						t.setComplete(true);
 						taskToMark.setComplete(true);
 					}
-					
+
 					else {
 						t.setComplete(false);
 						taskToMark.setComplete(false);
