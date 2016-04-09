@@ -85,13 +85,10 @@ public class TaskOverviewController {
 	private TableColumn<Task, String> floatingDetailsColumn;
 	
 	@FXML private Label instantFeedback;
-	
 	@FXML private Label overdueCounter;
-	
 	@FXML private Label todayDate;
-	
 	@FXML private Rectangle overdueRectangle;
-
+	
 	@FXML
 	private TextField commandText;
 
@@ -100,12 +97,9 @@ public class TaskOverviewController {
 	private ObservableList<Task> floatingList = FXCollections.observableArrayList();
 	
 	private ArrayList<ObservableList<Task>> totalList = new ArrayList<ObservableList<Task>>();
-
-	
-	
 	private ArrayList<TableView<Task>> allTables = new ArrayList<TableView<Task>>();
 	
-	Feedback feedback;
+	private Feedback feedback;
 
 	// Reference to the main application.
 	private MainApp mainApp;
@@ -234,33 +228,71 @@ public class TaskOverviewController {
 	 * @param mainApp
 	 */
 	public void setMainApp(MainApp mainApp) {
-		totalList.add(list);
-		totalList.add(eventList);
-		totalList.add(floatingList);
-		allTables.add(taskTable);
-		allTables.add(eventTable);
-		allTables.add(floatingTable);
+		initializeLists();
 		this.mainApp = mainApp;
-		todayDate.setText(MainLogic.getCurrentDate().getDateString());
-		feedback = Feedback.getInstance();
-		instantFeedback.setText(feedback.getMessage());
-		// Add observable list data to the table
+		initializeLabels();
 		getTaskListFromFile();
-		if (getNoOfTasks(MainLogic.getExpiredTasks()) > 0) {
-		overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
-		} else {
-			overdueRectangle.setOpacity(0);
-		}
-		for (int i = 0; i < totalList.size(); i++) {
-		allTables.get(i).setItems(totalList.get(i));
-		}
-		
-		taskPNumberColumn.setCellFactory(column -> {
+		showOverdueCounter();	
+		initializeAllPriority();
+		initializeAllDates();
+		//Eeshuan, this part reads value as things are typed in
+		commandText.textProperty().addListener((observable, oldValue, newValue) -> {
+		    System.out.println("TextField Text Changed (newValue: " + newValue + ")");
+		});
+	}
+
+	private void initializeAllPriority() {
+		initializePriority();
+		initializeEventPriority();
+		initializeFloatingPriority();
+	}
+
+	private void initializeAllDates() {
+		initializeTaskDateColumn();
+		initializeEventStartDateColumn();
+		initializeEventEndDateColumn();
+	}
+
+	private void initializeFloatingPriority() {
+		floatingPNumberColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
 		            super.updateItem(item, empty);
+		            setPriorityStyle(item, empty);
+		        }
 
+				private void setPriorityStyle(String item, boolean empty) {
+					if (item == null || empty) {
+		            	 setText("");
+		                 setStyle("");
+		            } else {
+		                setText(item);
+		                if (item.equals("1")) {
+		                	setText("H");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: red");
+		                } else if (item.equals("2")) {
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
+		                } else {
+		                	setText("L");
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		            }
+				}
+		    };
+		});
+	}
+
+	private void initializeEventPriority() {
+		eventPNumberColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
 		            if (item == null || empty) {
 		            	 setText("");
 		                 setStyle("");
@@ -283,105 +315,9 @@ public class TaskOverviewController {
 		        }
 		    };
 		});
-		
-		taskDateColumn.setCellFactory(column -> {
-		    return new TableCell<Task, String>() {
-		        @Override
-		        protected void updateItem(String item, boolean empty) {
-		            super.updateItem(item, empty);
+	}
 
-		            if (item == null || empty) {
-		            	 setText("");
-		                 setStyle("");
-		            } else {
-		            	boolean isExpired = false;
-		            	boolean isTomorrow = false;
-		            	boolean isToday = false;
-		            	String[] date = item.split("-");
-		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
-		            	Calendar cal = Calendar.getInstance();
-		            	cal.add(Calendar.DAY_OF_MONTH, 1);
-		            	Date todayDate = MainLogic.getCurrentDate();
-		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
-									cal.get(Calendar.MONTH) + 1, 
-									cal.get(Calendar.YEAR));
-		            	Date taskDate = new Date(
-		            			Integer.parseInt(date[0]), 
-		            			Integer.parseInt(date[1]), 
-		            			Integer.parseInt(date[2]));
-		            	if(taskDate.compareTo(todayDate) < 0)
-		            		isExpired = true;
-		            	if(taskDate.equals(tmrwDate))
-		            		isTomorrow = true;
-		            	if(taskDate.equals(todayDate))
-		            		isToday = true;
-		                setText(item);
-		                if (isExpired) {
-		                    setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
-						} else {
-		                	setTextFill(Color.BLACK);
-		                    setStyle("");
-		                }
-		                if (isTomorrow)
-		                	setText("Tomorrow");
-		                if (isToday)
-		                	setText("Today");
-		            }
-		        }
-		    };
-		});
-		
-		
-		eventStartDateColumn.setCellFactory(column -> {
-		    return new TableCell<Task, String>() {
-		        @Override
-		        protected void updateItem(String item, boolean empty) {
-		            super.updateItem(item, empty);
-
-		            if (item == null || empty) {
-		            	 setText("");
-		                 setStyle("");
-		            } else {
-		            	boolean isExpired = false;
-		            	boolean isTomorrow = false;
-		            	boolean isToday = false;
-		            	String[] date = item.split("-");
-		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
-		            	Calendar cal = Calendar.getInstance();
-		            	cal.add(Calendar.DAY_OF_MONTH, 1);
-		            	Date todayDate = MainLogic.getCurrentDate();
-		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
-									cal.get(Calendar.MONTH) + 1, 
-									cal.get(Calendar.YEAR));
-		            	Date taskDate = new Date(
-		            			Integer.parseInt(date[0]), 
-		            			Integer.parseInt(date[1]), 
-		            			Integer.parseInt(date[2]));
-		            	if(taskDate.compareTo(todayDate) < 0)
-		            		isExpired = true;
-		            	if(taskDate.equals(tmrwDate))
-		            		isTomorrow = true;
-		            	if(taskDate.equals(todayDate))
-		            		isToday = true;
-		                setText(item);
-		                if (isExpired) {
-		                    setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
-						} else {
-		                	setTextFill(Color.BLACK);
-		                    setStyle("");
-		                }
-		                if (isTomorrow)
-		                	setText("Tomorrow");
-		                if (isToday)
-		                	setText("Today");
-		            }
-		        }
-		    };
-		});
-		
-		
+	private void initializeEventEndDateColumn() {
 		eventEndDateColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
@@ -429,9 +365,110 @@ public class TaskOverviewController {
 		        }
 		    };
 		});
-		
-		
-		eventPNumberColumn.setCellFactory(column -> {
+	}
+
+	private void initializeEventStartDateColumn() {
+		eventStartDateColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		            	 setText("");
+		                 setStyle("");
+		            } else {
+		            	boolean isExpired = false;
+		            	boolean isTomorrow = false;
+		            	boolean isToday = false;
+		            	String[] date = item.split("-");
+		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
+		            	Calendar cal = Calendar.getInstance();
+		            	cal.add(Calendar.DAY_OF_MONTH, 1);
+		            	Date todayDate = MainLogic.getCurrentDate();
+		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
+									cal.get(Calendar.MONTH) + 1, 
+									cal.get(Calendar.YEAR));
+		            	Date taskDate = new Date(
+		            			Integer.parseInt(date[0]), 
+		            			Integer.parseInt(date[1]), 
+		            			Integer.parseInt(date[2]));
+		            	if(taskDate.compareTo(todayDate) < 0)
+		            		isExpired = true;
+		            	if(taskDate.equals(tmrwDate))
+		            		isTomorrow = true;
+		            	if(taskDate.equals(todayDate))
+		            		isToday = true;
+		                setText(item);
+		                if (isExpired) {
+		                    setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
+						} else {
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		                if (isTomorrow)
+		                	setText("Tomorrow");
+		                if (isToday)
+		                	setText("Today");
+		            }
+		        }
+		    };
+		});
+	}
+
+	private void initializeTaskDateColumn() {
+		taskDateColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		            	 setText("");
+		                 setStyle("");
+		            } else {
+		            	boolean isExpired = false;
+		            	boolean isTomorrow = false;
+		            	boolean isToday = false;
+		            	String[] date = item.split("-");
+		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
+		            	Calendar cal = Calendar.getInstance();
+		            	cal.add(Calendar.DAY_OF_MONTH, 1);
+		            	Date todayDate = MainLogic.getCurrentDate();
+		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
+									cal.get(Calendar.MONTH) + 1, 
+									cal.get(Calendar.YEAR));
+		            	Date taskDate = new Date(
+		            			Integer.parseInt(date[0]), 
+		            			Integer.parseInt(date[1]), 
+		            			Integer.parseInt(date[2]));
+		            	if(taskDate.compareTo(todayDate) < 0)
+		            		isExpired = true;
+		            	if(taskDate.equals(tmrwDate))
+		            		isTomorrow = true;
+		            	if(taskDate.equals(todayDate))
+		            		isToday = true;
+		                setText(item);
+		                if (isExpired) {
+		                    setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
+						} else {
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		                if (isTomorrow)
+		                	setText("Tomorrow");
+		                if (isToday)
+		                	setText("Today");
+		            }
+		        }
+		    };
+		});
+	}
+
+	private void initializePriority() {
+		taskPNumberColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
@@ -459,42 +496,32 @@ public class TaskOverviewController {
 		        }
 		    };
 		});
-		
-		floatingPNumberColumn.setCellFactory(column -> {
-		    return new TableCell<Task, String>() {
-		        @Override
-		        protected void updateItem(String item, boolean empty) {
-		            super.updateItem(item, empty);
+	}
 
-		            if (item == null || empty) {
-		            	 setText("");
-		                 setStyle("");
-		            } else {
-		                setText(item);
-		                if (item.equals("1")) {
-		                	setText("H");
-		                	setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: red");
-		                } else if (item.equals("2")) {
-		                	setText("M");
-		                	setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: orange");
-		                } else {
-		                	setText("L");
-		                	setTextFill(Color.BLACK);
-		                    setStyle("");
-		                }
-		            }
-		        }
-		    };
-		});
-		//Eeshuan, this part reads value as things are typed in
-		commandText.textProperty().addListener((observable, oldValue, newValue) -> {
-		    System.out.println("TextField Text Changed (newValue: " + newValue + ")");
-		});
-	//	commandText.setOnAction((event) -> {
-	//		onEnter();
-	//	});
+	private void initializeLabels() {
+		todayDate.setText(MainLogic.getCurrentDate().getDateString());
+		feedback = Feedback.getInstance();
+		instantFeedback.setText(feedback.getMessage());
+	}
+
+	private void initializeLists() {
+		totalList.add(list);
+		totalList.add(eventList);
+		totalList.add(floatingList);
+		allTables.add(taskTable);
+		allTables.add(eventTable);
+		allTables.add(floatingTable);
+	}
+
+	private void showOverdueCounter() {
+		if (getNoOfTasks(MainLogic.getExpiredTasks()) > 0) {
+		overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
+		} else {
+			overdueRectangle.setOpacity(0);
+		}
+		for (int i = 0; i < totalList.size(); i++) {
+		allTables.get(i).setItems(totalList.get(i));
+		}
 	}
 	
 	
@@ -577,57 +604,65 @@ public class TaskOverviewController {
 	
 	@FXML
 	void onKeyPressed(KeyEvent keyEvent) {
-	  if (keyEvent.getCode() == KeyCode.CONTROL) { 
-	    System.out.print("ctrl pressed");
-	    controlPressed = true;
-      } else if (keyEvent.getCode() == KeyCode.Z) {
-          zPressed = true;
-      } else if (keyEvent.getCode() == KeyCode.Y) {
-          yPressed = true;
-      } else if (keyEvent.getCode() == KeyCode.Q) {
-          qPressed = true;
-      } else if (keyEvent.getCode() == KeyCode.F12) {
-          mainApp.showHelpOverview();
-      } else if (keyEvent.getCode() == KeyCode.F5) {
-          mainApp.showOverdueOverview();
-      } else if (keyEvent.getCode() == KeyCode.F4) {
-          mainApp.showCompleteOverview();
-      } else if (keyEvent.getCode() == KeyCode.F3) {
-          mainApp.showUpcomingOverview();
-      } else if (keyEvent.getCode() == KeyCode.F2) {
-          mainApp.showTodayOverview();
-      } else if (keyEvent.getCode() == KeyCode.F1) {
-          mainApp.showTaskOverview();
-      } else if (keyEvent.getCode() == KeyCode.F11) {
-          mainApp.getPrimaryStage().toBack();
-      } else if (keyEvent.getCode() == KeyCode.ESCAPE) {
-          commandText.setText("home");
-          onEnter();
-      }
-	  if(controlPressed && zPressed){
-		  commandText.setText("undo");
-		  onEnter();
-	  }
-	  if(controlPressed && yPressed){
-		  commandText.setText("redo");
-		  onEnter();
-	  }
-	  if(controlPressed && qPressed){
-		  System.exit(0);
-	  }
+	  processKeyEventPressed(keyEvent);
+	}
+
+	private void processKeyEventPressed(KeyEvent keyEvent) {
+		if (keyEvent.getCode() == KeyCode.CONTROL) { 
+		    System.out.print("ctrl pressed");
+		    controlPressed = true;
+		  } else if (keyEvent.getCode() == KeyCode.Z) {
+		      zPressed = true;
+		  } else if (keyEvent.getCode() == KeyCode.Y) {
+		      yPressed = true;
+		  } else if (keyEvent.getCode() == KeyCode.Q) {
+		      qPressed = true;
+		  } else if (keyEvent.getCode() == KeyCode.F12) {
+		      mainApp.showHelpOverview();
+		  } else if (keyEvent.getCode() == KeyCode.F5) {
+		      mainApp.showOverdueOverview();
+		  } else if (keyEvent.getCode() == KeyCode.F4) {
+		      mainApp.showCompleteOverview();
+		  } else if (keyEvent.getCode() == KeyCode.F3) {
+		      mainApp.showUpcomingOverview();
+		  } else if (keyEvent.getCode() == KeyCode.F2) {
+		      mainApp.showTodayOverview();
+		  } else if (keyEvent.getCode() == KeyCode.F1) {
+		      mainApp.showTaskOverview();
+		  } else if (keyEvent.getCode() == KeyCode.F11) {
+		      mainApp.getPrimaryStage().toBack();
+		  } else if (keyEvent.getCode() == KeyCode.ESCAPE) {
+		      commandText.setText("home");
+		      onEnter();
+		  }
+		  if(controlPressed && zPressed){
+			  commandText.setText("undo");
+			  onEnter();
+		  }
+		  if(controlPressed && yPressed){
+			  commandText.setText("redo");
+			  onEnter();
+		  }
+		  if(controlPressed && qPressed){
+			  System.exit(0);
+		  }
 	}
 
 	@FXML
 	void onKeyReleased(KeyEvent keyEvent) {
-	  if (keyEvent.getCode() == KeyCode.CONTROL) { 
-	    controlPressed = false;
-      } else if (keyEvent.getCode() == KeyCode.Z) {
-          zPressed = false;
-      } else if (keyEvent.getCode() == KeyCode.Y) {
-          yPressed = false;
-      } else if (keyEvent.getCode() == KeyCode.Q) {
-    	  qPressed = false;
-      }
+	  processKeyEventReleased(keyEvent);
+	}
+
+	private void processKeyEventReleased(KeyEvent keyEvent) {
+		if (keyEvent.getCode() == KeyCode.CONTROL) { 
+		    controlPressed = false;
+		  } else if (keyEvent.getCode() == KeyCode.Z) {
+		      zPressed = false;
+		  } else if (keyEvent.getCode() == KeyCode.Y) {
+		      yPressed = false;
+		  } else if (keyEvent.getCode() == KeyCode.Q) {
+			  qPressed = false;
+		  }
 	}
 	
 	@FXML 

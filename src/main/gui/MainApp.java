@@ -99,7 +99,7 @@ public class MainApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI Root Initialization failed.");
         }
     }
 
@@ -121,7 +121,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI TaskOverview Failed.");
         }
     }
     
