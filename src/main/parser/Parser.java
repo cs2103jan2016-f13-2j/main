@@ -44,101 +44,61 @@ public class Parser {
 		ArrayList<String> inputCommand = retrieveCommand(userInput.getRawInput());
 		switch (Shortcuts.shortcuts(inputCommand.get(0).toLowerCase())) {
 		case "recurring":
-			Task recurringTask = createTask.createRecurring(RECURRING, inputCommand);
-			userInput.setTask(recurringTask);
-			userInput.setCommand("recurring");
+			setUserInputForRecuring(userInput, inputCommand);
 			break;
 		
 		case "add":
-			Task addTask = createTaskForAdd(inputCommand);
-			userInput.setTask(addTask);
-			userInput.setCommand("add");
+			setUserInputForAdd(userInput, inputCommand);
 			break;
 
 		
 		case "delete":
-			userInput.setCommand("delete");
-			ArrayList<int[]> deleteList = new ArrayList<int[]>();
-			if(inputCommand.contains("all")){
-				userInput.setIsAll(true);
-				int[] arr = new int[2];
-				arr[0] = deleteType(inputCommand.get(2));
-				arr[1] = deleteNumber(inputCommand.get(2));
-				deleteList.add(arr);
-				userInput.setDeleteNumber(deleteList);
-			} else {
-				passDeletePart(inputCommand,userInput,deleteList);
-			}
+			setUserInputForDelete(userInput, inputCommand);
 			break;
 			
 		case "edit": 
-			userInput.setCommand("edit");
-			ArrayList<Integer> editList = new ArrayList<Integer>();
-			if(inputCommand.contains("all")){
-				userInput.setIsAll(true);
-				String type_Num = inputCommand.get(2);
-				editList.add(deleteNumber(type_Num));
-				userInput.setTaskType(deleteType(type_Num));
-				passEditPart(inputCommand,userInput,editList,3);
-			} else {
-				String type_Num = inputCommand.get(1);
-				editList.add(deleteNumber(type_Num));
-				userInput.setTaskType(deleteType(type_Num));
-				passEditPart(inputCommand,userInput,editList,2);
-			}	
+			setUserInputForEdit(userInput, inputCommand);	
 			break;	
 			
 		case "search":
-			String term = inputCommand.get(1);
-			userInput.setCommand("search");
-			userInput.setSearchTerm(term);
+			setUserInputForSearch(userInput, inputCommand);
 			break;
 		
 		case "sort":
-			userInput.setCommand("sort");
-			int sortType = getNumber(inputCommand.get(1));
-			userInput.setSortType(sortType);
+			setUserInputForSort(userInput, inputCommand);
 			break;
 		
 		case "home":
-			userInput.setCommand("home");
+			setUserInputForHome(userInput);
 			break;
 		
 		case "display":
-			userInput.setCommand("display");
+			setUserInputForDisplay(userInput);
 			break;
 
 		
 		case "undo":
-			userInput.setCommand("undo");
+			setUserInputForUndo(userInput);
 			break;
 			
 		case "redo":
-			userInput.setCommand("redo");
+			setUserInputForRedo(userInput);
 			break;
 			
 		case "complete":
-			userInput.setCommand("complete");
-			userInput.setComplete(true);
-			ArrayList<int[]> completeList = new ArrayList<int[]>();
-			passDeletePart(inputCommand,userInput,completeList);
+			setUserInputForComplete(userInput, inputCommand);
 			break;
 		
 		case "uncomplete":
-			userInput.setCommand("uncomplete");
-			userInput.setComplete(false);
-			ArrayList<int[]> uncompleteList = new ArrayList<int[]>();
-			passDeletePart(inputCommand,userInput,uncompleteList);
+			setUserInputForUncomplete(userInput, inputCommand);
 			break;
 			
 		case "import":
-			userInput.setCommand("import");
-			userInput.setPath(inputCommand.get(1));
+			setUserInputForImport(userInput, inputCommand);
 			break;
 			
 		case "export":
-			userInput.setCommand("export");
-			userInput.setPath(inputCommand.get(1));
+			setUserInputForExport(userInput, inputCommand);
 			break;
 			
 		default:
@@ -147,6 +107,130 @@ public class Parser {
 		}
 		return userInput;
 
+	}
+
+
+
+	private static void setUserInputForRedo(UserInput userInput) {
+		userInput.setCommand("redo");
+	}
+
+
+
+	private static void setUserInputForUndo(UserInput userInput) {
+		userInput.setCommand("undo");
+	}
+
+
+
+	private static void setUserInputForDisplay(UserInput userInput) {
+		userInput.setCommand("display");
+	}
+
+
+
+	private static void setUserInputForHome(UserInput userInput) {
+		userInput.setCommand("home");
+	}
+
+
+
+	private static void setUserInputForExport(UserInput userInput, ArrayList<String> inputCommand) {
+		userInput.setCommand("export");
+		userInput.setPath(inputCommand.get(1));
+	}
+
+
+
+	private static void setUserInputForImport(UserInput userInput, ArrayList<String> inputCommand) {
+		userInput.setCommand("import");
+		userInput.setPath(inputCommand.get(1));
+	}
+
+
+
+	private static void setUserInputForUncomplete(UserInput userInput, ArrayList<String> inputCommand) {
+		userInput.setCommand("uncomplete");
+		userInput.setComplete(false);
+		ArrayList<int[]> uncompleteList = new ArrayList<int[]>();
+		passDeletePart(inputCommand,userInput,uncompleteList);
+	}
+
+
+
+	private static void setUserInputForComplete(UserInput userInput, ArrayList<String> inputCommand) {
+		userInput.setCommand("complete");
+		userInput.setComplete(true);
+		ArrayList<int[]> completeList = new ArrayList<int[]>();
+		passDeletePart(inputCommand,userInput,completeList);
+	}
+
+
+
+	private static void setUserInputForSort(UserInput userInput, ArrayList<String> inputCommand) {
+		userInput.setCommand("sort");
+		int sortType = getNumber(inputCommand.get(1));
+		userInput.setSortType(sortType);
+	}
+
+
+
+	private static void setUserInputForSearch(UserInput userInput, ArrayList<String> inputCommand) {
+		String term = inputCommand.get(1);
+		userInput.setCommand("search");
+		userInput.setSearchTerm(term);
+	}
+
+
+
+	private static void setUserInputForEdit(UserInput userInput, ArrayList<String> inputCommand) {
+		userInput.setCommand("edit");
+		ArrayList<Integer> editList = new ArrayList<Integer>();
+		if(inputCommand.contains("all")){
+			userInput.setIsAll(true);
+			String type_Num = inputCommand.get(2);
+			editList.add(deleteNumber(type_Num));
+			userInput.setTaskType(deleteType(type_Num));
+			passEditPart(inputCommand,userInput,editList,3);
+		} else {
+			String type_Num = inputCommand.get(1);
+			editList.add(deleteNumber(type_Num));
+			userInput.setTaskType(deleteType(type_Num));
+			passEditPart(inputCommand,userInput,editList,2);
+		}
+	}
+
+
+
+	private static void setUserInputForDelete(UserInput userInput, ArrayList<String> inputCommand) {
+		userInput.setCommand("delete");
+		ArrayList<int[]> deleteList = new ArrayList<int[]>();
+		if(inputCommand.contains("all")){
+			userInput.setIsAll(true);
+			int[] arr = new int[2];
+			arr[0] = deleteType(inputCommand.get(2));
+			arr[1] = deleteNumber(inputCommand.get(2));
+			deleteList.add(arr);
+			userInput.setDeleteNumber(deleteList);
+		} else {
+			passDeletePart(inputCommand,userInput,deleteList);
+		}
+	}
+
+
+
+	private static void setUserInputForAdd(UserInput userInput, ArrayList<String> inputCommand) {
+		Task addTask = createTaskForAdd(inputCommand);
+		userInput.setTask(addTask);
+		userInput.setCommand("add");
+	}
+
+
+
+	private static void setUserInputForRecuring(UserInput userInput, ArrayList<String> inputCommand) {
+		Task recurringTask = CreateTask.createRecurring(RECURRING, inputCommand);
+		userInput.setTask(recurringTask);
+		userInput.setCommand("recurring");
 	}
 
 	
@@ -158,13 +242,13 @@ public class Parser {
 			
 			switch(taskType) {
 			case "deadline":
-				task = createTask.createDeadline(taskType, listFromLogic);
+				task = CreateTask.createDeadline(taskType, listFromLogic);
 				break;
 			case "event":
-				task = createTask.createEvent(taskType, listFromLogic);
+				task = CreateTask.createEvent(taskType, listFromLogic);
 				break;
 			case "floating":
-				task = createTask.createFloating(taskType, listFromLogic);
+				task = CreateTask.createFloating(taskType, listFromLogic);
 				break;
 			default:
 				break;
@@ -242,7 +326,7 @@ public class Parser {
 			case "p"://priority
 				n = 7;
 				break;
-			case "-c":
+			case "-c"://complete
 			case "c":
 				n = 8;
 				break;
@@ -324,31 +408,31 @@ public class Parser {
 			}
 			switch(n){
 			case 1:
-				String details = createTask.getDetail(commands, tempI+1, i);	
+				String details = CreateTask.getDetail(commands, tempI+1, i);	
 				userInput.setDetails(details);
 				break;
 			case 2:
-				Date startDate = createTask.getDate(commands.get(tempI+1));
+				Date startDate = CreateTask.getDate(commands.get(tempI+1));
 				userInput.setStartDate(startDate);
 				break;
 			case 3:
-				Time startTime = createTask.getTime(commands.get(tempI+1));
+				Time startTime = CreateTask.getTime(commands.get(tempI+1));
 				userInput.setStartTime(startTime);
 				break;
 			case 4:
-				Date endDate = createTask.getDate(commands.get(tempI+1));
+				Date endDate = CreateTask.getDate(commands.get(tempI+1));
 				userInput.setEndDate(endDate);
 				break;
 			case 5:
-				Time endTime = createTask.getTime(commands.get(tempI+1));
+				Time endTime = CreateTask.getTime(commands.get(tempI+1));
 				userInput.setEndTime(endTime);
 				break;
 			case 6:
-				String location = createTask.getLocation(commands, tempI+1, i);
+				String location = CreateTask.getLocation(commands, tempI+1, i);
 				userInput.setLocation(location);
 				break;
 			case 7:
-				int priority = createTask.getPriority(commands.get(tempI+1));
+				int priority = CreateTask.getPriority(commands.get(tempI+1));
 				userInput.setPriority(priority);
 				break;
 			case 8:
