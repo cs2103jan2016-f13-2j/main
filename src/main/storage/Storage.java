@@ -50,7 +50,7 @@ public class Storage {
 		readFileToTaskArrayList(taskFile, taskList);
 	}
 	
-	//-----Public Methods-----
+	//=====Public Methods=====
 	
 	/**
 	 * Creates a Storage object for use if it doesn't exist.
@@ -71,17 +71,6 @@ public class Storage {
 
 	public ArrayList<Task> getTaskList() {
 		return taskList;
-	}
-	
-	/**
-	 * For testing purposes.
-	 * 
-	 * Sets the FILE_NAME to the test file path.
-	 * @param string : The file path of the test file.
-	 */
-	
-	public static void setFileName(String fileName) {
-		FILE_NAME = fileName;
 	}
 	
 	/**
@@ -158,8 +147,21 @@ public class Storage {
 		return true;
 	}
 	
+	//=====Protected methods=====
+	
+	/**
+	 * For testing purposes.
+	 * 
+	 * Sets the FILE_NAME to the test file path.
+	 * @param string : The file path of the test file.
+	 */
+	
+	protected static void setFileName(String fileName) {
+		FILE_NAME = fileName;
+	}
+	
 
-	//-----Private methods-----
+	//=====Private methods=====
 	
 	/**
 	 * Retrieves the file object and creates one if it doesn't exist.
