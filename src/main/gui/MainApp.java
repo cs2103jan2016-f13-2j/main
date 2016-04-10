@@ -123,7 +123,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-        	logger.log(Level.INFO, "UI TaskOverview Failed.");
+        	logger.log(Level.INFO, "UI TaskOverview initialization Failed.");
         }
     }
     
@@ -145,7 +145,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI HelpOverview initialization Failed.");
         }
     }
     
@@ -167,7 +167,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI CompleteOverview initialization Failed.");
         }
     }
 
@@ -189,7 +189,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI TodayOverview initialization Failed.");
         }
     }
     
@@ -211,7 +211,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI UpcomingOverview initialization Failed.");
         }
     }
     
@@ -233,7 +233,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI OverdueOverview initialization Failed.");
         }
     }
     
