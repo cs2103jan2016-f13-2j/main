@@ -1,5 +1,5 @@
 //@@author A0124487Y
-package main.gui.resources;
+package main.gui.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -595,9 +595,9 @@ public class UpcomingOverviewController {
 		feedback.setMessage(null);
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
-		UserInput userInput = new UserInput(command, 1);
+		UserInput userInput = new UserInput(command, 3);
 		MainLogic.run(userInput);	
-		mainApp.showTaskOverview(); 
+		mainApp.showUpcomingOverview(); 
 	}    
 	
 	

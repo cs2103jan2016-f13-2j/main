@@ -25,6 +25,7 @@ public class createTask {
 	private static final String MIDNIGHT = "midnight";
 	private static final String NOON = "noon";
 	private static final String TOMORROW = "tomorrow";
+	private static final String TODAY = "today";
 	private static final String MONDAY = "monday";
 	private static final String TUESDAY = "tuesday";
 	private static final String WEDNESDAY = "wednesday";
@@ -44,6 +45,7 @@ public class createTask {
 	private static final String OCTOBER = "October";
 	private static final String NOVEMBER = "November";
 	private static final String DECEMBER = "December";
+	
 
 	public final static Task createDeadline(String taskType, ArrayList<String> info) {
 		String taskName = taskType + " task";
@@ -52,17 +54,16 @@ public class createTask {
 		int length = info.size();
 		int indexOfP = 0;
 
-		if (info.contains(PRIORITY)) {
-			indexOfP = info.indexOf(PRIORITY);
-			String priority = info.get(indexOfP + 1);
-			task.setPriority(getPriority(priority));
-		} else {
-			indexOfP = length;
-			task.setPriority(3);
-		}
+		indexOfP = setPriorityForDeadlineTask(info, task, length);
 
 		String detail = getDetail(info, 1, indexOfBy);
 		String dateAndTime = info.get(indexOfBy + 1);
+		setLocationForDeadlineTask(info, taskName, task, indexOfP, detail, dateAndTime);
+		return task;
+	}
+
+	private static void setLocationForDeadlineTask(ArrayList<String> info, String taskName, Task task, int indexOfP,
+			String detail, String dateAndTime) {
 		if (info.contains(AT)) {
 			int indexOfAt = info.indexOf(AT);
 			Time time = getTime(dateAndTime);
@@ -84,7 +85,19 @@ public class createTask {
 			task.setTaskStartTime(time);
 			task.setTaskType(4);
 		}
-		return task;
+	}
+
+	private static int setPriorityForDeadlineTask(ArrayList<String> info, Task task, int length) {
+		int indexOfP;
+		if (info.contains(PRIORITY)) {
+			indexOfP = info.indexOf(PRIORITY);
+			String priority = info.get(indexOfP + 1);
+			task.setPriority(getPriority(priority));
+		} else {
+			indexOfP = length;
+			task.setPriority(3);
+		}
+		return indexOfP;
 	}
 
 	public final static Task createEvent(String taskType, ArrayList<String> info) {
@@ -94,14 +107,7 @@ public class createTask {
 		int indexOfTo = info.indexOf(TO);
 		int length = info.size();
 		int indexOfP = 0;
-		if (info.contains(PRIORITY)) {
-			indexOfP = info.indexOf(PRIORITY);
-			String priority = info.get(indexOfP + 1);
-			task.setPriority(getPriority(priority));
-		} else {
-			indexOfP = length;
-			task.setPriority(3);
-		}
+		indexOfP = setPriorityForDeadlineTask(info, task, length);
 
 		String detail = getDetail(info, 1, indexOfFrom);
 		String startDateAndTime = info.get(indexOfFrom + 1);
@@ -148,14 +154,7 @@ public class createTask {
 			int indexOfAt = info.indexOf(AT);
 			String detail = getDetail(info, 1, indexOfAt);
 			String location = getLocation(info, indexOfAt + 1, indexOfP);
-			if (info.contains(PRIORITY)) {
-				indexOfP = info.indexOf(PRIORITY);
-				String priority = info.get(indexOfP + 1);
-				task.setPriority(getPriority(priority));
-			} else {
-				indexOfP = length;
-				task.setPriority(3);
-			}
+			indexOfP = setPriorityForDeadlineTask(info, task, length);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
 			;
@@ -229,14 +228,7 @@ public class createTask {
 				task.setTaskStartTime(time);
 				task.setTaskType(4);
 
-				if (info.contains(PRIORITY)) {
-					indexOfP = info.indexOf(PRIORITY);
-					String priority = info.get(indexOfP + 1);
-					task.setPriority(getPriority(priority));
-				} else {
-					indexOfP = indexOfFor;
-					task.setPriority(3);
-				}
+				indexOfP = setPriorityForDeadlineTask(info, task, indexOfFor);
 			}
 
 		} else if (info.contains(FROM)) {
@@ -283,14 +275,7 @@ public class createTask {
 				task.setTaskEndDate(endDate);
 				task.setTaskEndTime(endTime);
 				task.setTaskType(1);
-				if (info.contains(PRIORITY)) {
-					indexOfP = info.indexOf(PRIORITY);
-					String priority = info.get(indexOfP + 1);
-					task.setPriority(getPriority(priority));
-				} else {
-					indexOfP = indexOfFor;
-					task.setPriority(3);
-				}
+				indexOfP = setPriorityForDeadlineTask(info, task, indexOfFor);
 			}
 		} else {
 			if (info.contains(AT)) {
@@ -461,6 +446,11 @@ public class createTask {
 				}
 			}
 			
+		} else if(Shortcuts.diffDateFormat(dateInfo).contains(TODAY)) {
+			Calendar cal = Calendar.getInstance();
+			date.setDay(cal.get(Calendar.DAY_OF_MONTH));
+			date.setMonth(cal.get(Calendar.MONTH) + 1);
+			date.setYear(cal.get(Calendar.YEAR));
 		} else if (Shortcuts.diffDateFormat(dateInfo).contains(TOMORROW)) {
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DAY_OF_MONTH, 1);

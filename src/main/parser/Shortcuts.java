@@ -23,11 +23,6 @@ public class Shortcuts {
 		case "update":
 		case "e":
 			return "edit";
-		// display task commands
-		case "display":
-		case "view":
-		case "v":
-			return "display";
 		// search command
 		case "search":
 		case "s":
@@ -52,6 +47,8 @@ public class Shortcuts {
 		case "complete":
 		case "mark":
 		case "done":
+		case "finished":
+		case "finish":
 			return "complete";
 		//uncomplete command
 		case "incomplete":
@@ -64,6 +61,8 @@ public class Shortcuts {
 	
 	public static String diffDateFormat(String dateInfo){
 		switch(dateInfo.toLowerCase()){
+		case "today":
+			return "today";
 		case "tmrw":
 		case "tmr":
 		case "tomorrow":
