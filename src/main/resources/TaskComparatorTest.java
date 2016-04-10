@@ -1,11 +1,8 @@
-package main.resources.test;
+package main.resources;
  
 import static org.junit.Assert.*;
  
 import org.junit.Test;
-
-import main.resources.Task;
-import main.resources.TaskComparator;
  
 public class TaskComparatorTest {
  

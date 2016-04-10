@@ -1,4 +1,4 @@
-package main.storage.test;
+package main.storage;
 
 import static org.junit.Assert.*;
 

@@ -1,6 +1,5 @@
-package main.parser.test;
+package main.parser;
 
-import main.parser.Parser;
 import static org.junit.Assert.*;
 import org.junit.Test;
 //@@author A0133926A

@@ -1,10 +1,8 @@
-package main.resources.test;
+package main.resources;
  
 import static org.junit.Assert.*;
  
 import org.junit.Test;
-
-import main.resources.Task;
  
 public class TaskTest {
  
