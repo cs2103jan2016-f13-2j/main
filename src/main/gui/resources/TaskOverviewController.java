@@ -601,7 +601,7 @@ public class TaskOverviewController {
 		//System.out.println(command);
 		UserInput userInput = new UserInput(command, 1);
 		MainLogic.run(userInput);	
-		mainApp.showTaskOverview(); 
+		mainApp.showTaskOverview();
 	}    
 	
 	
