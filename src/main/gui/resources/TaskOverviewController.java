@@ -529,8 +529,13 @@ public class TaskOverviewController {
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
+		//changes for every overview
 		ArrayList<ArrayList<Task>> temp = MainLogic.getTaskList();
 		numberTaskArrayList(temp); 
+		setTotalList(temp);
+	}
+
+	private void setTotalList(ArrayList<ArrayList<Task>> temp) {
 		for (int k = 0; k< totalList.size(); k++){ 
 			for (int j = 0; j < temp.size(); j++) {
 				for (int i=0; i < temp.get(j).size(); i++) {
@@ -548,7 +553,6 @@ public class TaskOverviewController {
 	
 	private void numberTaskArrayList(ArrayList<ArrayList<Task>> list) {
 		int taskNum = 1;
-		
 		for (ArrayList<Task> listT : list) {
 				taskNum = 1;
 				for (Task t : listT) {
