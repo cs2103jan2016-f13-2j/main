@@ -74,9 +74,9 @@ public class HelpOverviewController {
 		public void onEnter(){
 			String command = commandText.getText(); //string received from user.
 			commandText.setText("");
-			UserInput userInput = new UserInput(command, 1);
+			UserInput userInput = new UserInput(command, 6);
 			MainLogic.run(userInput);	
-			mainApp.showTaskOverview(); 
+			mainApp.showHelpOverview(); 
 		}    
 		
 		

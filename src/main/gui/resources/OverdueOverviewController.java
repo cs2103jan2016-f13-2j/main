@@ -595,9 +595,9 @@ public class OverdueOverviewController {
 		feedback.setMessage(null);
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
-		UserInput userInput = new UserInput(command, 1);
+		UserInput userInput = new UserInput(command, 5);
 		MainLogic.run(userInput);	
-		mainApp.showTaskOverview(); 
+		mainApp.showOverdueOverview(); 
 	}    
 	
 	
