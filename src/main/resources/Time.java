@@ -2,34 +2,49 @@ package main.resources;
 
 import java.io.Serializable;
 
-//@@author A0125255L
+//@@author A0124711U
 
 public class Time implements Comparable<Time>, Serializable {
 
+	private int hour;
+	private int minute;
+	
 	/**
-	 * 
+	 * Initialises the class variables to the defaults of -1.
 	 */
-	private static final long serialVersionUID = 1L;
-	int hour;
-	int minute;
+	public Time() {
+		this(-1, -1);
+	}
 
+	/**
+	 * Initialises the class variables with the given input.
+	 * @param hour
+	 * @param minute
+	 */
 	public Time(int hour, int minute) {
 		this.hour = hour;
 		this.minute = minute;
 	}
 
-	public Time() {
-		this(-1, -1);
-	}
-
+	//===== Public methods =====
+	
+	/**
+	 * Retrieves the hour integer.
+	 * @return the hour integer.
+	 */
 	public int getHour() {
 		return hour;
 	}
 
+	/**
+	 * Retrieves the minute integer.
+	 * @return the minute integer.
+	 */
 	public int getMinute() {
 		return minute;
 	}
 
+	
 	public Time getTime() {
 		return this;
 	}
@@ -55,7 +70,6 @@ public class Time implements Comparable<Time>, Serializable {
 		minute = newMinute;
 	}
 
-	//@@author A0124711U
 	/**
 	 * Checks whether the hour and minute are valid values.
 	 * @return true if the time is valid, false otherwise.
@@ -92,7 +106,6 @@ public class Time implements Comparable<Time>, Serializable {
 		return false;
 	}
 
-	//@@author A0125255L
 	@Override
 	public int compareTo(Time time) {
 		if (this.hour != time.getHour()) {
