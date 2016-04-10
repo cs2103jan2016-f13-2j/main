@@ -30,7 +30,8 @@ public class HelpOverviewController {
 	
 	@FXML private Label overdueCounter;
 	@FXML private Rectangle overdueRectangle;
-	 private MainApp mainApp;
+	 
+	private MainApp mainApp;
 
 	    /**
 	     * The constructor.
@@ -55,16 +56,16 @@ public class HelpOverviewController {
 	     */
 	    public void setMainApp(MainApp mainApp) {
 	        this.mainApp = mainApp;
-			if (getNoOfTasks(MainLogic.getExpiredTasks()) > 0) {
-				overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
+			if (getNoOfDAndFTasks(MainLogic.getExpiredTasks()) > 0) {
+				overdueCounter.setText(""+getNoOfDAndFTasks(MainLogic.getExpiredTasks()));
 				} else {
 					overdueRectangle.setOpacity(0);
 				}
 	    }
 	    
-		private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
+		private int getNoOfDAndFTasks(ArrayList<ArrayList<Task>> array) {
 			int counter=0;
-			for (int i = 0; i < array.size(); i++) {
+			for (int i = 0; i < array.size()-1; i++) {
 				counter += array.get(i).size();
 				}
 			return counter;
@@ -73,8 +74,7 @@ public class HelpOverviewController {
 		public void onEnter(){
 			String command = commandText.getText(); //string received from user.
 			commandText.setText("");
-			//System.out.println(command);
-			UserInput userInput = new UserInput(command, 7);
+			UserInput userInput = new UserInput(command, 1);
 			MainLogic.run(userInput);	
 			mainApp.showTaskOverview(); 
 		}    
@@ -83,57 +83,65 @@ public class HelpOverviewController {
 		
 		@FXML
 		void onKeyPressed(KeyEvent keyEvent) {
-		  if (keyEvent.getCode() == KeyCode.CONTROL) { 
-		    System.out.print("ctrl pressed");
-		    controlPressed = true;
-	      } else if (keyEvent.getCode() == KeyCode.Z) {
-	          zPressed = true;
-	      } else if (keyEvent.getCode() == KeyCode.Y) {
-	          yPressed = true;
-	      } else if (keyEvent.getCode() == KeyCode.Q) {
-	          qPressed = true;
-	      } else if (keyEvent.getCode() == KeyCode.F12) {
-	          mainApp.showHelpOverview();
-	      } else if (keyEvent.getCode() == KeyCode.F5) {
-	          mainApp.showOverdueOverview();
-	      } else if (keyEvent.getCode() == KeyCode.F4) {
-	          mainApp.showCompleteOverview();
-	      } else if (keyEvent.getCode() == KeyCode.F3) {
-	          mainApp.showUpcomingOverview();
-	      } else if (keyEvent.getCode() == KeyCode.F2) {
-	          mainApp.showTodayOverview();
-	      } else if (keyEvent.getCode() == KeyCode.F1) {
-	          mainApp.showTaskOverview();
-	      } else if (keyEvent.getCode() == KeyCode.F11) {
-	          mainApp.getPrimaryStage().toBack();
-	      } else if (keyEvent.getCode() == KeyCode.ESCAPE) {
-	          commandText.setText("home");
-	          onEnter();
-	      }
-		  if(controlPressed && zPressed){
-			  commandText.setText("undo");
-			  onEnter();
-		  }
-		  if(controlPressed && yPressed){
-			  commandText.setText("redo");
-			  onEnter();
-		  }
-		  if(controlPressed && qPressed){
-			  System.exit(0);
-		  }
+		  processKeyEventPressed(keyEvent);
+		}
+
+		private void processKeyEventPressed(KeyEvent keyEvent) {
+			if (keyEvent.getCode() == KeyCode.CONTROL) { 
+			    System.out.print("ctrl pressed");
+			    controlPressed = true;
+			  } else if (keyEvent.getCode() == KeyCode.Z) {
+			      zPressed = true;
+			  } else if (keyEvent.getCode() == KeyCode.Y) {
+			      yPressed = true;
+			  } else if (keyEvent.getCode() == KeyCode.Q) {
+			      qPressed = true;
+			  } else if (keyEvent.getCode() == KeyCode.F12) {
+			      mainApp.showHelpOverview();
+			  } else if (keyEvent.getCode() == KeyCode.F5) {
+			      mainApp.showOverdueOverview();
+			  } else if (keyEvent.getCode() == KeyCode.F4) {
+			      mainApp.showCompleteOverview();
+			  } else if (keyEvent.getCode() == KeyCode.F3) {
+			      mainApp.showUpcomingOverview();
+			  } else if (keyEvent.getCode() == KeyCode.F2) {
+			      mainApp.showTodayOverview();
+			  } else if (keyEvent.getCode() == KeyCode.F1) {
+			      mainApp.showTaskOverview();
+			  } else if (keyEvent.getCode() == KeyCode.F11) {
+			      mainApp.getPrimaryStage().toBack();
+			  } else if (keyEvent.getCode() == KeyCode.ESCAPE) {
+			      commandText.setText("home");
+			      onEnter();
+			  }
+			  if(controlPressed && zPressed){
+				  commandText.setText("undo");
+				  onEnter();
+			  }
+			  if(controlPressed && yPressed){
+				  commandText.setText("redo");
+				  onEnter();
+			  }
+			  if(controlPressed && qPressed){
+				  System.exit(0);
+			  }
 		}
 
 		@FXML
 		void onKeyReleased(KeyEvent keyEvent) {
-		  if (keyEvent.getCode() == KeyCode.CONTROL) { 
-		    controlPressed = false;
-	      } else if (keyEvent.getCode() == KeyCode.Z) {
-	          zPressed = false;
-	      } else if (keyEvent.getCode() == KeyCode.Y) {
-	          yPressed = false;
-	      } else if (keyEvent.getCode() == KeyCode.Q) {
-	    	  qPressed = false;
-	      }
+		  processKeyEventReleased(keyEvent);
+		}
+
+		private void processKeyEventReleased(KeyEvent keyEvent) {
+			if (keyEvent.getCode() == KeyCode.CONTROL) { 
+			    controlPressed = false;
+			  } else if (keyEvent.getCode() == KeyCode.Z) {
+			      zPressed = false;
+			  } else if (keyEvent.getCode() == KeyCode.Y) {
+			      yPressed = false;
+			  } else if (keyEvent.getCode() == KeyCode.Q) {
+				  qPressed = false;
+			  }
 		}
 		
 		@FXML 

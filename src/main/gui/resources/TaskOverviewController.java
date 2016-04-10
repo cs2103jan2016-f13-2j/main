@@ -104,10 +104,6 @@ public class TaskOverviewController {
 	// Reference to the main application.
 	private MainApp mainApp;
 
-	/**
-	 * The constructor.
-	 * The constructor is called before the initialize() method.
-	 */
 	public TaskOverviewController() {
 		
 	}
@@ -118,8 +114,105 @@ public class TaskOverviewController {
 	 */
 	@FXML
 	private void initialize() {
+		initializeAllTables();
+		wrapTableColumns();
+	}
 
-		// Initialize the task table with the two columns.
+	private void wrapTableColumns() {
+		taskDetailsWrap();
+		taskLocationWrap();
+		eventDetailsWrap();
+		eventLocationWrap();
+		floatingDetailsWrap();
+	}
+
+	private void floatingDetailsWrap() {
+		floatingDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(floatingDetailsColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
+	}
+
+	private void eventLocationWrap() {
+		eventLocationColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(eventLocationColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
+	}
+
+	private void eventDetailsWrap() {
+		eventDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(eventDetailsColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
+	}
+
+	private void taskLocationWrap() {
+		taskLocationColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(taskLocationColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
+	}
+
+	private void taskDetailsWrap() {
+		taskDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
+
+	        @Override
+	        public TableCell<Task, String> call(
+	                TableColumn<Task, String> param) {
+	            TableCell<Task, String> cell = new TableCell<>();
+	            Text text = new Text();
+	            cell.setGraphic(text);
+	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+	            text.wrappingWidthProperty().bind(taskDetailsColumn.widthProperty());
+	            text.textProperty().bind(cell.itemProperty());
+	            return cell ;
+	        }
+	    });
+	}
+
+
+	private void initializeAllTables() {
 		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		taskPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
@@ -139,88 +232,14 @@ public class TaskOverviewController {
 		floatingNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		floatingPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		floatingDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
-		
+		setTablePlaceHolder();
+	}
+
+	private void setTablePlaceHolder() {
 		taskTable.setPlaceholder(new Label("No tasks"));
 		eventTable.setPlaceholder(new Label("No tasks"));
 		floatingTable.setPlaceholder(new Label("No tasks"));
-		
-		taskDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
-
-	        @Override
-	        public TableCell<Task, String> call(
-	                TableColumn<Task, String> param) {
-	            TableCell<Task, String> cell = new TableCell<>();
-	            Text text = new Text();
-	            cell.setGraphic(text);
-	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-	            text.wrappingWidthProperty().bind(taskDetailsColumn.widthProperty());
-	            text.textProperty().bind(cell.itemProperty());
-	            return cell ;
-	        }
-	    });
-		
-		taskLocationColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
-
-	        @Override
-	        public TableCell<Task, String> call(
-	                TableColumn<Task, String> param) {
-	            TableCell<Task, String> cell = new TableCell<>();
-	            Text text = new Text();
-	            cell.setGraphic(text);
-	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-	            text.wrappingWidthProperty().bind(taskLocationColumn.widthProperty());
-	            text.textProperty().bind(cell.itemProperty());
-	            return cell ;
-	        }
-	    });
-		
-		eventDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
-
-	        @Override
-	        public TableCell<Task, String> call(
-	                TableColumn<Task, String> param) {
-	            TableCell<Task, String> cell = new TableCell<>();
-	            Text text = new Text();
-	            cell.setGraphic(text);
-	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-	            text.wrappingWidthProperty().bind(eventDetailsColumn.widthProperty());
-	            text.textProperty().bind(cell.itemProperty());
-	            return cell ;
-	        }
-	    });
-		
-		eventLocationColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
-
-	        @Override
-	        public TableCell<Task, String> call(
-	                TableColumn<Task, String> param) {
-	            TableCell<Task, String> cell = new TableCell<>();
-	            Text text = new Text();
-	            cell.setGraphic(text);
-	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-	            text.wrappingWidthProperty().bind(eventLocationColumn.widthProperty());
-	            text.textProperty().bind(cell.itemProperty());
-	            return cell ;
-	        }
-	    });
-		
-		floatingDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
-
-	        @Override
-	        public TableCell<Task, String> call(
-	                TableColumn<Task, String> param) {
-	            TableCell<Task, String> cell = new TableCell<>();
-	            Text text = new Text();
-	            cell.setGraphic(text);
-	            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
-	            text.wrappingWidthProperty().bind(floatingDetailsColumn.widthProperty());
-	            text.textProperty().bind(cell.itemProperty());
-	            return cell ;
-	        }
-	    });
 	}
-
-
 	
 	/**
 	 * Is called by the main application to give a reference back to itself.
@@ -233,12 +252,16 @@ public class TaskOverviewController {
 		initializeLabels();
 		getTaskListFromFile();
 		showOverdueCounter();	
+		setTables();
 		initializeAllPriority();
 		initializeAllDates();
-		//Eeshuan, this part reads value as things are typed in
-		commandText.textProperty().addListener((observable, oldValue, newValue) -> {
-		    System.out.println("TextField Text Changed (newValue: " + newValue + ")");
-		});
+
+	}
+
+	private void setTables() {
+		for (int i = 0; i < totalList.size(); i++) {
+		allTables.get(i).setItems(totalList.get(i));
+		}
 	}
 
 	private void initializeAllPriority() {
@@ -332,7 +355,6 @@ public class TaskOverviewController {
 		            	boolean isTomorrow = false;
 		            	boolean isToday = false;
 		            	String[] date = item.split("-");
-		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
 		            	Calendar cal = Calendar.getInstance();
 		            	cal.add(Calendar.DAY_OF_MONTH, 1);
 		            	Date todayDate = MainLogic.getCurrentDate();
@@ -382,7 +404,6 @@ public class TaskOverviewController {
 		            	boolean isTomorrow = false;
 		            	boolean isToday = false;
 		            	String[] date = item.split("-");
-		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
 		            	Calendar cal = Calendar.getInstance();
 		            	cal.add(Calendar.DAY_OF_MONTH, 1);
 		            	Date todayDate = MainLogic.getCurrentDate();
@@ -432,7 +453,6 @@ public class TaskOverviewController {
 		            	boolean isTomorrow = false;
 		            	boolean isToday = false;
 		            	String[] date = item.split("-");
-		            	//String[] currDate = MainLogic.getCurrentDate().getDateString().split("-");
 		            	Calendar cal = Calendar.getInstance();
 		            	cal.add(Calendar.DAY_OF_MONTH, 1);
 		            	Date todayDate = MainLogic.getCurrentDate();
@@ -514,13 +534,10 @@ public class TaskOverviewController {
 	}
 
 	private void showOverdueCounter() {
-		if (getNoOfTasks(MainLogic.getExpiredTasks()) > 0) {
-		overdueCounter.setText(""+getNoOfTasks(MainLogic.getExpiredTasks()));
+		if (getNoOfDAndFTasks(MainLogic.getExpiredTasks()) > 0) {
+		overdueCounter.setText(""+getNoOfDAndFTasks(MainLogic.getExpiredTasks()));
 		} else {
 			overdueRectangle.setOpacity(0);
-		}
-		for (int i = 0; i < totalList.size(); i++) {
-		allTables.get(i).setItems(totalList.get(i));
 		}
 	}
 	
@@ -563,32 +580,12 @@ public class TaskOverviewController {
 		}
 
 	
-	private int getNoOfTasks(ArrayList<ArrayList<Task>> array) {
+	private int getNoOfDAndFTasks(ArrayList<ArrayList<Task>> array) {
 		int counter=0;
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0; i < array.size()-1; i++) {
 			counter += array.get(i).size();
 			}
 		return counter;
-	}
-	
-	/**
-	 * Called when the user clicks on the delete button.
-	 */
-	@FXML
-	private void handleDeleteTask() {
-		int selectedIndex = taskTable.getSelectionModel().getSelectedIndex();
-		if (selectedIndex >= 0) {
-			taskTable.getItems().remove(selectedIndex);
-		} else {
-			// Nothing selected.
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.initOwner(mainApp.getPrimaryStage());
-			alert.setTitle("No Selection");
-			alert.setHeaderText("No Task Selected");
-			alert.setContentText("Please select a task in the table.");
-
-			alert.showAndWait();
-		}
 	}
 
 	/**
@@ -598,7 +595,6 @@ public class TaskOverviewController {
 		feedback.setMessage(null);
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
-		//System.out.println(command);
 		UserInput userInput = new UserInput(command, 1);
 		MainLogic.run(userInput);	
 		mainApp.showTaskOverview(); 
