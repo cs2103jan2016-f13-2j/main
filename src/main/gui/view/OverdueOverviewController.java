@@ -1,5 +1,5 @@
 //@@author A0124487Y
-package main.gui.resources;
+package main.gui.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;

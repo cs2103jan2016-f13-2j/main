@@ -1,5 +1,5 @@
 //@@author A0124487Y
-package main.gui.resources;
+package main.gui.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,7 +30,7 @@ import main.resources.Task;
 import main.resources.UserInput;
 
 
-public class CompleteOverviewController {
+public class TodayOverviewController {
 	
 	private static final String CMD_DISPLAY = "display";
 	
@@ -104,7 +104,7 @@ public class CompleteOverviewController {
 	// Reference to the main application.
 	private MainApp mainApp;
 
-	public CompleteOverviewController() {
+	public TodayOverviewController() {
 		
 	}
 
@@ -547,7 +547,7 @@ public class CompleteOverviewController {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
 		//changes for every overview
-		ArrayList<ArrayList<Task>> temp = MainLogic.getCompletedTasks();
+		ArrayList<ArrayList<Task>> temp = MainLogic.getTodayTasks();
 		numberTaskArrayList(temp); 
 		setTotalList(temp);
 	}
@@ -595,9 +595,9 @@ public class CompleteOverviewController {
 		feedback.setMessage(null);
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
-		UserInput userInput = new UserInput(command, 4);
+		UserInput userInput = new UserInput(command, 2);
 		MainLogic.run(userInput);	
-		mainApp.showCompleteOverview(); 
+		mainApp.showTodayOverview(); 
 	}    
 	
 	

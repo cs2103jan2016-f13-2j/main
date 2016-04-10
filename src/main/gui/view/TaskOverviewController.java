@@ -1,5 +1,5 @@
 //@@author A0124487Y
-package main.gui.resources;
+package main.gui.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,8 +8,6 @@ import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -30,7 +28,7 @@ import main.resources.Task;
 import main.resources.UserInput;
 
 
-public class UpcomingOverviewController {
+public class TaskOverviewController {
 	
 	private static final String CMD_DISPLAY = "display";
 	
@@ -104,7 +102,7 @@ public class UpcomingOverviewController {
 	// Reference to the main application.
 	private MainApp mainApp;
 
-	public UpcomingOverviewController() {
+	public TaskOverviewController() {
 		
 	}
 
@@ -547,7 +545,7 @@ public class UpcomingOverviewController {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
 		//changes for every overview
-		ArrayList<ArrayList<Task>> temp = MainLogic.getWeekTasks();
+		ArrayList<ArrayList<Task>> temp = MainLogic.getTaskList();
 		numberTaskArrayList(temp); 
 		setTotalList(temp);
 	}
@@ -595,9 +593,9 @@ public class UpcomingOverviewController {
 		feedback.setMessage(null);
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
-		UserInput userInput = new UserInput(command, 3);
+		UserInput userInput = new UserInput(command, 1);
 		MainLogic.run(userInput);	
-		mainApp.showUpcomingOverview(); 
+		mainApp.showTaskOverview();
 	}    
 	
 	

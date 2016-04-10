@@ -1,5 +1,5 @@
 //@@author A0124487Y
-package main.gui.resources;
+package main.gui.view;
 
 import java.util.ArrayList;
 
@@ -72,7 +72,6 @@ public class HelpOverviewController {
 		}
 	    
 		public void onEnter(){
-			feedback.setMessage(null);
 			String command = commandText.getText(); //string received from user.
 			commandText.setText("");
 			UserInput userInput = new UserInput(command, 6);

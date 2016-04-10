@@ -14,12 +14,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import main.gui.resources.CompleteOverviewController;
-import main.gui.resources.HelpOverviewController;
-import main.gui.resources.OverdueOverviewController;
-import main.gui.resources.TaskOverviewController;
-import main.gui.resources.TodayOverviewController;
-import main.gui.resources.UpcomingOverviewController;
+import main.gui.view.CompleteOverviewController;
+import main.gui.view.HelpOverviewController;
+import main.gui.view.OverdueOverviewController;
+import main.gui.view.TaskOverviewController;
+import main.gui.view.TodayOverviewController;
+import main.gui.view.UpcomingOverviewController;
 import main.resources.Task;
 
 public class MainApp extends Application {
