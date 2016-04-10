@@ -25,6 +25,7 @@ public class createTask {
 	private static final String MIDNIGHT = "midnight";
 	private static final String NOON = "noon";
 	private static final String TOMORROW = "tomorrow";
+	private static final String TODAY = "today";
 	private static final String MONDAY = "monday";
 	private static final String TUESDAY = "tuesday";
 	private static final String WEDNESDAY = "wednesday";
@@ -44,6 +45,7 @@ public class createTask {
 	private static final String OCTOBER = "October";
 	private static final String NOVEMBER = "November";
 	private static final String DECEMBER = "December";
+	
 
 	public final static Task createDeadline(String taskType, ArrayList<String> info) {
 		String taskName = taskType + " task";
@@ -444,6 +446,11 @@ public class createTask {
 				}
 			}
 			
+		} else if(Shortcuts.diffDateFormat(dateInfo).contains(TODAY)) {
+			Calendar cal = Calendar.getInstance();
+			date.setDay(cal.get(Calendar.DAY_OF_MONTH));
+			date.setMonth(cal.get(Calendar.MONTH) + 1);
+			date.setYear(cal.get(Calendar.YEAR));
 		} else if (Shortcuts.diffDateFormat(dateInfo).contains(TOMORROW)) {
 			Calendar cal = Calendar.getInstance();
 			cal.add(Calendar.DAY_OF_MONTH, 1);

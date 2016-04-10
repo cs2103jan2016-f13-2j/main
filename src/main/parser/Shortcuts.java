@@ -61,6 +61,8 @@ public class Shortcuts {
 	
 	public static String diffDateFormat(String dateInfo){
 		switch(dateInfo.toLowerCase()){
+		case "today":
+			return "today";
 		case "tmrw":
 		case "tmr":
 		case "tomorrow":

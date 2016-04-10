@@ -52,8 +52,21 @@ public class Delete implements Command {
 		
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			task = userInput.getTasksToDelete().get(i);
-			if (task.isRecurring()) {
-				task.setDeleted(true);
+			if (task.isRecurring() && userInput.getIsAll()) {
+				Task t = task.getHead();
+				for (int j=0; j<t.getRecurList().size(); j++) {
+					taskList.remove(t.getRecurList().get(j));
+					displayList.remove(t.getRecurList().get(j));
+				}
+				userInput.setRecurList(t.getRecurList());
+				t.setRecurList(new ArrayList<Task>());
+			}
+			
+			else if (task.isRecurring()) {
+				taskList.remove(task);
+				displayList.remove(task);
+				Task t = task.getHead();
+				t.getRecurList().remove(task);
 			}
 			
 			else {
@@ -94,7 +107,6 @@ public class Delete implements Command {
 	private String getTaskTypeString(Task task) {
 		String type;
 		int taskType = task.getTaskType();
-		System.out.println(taskType);
 
 		switch(taskType) {
 		case 1:
@@ -125,8 +137,25 @@ public class Delete implements Command {
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task task = userInput.getTasksToDelete().get(i);
-			if (task.isRecurring()) {
-				task.setDeleted(false);
+			
+			if (task.isRecurring() && userInput.getIsAll()) {
+				Task t = task.getHead();
+				for (int j=0; j<userInput.getRecurList().size(); j++) {
+					taskList.add(userInput.getRecurList().get(j));
+					if (!displayList.equals(taskList)) {
+						displayList.add(userInput.getRecurList().get(j));
+					}
+				}
+				t.setRecurList(userInput.getRecurList());
+			}
+			
+			else if (task.isRecurring()) {
+				taskList.add(task);
+				if (!displayList.equals(taskList)) {
+					displayList.add(task);
+				}
+				Task t = task.getHead();
+				t.getRecurList().add(task);
 			}
 			
 			else {
@@ -148,8 +177,22 @@ public class Delete implements Command {
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task task = userInput.getTasksToDelete().get(i);
-			if (task.isRecurring()) {
-				task.setDeleted(true);
+			
+			if (task.isRecurring() && userInput.getIsAll()) {
+				Task t = task.getHead();
+				for (int j=0; j<t.getRecurList().size(); j++) {
+					taskList.remove(t.getRecurList().get(j));
+					displayList.remove(t.getRecurList().get(j));
+				}
+				userInput.setRecurList(t.getRecurList());
+				t.setRecurList(new ArrayList<Task>());
+			}
+			
+			else if (task.isRecurring()) {
+				taskList.remove(task);
+				displayList.remove(task);
+				Task t = task.getHead();
+				t.getRecurList().remove(task);
 			}
 			
 			else {

@@ -46,22 +46,15 @@ public class Add implements Command {
 		logger.log(Level.INFO, "Command ADD");
 		taskList = storage.getTaskList();
 		Task task = userInput.getTask();
-		if (task.getTaskStartDate() != null && 
-				(task.getTaskStartDate().compareTo(MainLogic.getCurrentDate()) < 0)) {
-			task.setExpired(true);
-		}
-		
-			taskList.add(task);
-			recurList.add(task);
-		
 		if (task.isRecurring()) {
+			task.setHead(task);
+			Task newTask = Task.duplicateTask(task);
+			recurList.add(newTask);
+			taskList.add(newTask);
 			task.setRecurTime(task.getRecurTime() - 1);
 			Calendar calStart = Calendar.getInstance();
 			Calendar calEnd = Calendar.getInstance();
 			while (task.getRecurTime() > 0) {
-				Task newTask = Task.duplicateTask(task);
-				taskList.add(newTask);
-				recurList.add(newTask);
 				task.setRecurTime(task.getRecurTime() - 1);
 				Date dateStart = task.getTaskStartDate();
 				calStart.set(dateStart.getYear(), dateStart.getMonth(), dateStart.getDay());
@@ -124,18 +117,23 @@ public class Add implements Command {
 					break;
 				}
 				}
+				newTask = Task.duplicateTask(task);
+				recurList.add(newTask);
+				taskList.add(newTask);
+				System.out.println(newTask.getHead());
 			}
-		}
-
-		recurList.add(null);
-		for (int i=0; i<recurList.size()-1; i++) {
-			Task t = recurList.get(i);
-			System.out.println(i+" "+t.getTaskDetails());
-			t.setHead(recurList.get(0));
-			t.setNext(recurList.get(i+1));
+			
+			task.setRecurList(recurList);	
 		}
 		
-		userInput.setRecurList(recurList);
+		else {
+			if (task.getTaskStartDate() != null && 
+					(task.getTaskStartDate().compareTo(MainLogic.getCurrentDate()) < 0)) {
+				task.setExpired(true);
+			}
+			
+			taskList.add(task);
+		}
 		
 		if (!storage.saveFile()) {
 			feedback.setMessage(MSG_FAIL_FILE_SAVE);
@@ -177,10 +175,9 @@ public class Add implements Command {
 	public void undo() {
 		logger.log(Level.INFO, "Command UNDO ADD");
 		taskList = storage.getTaskList();
-		System.out.println("list "+userInput.getRecurList().size());
 		if (userInput.getTask().isRecurring()) {
-			for (int i=0; i<userInput.getRecurList().size() - 1; i++) {
-				Task t = userInput.getRecurList().get(i);
+			for (int i=0; i<userInput.getTask().getRecurList().size(); i++) {
+				Task t = userInput.getTask().getRecurList().get(i);
 				taskList.remove(t);
 			}
 		}
@@ -198,8 +195,8 @@ public class Add implements Command {
 		logger.log(Level.INFO, "Command REDO ADD");
 		taskList = storage.getTaskList();
 		if (userInput.getTask().isRecurring()) {
-			for (int i=0; i<userInput.getRecurList().size() - 1; i++) {
-				Task t = userInput.getRecurList().get(i);
+			for (int i=0; i<userInput.getTask().getRecurList().size(); i++) {
+				Task t = userInput.getTask().getRecurList().get(i);
 				taskList.add(t);
 			}
 		}

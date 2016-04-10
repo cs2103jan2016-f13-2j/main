@@ -30,6 +30,7 @@ public class Edit implements Command {
 	private static Storage storage;
 	private static Feedback feedback;
 	private ArrayList<Task> taskList;
+	private ArrayList<Task> recurList;
 	private static Logger logger = Logger.getLogger("Edit");
 
 	public Edit(UserInput userInput) {
@@ -37,6 +38,7 @@ public class Edit implements Command {
 		storage = Storage.getInstance();
 		feedback = Feedback.getInstance();
 		taskList = new ArrayList<Task>();
+		recurList = new ArrayList<Task>();
 	}
 
 	@Override
@@ -48,9 +50,33 @@ public class Edit implements Command {
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		Task taskToEdit = userInput.getTaskToEdit();
 		userInput.setTaskToEdit(taskToEdit);
+		Task newTask = null;
 
 
-		Task newTask = Task.duplicateTask(taskToEdit);
+		if (taskToEdit.isRecurring() && userInput.getIsAll()) {
+			Task t = taskToEdit.getHead();
+			userInput.setRecurList(t.getRecurList());
+			for (int i=0; i<t.getRecurList().size(); i++) {
+				newTask = Task.duplicateTask(t.getRecurList().get(i));
+				editTask(success, changedTaskType, displayList, t.getRecurList().get(i), newTask);
+			}
+			userInput.setTask(taskToEdit);
+			t.setRecurList(recurList);
+		}
+
+		else if (taskToEdit.isRecurring()) {
+			newTask = Task.duplicateTask(taskToEdit);
+			editTask(success, changedTaskType, displayList, taskToEdit, newTask);
+			userInput.setTask(newTask);
+			taskToEdit.getHead().getRecurList().remove(taskToEdit);
+			taskToEdit.getHead().getRecurList().add(newTask);
+		}
+
+		else {
+			newTask = Task.duplicateTask(taskToEdit);
+			editTask(success, changedTaskType, displayList, taskToEdit, newTask);
+			userInput.setTask(newTask);
+		}
 
 		Date startDate = newTask.getTaskStartDate();
 		Time startTime = newTask.getTaskStartTime();
@@ -78,7 +104,10 @@ public class Edit implements Command {
 			feedback.setMessage(MSG_FAIL_START_DATE_LATER_THAN_END_DATE);
 			return;
 		}
+	}
 
+	private void editTask(boolean success, boolean changedTaskType, ArrayList<Task> displayList, Task taskToEdit,
+			Task newTask) {
 		for (int i=1; i<userInput.getEditNumber().size(); i++) {
 			switch (userInput.getEditNumber().get(i)) {
 			case 1:	{	//task detail
@@ -86,7 +115,7 @@ public class Edit implements Command {
 				success = true;
 				break;
 			}
-			
+
 			case 2: {	//task start date
 				if (newTask.getTaskType() == 2) {	//floating
 					if (!changedTaskType) {
@@ -110,7 +139,7 @@ public class Edit implements Command {
 				success = true;
 				break;
 			}
-			case 4:	{	//task end date
+			case 4:	{	//task end date		
 				if (newTask.getTaskType() == 2) { //floating
 					feedback.setMessage(MSG_FAIL_NO_START_DATE);
 					break;
@@ -122,6 +151,7 @@ public class Edit implements Command {
 					newTask.setTaskType(1);	//event
 				}
 				newTask.setTaskEndDate(userInput.getEndDate());
+
 				success = true;
 				break;
 			}
@@ -150,7 +180,7 @@ public class Edit implements Command {
 				success = true;
 				break;
 			}
-			case 8: {	//is complete
+			case 8: {	//is complete			
 				newTask.setComplete(userInput.getComplete());
 				success = true;
 				break;
@@ -169,79 +199,119 @@ public class Edit implements Command {
 			}
 		}
 
+		recurList.add(newTask);
 		taskList.remove(taskToEdit);
 		taskList.add(newTask);
 		if (!displayList.equals(taskList)) {
 			displayList.remove(taskToEdit);
 			displayList.add(newTask);
 		}
-		userInput.setTask(newTask);
 	}
 
-//@@author A0124711U
-/**
- * Checks if the dates in the tasks are valid and the end date is not earlier than the start date.
- * @return true if dates are valid, false otherwise.
- */
-private static boolean isValidDateAndTime(Date startDate, Time startTime, Date endDate, Time endTime) {
-	if (startDate != null && !startDate.isValid() || endDate != null && !endDate.isValid()) {
+	//@@author A0124711U
+	/**
+	 * Checks if the dates in the tasks are valid and the end date is not earlier than the start date.
+	 * @return true if dates are valid, false otherwise.
+	 */
+	private static boolean isValidDateAndTime(Date startDate, Time startTime, Date endDate, Time endTime) {
+		if (startDate != null && !startDate.isValid() || endDate != null && !endDate.isValid()) {
+			return false;
+		}
+
+		if (startTime != null && !startTime.isValid() || endTime != null && !endTime.isValid()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Checks if the end date/time is earlier than the start date/time.
+	 * @return true if the end date/time is earlier than start date/time, false otherwise.
+	 */
+	private static boolean isEndDateEarlierThanStartDate(Date startDate, Time startTime, Date endDate, Time endTime) {
+		assert(isValidDateAndTime(startDate, startTime, endDate, endTime));
+
+		if (startDate != null && endDate != null) {
+			if (startDate.compareTo(endDate) > 0) {
+				return true;
+			}
+			else if (startTime != null && endTime != null && startTime.compareTo(endTime) > 0) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
-	if (startTime != null && !startTime.isValid() || endTime != null && !endTime.isValid()) {
-		return false;
-	}
+	//@@author A0125255L
+	@Override
+	public void undo() {
+		logger.log(Level.INFO, "Command UNDO EDIT");
+		taskList = storage.getTaskList();
+		ArrayList<Task> displayList = MainLogic.getDisplayList();
 
-	return true;
-}
+		if (userInput.getTask().isRecurring() && userInput.getIsAll()) {
+			Task t = userInput.getTask().getHead();
+			for (int i=0; i<t.getRecurList().size(); i++) {
+				taskList.remove(t.getRecurList().get(i));
+				taskList.add(userInput.getRecurList().get(i));
+				if (!displayList.equals(taskList)) {
+					displayList.remove(t.getRecurList().get(i));
+					displayList.add(userInput.getRecurList().get(i));
+				}
+			}
 
-/**
- * Checks if the end date/time is earlier than the start date/time.
- * @return true if the end date/time is earlier than start date/time, false otherwise.
- */
-private static boolean isEndDateEarlierThanStartDate(Date startDate, Time startTime, Date endDate, Time endTime) {
-	assert(isValidDateAndTime(startDate, startTime, endDate, endTime));
-
-	if (startDate != null && endDate != null) {
-		if (startDate.compareTo(endDate) > 0) {
-			return true;
+			ArrayList<Task> swapList = userInput.getRecurList();
+			userInput.setRecurList(t.getRecurList());
+			t.setRecurList(swapList);
 		}
-		else if (startTime != null && endTime != null && startTime.compareTo(endTime) > 0) {
-			return true;
+		else {
+			taskList.remove(userInput.getTask());
+			taskList.add(userInput.getTaskToEdit());
+			if (!displayList.equals(taskList)) {
+				displayList.remove(userInput.getTask());
+				displayList.add(userInput.getTaskToEdit());
+			}		
 		}
+		storage.saveFile();
+		
+		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
-	return false;
-}
+	@Override
+	public void redo() {
+		logger.log(Level.INFO, "Command REDO EDIT");
+		taskList = storage.getTaskList();
+		ArrayList<Task> displayList = MainLogic.getDisplayList();
 
-//@@author A0125255L
-@Override
-public void undo() {
-	logger.log(Level.INFO, "Command UNDO EDIT");
-	taskList = storage.getTaskList();
-	ArrayList<Task> displayList = MainLogic.getDisplayList();
-	taskList.remove(userInput.getTask());
-	taskList.add(userInput.getTaskToEdit());
-	if (!displayList.equals(taskList)) {
-		displayList.remove(userInput.getTask());
-		displayList.add(userInput.getTaskToEdit());
+		if (userInput.getTask().isRecurring() && userInput.getIsAll()) {
+			Task t = userInput.getTask().getHead();
+			for (int i=0; i<t.getRecurList().size(); i++) {
+				taskList.remove(t.getRecurList().get(i));
+				taskList.add(userInput.getRecurList().get(i));
+				if (!displayList.equals(taskList)) {
+					displayList.remove(t.getRecurList().get(i));
+					displayList.add(userInput.getRecurList().get(i));
+				}
+			}
+
+			ArrayList<Task> swapList = userInput.getRecurList();
+			userInput.setRecurList(t.getRecurList());
+			t.setRecurList(swapList);
+		}
+		else {
+			taskList.remove(userInput.getTaskToEdit());
+			taskList.add(userInput.getTask());
+			if (!displayList.equals(taskList)) {
+				displayList.remove(userInput.getTaskToEdit());
+				displayList.add(userInput.getTask());
+			}
+
+			
+		}
+		storage.saveFile();
+		
+		feedback.setMessage(MSG_SUCCESS_REDO);
 	}
-
-	feedback.setMessage(MSG_SUCCESS_UNDO);
-}
-
-@Override
-public void redo() {
-	logger.log(Level.INFO, "Command REDO EDIT");
-	taskList = storage.getTaskList();
-	ArrayList<Task> displayList = MainLogic.getDisplayList();
-	taskList.remove(userInput.getTaskToEdit());
-	taskList.add(userInput.getTask());
-	if (!displayList.equals(taskList)) {
-		displayList.remove(userInput.getTaskToEdit());
-		displayList.add(userInput.getTask());
-	}
-
-	feedback.setMessage(MSG_SUCCESS_REDO);
-}
 }

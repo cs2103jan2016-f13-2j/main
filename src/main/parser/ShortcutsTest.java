@@ -7,8 +7,7 @@ import org.junit.Test;
 public class ShortcutsTest {
 	@Test
 	public void testShortcuts() {
-		
-		
+	
 		//flexi commands for adding a task
 		assertTrue(Shortcuts.shortcuts("add").equals("add"));
 		assertTrue(Shortcuts.shortcuts("a").equals("add"));
@@ -59,6 +58,8 @@ public class ShortcutsTest {
 	
 	@Test
 	public void testDiffDateFormat(){
+		//test tomorrow shortcut
+		assertTrue(Shortcuts.diffDateFormat("today").equals("today"));
 		//test tomorrow shortcut
 		assertTrue(Shortcuts.diffDateFormat("tmr").equals("tomorrow"));
 		assertTrue(Shortcuts.diffDateFormat("tmrw").equals("tomorrow"));
