@@ -24,7 +24,7 @@ public class Storage {
 	private static String FILE_NAME = "task.dat";
 	private static String DEFAULT = "default";
 
-	//Message strings
+	//Feedback strings
 	private static String MSG_SUCCESS_IMPORT = "Successfully imported file data from %1$s";
 	private static String MSG_SUCCESS_EXPORT = "Successfully exported file data from %1$s";
 	private static String MSG_FAIL_FILE_NOT_FOUND = "Error: The specified file does not exist.";
@@ -41,14 +41,13 @@ public class Storage {
 	/**
 	 * Initialises the File, and also the taskList with the contents of the File.
 	 */
-
 	private Storage() {
 		initialiseVariables();
 		retreiveFile(FILE_NAME);
 		readFileToTaskArrayList(taskFile, taskList);
 	}
 
-	//=====Public Methods=====
+	//===== Public Methods =====
 
 	/**
 	 * Creates a Storage object for use if it doesn't exist.
@@ -63,10 +62,9 @@ public class Storage {
 	}
 
 	/**
-	 * Allows access to the taskList.
+	 * Retrieves the taskList.
 	 * @return the taskList object reference.
 	 */
-
 	public ArrayList<Task> getTaskList() {
 		return taskList;
 	}
@@ -75,7 +73,6 @@ public class Storage {
 	 * Writes the existing taskList to file.
 	 * @return true if successfully saved, false if exception thrown.
 	 */
-
 	public boolean saveFile() {
 		boolean isSuccessful = writeTaskArrayListToFile(taskList, taskFile);
 		if (isSuccessful) {
@@ -150,7 +147,21 @@ public class Storage {
 		return true;
 	}
 
-	//=====Protected methods=====
+	/**
+	 * === For testing purposes ===
+	 * 
+	 * Sets the FILE_NAME to the test file path.
+	 * @param string : The file path of the test file.
+	 */
+	public static void setFileName(String fileName) {
+		FILE_NAME = fileName;
+	}
+
+
+	//===== Private methods =====
+
+
+
 
 	/**
 	 * Initialises the class variables.
@@ -161,26 +172,9 @@ public class Storage {
 	}
 
 	/**
-	 * For testing purposes.
-	 * 
-	 * Sets the FILE_NAME to the test file path.
-	 * @param string : The file path of the test file.
-	 */
-
-	protected static void setFileName(String fileName) {
-		FILE_NAME = fileName;
-	}
-
-
-	//=====Private methods=====
-
-
-
-	/**
 	 * Retrieves the file object and creates one if it doesn't exist.
 	 * @param fileName : The file path String
 	 */
-
 	private void retreiveFile(String fileName) {
 		taskFile = new File(fileName);
 
@@ -197,7 +191,6 @@ public class Storage {
 	 * @param file : The file to be created/
 	 * @return true if successfully created, false if exception thrown.
 	 */
-
 	private boolean createNewFile(File file) {
 		try {
 			file.createNewFile();
@@ -209,7 +202,6 @@ public class Storage {
 		}
 		catch (IOException e) {
 			logger.log(Level.WARNING, "Unable to create new file.");
-			//e.printStackTrace();
 			return false;
 		}
 
@@ -223,7 +215,6 @@ public class Storage {
 	 * @param list : The list for contents to be put into.
 	 * @return true if successfully read, false if exception thrown.
 	 */
-
 	private boolean readFileToTaskArrayList(File file, ArrayList<Task> list) {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
@@ -239,8 +230,6 @@ public class Storage {
 		catch (IOException | ClassNotFoundException e) {
 			feedback.setMessage(MSG_FAIL_READ_FILE);
 			logger.log(Level.WARNING, "Unable to read from taskFile.");
-			//e.printStackTrace();
-
 			return false;
 		}
 
@@ -253,7 +242,6 @@ public class Storage {
 	 * @param file : The destination file to be written to.
 	 * @return true if successfully written, false if exception thrown.
 	 */
-
 	private boolean writeTaskArrayListToFile(ArrayList<Task> list, File file) {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
@@ -273,7 +261,6 @@ public class Storage {
 		catch (IOException e) {
 			feedback.setMessage(MSG_FAIL_WRITE_FILE);
 			logger.log(Level.WARNING, "Unable to write to taskFile.");
-			e.printStackTrace();
 
 			return false;
 		}
