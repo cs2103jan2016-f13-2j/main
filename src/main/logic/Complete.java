@@ -52,11 +52,8 @@ public class Complete implements Command {
 		taskList = storage.getTaskList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task taskToMark = userInput.getTasksToDelete().get(i);
-			System.out.println(taskToMark.getTaskDetails());
 			for (Task t: taskList) {
-				System.out.println("Task not found.");
 				if (taskToMark.equals(t)) {
-					System.out.println("Task found!");
 					if (userInput.getComplete() == COMPLETE) {
 						if (t.isComplete() == false) {
 							t.setComplete(true);
