@@ -33,6 +33,10 @@ public class Delete implements Command {
 	private ArrayList<Task> taskList;
 	private static Logger logger = Logger.getLogger("Delete");
 
+	/**
+	 * Constructs a Delete command
+	 * @param userInput: userInput instance from MainLogic
+	 */
 	public Delete(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
@@ -40,6 +44,9 @@ public class Delete implements Command {
 		taskList = new ArrayList<Task>();
 	}
 
+	/**
+	 * Execute the command
+	 */
 	@Override
 	public void execute() {
 		boolean success = false;
@@ -130,6 +137,9 @@ public class Delete implements Command {
 	}
 
 	//@@author A0125255L
+	/**
+	 * Undo the command
+	 */
 	@Override
 	public void undo() {
 		logger.log(Level.INFO, "Command UNDO DELETE");
@@ -170,6 +180,9 @@ public class Delete implements Command {
 		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
+	/**
+	 * Redo the command
+	 */
 	@Override
 	public void redo() {
 		logger.log(Level.INFO, "Command REDO DELETE");

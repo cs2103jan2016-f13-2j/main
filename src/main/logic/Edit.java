@@ -33,6 +33,10 @@ public class Edit implements Command {
 	private ArrayList<Task> recurList;
 	private static Logger logger = Logger.getLogger("Edit");
 
+	/**
+	 * Constructs an Edit command
+	 * @param userInput: userInput instance from MainLogic
+	 */
 	public Edit(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
@@ -41,6 +45,9 @@ public class Edit implements Command {
 		recurList = new ArrayList<Task>();
 	}
 
+	/**
+	 * Execute the command
+	 */
 	@Override
 	public void execute() {
 		boolean success = false;
@@ -106,6 +113,14 @@ public class Edit implements Command {
 		}
 	}
 
+	/**
+	 * Executes the task edit
+	 * @param success: returns true if editTask runs without error
+	 * @param changedTaskType: returns true if taskType is changed previously
+	 * @param displayList: displayList from MainLogic
+	 * @param taskToEdit: Task to be edited
+	 * @param newTask: Task to change to
+	 */
 	private void editTask(boolean success, boolean changedTaskType, ArrayList<Task> displayList, Task taskToEdit,
 			Task newTask) {
 		for (int i=1; i<userInput.getEditNumber().size(); i++) {
@@ -245,6 +260,9 @@ public class Edit implements Command {
 	}
 
 	//@@author A0125255L
+	/**
+	 * Undo the command
+	 */
 	@Override
 	public void undo() {
 		logger.log(Level.INFO, "Command UNDO EDIT");
@@ -279,6 +297,9 @@ public class Edit implements Command {
 		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
+	/**
+	 * Redo the command
+	 */
 	@Override
 	public void redo() {
 		logger.log(Level.INFO, "Command REDO EDIT");
