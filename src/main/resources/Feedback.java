@@ -44,11 +44,9 @@ public class Feedback {
 	 * @param feedback message
 	 */
 	public void setMessage(String message) {
-		System.out.println("Current message: " + this.message);
-		System.out.println("Incoming message: " + message);
 		if (this.message == null || message == null) {
 			this.message = message;
-			System.out.println("Message replaced with: " + message);
+			System.out.println("Current: " + this.message);
 		}
 	}
 
