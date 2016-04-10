@@ -82,10 +82,14 @@ public class TaskOverviewController {
 	@FXML
 	private TableColumn<Task, String> floatingDetailsColumn;
 	
-	@FXML private Label instantFeedback;
-	@FXML private Label overdueCounter;
-	@FXML private Label todayDate;
-	@FXML private Rectangle overdueRectangle;
+	@FXML 
+	private Label instantFeedback;
+	@FXML 
+	private Label overdueCounter;
+	@FXML 
+	private Label todayDate;
+	@FXML 
+	private Rectangle overdueRectangle;
 	
 	@FXML
 	private TextField commandText;
@@ -112,10 +116,20 @@ public class TaskOverviewController {
 	 */
 	@FXML
 	private void initialize() {
-		initializeAllTables();
+		initializeLists();
+		initializeLabels();
+		displayAllTables();
 		wrapTableColumns();
+		getTaskListFromFile();
+		showOverdueCounter();	
+		setTables();
+		initializeAllPriority();
+		initializeAllDates();
 	}
 
+	/**
+	 * Overrides table columns settings to wrap text 
+	 */
 	private void wrapTableColumns() {
 		taskDetailsWrap();
 		taskLocationWrap();
@@ -209,8 +223,10 @@ public class TaskOverviewController {
 	    });
 	}
 
-
-	private void initializeAllTables() {
+	/**
+	 * Displays data from observableLists
+	 */
+	private void displayAllTables() {
 		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		taskPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
@@ -233,6 +249,9 @@ public class TaskOverviewController {
 		setTablePlaceHolder();
 	}
 
+	/**
+	 * Set text to put "No Tasks" if there are no contents in the table.
+	 */
 	private void setTablePlaceHolder() {
 		taskTable.setPlaceholder(new Label("No tasks"));
 		eventTable.setPlaceholder(new Label("No tasks"));
@@ -245,17 +264,12 @@ public class TaskOverviewController {
 	 * @param mainApp
 	 */
 	public void setMainApp(MainApp mainApp) {
-		initializeLists();
 		this.mainApp = mainApp;
-		initializeLabels();
-		getTaskListFromFile();
-		showOverdueCounter();	
-		setTables();
-		initializeAllPriority();
-		initializeAllDates();
-
 	}
 
+	/**
+	 * inputs the totalList of tasks into tables
+	 */
 	private void setTables() {
 		for (int i = 0; i < totalList.size(); i++) {
 		allTables.get(i).setItems(totalList.get(i));
@@ -531,6 +545,9 @@ public class TaskOverviewController {
 		allTables.add(floatingTable);
 	}
 
+	/**
+	 * displays the number of overdued tasks if any
+	 */
 	private void showOverdueCounter() {
 		if (getNoOfDAndFTasks(MainLogic.getExpiredTasks()) > 0) {
 		overdueCounter.setText(""+getNoOfDAndFTasks(MainLogic.getExpiredTasks()));
@@ -539,8 +556,9 @@ public class TaskOverviewController {
 		}
 	}
 	
-	
-	//convert arraylist to observable list
+	/**
+	 * converts the arrayList<arrayList<Task>> to an arrayList<ObservableList<Task>>
+	 */
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
