@@ -167,7 +167,7 @@ public class Storage {
 	 * @param string : The file path of the test file.
 	 */
 
-	protected static void setFileName(String fileName) {
+	public static void setFileName(String fileName) {
 		FILE_NAME = fileName;
 	}
 

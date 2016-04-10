@@ -67,72 +67,9 @@ public class Add implements Command {
 			Calendar calStart = Calendar.getInstance();
 			Calendar calEnd = Calendar.getInstance();
 			while (task.getRecurTime() > 0) {
-				task.setRecurTime(task.getRecurTime() - 1);
-				Date dateStart = task.getTaskStartDate();
-				calStart.set(dateStart.getYear(), dateStart.getMonth(), dateStart.getDay());
-				Date dateEnd;
-				if (task.getTaskEndDate() != null) {
-					dateEnd = task.getTaskEndDate();
-					calEnd.set(dateEnd.getYear(), dateEnd.getMonth(), dateEnd.getDay());
-				}
-				switch (task.getRecurFrequency()) {
-				case 1: {	//daily
-					calStart.add(Calendar.DAY_OF_MONTH, 1);
-					calEnd.add(Calendar.DAY_OF_MONTH, 1);
-					task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-														calStart.get(Calendar.MONTH), 
-															calStart.get(Calendar.YEAR)));
-					if (task.getTaskEndDate() != null) {
-						task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-								calEnd.get(Calendar.MONTH), 
-									calEnd.get(Calendar.YEAR)));
-					}
-					break;
-				}
-				case 2: {	//weekly
-					calStart.add(Calendar.DAY_OF_MONTH, 7);
-					calEnd.add(Calendar.DAY_OF_MONTH, 7);
-					task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-														calStart.get(Calendar.MONTH), 
-															calStart.get(Calendar.YEAR)));
-					if (task.getTaskEndDate() != null) {
-						task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-								calEnd.get(Calendar.MONTH), 
-									calEnd.get(Calendar.YEAR)));
-					}
-					break;
-				}
-				case 3: {	//monthly
-					calStart.add(Calendar.MONTH, 1);
-					calEnd.add(Calendar.MONTH, 1);
-					task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-														calStart.get(Calendar.MONTH), 
-															calStart.get(Calendar.YEAR)));
-					if (task.getTaskEndDate() != null) {
-						task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-								calEnd.get(Calendar.MONTH), 
-									calEnd.get(Calendar.YEAR)));
-					}
-					break;
-				}
-				case 4: {	//yearly
-					calStart.add(Calendar.YEAR, 1);
-					calEnd.add(Calendar.YEAR, 1);
-					task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-														calStart.get(Calendar.MONTH), 
-															calStart.get(Calendar.YEAR)));
-					if (task.getTaskEndDate() != null) {
-						task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-								calEnd.get(Calendar.MONTH), 
-									calEnd.get(Calendar.YEAR)));
-					}
-					break;
-				}
-				}
-				newTask = Task.duplicateTask(task);
-				recurList.add(newTask);
-				taskList.add(newTask);
-				System.out.println(newTask.getHead());
+				updateDate(task, calStart, calEnd);
+				generateRecurTasks(task, calStart, calEnd);
+				updateList(task);
 			}
 			
 			task.setRecurList(recurList);	
@@ -152,6 +89,92 @@ public class Add implements Command {
 		}
 		else {
 			feedback.setMessage(String.format(MSG_SUCCESS_ADD, getTaskTypeString(), userInput.getTask().getTaskDetails()));
+		}
+	}
+
+	/**
+	 * Updates the taskList and recurList to the list of all recurring tasks
+	 */
+	private void updateList(Task task) {
+		Task newTask;
+		newTask = Task.duplicateTask(task);
+		recurList.add(newTask);
+		taskList.add(newTask);
+	}
+
+	/**
+	 * Updates the date for the recurring task
+	 * @param task: Task to be updated
+	 */
+	private void updateDate(Task task, Calendar calStart, Calendar calEnd) {
+		task.setRecurTime(task.getRecurTime() - 1);
+		Date dateStart = task.getTaskStartDate();
+		calStart.set(dateStart.getYear(), dateStart.getMonth(), dateStart.getDay());
+		Date dateEnd;
+		if (task.getTaskEndDate() != null) {
+			dateEnd = task.getTaskEndDate();
+			calEnd.set(dateEnd.getYear(), dateEnd.getMonth(), dateEnd.getDay());
+		}
+	}
+
+	/**
+	 * Creates an instance after updating the new recurring date
+	 * @param task: Task to update the date to
+	 */
+	private void generateRecurTasks(Task task, Calendar calStart, Calendar calEnd) {
+		switch (task.getRecurFrequency()) {
+		case 1: {	//daily
+			calStart.add(Calendar.DAY_OF_MONTH, 1);
+			calEnd.add(Calendar.DAY_OF_MONTH, 1);
+			task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
+												calStart.get(Calendar.MONTH), 
+													calStart.get(Calendar.YEAR)));
+			if (task.getTaskEndDate() != null) {
+				task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
+						calEnd.get(Calendar.MONTH), 
+							calEnd.get(Calendar.YEAR)));
+			}
+			break;
+		}
+		case 2: {	//weekly
+			calStart.add(Calendar.DAY_OF_MONTH, 7);
+			calEnd.add(Calendar.DAY_OF_MONTH, 7);
+			task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
+												calStart.get(Calendar.MONTH), 
+													calStart.get(Calendar.YEAR)));
+			if (task.getTaskEndDate() != null) {
+				task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
+						calEnd.get(Calendar.MONTH), 
+							calEnd.get(Calendar.YEAR)));
+			}
+			break;
+		}
+		case 3: {	//monthly
+			calStart.add(Calendar.MONTH, 1);
+			calEnd.add(Calendar.MONTH, 1);
+			task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
+												calStart.get(Calendar.MONTH), 
+													calStart.get(Calendar.YEAR)));
+			if (task.getTaskEndDate() != null) {
+				task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
+						calEnd.get(Calendar.MONTH), 
+							calEnd.get(Calendar.YEAR)));
+			}
+			break;
+		}
+		case 4: {	//yearly
+			calStart.add(Calendar.YEAR, 1);
+			calEnd.add(Calendar.YEAR, 1);
+			task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
+												calStart.get(Calendar.MONTH), 
+													calStart.get(Calendar.YEAR)));
+			if (task.getTaskEndDate() != null) {
+				task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
+						calEnd.get(Calendar.MONTH), 
+							calEnd.get(Calendar.YEAR)));
+			}
+			break;
+		}
 		}
 	}
 	
