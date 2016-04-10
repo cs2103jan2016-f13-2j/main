@@ -374,10 +374,10 @@ public class TodayOverviewController {
 		            	 setText("");
 		                 setStyle("");
 		            } else {
+		            	String[] date = item.split("-");
 		            	boolean isExpired = false;
 		            	boolean isTomorrow = false;
-		            	boolean isToday = false;
-		            	String[] date = item.split("-");
+		            	boolean isToday = false;	            	
 		            	Calendar cal = Calendar.getInstance();
 		            	cal.add(Calendar.DAY_OF_MONTH, 1);
 		            	Date todayDate = MainLogic.getCurrentDate();
@@ -561,8 +561,8 @@ public class TodayOverviewController {
 	 * displays the number of overdued tasks if any
 	 */
 	private void showOverdueCounter() {
-		if (getNoOfDAndFTasks(MainLogic.getExpiredTasks()) > 0) {
-		overdueCounter.setText(""+getNoOfDAndFTasks(MainLogic.getExpiredTasks()));
+		if (getNoOfDAndETasks(MainLogic.getExpiredTasks()) > 0) {
+		overdueCounter.setText(""+getNoOfDAndETasks(MainLogic.getExpiredTasks()));
 		} else {
 			overdueRectangle.setOpacity(0);
 		}
@@ -616,11 +616,11 @@ public class TodayOverviewController {
 		}
 
 	/**
-	 * get total number of deadline and floating tasks in an ArrayList<ArrayList<Task>> from MainLogic
+	 * get total number of deadline and event tasks in an ArrayList<ArrayList<Task>> from MainLogic
 	 * @param array
 	 * @return
 	 */
-	private int getNoOfDAndFTasks(ArrayList<ArrayList<Task>> array) {
+	private int getNoOfDAndETasks(ArrayList<ArrayList<Task>> array) {
 		int counter=0;
 		for (int i = 0; i < array.size(); i++) {
 			if(i != MAIN_LOGIC_FLOATING)
