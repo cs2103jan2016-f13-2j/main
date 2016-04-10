@@ -126,6 +126,11 @@
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delete all &lt;TaskType&gt;&lt;TaskNumber&gt;">
+                     <font>
+                        <Font name="Papyrus" size="12.0" />
+                     </font>
+                  </Text>
                </children>
             </VBox>
             <VBox prefHeight="52.0" prefWidth="344.0">
@@ -136,10 +141,16 @@
                         <Font name="Papyrus" size="12.0" />
                      </font>
                   </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit all &lt;TaskType&gt;&lt;TaskNumber&gt; -&lt;TaskColumn&gt; &lt;NewInput&gt;">
+                     <font>
+                        <Font name="Papyrus" size="12.0" />
+                     </font>
+                  </Text>
                </children>
             </VBox>
             <VBox prefHeight="52.0" prefWidth="206.0">
                <children>
+                  <VBox prefHeight="52.0" prefWidth="192.0" />
                   <Label text="Searching for a task" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search &lt;Content&gt;">
                      <font>
