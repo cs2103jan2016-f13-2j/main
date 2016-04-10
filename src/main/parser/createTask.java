@@ -377,7 +377,11 @@ public class createTask {
 			if (timeInfo.toLowerCase().contains("am")) {
 				String h[] = timeInfo.toLowerCase().split("am");
 				if(h[0].length()<=2){
-					time.setHour(Integer.parseInt(h[0]));
+					int hour = Integer.parseInt(h[0]);
+					if (hour == 12) {
+						hour = 0;
+					}
+					time.setHour(hour);
 					time.setMinute(0);
 				} else {
 					handleDiffTimeFormatPart1(h[0],time);
@@ -385,7 +389,11 @@ public class createTask {
 			} else {
 				String h[] = timeInfo.toLowerCase().split("pm");
 				if(h[0].length()<=2){
-					time.setHour(Integer.parseInt(h[0])+12);
+					int hour = Integer.parseInt(h[0]) + 12;
+					if (hour == 24) {
+						hour = 12;
+					}
+					time.setHour(hour);
 					time.setMinute(0);
 				} else {
 					handleDiffTimeFormatPart1(h[0],time);

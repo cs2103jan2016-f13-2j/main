@@ -123,6 +123,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
+        	e.printStackTrace();
         	logger.log(Level.INFO, "UI TaskOverview initialization Failed.");
         }
     }
