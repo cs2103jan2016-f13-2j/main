@@ -232,7 +232,7 @@ public class MainLogic {
 	 * copyList(): new instance of storage taskList
 	 */
 	private static void homeCommand() {
-		displayList = copyList();
+		displayList = storage.getTaskList();
 	}
 	
 	/**
@@ -478,19 +478,6 @@ public class MainLogic {
 					}
 				}
 			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Creates a new duplicated instance of the taskList from Storage
-	 * @return ArrayList<Task> of Tasks duplicated from Storage
-	 */
-	private static ArrayList<Task> copyList() {
-		ArrayList<Task> list = new ArrayList<Task>();
-		for (int i=0; i<storage.getTaskList().size(); i++) {
-			list.add(storage.getTaskList().get(i));
 		}
 
 		return list;

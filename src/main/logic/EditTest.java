@@ -12,11 +12,12 @@ import main.resources.UserInput;
 import main.storage.Storage;
 
 //@@author A0125255L
-public class AddTest {
-	
+public class EditTest {
+
 	UserInput userInput;
 	Command command;
 	ArrayList<Task> taskList;
+	ArrayList<Integer> editList;
 	Storage storage;
 	Task task;
 	
@@ -26,6 +27,7 @@ public class AddTest {
 	@Test
 	public void test() {
 		taskList = new ArrayList<Task>();
+		editList = new ArrayList<Integer>();
 		file = new File(FILE_NAME);
 		
 		if (file.exists()) {
@@ -35,37 +37,31 @@ public class AddTest {
 		Storage.setFileName(FILE_NAME);
 		storage = Storage.getInstance();	
 		
-		
-		//Adding floating task "test1" to the taskList
-		task = new Task("floating task", "test1", 1);
-		userInput = new UserInput("add test1");
-		userInput.setTask(task);
-		command = new Add(userInput);
-		command.execute();
-		taskList.add(task);
-		assertEquals(taskList, storage.getTaskList());
-		
-		//Adding deadline task "test2" to the taskList
-		task = new Task("deadline task", "test2", 2);
+		//Adding deadline task "test1" to the taskList
+		task = new Task("deadline task", "test1", 2);
 		userInput = new UserInput("add test2");
 		userInput.setTask(task);
 		command = new Add(userInput);
 		command.execute();
 		taskList.add(task);
-		assertEquals(taskList, storage.getTaskList());
 		
-		//Adding event task "test3" to the taskList
-		task = new Task("event task", "test3", 3);
-		userInput = new UserInput("add test3");
-		userInput.setTask(task);
-		command = new Add(userInput);
+		//Edit location of "test1" from the taskList
+		userInput = new UserInput("edit d1");
+		userInput.setLocation("location1");
+		editList.add(1);	//task number
+		editList.add(6); 	//location tag
+		System.out.println("editlist "+editList.size());
+		userInput.setEdit(editList);
+		userInput.setTaskToEdit(task);
+		MainLogic.setDisplayList(new ArrayList<Task>());
+		command = new Edit(userInput);
 		command.execute();
-		taskList.add(task);
+		taskList = new ArrayList<Task>();
+		taskList.add(userInput.getTask());
 		assertEquals(taskList, storage.getTaskList());
-		
+			
 		if (file.exists()) {
 			file.delete();
 		}
 	}
-
 }

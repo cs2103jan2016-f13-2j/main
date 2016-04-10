@@ -55,14 +55,14 @@ public class Add implements Command {
 		taskList = storage.getTaskList();
 		Task task = userInput.getTask();
 		if (task.isRecurring()) {
-			task.setHead(task);
-			Task newTask = Task.duplicateTask(task);
-			recurList.add(newTask);
-			taskList.add(newTask);
 			if (task.getRecurTime() <= 0) {
 				feedback.setMessage(MSG_FAIL_INVALID_RECUR_FREQ);
 				return;
 			}
+			task.setHead(task);
+			Task newTask = Task.duplicateTask(task);
+			recurList.add(newTask);
+			taskList.add(newTask);
 			task.setRecurTime(task.getRecurTime() - 1);
 			Calendar calStart = Calendar.getInstance();
 			Calendar calEnd = Calendar.getInstance();
