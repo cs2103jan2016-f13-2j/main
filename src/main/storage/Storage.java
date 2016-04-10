@@ -147,7 +147,21 @@ public class Storage {
 		return true;
 	}
 
-	//===== Protected methods =====
+	/**
+	 * === For testing purposes ===
+	 * 
+	 * Sets the FILE_NAME to the test file path.
+	 * @param string : The file path of the test file.
+	 */
+	public static void setFileName(String fileName) {
+		FILE_NAME = fileName;
+	}
+
+
+	//===== Private methods =====
+
+
+
 
 	/**
 	 * Initialises the class variables.
@@ -156,21 +170,6 @@ public class Storage {
 		feedback = Feedback.getInstance();
 		taskList = new ArrayList<Task>();
 	}
-
-	/**
-	 * === For testing purposes ===
-	 * 
-	 * Sets the FILE_NAME to the test file path.
-	 * @param string : The file path of the test file.
-	 */
-	protected static void setFileName(String fileName) {
-		FILE_NAME = fileName;
-	}
-
-
-	//===== Private methods =====
-
-
 
 	/**
 	 * Retrieves the file object and creates one if it doesn't exist.
