@@ -71,12 +71,11 @@ public class MainLogic {
 			createCommandObject();
 			executeCommand();
 			updateTaskList();
+			logger.log(Level.INFO, "MainLogic END");
 		} catch (Exception e) {
 			logger.log(Level.WARNING, "MainLogic ERROR");
 			success = false;
-			e.printStackTrace();
 		}
-		logger.log(Level.INFO, "MainLogic END");
 	}
 
 	//-----Private methods-----
@@ -95,54 +94,40 @@ public class MainLogic {
 		
 		switch (getCommand()) {
 		case "add": {
-			command = new Add(userInput);
-			commandList.push(command);
-			clearUndoStack();
-			displayList = storage.getTaskList();		
+			addCommand();		
 			break;
 		}
 		case "delete": {
-			userInput.setTaskToDelete(findDeleteTask());
-			command = new Delete(userInput);
-			commandList.push(command);
-			clearUndoStack();
+			deleteCommand();
 			break;
 		}
 		case "edit": {
-			userInput.setTaskToEdit(findEditTask());
-			command = new Edit(userInput);
-			commandList.push(command);
-			clearUndoStack();
+			editCommand();
 			break;
 		}
 
 		case "display": {
-			userInput.setSortType(sortType);
-			command = new Display(userInput);
+			displayCommand();
 			break;
 		}
 
 		case "sort": {
-			command = new Sort(userInput);
-			sortType = userInput.getSortType();
+			sortCommand();
 			break;
 		}
 
 		case "search": {
-			command = new Search(userInput);
+			searchCommand();
 			break;
 		}
 
 		case "recurring": {
-			command = new Add(userInput);
-			commandList.push(command);
-			clearUndoStack();
-			displayList = storage.getTaskList();
+			addCommand();
 			break;
 		}
 
 		case "home": {
-			displayList = copyList();
+			homeCommand();
 			break;
 		}
 
@@ -157,40 +142,159 @@ public class MainLogic {
 		}
 
 		case "import": {
-			storage.importFile(userInput.getPath());
-			displayList = storage.getTaskList();
+			importCommand();
 			break;
 		}
 
 		case "export": {
-			storage.exportFile(userInput.getPath());
+			exportCommand();
 			break;
 		}
 
 		case "complete": {
-			userInput.setTaskToDelete(completeTask());
-			command = new Complete(userInput);
-			commandList.push(command);
-			clearUndoStack();
-			displayList = storage.getTaskList();
+			completeCommand();
 			break;
 		}
 
 		case "uncomplete": {
-			userInput.setTaskToDelete(completeTask());
-			command = new Complete(userInput);
-			commandList.push(command);
-			clearUndoStack();
-			displayList = storage.getTaskList();
+			completeCommand();
 			break;
 		}
 
 		default: {
-			userInput.setSearchTerm(userInput.getCommand());
-			command = new Search(userInput);
+			defaultSearch();
 			break;
 		}
 		}
+	}
+	
+	/**
+	 * Creates the "Add" command object
+	 * Push the Object to the commandList
+	 */
+	private static void addCommand() {
+		command = new Add(userInput);
+		commandList.push(command);
+		clearUndoStack();
+		displayList = storage.getTaskList();
+	}
+	
+	/**
+	 * Creates the "Delete" command object
+	 * Push the Object to the commandList
+	 */
+	private static void deleteCommand() {
+		userInput.setTaskToDelete(findDeleteTask());
+		command = new Delete(userInput);
+		commandList.push(command);
+		clearUndoStack();
+	}
+
+	/**
+	 * Creates the "Edit" command object
+	 * Push the Object to the commandList
+	 */
+	private static void editCommand() {
+		userInput.setTaskToEdit(findEditTask());
+		command = new Edit(userInput);
+		commandList.push(command);
+		clearUndoStack();
+	}
+
+	/**
+	 * Creates the "Display" command object
+	 * Sets the display sort type to be the current sort structure
+	 */
+	private static void displayCommand() {
+		userInput.setSortType(sortType);
+		command = new Display(userInput);
+	}
+
+	/**
+	 * Creates the "Sort" command object
+	 * Sets the sortType to the new sort structure
+	 */
+	private static void sortCommand() {
+		command = new Sort(userInput);
+		sortType = userInput.getSortType();
+	}
+
+
+	/**
+	 * Creates the "Search" command object
+	 */
+	private static void searchCommand() {
+		command = new Search(userInput);
+	}
+
+	/**
+	 * Sets the displayList to the default storage taskList
+	 * copyList(): new instance of storage taskList
+	 */
+	private static void homeCommand() {
+		displayList = storage.getTaskList();
+	}
+	
+	/**
+	 * Undo the last executed Command object
+	 * Removes the Object from the commandList and pushes the object to the
+	 * undoedCommandList for redoing purposes
+	 */
+	private static void undoCommand() {
+		if (!commandList.empty()) {
+			Command command = commandList.pop();
+			undoedCommandList.push(command);
+			command.undo();
+		}
+	}
+
+	/**
+	 * Redo the last undone Command object
+	 * Removes the Object from the undoedCommandList and pushes the object to 
+	 * the commandList for undoing purposes
+	 */
+	private static void redoCommand() {
+		if (!undoedCommandList.empty()) {
+			Command command = undoedCommandList.pop();
+			commandList.push(command);
+			command.redo();
+		}
+	}
+
+	/**
+	 * Imports the file through the file path given
+	 */
+	private static void importCommand() {
+		storage.importFile(userInput.getPath());
+		displayList = storage.getTaskList();
+	}
+
+	/**
+	 * Exports the file through the file path given
+	 */
+	private static void exportCommand() {
+		storage.exportFile(userInput.getPath());
+	}
+
+	/**
+	 * Creates the "Complete" command object
+	 * Push the Object to the commandList
+	 */
+	private static void completeCommand() {
+		userInput.setTaskToDelete(completeTask());
+		command = new Complete(userInput);
+		commandList.push(command);
+		clearUndoStack();
+		displayList = storage.getTaskList();
+	}
+
+	/**
+	 * Sets the default command to be search term
+	 * Creates the "Search" command object
+	 */
+	private static void defaultSearch() {
+		userInput.setSearchTerm(userInput.getCommand());
+		searchCommand();
 	}
 
 	//@@author A0124711U
@@ -294,38 +398,12 @@ public class MainLogic {
 	private static String getCommand() {
 		return Shortcuts.shortcuts(userInput.getCommand().toLowerCase());
 	}
-
-	/**
-	 * Undo the last executed Command object
-	 * Removes the Object from the commandList and pushes the object to the
-	 * undoedCommandList for redoing purposes
-	 */
-	private static void undoCommand() {
-		if (!commandList.empty()) {
-			Command command = commandList.pop();
-			undoedCommandList.push(command);
-			command.undo();
-		}
-	}
-
+	
 	/**
 	 * Clears the undo Command stack
 	 */
 	private static void clearUndoStack() {
 		undoedCommandList = new Stack<Command>();
-	}
-
-	/**
-	 * Redo the last undone Command object
-	 * Removes the Object from the undoedCommandList and pushes the object to 
-	 * the commandList for undoing purposes
-	 */
-	private static void redoCommand() {
-		if (!undoedCommandList.empty()) {
-			Command command = undoedCommandList.pop();
-			commandList.push(command);
-			command.redo();
-		}
 	}
 	
 	/**
@@ -400,19 +478,6 @@ public class MainLogic {
 					}
 				}
 			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Creates a new duplicated instance of the taskList from Storage
-	 * @return ArrayList<Task> of Tasks duplicated from Storage
-	 */
-	private static ArrayList<Task> copyList() {
-		ArrayList<Task> list = new ArrayList<Task>();
-		for (int i=0; i<storage.getTaskList().size(); i++) {
-			list.add(storage.getTaskList().get(i));
 		}
 
 		return list;
@@ -542,43 +607,69 @@ public class MainLogic {
 		setCurrentTime();
 		
 		for (int i=0; i<list.size(); i++) {
-			Task task = list.get(i);
-			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(currentDate) < 0) {
-					task.setExpired(true);
-			}
-
-			else if (task.getTaskStartDate() != null &&
-					task.getTaskStartDate().compareTo(currentDate) == 0 && 
-					task.getTaskStartTime() != null && 
-					task.getTaskStartTime().compareTo(currentTime) < 0) {
-					task.setExpired(true);
-			}
-			
-			else {
-				task.setExpired(false);
-			}
-			
-			switch (task.getTaskType()) {
-			case 1: {	//event
-				eventList.add(task);
-				break;
-			}
-			case 2: {	//floating
-				floatList.add(task);
-				break;
-			}
-			case 4: {	//deadline
-				deadlineList.add(task);
-				break;
-			}
-			}
+			Task task = checkExpired(list, i);
+			filterTask(eventList, floatList, deadlineList, task);
 		}
 
+		createList(newList, eventList, floatList, deadlineList);
+		return newList;
+	}
+
+	/**
+	 * Creates the list containing: Deadline, Floating, Event
+	 * @param newList: List to be created
+	 */
+	private static void createList(ArrayList<ArrayList<Task>> newList, ArrayList<Task> eventList,
+			ArrayList<Task> floatList, ArrayList<Task> deadlineList) {
 		newList.add(eventList);
 		newList.add(floatList);
 		newList.add(deadlineList);
 		storage.saveFile();
-		return newList;
+	}
+
+	/**
+	 * Filter the task into the respective Deadline, Floating, Event lists
+	 */
+	private static void filterTask(ArrayList<Task> eventList, ArrayList<Task> floatList, ArrayList<Task> deadlineList,
+			Task task) {
+		switch (task.getTaskType()) {
+		case 1: {	//event
+			eventList.add(task);
+			break;
+		}
+		case 2: {	//floating
+			floatList.add(task);
+			break;
+		}
+		case 4: {	//deadline
+			deadlineList.add(task);
+			break;
+		}
+		}
+	}
+
+	/**
+	 * Check whether the task is expired
+	 * @param list: taskList from Storage
+	 * @return Task object after determining whether to toggle expired variable
+	 */
+	private static Task checkExpired(ArrayList<Task> list, int i) {
+		Task task = list.get(i);
+		if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(currentDate) < 0) {
+				task.setExpired(true);
+		}
+
+		else if (task.getTaskStartDate() != null &&
+				task.getTaskStartDate().compareTo(currentDate) == 0 && 
+				task.getTaskStartTime() != null && 
+				task.getTaskStartTime().compareTo(currentTime) < 0) {
+				task.setExpired(true);
+		}
+		
+		else {
+			task.setExpired(false);
+		}
+		return task;
 	}
 
 	//Lists
