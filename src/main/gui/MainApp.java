@@ -28,13 +28,13 @@ public class MainApp extends Application {
 	private static final String WINDOW_TITLE = "Trekker";
 	
 	//Layout file paths
-	private static final String FXML_ROOT_LAYOUT = "resources/RootLayout.fxml";
-	private static final String FXML_TASK_OVERVIEW = "resources/TaskOverview.fxml";
-	private static final String FXML_HELP_OVERVIEW = "resources/HelpOverview.fxml";
-	private static final String FXML_COMPLETE_OVERVIEW = "resources/CompleteOverview.fxml";
-	private static final String FXML_TODAY_OVERVIEW = "resources/TodayOverview.fxml";
-	private static final String FXML_UPCOMING_OVERVIEW = "resources/UpcomingOverview.fxml";
-	private static final String FXML_OVERDUE_OVERVIEW = "resources/OverdueOverview.fxml";
+	private static final String FXML_ROOT_LAYOUT = "view/RootLayout.fxml";
+	private static final String FXML_TASK_OVERVIEW = "view/TaskOverview.fxml";
+	private static final String FXML_HELP_OVERVIEW = "view/HelpOverview.fxml";
+	private static final String FXML_COMPLETE_OVERVIEW = "view/CompleteOverview.fxml";
+	private static final String FXML_TODAY_OVERVIEW = "view/TodayOverview.fxml";
+	private static final String FXML_UPCOMING_OVERVIEW = "view/UpcomingOverview.fxml";
+	private static final String FXML_OVERDUE_OVERVIEW = "view/OverdueOverview.fxml";
 	
 
     private Stage primaryStage;
@@ -100,6 +100,7 @@ public class MainApp extends Application {
             primaryStage.show();
         } catch (IOException e) {
         	logger.log(Level.INFO, "UI Root Initialization failed.");
+        	e.printStackTrace();
         }
     }
 
