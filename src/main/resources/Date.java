@@ -4,65 +4,101 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-//@@author A0125255L
+//@@author A0124711U
 
 public class Date implements Comparable<Date>, Serializable {
 
-	int day;
-	int month;
-	int year;
-	
+	private int day;
+	private int month;
+	private int year;
+
 	private static Logger logger = Logger.getLogger("Date");
 
-	public Date(int day, int month, int year) {
-		this.day = day;
-		this.month = month;
-		if (year < 2000) {
-			year += 2000;
-		}
-		this.year = year;
-	}
-
+	/**
+	 * Initialises the class variables to the defaults of -1.
+	 */
 	public Date() {
 		this(-1, -1, -1);
 	}
 
+	/**
+	 * Initialises the class variables with the given input.
+	 * @param day : The integer day.
+	 * @param month : The integer month.
+	 * @param year : The integer year.
+	 */
+	public Date(int day, int month, int year) {
+		if (year < 2000) {
+			year += 2000;
+		}
+
+		this.day = day;
+		this.month = month;
+		this.year = year;
+	}
+
+	//===== Public methods =====
+
+	/**
+	 * Retrieves the day integer.
+	 * @return the day integer.
+	 */
 	public int getDay() {
 		return day;
 	}
 
+	/**
+	 * Retrieves the month integer.
+	 * @return the day integer.
+	 */
 	public int getMonth() {
 		return month;
 	}
 
+	/**
+	 * Retrieves the year integer.
+	 * @return the year integer.
+	 */
 	public int getYear() {
 		return year;
 	}
 
-	public Date getDate() {
-		return this;
-	}
-
+	/**
+	 * Retrieves the date in DD-MM-YYYY string format.
+	 * @return the date string.
+	 */
 	public String getDateString() {
-		return day+"-"+month+"-"+year;
+		return day + "-" + month + "-" + year;
 	}
 
-	public void setDay(int newDay) {
-		day = newDay;
+	/**
+	 * Sets the day variable.
+	 * @param day : The day integer.
+	 */
+	public void setDay(int day) {
+		this.day = day;
 	}
 
-	public void setMonth(int newMonth) {
-		month = newMonth;
+	/**
+	 * Sets the month variable.
+	 * @param month : The month integer.
+	 */
+	public void setMonth(int month) {
+		this.month = month;
 	}
 
-	public void setYear(int newYear) {
-		if (newYear < 2000) {
-			newYear += 2000;
+	/**
+	 * Sets the year variable.
+	 * @param year : The year integer.
+	 */
+	public void setYear(int year) {
+		if (year < 2000) {
+			year += 2000;
 		}
-		this.year = newYear;
+
+		this.year = year;
 	}
 
-	//@@author A0124711U
 	/**
 	 * Checks whether the date is a valid calendar date.
 	 * @return true if date is valid calendar date, false otherwise.
@@ -70,13 +106,53 @@ public class Date implements Comparable<Date>, Serializable {
 	public boolean isValid() {
 		if (isValidYear() && isValidMonth()
 				&& isValidDay()) {
-			
+
 			return true;
 		}
 
 		return false;
 	}
+
+	/**
+	 * Custom comparator for dates.
+	 * @param date : The date to compare with.
+	 */
+	@Override
+	public int compareTo(Date date) {
+		if (year != date.getYear()) {
+			return year - date.getYear();
+		}
+		else if (month != date.getMonth()) {
+			return month - date.getMonth();
+		}
+		else {
+			return day - date.getDay();
+		}
+	}
+
+	/**
+	 * Compares if two dates are equal.
+	 * @param date : The date to compare with.
+	 * @return True if equal, false otherwise.
+	 */
+	public boolean equals(Date date){
+		if (date == null) {
+			return false;
+		}
+		else {
+			if(date instanceof Date) {
+				Date obj = (Date) date;
+				return year == obj.getYear() && 
+						month == obj.getMonth() && 
+						day == obj.getDay();
+			}
+			
+			return false;
+		}
+	}
 	
+	//===== Private methods =====
+
 	/**
 	 * Checks if the year is a valid integer.
 	 * @return true if valid integer, false otherwise.
@@ -88,7 +164,7 @@ public class Date implements Comparable<Date>, Serializable {
 
 		return false;
 	}
-	
+
 	/**
 	 * Checks if the month is within the valid range.
 	 * @return true if month is valid, false otherwise.
@@ -112,14 +188,14 @@ public class Date implements Comparable<Date>, Serializable {
 
 		return false;
 	}
-	
+
 	/**
 	 * Retrieves the maximum number of days in a month, given a valid month.
 	 * @return int : Maximum number of days in the month.
 	 */
 	private int maxDayOfMonth() {
 		assert(isValidMonth());
-		
+
 		switch (month) {
 		case 1:
 			return 31;
@@ -165,7 +241,7 @@ public class Date implements Comparable<Date>, Serializable {
 		default:
 			logger.log(Level.SEVERE, "Invalid month entered in maxMonthOfDay()");
 		}
-		
+
 		return -1;
 	}
 
@@ -175,42 +251,11 @@ public class Date implements Comparable<Date>, Serializable {
 	 */
 	private boolean isLeapYear() {
 		assert(isValidYear());
-		
+
 		if (year % 4 != 0 || year % 100 == 0 && year % 400 != 0) {
 			return false;
 		}
-		
+
 		return true;
-	}
-
-	//@@author A0125255L
-	@Override
-	public int compareTo(Date date) {
-		if (this.year != date.getYear()) {
-			return this.year - date.getYear();
-		}
-		else if (this.month != date.getMonth()) {
-			return this.month - date.getMonth();
-		}
-
-		else {
-			return this.day - date.getDay();
-		}
-	}
-
-	public boolean equals(Date date){
-		if (date == null) {
-			return false;
-		}
-
-		else {
-			if(date instanceof Date) {
-				Date obj = (Date) date;
-				return this.year == obj.getYear() && 
-						this.month == obj.getMonth() && 
-						this.day == obj.getDay();
-			}
-			return false;
-		}
 	}
 }

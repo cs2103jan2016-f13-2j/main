@@ -2,60 +2,86 @@ package main.resources;
 
 import java.io.Serializable;
 
-//@@author A0125255L
+//@@author A0124711U
 
 public class Time implements Comparable<Time>, Serializable {
 
+	private int hour;
+	private int minute;
+	
 	/**
-	 * 
+	 * Initialises the class variables to the defaults of -1.
 	 */
-	private static final long serialVersionUID = 1L;
-	int hour;
-	int minute;
+	public Time() {
+		this(-1, -1);
+	}
 
+	/**
+	 * Initialises the class variables with the given input.
+	 * @param hour
+	 * @param minute
+	 */
 	public Time(int hour, int minute) {
 		this.hour = hour;
 		this.minute = minute;
 	}
 
-	public Time() {
-		this(-1, -1);
-	}
-
+	//===== Public methods =====
+	
+	/**
+	 * Retrieves the hour integer.
+	 * @return the hour integer.
+	 */
 	public int getHour() {
 		return hour;
 	}
 
+	/**
+	 * Retrieves the minute integer.
+	 * @return the minute integer.
+	 */
 	public int getMinute() {
 		return minute;
 	}
 
-	public Time getTime() {
-		return this;
-	}
-
+	/**
+	 * Retrieves the time in HH:MM string format. 
+	 * @return the time string.
+	 */
 	public String getTimeString() {
 		if (minute < 10) {
-			return hour+":0"+minute;
+			return hour + ":0" + minute;
 		}
 
-		return hour+":"+minute;
+		return hour + ":" + minute;
 	}
 
-	public void setHour(int newHour) {
-		hour = newHour;
+	/**
+	 * Sets the hour variable.
+	 * @param hour : The hour integer.
+	 */
+	public void setHour(int hour) {
+		this.hour = hour;
 	}
 
-	public void setMinute(int newMinute) {
-		minute = newMinute;
+	/**
+	 * Sets the minute variable.
+	 * @param minute : The minute integer.
+	 */
+	public void setMinute(int minute) {
+		this.minute = minute;
 	}
 
-	public void setTime(int newHour, int newMinute) {
-		hour = newHour;
-		minute = newMinute;
+	/**
+	 * Sets the time variable.
+	 * @param hour : The hour integer.
+	 * @param minute : The minute integer.
+	 */
+	public void setTime(int hour, int minute) {
+		this.hour = hour;
+		this.minute = minute;
 	}
 
-	//@@author A0124711U
 	/**
 	 * Checks whether the hour and minute are valid values.
 	 * @return true if the time is valid, false otherwise.
@@ -67,6 +93,44 @@ public class Time implements Comparable<Time>, Serializable {
 
 		return false;
 	}
+	
+	/**
+	 * Custom comparator for time.
+	 * @param time : The time to compare with.
+	 */
+	@Override
+	public int compareTo(Time time) {
+		if (this.hour != time.getHour()) {
+			return this.hour - time.getHour();
+		}
+
+		else {
+			return this.minute - time.getMinute();
+		}
+	}
+
+	/**
+	 * Compares if two times are equal.
+	 * @param date : The time to compare with.
+	 * @return True if equal, false otherwise.
+	 */
+	public boolean equals(Time time){
+		if (time == null) {
+			return false;
+		}
+
+		else {
+			if(time instanceof Time) {
+				Time obj = (Time) time;
+				return this.hour == obj.getHour() && 
+						this.minute == obj.getMinute();
+			}
+
+			return false;
+		}
+	}
+	
+	//===== Private methods =====
 
 	/**
 	 * Checks if the hour is within the valid range.
@@ -90,33 +154,5 @@ public class Time implements Comparable<Time>, Serializable {
 		}
 
 		return false;
-	}
-
-	//@@author A0125255L
-	@Override
-	public int compareTo(Time time) {
-		if (this.hour != time.getHour()) {
-			return this.hour - time.getHour();
-		}
-
-		else {
-			return this.minute - time.getMinute();
-		}
-	}
-
-	public boolean equals(Time time){
-		if (time == null) {
-			return false;
-		}
-
-		else {
-			if(time instanceof Time) {
-				Time obj = (Time) time;
-				return this.hour == obj.getHour() && 
-						this.minute == obj.getMinute();
-			}
-
-			return false;
-		}
 	}
 }
