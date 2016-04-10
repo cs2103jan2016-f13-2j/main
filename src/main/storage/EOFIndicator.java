@@ -8,6 +8,6 @@ import main.resources.Task;
  * Empty class that is appended to the task file
  * to detect end of file when reading from the file.
  */
-public class EofIndicator implements Serializable {
+public class EOFIndicator implements Serializable {
 	//empty
 }
