@@ -16,7 +16,7 @@ public class Complete implements Command {
 	private static final String MSG_SUCCESS_UNCOMPLETE = "Task uncompleted.";
 	private static final String MSG_FAIL_TASK_COMPLETED = "Error: Task is already completed.";
 	private static final String MSG_FAIL_TASK_UNCOMPLETED = "Error: Task is not completed.";
-	private static final String MSG_FAIL_TASK_OOB = "Error: The specified task could not be found.;"
+	private static final String MSG_FAIL_INDEX_OOB = "Error: The specified task could not be found.;";
 	
 	private UserInput userInput;
 	private static Storage storage;
