@@ -14,10 +14,12 @@ public class Complete implements Command {
 	//Feedback Strings
 	private static final String MSG_SUCCESS_COMPLETE = "Task completed.";
 	private static final String MSG_SUCCESS_UNCOMPLETE = "Task uncompleted.";
+	private static final String MSG_SUCCESS_UNDO = "Undid previous command.";
+	private static final String MSG_SUCCESS_REDO = "Redid previous command.";
 	private static final String MSG_FAIL_TASK_COMPLETED = "Error: Task is already completed.";
 	private static final String MSG_FAIL_TASK_UNCOMPLETED = "Error: Task is not completed.";
 	private static final String MSG_FAIL_INDEX_OOB = "Error: The specified task could not be found.;";
-	
+
 	private UserInput userInput;
 	private static Storage storage;
 	private static Feedback feedback;
@@ -35,13 +37,15 @@ public class Complete implements Command {
 	@Override
 	public void execute() {
 		boolean done = false;
-		
+
 		logger.log(Level.INFO, "Command COMPLETE");
 		taskList = storage.getTaskList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task taskToMark = userInput.getTasksToDelete().get(i);
 			for (Task t: taskList) {
+				System.out.println("Task not found.");
 				if (taskToMark.equals(t)) {
+					System.out.println("Task found!");
 					if (userInput.getComplete() == COMPLETE) {
 						if (t.isComplete() == false) {
 							t.setComplete(true);
@@ -67,10 +71,10 @@ public class Complete implements Command {
 						}
 					}
 				}
-				
-				if (!done) {
-					feedback.setMessage(MSG_FAIL_INDEX_OOB);
-				}
+			}
+			
+			if (!done) {
+				feedback.setMessage(MSG_FAIL_INDEX_OOB);
 			}
 		}
 	}
@@ -95,6 +99,8 @@ public class Complete implements Command {
 				}
 			}
 		}
+		
+		feedback.setMessage(MSG_SUCCESS_UNDO);
 
 	}
 
@@ -117,6 +123,9 @@ public class Complete implements Command {
 				}
 			}
 		}
+storage.saveFile();
+		
+		feedback.setMessage(MSG_SUCCESS_REDO);
 	}
 
 }
