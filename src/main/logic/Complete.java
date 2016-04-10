@@ -9,6 +9,8 @@ import main.resources.Task;
 import main.resources.UserInput;
 import main.storage.Storage;
 
+//@@author A0125255L
+
 public class Complete implements Command {
 
 	//Feedback Strings
@@ -28,12 +30,20 @@ public class Complete implements Command {
 	private static Logger logger = Logger.getLogger("Complete");
 	private static boolean COMPLETE = true;
 
+	/**
+	 * Constructs a Complete command
+	 * @param userInput: userInput instance from MainLogic
+	 */
 	public Complete(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
 		feedback = Feedback.getInstance();
 		taskList = new ArrayList<Task>();
 	}
+	
+	/**
+	 * Executes the command
+	 */
 	@Override
 	public void execute() {
 		boolean done = false;
@@ -42,6 +52,7 @@ public class Complete implements Command {
 		taskList = storage.getTaskList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
 			Task taskToMark = userInput.getTasksToDelete().get(i);
+			System.out.println(taskToMark.getTaskDetails());
 			for (Task t: taskList) {
 				System.out.println("Task not found.");
 				if (taskToMark.equals(t)) {
@@ -79,6 +90,9 @@ public class Complete implements Command {
 		}
 	}
 
+	/**
+	 * Undo the command
+	 */
 	@Override
 	public void undo() {
 		logger.log(Level.INFO, "Command COMPLETE UNDO");
@@ -104,12 +118,16 @@ public class Complete implements Command {
 
 	}
 
+	/**
+	 * Redo the command
+	 */
 	@Override
 	public void redo() {
 		logger.log(Level.INFO, "Command COMPLETE REDO");
 		taskList = storage.getTaskList();
 		for (int i=0; i<userInput.getTasksToDelete().size(); i++) {
-			Task taskToMark = userInput.getTasksToDelete().get(i);				for (Task t: taskList) {
+			Task taskToMark = userInput.getTasksToDelete().get(i);
+			for (Task t: taskList) {
 				if (taskToMark.equals(t)) {
 					if (userInput.getComplete() == COMPLETE) {
 						t.setComplete(true);
@@ -127,5 +145,4 @@ storage.saveFile();
 		
 		feedback.setMessage(MSG_SUCCESS_REDO);
 	}
-
 }

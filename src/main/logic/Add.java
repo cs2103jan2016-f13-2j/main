@@ -18,6 +18,7 @@ public class Add implements Command {
 	private static final String MSG_SUCCESS_ADD = "Added new %1$s task \"%2$s\".";
 	private static final String MSG_SUCCESS_UNDO = "Undid previous command.";
 	private static final String MSG_SUCCESS_REDO = "Redid previous command.";
+	private static final String MSG_FAIL_INVALID_RECUR_FREQ = "Error: Invalid recurring frequency entered.";
 	private static final String MSG_FAIL_FILE_SAVE = "Error: File could not be saved after add command.";
 	
 	private static final String TYPE_DEADLINE = "deadline";
@@ -33,6 +34,10 @@ public class Add implements Command {
 	
 	private static Logger logger = Logger.getLogger("Add");
 
+	/**
+	 * Constructs an Add command
+	 * @param userInput: userInput instance from MainLogic
+	 */
 	public Add(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
@@ -41,6 +46,9 @@ public class Add implements Command {
 		recurList = new ArrayList<Task>();
 	}
 
+	/**
+	 * Executes the command
+	 */
 	@Override
 	public void execute() {
 		logger.log(Level.INFO, "Command ADD");
@@ -51,6 +59,10 @@ public class Add implements Command {
 			Task newTask = Task.duplicateTask(task);
 			recurList.add(newTask);
 			taskList.add(newTask);
+			if (task.getRecurTime() <= 0) {
+				feedback.setMessage(MSG_FAIL_INVALID_RECUR_FREQ);
+				return;
+			}
 			task.setRecurTime(task.getRecurTime() - 1);
 			Calendar calStart = Calendar.getInstance();
 			Calendar calEnd = Calendar.getInstance();
@@ -143,6 +155,12 @@ public class Add implements Command {
 		}
 	}
 	
+	//@@author A0124711U
+		/**
+		 * Returns the type of task as a string description.
+		 * @param task : The task type to be checked.
+		 * @return The string description of the task type.
+		 */
 	private String getTaskTypeString() {
 		String type;
 		
@@ -171,6 +189,10 @@ public class Add implements Command {
 		return type;
 	}
 
+	//@@author A0125255L
+	/**
+	 * Undo the command
+	 */
 	@Override
 	public void undo() {
 		logger.log(Level.INFO, "Command UNDO ADD");
@@ -190,6 +212,9 @@ public class Add implements Command {
 		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
+	/**
+	 * Redo the command
+	 */
 	@Override
 	public void redo() {
 		logger.log(Level.INFO, "Command REDO ADD");
