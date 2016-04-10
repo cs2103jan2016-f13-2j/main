@@ -101,6 +101,7 @@ public class MainApp extends Application {
         } catch (IOException e) {
         	e.printStackTrace();
         	logger.log(Level.INFO, "UI Root Initialization failed.");
+        	e.printStackTrace();
         }
     }
 

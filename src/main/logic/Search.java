@@ -21,6 +21,10 @@ public class Search implements Command {
 	private static Feedback feedback;
 	private static Logger logger = Logger.getLogger("Search");
 
+	/**
+	 * Constructs a Search command
+	 * @param userInput: userInput instance from MainLogic
+	 */
 	public Search(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
@@ -28,6 +32,9 @@ public class Search implements Command {
 		new ArrayList<Task>();
 	}
 
+	/**
+	 * Execute the command
+	 */
 	@Override
 	public void execute() {
 		logger.log(Level.INFO, "Command SEARCH");

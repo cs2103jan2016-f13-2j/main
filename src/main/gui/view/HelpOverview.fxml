@@ -9,23 +9,23 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" styleClass="background" stylesheets="@../LightTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.HelpOverviewController">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" styleClass="background" stylesheets="@LightTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.view.HelpOverviewController">
    <children>
-      <TextField fx:id="commandText" layoutX="10.0" layoutY="550.0" onAction="#onEnter" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyPressed" prefHeight="37.0" prefWidth="745.0" stylesheets="@../LightTheme.css" />
+      <TextField fx:id="commandText" layoutX="10.0" layoutY="550.0" onAction="#onEnter" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyPressed" prefHeight="37.0" prefWidth="745.0" stylesheets="@LightTheme.css" />
       <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ffc41f" height="36.0" layoutX="1117.0" layoutY="6.0" onMouseClicked="#onClickedHelp" stroke="BLACK" strokeType="INSIDE" width="76.0" />
-      <Label layoutX="1121.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Help (F12)" />
+      <Label layoutX="1121.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Help (F12)" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="120.0" layoutY="6.0" onMouseClicked="#onClickedAllTask" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="245.0" layoutY="6.0" onMouseClicked="#onClickedToday" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="370.0" layoutY="6.0" onMouseClicked="#onClickedUpcoming" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="495.0" layoutY="6.0" onMouseClicked="#onClickedComplete" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="620.0" layoutY="6.0" onMouseClicked="#onClickedOverdue" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
-                  <Label layoutX="138.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="All Task (F1)" />
-                  <Label layoutX="379.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Upcoming (F3)" />
-                  <Label layoutX="502.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Completed (F4)" />
-                  <Label layoutX="635.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Overdue (F5)" />
-                  <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Today (F2)" />
+                  <Label layoutX="138.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="All Task (F1)" />
+                  <Label layoutX="379.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Upcoming (F3)" />
+                  <Label layoutX="502.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Completed (F4)" />
+                  <Label layoutX="635.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Overdue (F5)" />
+                  <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Today (F2)" />
       <Rectangle fx:id="overdueRectangle" arcHeight="50.0" arcWidth="50.0" fill="#d71717" height="19.0" layoutX="724.0" layoutY="5.0" mouseTransparent="true" onMouseClicked="#onClickedOverdue" stroke="BLACK" strokeType="INSIDE" width="26.0" />
-                  <Label fx:id="overdueCounter" alignment="CENTER" layoutX="721.0" layoutY="6.0" mouseTransparent="true" prefHeight="12.0" prefWidth="32.0" styleClass="label-counter" textAlignment="CENTER" />      <DialogPane layoutY="51.0" prefHeight="466.0" prefWidth="1200.0" styleClass="table-view" stylesheets="@../LightTheme.css" />
+                  <Label fx:id="overdueCounter" alignment="CENTER" layoutX="721.0" layoutY="6.0" mouseTransparent="true" prefHeight="12.0" prefWidth="32.0" styleClass="label-counter" textAlignment="CENTER" />      <DialogPane layoutY="51.0" prefHeight="466.0" prefWidth="1200.0" styleClass="table-view" stylesheets="@LightTheme.css" />
       <VBox layoutX="569.0" layoutY="220.0" prefHeight="165.0" prefWidth="132.0">
          <children>
             <Label text="Shortcuts" />

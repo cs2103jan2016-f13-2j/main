@@ -64,7 +64,7 @@ public class Date implements Comparable<Date>, Serializable {
 	}
 
 	/**
-	 * Retrieves the date string in DD-MM-YYYY format.
+	 * Retrieves the date in DD-MM-YYYY string format.
 	 * @return the date string.
 	 */
 	public String getDateString() {
@@ -89,7 +89,7 @@ public class Date implements Comparable<Date>, Serializable {
 
 	/**
 	 * Sets the year variable.
-	 * @param year : The year variable.
+	 * @param year : The year integer.
 	 */
 	public void setYear(int year) {
 		if (year < 2000) {

@@ -2,7 +2,6 @@ package main.logic;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,6 +30,10 @@ public class Sort implements Command {
 	private ArrayList<Task> taskList;
 	private static Logger logger = Logger.getLogger("Sort");
 
+	/**
+	 * Constructs a Sort command
+	 * @param userInput: userInput instance from MainLogic
+	 */
 	public Sort(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
@@ -38,6 +41,9 @@ public class Sort implements Command {
 		taskList = new ArrayList<Task>();
 	}
 
+	/**
+	 * Executes the command
+	 */
 	@Override
 	public void execute() {
 		logger.log(Level.INFO, "Command SORT");
@@ -81,6 +87,12 @@ public class Sort implements Command {
 		userInput.setTaskList(taskList);
 	}
 
+	//@@author A0124711U
+		/**
+		 * Returns the type of task as a string description.
+		 * @param task : The task type to be checked.
+		 * @return The string description of the task type.
+		 */
 	public String getSortCategoryString() {
 		String type = null;
 
@@ -111,6 +123,7 @@ public class Sort implements Command {
 		return type;
 	}
 
+	//@@author A0125255L
 	@Override
 	public void undo() {
 		// TODO Auto-generated method stub

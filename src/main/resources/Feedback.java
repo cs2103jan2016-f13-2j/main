@@ -27,7 +27,6 @@ public class Feedback {
 	 * @return the feedback message.
 	 */
 	public String getMessage() {
-		System.out.println("Getting message: " + message);
 		return message;
 	}
 	
@@ -46,7 +45,6 @@ public class Feedback {
 	public void setMessage(String message) {
 		if (this.message == null || message == null) {
 			this.message = message;
-			System.out.println("Current: " + this.message);
 		}
 	}
 
