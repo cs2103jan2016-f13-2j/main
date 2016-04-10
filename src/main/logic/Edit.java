@@ -272,10 +272,11 @@ public class Edit implements Command {
 			if (!displayList.equals(taskList)) {
 				displayList.remove(userInput.getTask());
 				displayList.add(userInput.getTaskToEdit());
-			}
-
-			feedback.setMessage(MSG_SUCCESS_UNDO);
+			}		
 		}
+		storage.saveFile();
+		
+		feedback.setMessage(MSG_SUCCESS_UNDO);
 	}
 
 	@Override
@@ -307,7 +308,10 @@ public class Edit implements Command {
 				displayList.add(userInput.getTask());
 			}
 
-			feedback.setMessage(MSG_SUCCESS_REDO);
+			
 		}
+		storage.saveFile();
+		
+		feedback.setMessage(MSG_SUCCESS_REDO);
 	}
 }
