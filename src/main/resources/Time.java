@@ -18,8 +18,8 @@ public class Time implements Comparable<Time>, Serializable {
 
 	/**
 	 * Initialises the class variables with the given input.
-	 * @param hour : the int hour.
-	 * @param minute : the int minute.
+	 * @param hour : the hour integer.
+	 * @param minute : the minute integer.
 	 */
 	public Time(int hour, int minute) {
 		this.hour = hour;
