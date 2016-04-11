@@ -698,7 +698,7 @@ public class CompleteOverviewController {
 
 	/**
 	 * get total number of deadline and event tasks in an list of list of tasks from MainLogic.
-	 * @param TotalList a list of list of tasks
+	 * @param list : a list of list of tasks
 	 * @return The number of deadline and event tasks
 	 */
 	private int getNoOfDAndETasks(ArrayList<ArrayList<Task>> list) {

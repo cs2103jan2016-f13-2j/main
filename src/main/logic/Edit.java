@@ -234,9 +234,10 @@ public class Edit implements Command {
 	//@@author A0124711U
 	/**
 	 * Checks if the dates in the tasks are valid and the end date is not earlier than the start date.
-	 * @param startDate :
-	 * @param startTime :
-	 * @param
+	 * @param startDate : the start date object.
+	 * @param startTime : the start time object.
+	 * @param endDate : the end date object.
+	 * @param endTime : the end time object.
 	 * @return true if dates are valid, false otherwise.
 	 */
 	private static boolean isValidDateAndTime(Date startDate, Time startTime, Date endDate, Time endTime) {
@@ -253,6 +254,10 @@ public class Edit implements Command {
 
 	/**
 	 * Checks if the end date/time is earlier than the start date/time.
+	 * @param startDate : the start date object.
+	 * @param startTime : the start time object.
+	 * @param endDate : the end date object.
+	 * @param endTime : the end time object.
 	 * @return true if the end date/time is earlier than start date/time, false otherwise.
 	 */
 	private static boolean isEndDateEarlierThanStartDate(Date startDate, Time startTime, Date endDate, Time endTime) {

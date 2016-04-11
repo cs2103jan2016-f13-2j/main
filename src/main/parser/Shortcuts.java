@@ -4,6 +4,11 @@ package main.parser;
 //@@author A0133926A
 public class Shortcuts {
 
+	/**
+	 * Parses the flexible command inputs
+	 * @param command: the raw input string
+	 * @return the standard format string.
+	 */
 	public static String shortcuts(String command) {
 		switch (command) {
 		// add task commands
@@ -59,6 +64,12 @@ public class Shortcuts {
 		}
 	}
 	
+	
+	/**
+	 * parses flexible date information 
+	 * @param dateInfo:date information
+	 * @return the standard date format string.
+	 */
 	public static String diffDateFormat(String dateInfo){
 		switch(dateInfo.toLowerCase()){
 		//set date as today
