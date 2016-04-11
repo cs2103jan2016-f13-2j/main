@@ -367,7 +367,9 @@ public class Parser {
 	 * @param command
 	 * @return integer which represents the corresponding command
 	 */
-	private static Integer getNumber(String command){
+	protected static Integer getNumber(String command){
+		feedback = Feedback.getInstance();
+		
 		int n = -1;
 		switch(command.toLowerCase()){
 			case "-de":
@@ -456,7 +458,7 @@ public class Parser {
 	 * @param n
 	 * @return the index number of the next command in the array list
 	 */
-	private static int findNextCommand(ArrayList<String> commands, int n){//for edit
+	protected static int findNextCommand(ArrayList<String> commands, int n){//for edit
 		int k = -1;
 		for(int i=n+1; i<commands.size(); i++){
 			if(commands.get(i).toLowerCase().contains("-st")||commands.get(i).toLowerCase().contains("-sd")||commands.get(i).toLowerCase().contains("-et")||commands.get(i).toLowerCase().contains("-ed")||commands.get(i).toLowerCase().contains("-p")||commands.get(i).toLowerCase().contains("-l")
@@ -475,7 +477,7 @@ public class Parser {
 	 * @param userInput
 	 * @param list
 	 */
-	private static void passDeletePart(ArrayList<String> commands, UserInput userInput, ArrayList<int[]> list){
+	protected static void passDeletePart(ArrayList<String> commands, UserInput userInput, ArrayList<int[]> list){
 		for(int i=1; i<commands.size(); i++){
 			int[] arr = new int[2];
 			arr[0] = deleteType(commands.get(i));
@@ -494,7 +496,7 @@ public class Parser {
 	 * @param list
 	 * @param start
 	 */
-	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list,int start){
+	protected static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list,int start){
 		int i = start;
 		while(i<commands.size()){
 			int n = getNumber(commands.get(i));
@@ -557,7 +559,7 @@ public class Parser {
 	 * @param input
 	 * @return String
 	 */
-	private final static String formatInputForValidParsing (String input) {
+	protected final static String formatInputForValidParsing (String input) {
 		return input.replaceAll("\\s+", WHITESPACE).trim();
 	}
 	/**
@@ -565,7 +567,7 @@ public class Parser {
 	 * @param input
 	 * @return true if it contains only one word
 	 */
-	private final static boolean onlyOneWord(String input) {
+	protected final static boolean onlyOneWord(String input) {
 		if (input.contains(WHITESPACE)) {
 			return false;
 		}
