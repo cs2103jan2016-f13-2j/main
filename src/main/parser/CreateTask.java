@@ -78,8 +78,8 @@ public class CreateTask {
 
 	/**
 	 * assign location,start time, start date, task details to deadline task
-	 * @param info
 	 * Sets the location for the deadline task
+	 * @param info
 	 * @param info : ArrayList containing each word of the user input.
 	 * @param taskName : string containing task name.
 	 * @param task : the Task object.

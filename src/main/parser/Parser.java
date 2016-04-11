@@ -167,8 +167,8 @@ public class Parser {
 	/**
 	 * deal with the uncomplete command, assign the "uncomplete" to command, and assign value to 
 	 * the delete the deleteNumber
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput: the userInput object.
+	 * @param inputCommand: the ArrayList containing the command.
 	 */
 	private static void setUserInputForUncomplete(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("uncomplete");
@@ -181,8 +181,8 @@ public class Parser {
 	/**
 	 * deal with the complete command, assign the "complete" to command, and assign value to 
 	 * the delete the deleteNumber
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput: the userInput object.
+	 * @param inputCommand: the ArrayList containing the command.
 	 */
 	private static void setUserInputForComplete(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("complete");
@@ -195,8 +195,8 @@ public class Parser {
 	/**
 	 * deal with the sort command, assign the "sort" to command, and assign value to 
 	 * the searchTerm, sortType
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput: the userInput object.
+	 * @param inputCommand: the ArrayList containing the command.
 	 */
 	private static void setUserInputForSort(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("sort");
@@ -208,8 +208,8 @@ public class Parser {
 	/**
 	 * deal with the search command, assign the "search" to command, and assign value to 
 	 * the serachTerm and taskList
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput: the userInput object.
+	 * @param inputCommand: the ArrayList containing the command.
 	 */
 	private static void setUserInputForSearch(UserInput userInput, ArrayList<String> inputCommand) {
 		String term = inputCommand.get(1);
@@ -221,8 +221,8 @@ public class Parser {
 	/**
 	 * deal with the edit command, assign the "edit" to command, and assign value to 
 	 * the editNumber, startTime, startDate, endTime, endDate, location, details priority and taskToEdit
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput: the userInput object.
+	 * @param inputCommand: the ArrayList containing the command.
 	 */
 	private static void setUserInputForEdit(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("edit");
@@ -244,8 +244,8 @@ public class Parser {
 
 	/**
 	 * deal with the delete command, assign the "delete" command and assign value to the deleteNumber
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput: the userInput object.
+	 * @param inputCommand: the ArrayList containing the command.
 	 */
 	private static void setUserInputForDelete(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("delete");
@@ -265,8 +265,8 @@ public class Parser {
 
 	/**
 	 * deal with the add command, assign the "add" command and assign value to the task attribute
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput: the userInput object.
+	 * @param inputCommand: the ArrayList containing the command.
 	 */
 	private static void setUserInputForAdd(UserInput userInput, ArrayList<String> inputCommand) {
 		Task addTask = createTaskForAdd(inputCommand);
@@ -277,8 +277,8 @@ public class Parser {
 
 	/**
 	 * deal with the recurring command, assign the "recurring" command and assign value to the task attribute
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput: the userInput object.
+	 * @param inputCommand: the ArrayList containing the command.
 	 */
 	private static void setUserInputForRecuring(UserInput userInput, ArrayList<String> inputCommand) {
 		Task recurringTask = CreateTask.createRecurring(RECURRING, inputCommand);
@@ -289,7 +289,7 @@ public class Parser {
 	
 	/**
 	 * create different task type for add command
-	 * @param listFromLogic
+	 * @param listFromLogic: 
 	 * @return a task object
 	 */
 	public final static Task createTaskForAdd(ArrayList<String> listFromLogic) {
@@ -317,8 +317,8 @@ public class Parser {
 	/**
 	 * get the string the user typed in and store each words in a right format in 
 	 * an array list.
-	 * @param inputFromLogic
-	 * @param contentListForLogic
+	 * @param inputFromLogic: the raw data of user input
+	 * @param contentListForLogic: the ArrayList containing the command.
 	 */
 	private static void updateList(String inputFromLogic, ArrayList<String> contentListForLogic) {
 		
@@ -342,7 +342,7 @@ public class Parser {
 
 	/**
 	 * identify different task type
-	 * @param listFromLogic
+	 * @param listFromLogic: the ArrayList containing the command.
 	 * @return the string which represent different task type
 	 */
 	public static String identifyTaskType(ArrayList<String> listFromLogic ) {
@@ -364,7 +364,7 @@ public class Parser {
 	
 	/**
 	 * differentiate different command for editing
-	 * @param command
+	 * @param command: the attribute you selected
 	 * @return integer which represents the corresponding command
 	 */
 	protected static Integer getNumber(String command){
@@ -414,7 +414,7 @@ public class Parser {
 	
 	/**
 	 * find what kind of task you want to delete
-	 * @param s
+	 * @param s: the string of task type and task number
 	 * @return the integer number which represent the corresponding type
 	 */
 	public static int deleteType(String s){
@@ -437,7 +437,7 @@ public class Parser {
 	
 	/**
 	 * find the task number user wants to delete
-	 * @param s
+	 * @param s: the string of task type and task number
 	 * @return the task number user wants to delete
 	 */
 	public static int deleteNumber(String s){
@@ -453,10 +453,10 @@ public class Parser {
 	}
 	
 	/**
-	 * find the next commnad such like "-st", "-sd" etc.
-	 * @param commands
-	 * @param n
-	 * @return the index number of the next command in the array list
+	 * find the next command such like "-st", "-sd" etc.
+	 * @param commands:the ArrayList containing the command
+	 * @param n:starting position
+	 * @return integer which represents the index number of the next command in the array list
 	 */
 	protected static int findNextCommand(ArrayList<String> commands, int n){//for edit
 		int k = -1;
@@ -473,9 +473,9 @@ public class Parser {
 	
 	/**
 	 * If the command is delete, then is will assign value to the deleteNumber attribute
-	 * @param commands
-	 * @param userInput
-	 * @param list
+	 * @param commands: the ArrayList containing the command
+	 * @param userInput: userInput object 
+	 * @param list: store the task number 
 	 */
 	protected static void passDeletePart(ArrayList<String> commands, UserInput userInput, ArrayList<int[]> list){
 		for(int i=1; i<commands.size(); i++){
@@ -491,10 +491,10 @@ public class Parser {
 	 * If the command is edit, then this function will help to assign value to
 	 * details, start date, start time, end date, end time, location, priority and 
 	 * complete attributes
-	 * @param commands
-	 * @param userInput
-	 * @param list
-	 * @param start
+	 * @param commands: 
+	 * @param userInput:userInput object
+	 * @param list: an array list
+	 * @param start: start position
 	 */
 	protected static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list,int start){
 		int i = start;
@@ -556,7 +556,7 @@ public class Parser {
 
 	/**
 	 * removes all unnecessary whitespaces to 1 whitespace
-	 * @param input
+	 * @param input: a string
 	 * @return String
 	 */
 	protected final static String formatInputForValidParsing (String input) {
@@ -564,7 +564,7 @@ public class Parser {
 	}
 	/**
 	 * check if a string input is only a word
-	 * @param input
+	 * @param input: a string
 	 * @return true if it contains only one word
 	 */
 	protected final static boolean onlyOneWord(String input) {
