@@ -62,8 +62,8 @@ public class Sort implements Command {
 			break;
 
 		case SORT_TYPE_DATE:	//task date
-			Collections.sort(taskList, new TaskComparator(SORT_TYPE_DETAILS));
-			Collections.sort(displayList, new TaskComparator(SORT_TYPE_DETAILS));
+			Collections.sort(taskList, new TaskComparator(SORT_TYPE_DATE));
+			Collections.sort(displayList, new TaskComparator(SORT_TYPE_DATE));
 			break;
 
 		case SORT_TYPE_TIME:	//task time

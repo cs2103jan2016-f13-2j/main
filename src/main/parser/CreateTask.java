@@ -21,7 +21,7 @@ public class CreateTask {
 	private static final String DAILY = "daily";
 	private static final String WEEKLY = "weekly";
 	private static final String MONTHLY = "monthly";
-	private static final String YEARLY = "yealy";
+	private static final String YEARLY = "yearly";
 	private static final String FOR = "for";
 	private static final String MIDNIGHT = "midnight";
 	private static final String NOON = "noon";
