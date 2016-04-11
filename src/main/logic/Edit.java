@@ -234,6 +234,9 @@ public class Edit implements Command {
 	//@@author A0124711U
 	/**
 	 * Checks if the dates in the tasks are valid and the end date is not earlier than the start date.
+	 * @param startDate :
+	 * @param startTime :
+	 * @param
 	 * @return true if dates are valid, false otherwise.
 	 */
 	private static boolean isValidDateAndTime(Date startDate, Time startTime, Date endDate, Time endTime) {
