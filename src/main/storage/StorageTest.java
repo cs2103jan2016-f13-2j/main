@@ -1,6 +1,8 @@
 package main.storage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,13 +56,13 @@ public class StorageTest {
 	 */
 	@Test
 	public void test1() {
-		Storage storage = Storage.getInstance();
+		Storage.getInstance();
 		
 		assert(file.exists());
 	}
 	
 	/**
-	 * Test the writing and reading of empty task list.
+	 * Tests the writing and reading of empty task list.
 	 */
 	@Test
 	public void test2() {
@@ -142,6 +144,8 @@ public class StorageTest {
 				fail("Import files are not equal in test4.");
 			}
 			
+			importFis.close();
+			taskFis.close();
 		}
 		catch (IOException e) {
 			fail("IOException occurred during import test in test4.");
@@ -174,6 +178,8 @@ public class StorageTest {
 				fail("Export files are not equal in test4.");
 			}
 			
+			exportFis.close();
+			taskFis.close();
 		}
 		catch (IOException e) {
 			fail("IOException occurred during export test in test4.");

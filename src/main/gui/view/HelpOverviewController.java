@@ -51,26 +51,29 @@ public class HelpOverviewController {
 	@FXML
 	private void initialize() {
 		showOverdueCounter();	
-		initializeLabels();
+		displayLabels();
 	}
 
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
-	 * @param mainApp
+	 * @param mainApp Main Application for GUI
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 
-	private void initializeLabels() {
+	/**
+	 * Displays instant feedback labels.
+	 */
+	private void displayLabels() {
 		feedback = Feedback.getInstance();
 		instantFeedback.setText(feedback.getMessage());
 	}
 
 	/**
-	 * displays the number of overdued tasks if any
+	 * Displays the number of overdue tasks, and displays nothing when there are no overdue tasks.
 	 */
 	private void showOverdueCounter() {
 		if (getNoOfDAndETasks(MainLogic.getExpiredTasks()) > 0) {
@@ -81,9 +84,9 @@ public class HelpOverviewController {
 	}
 	
 	/**
-	 * get total number of deadline and event tasks in an ArrayList<ArrayList<Task>> from MainLogic
-	 * @param array
-	 * @return
+	 * get total number of deadline and event tasks in an list of list of tasks from MainLogic.
+	 * @param TotalList a list of list of tasks
+	 * @return The number of deadline and event tasks
 	 */
 	private int getNoOfDAndETasks(ArrayList<ArrayList<Task>> array) {
 		int counter=0;
@@ -109,13 +112,17 @@ public class HelpOverviewController {
 	
 	/**
 	 * Listener for TextField. If User enters a keyboard shortcut, it will be executed.
-	 * @param keyEvent
+	 * @param keyEvent An event which indicates that a keystroke occurred in a component.
 	 */
 	@FXML
 	void onKeyPressed(KeyEvent keyEvent) {
 	  processKeyEventPressed(keyEvent);
 	}
 
+	/**
+	 * Processes the key event pressed.
+	 * @param keyEvent An event which indicates that a keystroke occurred in a component.
+	 */
 	private void processKeyEventPressed(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.CONTROL) { 
 		    System.out.print("ctrl pressed");
@@ -157,11 +164,21 @@ public class HelpOverviewController {
 		  }
 	}
 
+	/**
+	 * Listener for TextField. If User releases a keyboard shortcut, it will be executed.
+	 * @param keyEvent An event which indicates that a keystroke occurred in a component.
+	 * 
+	 */
 	@FXML
 	void onKeyReleased(KeyEvent keyEvent) {
 	  processKeyEventReleased(keyEvent);
 	}
 
+	/**
+	 * Processes the key event pressed.
+	 * @param keyEvent An event which indicates that a keystroke occurred in a component.
+	 * 
+	 */
 	private void processKeyEventReleased(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.CONTROL) { 
 		    controlPressed = false;
@@ -175,7 +192,7 @@ public class HelpOverviewController {
 	}
 	
 	/**
-	 * when overdue tab is clicked
+	 * When overdue tab is clicked, show overdue overview.
 	 */
 	@FXML 
 	void onClickedOverdue() {
@@ -183,7 +200,7 @@ public class HelpOverviewController {
 	}
 	
 	/**
-	 * when help tab is clicked
+	 * When help tab is clicked, show help overview.
 	 */
 	@FXML
 	void onClickedHelp(){
@@ -191,7 +208,7 @@ public class HelpOverviewController {
 	}
 	
 	/** 
-	 * when all tasks tab is clicked
+	 * When all tasks tab is clicked, show task overview.
 	 */
 	@FXML
 	void onClickedAllTask(){
@@ -199,7 +216,7 @@ public class HelpOverviewController {
 	}
 	
 	/**
-	 * when today tab is clicked
+	 * When today tab is clicked, show today's overview.
 	 */
 	@FXML
 	void onClickedToday(){
@@ -207,7 +224,7 @@ public class HelpOverviewController {
 	}
 	
 	/**
-	 * when upcoming tab is clicked
+	 * When upcoming tab is clicked, show upcoming overview.
 	 */
 	@FXML
 	void onClickedUpcoming(){
@@ -215,7 +232,7 @@ public class HelpOverviewController {
 	}
 	
 	/**
-	 * when complete tab is clicked
+	 * When complete tab is clicked, show complete overview.
 	 */
 	@FXML
 	void onClickedComplete(){

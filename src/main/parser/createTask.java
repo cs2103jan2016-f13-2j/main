@@ -52,12 +52,14 @@ public class CreateTask {
 	
 	//private static Feedback feedback = Feedback.getInstance();
 
+
 	
+
 	/**
-	 * create the deadline task
-	 * @param taskType
-	 * @param info
-	 * @return a deadline task
+	 * Creates a Task object of type "deadline"
+	 * @param taskType: Task type of task
+	 * @param info: Information to be added to the Task object
+	 * @return Task object of the created task
 	 */
 	public final static Task createDeadline(String taskType, ArrayList<String> info) {
 		String taskName = taskType + " task";
@@ -77,6 +79,8 @@ public class CreateTask {
 	/**
 	 * assign location,start time, start date, task details to deadline task
 	 * @param info
+	 * Sets the location for the deadline task
+	 * @param info: 
 	 * @param taskName
 	 * @param task
 	 * @param indexOfP
@@ -221,8 +225,8 @@ public class CreateTask {
 		if (info.contains(AT)) { // info has location
 			int indexOfAt = info.indexOf(AT);
 			String detail = getDetail(info, 1, indexOfAt);
-			String location = getLocation(info, indexOfAt + 1, indexOfP);
 			indexOfP = setPriorityForDeadlineTask(info, task, length);
+			String location = getLocation(info, indexOfAt + 1, indexOfP);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
 			task.setTaskLocation(location);
@@ -542,7 +546,7 @@ public class CreateTask {
 				if (hour == 12) {
 					hour = 0;
 				}
-				else if (hour < 0 || hour > 12) {
+				else if (hour < 1 || hour > 12) {
 					hour = -1;
 				}
 				time.setHour(hour);
@@ -552,7 +556,7 @@ public class CreateTask {
 				if (time.getHour() == 12) {
 					time.setHour(0);
 				}
-				else if (time.getHour() < 0 || time.getHour() > 12) {
+				else if (time.getHour() < 1 || time.getHour() > 12) {
 					time.setHour(-1);
 				}
 			}
@@ -563,7 +567,7 @@ public class CreateTask {
 				if (hour == 24) {
 					hour = 12;
 				}
-				else if (hour < 0 || hour > 12) {
+				else if (hour < 13 || hour > 24) {
 					hour = -1;
 				}
 				time.setHour(hour);
@@ -574,12 +578,13 @@ public class CreateTask {
 				if (time.getHour() == 24) {
 					time.setHour(12);
 				}
-				else if (time.getHour() < 0 || time.getHour() > 12) {
+				else if (time.getHour() < 13 || time.getHour() > 24) {
 					time.setHour(-1);
 				}
 			}
 		}
-	}
+}
+
 
 
 	/**
@@ -895,18 +900,21 @@ public class CreateTask {
 	 * @param timeInfo
 	 * @return true if the string is time
 	 */
-	protected static boolean isTime(String timeInfo) {
-		if (timeInfo.toLowerCase().contains("am") || timeInfo.toLowerCase().contains("pm") || timeInfo.contains(MIDNIGHT) || timeInfo.contains(NOON) || containsOnlyNumbers(timeInfo) ||containsNumbersAndColon(timeInfo)) {
-			return true;
-		} else {
-			return false;
-		}
+protected static boolean isTime(String timeInfo) {
+	if (timeInfo.toLowerCase().contains("am") || timeInfo.toLowerCase().contains("pm")
+			|| timeInfo.contains(MIDNIGHT) || timeInfo.contains(NOON) || containsOnlyNumbers(timeInfo) ||
+			containsNumbersAndColon(timeInfo)) {
+		return true;
+	} else {
+		return false;
 	}
-
+}
+	
 	protected static boolean containsNumbersAndColon(String str){
 		String t[] = str.split(":");
-		return (containsOnlyNumbers(t[0])&&containsOnlyNumbers(t[1]));
+		return containsOnlyNumbers(t[0])&&containsOnlyNumbers(t[1]);
 	}
+
 
 	/**
 	 * to check whether the string only contains number

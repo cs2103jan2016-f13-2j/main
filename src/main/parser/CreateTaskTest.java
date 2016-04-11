@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import org.junit.Test;
 //@@author A0133926A
 
-
-
-import main.resources.Date;
 import main.resources.Task;
 import main.resources.Time;
 import main.parser.Parser;
@@ -22,14 +19,15 @@ public class CreateTaskTest {
 	public void testCreateDeadline(){
 		String taskType = "deadline";
 		String command = "add eating by 20th-Aug;6pm at soc -p 1";
-		Date date = new Date(20,8,2016);
-		Time time = new Time(18,0);
 		ArrayList<String> info = Parser.retrieveCommand(command);
 		Task task = CreateTask.createDeadline(taskType,info);
 		assertEquals(task.getTaskName(),"deadline task");
 		assertEquals(task.getTaskDetails(),"eating");
-		assertEquals(task.getTaskStartTime(),time);
-		assertEquals(task.getTaskStartDate(),date);
+		assertEquals(task.getTaskStartTime().getHour(),18);
+		assertEquals(task.getTaskStartTime().getMinute(),0);
+		assertEquals(task.getTaskStartDate().getDay(),20);
+		assertEquals(task.getTaskStartDate().getMonth(),8);
+		assertEquals(task.getTaskStartDate().getYear(),2016);
 		assertEquals(task.getTaskLocation(),"soc");
 		assertEquals(task.getPriority(),1);
 	}
@@ -38,20 +36,24 @@ public class CreateTaskTest {
 	public void testCreateEvent(){
 		String taskType = "event";
 		String command = "add eating from 20th-Aug;6pm to 21st-Aug;6pm at soc -p 1";
-		Date startDate = new Date(20,8,2016);
-		Time startTime = new Time(18,0);
-		Date endDate = new Date(21,8,2016);
-		Time endTime = new Time(18,0);
 		ArrayList<String> info = Parser.retrieveCommand(command);
 		Task task = CreateTask.createEvent(taskType,info);
 		assertEquals(task.getTaskName(),"event task");
 		assertEquals(task.getTaskDetails(),"eating");
-		assertEquals(task.getTaskStartTime(),startTime);
-		//assertEquals(task.getTaskStartDate(),startDate);
-		//assertEquals(task.getTaskEndTime(),endTime);
-		//assertEquals(task.getTaskEndDate(),endDate);
-		//assertEquals(task.getTaskLocation(),"soc");
-		//assertEquals(task.getPriority(),1);
+		assertEquals(task.getTaskStartTime().getHour(),18);
+		assertEquals(task.getTaskStartTime().getMinute(),0);
+		assertEquals(task.getTaskStartDate().getDay(),20);
+		assertEquals(task.getTaskStartDate().getMonth(),8);
+		assertEquals(task.getTaskStartDate().getYear(),2016);
+		
+		assertEquals(task.getTaskEndTime().getHour(),18);
+		assertEquals(task.getTaskEndTime().getMinute(),0);
+		assertEquals(task.getTaskEndDate().getDay(),21);
+		assertEquals(task.getTaskEndDate().getMonth(),8);
+		assertEquals(task.getTaskEndDate().getYear(),2016);
+		
+		assertEquals(task.getTaskLocation(),"soc");
+		assertEquals(task.getPriority(),1);
 	}
 
 	@Test
@@ -70,18 +72,23 @@ public class CreateTaskTest {
 	public void testCreateRecurring(){
 		String taskType = "recurring";
 		String command = "recurring daily eating from 20th-Aug;6pm to 21st-Aug;6pm at soc -p 1 for 3 times";
-		Date startDate = new Date(20,8,2016);
-		Time startTime = new Time(18,0);
-		Date endDate = new Date(21,8,2016);
-		Time endTime = new Time(18,0);
+
 		ArrayList<String> info = Parser.retrieveCommand(command);
 		Task task = CreateTask.createRecurring(taskType,info);
-		assertEquals(task.getTaskName(),"event task");
+		assertEquals(task.getTaskName(),"recurring task");
 		assertEquals(task.getTaskDetails(),"eating");
-		assertEquals(task.getTaskStartTime(),startTime);
-		assertEquals(task.getTaskStartDate(),startDate);
-		assertEquals(task.getTaskEndTime(),endTime);
-		assertEquals(task.getTaskEndDate(),endDate);
+		
+		assertEquals(task.getTaskStartTime().getHour(),18);
+		assertEquals(task.getTaskStartTime().getMinute(),0);
+		assertEquals(task.getTaskStartDate().getDay(),20);
+		assertEquals(task.getTaskStartDate().getMonth(),8);
+		assertEquals(task.getTaskStartDate().getYear(),2016);
+		
+		assertEquals(task.getTaskEndTime().getHour(),18);
+		assertEquals(task.getTaskEndTime().getMinute(),0);
+		assertEquals(task.getTaskEndDate().getDay(),21);
+		assertEquals(task.getTaskEndDate().getMonth(),8);
+		assertEquals(task.getTaskEndDate().getYear(),2016);
 		assertEquals(task.getTaskLocation(),"soc");
 		assertEquals(task.getRecurFrequency(),1);
 		assertEquals(task.getPriority(),1);
@@ -105,15 +112,21 @@ public class CreateTaskTest {
 	@Test
 	public void testGetTime(){
 		String dateAndTime = "20th-Aug;6pm";
-		Time time = new Time(18,0);
-		assertEquals(CreateTask.getTime(dateAndTime),time);
+		
+		assertEquals(CreateTask.getTime(dateAndTime).getHour(),18);
+		assertEquals(CreateTask.getTime(dateAndTime).getMinute(),0);
+		
 	}
 
 	@Test
 	public void testGetDate(){
 		String dateAndTime = "20th-Aug;6pm";
-		Date date = new Date(20,8,2016);
-		assertEquals(CreateTask.getDate(dateAndTime),date);
+	
+		assertEquals(CreateTask.getDate(dateAndTime).getDay(),20);
+		assertEquals(CreateTask.getDate(dateAndTime).getMonth(),8);
+		assertEquals(CreateTask.getDate(dateAndTime).getYear(),2016);
+		
+
 	}
 
 	@Test
