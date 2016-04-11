@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import main.resources.Date;
+import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.Time;
 import main.parser.Shortcuts;
@@ -47,6 +48,12 @@ public class createTask {
 	private static final String DECEMBER = "December";
 	
 
+	/**
+	 * Creates a Task object of type "deadline"
+	 * @param taskType: Task type of task
+	 * @param info: Information to be added to the Task object
+	 * @return Task object of the created task
+	 */
 	public final static Task createDeadline(String taskType, ArrayList<String> info) {
 		String taskName = taskType + " task";
 		Task task = new Task();
@@ -62,6 +69,15 @@ public class createTask {
 		return task;
 	}
 
+	/**
+	 * Sets the location for the deadline task
+	 * @param info: 
+	 * @param taskName
+	 * @param task
+	 * @param indexOfP
+	 * @param detail
+	 * @param dateAndTime
+	 */
 	private static void setLocationForDeadlineTask(ArrayList<String> info, String taskName, Task task, int indexOfP,
 			String detail, String dateAndTime) {
 		if (info.contains(AT)) {
@@ -381,10 +397,19 @@ public class createTask {
 					if (hour == 12) {
 						hour = 0;
 					}
+					else if (hour < 0 || hour > 12) {
+						hour = -1;
+					}
 					time.setHour(hour);
 					time.setMinute(0);
 				} else {
 					handleDiffTimeFormatPart1(h[0],time);
+					if (time.getHour() == 12) {
+						time.setHour(0);
+					}
+					else if (time.getHour() < 0 || time.getHour() > 12) {
+						time.setHour(-1);
+					}
 				}
 			} else {
 				String h[] = timeInfo.toLowerCase().split("pm");
@@ -393,11 +418,20 @@ public class createTask {
 					if (hour == 24) {
 						hour = 12;
 					}
+					else if (hour < 0 || hour > 12) {
+						hour = -1;
+					}
 					time.setHour(hour);
 					time.setMinute(0);
 				} else {
 					handleDiffTimeFormatPart1(h[0],time);
 					time.setHour(time.getHour()+12);
+					if (time.getHour() == 24) {
+						time.setHour(12);
+					}
+					else if (time.getHour() < 0 || time.getHour() > 12) {
+						time.setHour(-1);
+					}
 				}
 			}
 	}
@@ -651,11 +685,17 @@ public class createTask {
 
 	private static boolean isTime(String timeInfo) {
 		if (timeInfo.toLowerCase().contains("am") || timeInfo.toLowerCase().contains("pm")
-				|| timeInfo.contains(MIDNIGHT) || timeInfo.contains(NOON) || containsOnlyNumbers(timeInfo)) {
+				|| timeInfo.contains(MIDNIGHT) || timeInfo.contains(NOON) || containsOnlyNumbers(timeInfo) ||
+				containsNumbersAndColon(timeInfo)) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+	
+	private static boolean containsNumbersAndColon(String str){
+		String t[] = str.split(":");
+		return containsOnlyNumbers(t[0])&&containsOnlyNumbers(t[1]);
 	}
 
 	private static boolean containsOnlyNumbers(String str) {
