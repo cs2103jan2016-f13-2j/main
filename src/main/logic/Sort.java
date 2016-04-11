@@ -96,7 +96,6 @@ public class Sort implements Command {
 	//@@author A0124711U
 		/**
 		 * Returns the type of task as a string description.
-		 * @param task : The task type to be checked.
 		 * @return The string description of the task type.
 		 */
 	public String getSortCategoryString() {

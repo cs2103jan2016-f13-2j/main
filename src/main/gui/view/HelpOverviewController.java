@@ -85,7 +85,7 @@ public class HelpOverviewController {
 	
 	/**
 	 * get total number of deadline and event tasks in an list of list of tasks from MainLogic.
-	 * @param TotalList a list of list of tasks
+	 * @param array : a list of list of tasks
 	 * @return The number of deadline and event tasks
 	 */
 	private int getNoOfDAndETasks(ArrayList<ArrayList<Task>> array) {

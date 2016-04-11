@@ -44,8 +44,8 @@ public class Task implements Serializable {
 	    /**
 	     * Constructor with some initial data.
 	     * 
-	     * @param firstName
-	     * @param lastName
+	     * @param taskName : the string containing the task name.
+	     * @param taskDetails : the string containing the task details.
 	     */
 	    public Task(String taskName, String taskDetails, int type) {
 	        this.taskName = taskName;

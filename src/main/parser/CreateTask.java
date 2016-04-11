@@ -80,12 +80,12 @@ public class CreateTask {
 	 * assign location,start time, start date, task details to deadline task
 	 * @param info
 	 * Sets the location for the deadline task
-	 * @param info: 
-	 * @param taskName
-	 * @param task
-	 * @param indexOfP
-	 * @param detail
-	 * @param dateAndTime
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param taskName : string containing task name.
+	 * @param task : the Task object.
+	 * @param indexOfP : int index of keyword "-p"
+	 * @param detail : string containing task details.
+	 * @param dateAndTime : string containing the date and time.
 	 */
 	private static void setLocationForDeadlineTask(ArrayList<String> info, String taskName, Task task, int indexOfP,
 		String detail, String dateAndTime) {
@@ -114,9 +114,9 @@ public class CreateTask {
 
 	/**
 	 * assign priority to deadline task
-	 * @param info
-	 * @param task
-	 * @param length
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param task : the task object.
+	 * @param length : length of the info ArrayList.
 	 * @return the index of the keyword priority in the arraylist
 	 */
 	private static int setPriorityForDeadlineTask(ArrayList<String> info, Task task, int length) {
@@ -134,8 +134,8 @@ public class CreateTask {
 
 	/**
 	 * create the event task
-	 * @param taskType
-	 * @param info
+	 * @param taskType : The task type string
+	 * @param info : ArrayList containing each word of the user input.
 	 * @return an event task
 	 */
 	public final static Task createEvent(String taskType, ArrayList<String> info) {
@@ -157,13 +157,13 @@ public class CreateTask {
 	
 	/**
 	 * assign the location,start time, end time, start date and end date to the event task
-	 * @param info
-	 * @param taskName
-	 * @param task
-	 * @param indexOfP
-	 * @param detail
-	 * @param startDateAndTime
-	 * @param endDateAndTime
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param taskName : the task name string.
+	 * @param task : the task object string.
+	 * @param indexOfP : int index of keyword "-p"
+	 * @param detail : the string containing the task details.
+	 * @param startDateAndTime : the string containing the start date and time.
+	 * @param endDateAndTime : the string containing the end date and time.
 	 */
 	private static void setLocationForEventTask(ArrayList<String> info, String taskName, Task task, int indexOfP,
 		String detail, String startDateAndTime, String endDateAndTime) {
@@ -199,8 +199,8 @@ public class CreateTask {
 	
 	/**
 	 * create the floating task
-	 * @param taskType
-	 * @param info
+	 * @param taskType : the task type string.
+	 * @param info : ArrayList containing each word of the user input.
 	 * @return the floating task
 	 */
 	public final static Task createFloating(String taskType, ArrayList<String> info) {
@@ -214,11 +214,11 @@ public class CreateTask {
 
 	/**
 	 * assign the location and location to the floating task
-	 * @param info
-	 * @param taskName
-	 * @param task
-	 * @param length
-	 * @param indexOfP
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param taskName : the task name string
+	 * @param task : the task object
+	 * @param length : the length of the info ArrayList.
+	 * @param indexOfP : int index of keyword "-p"
 	 */
 	private static void setLocationForFloatingTask(ArrayList<String> info, String taskName, Task task, int length,
 		int indexOfP) {
@@ -242,9 +242,9 @@ public class CreateTask {
 
 	/**
 	 * assign the priority to the floating task
-	 * @param info
-	 * @param task
-	 * @param length
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param task : the task object.
+	 * @param length : the length of the info ArrayLIst.
 	 * @return the index number of the keyword priority in the arraylist
 	 */
 	private static String setPriorityForFloatingTask(ArrayList<String> info, Task task, int length) {
@@ -265,8 +265,8 @@ public class CreateTask {
 
 	/**
 	 * create recurring task
-	 * @param taskType
-	 * @param info
+	 * @param taskType : the task type string.
+	 * @param info : ArrayList containing each word of the user input.
 	 * @return a recurring task
 	 */
 	public final static Task createRecurring(String taskType, ArrayList<String> info) {
@@ -293,11 +293,11 @@ public class CreateTask {
 
 	/**
 	 * create a floating recurring task
-	 * @param info
-	 * @param taskName
-	 * @param task
-	 * @param indexOfFor
-	 * @param indexOfP
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param taskName : the task name string.
+	 * @param task : the task object.
+	 * @param indexOfFor : int index of keyword "for"
+	 * @param indexOfP : int index of keyword "-p"
 	 */
 	private static void createFloatingRecurringTask(ArrayList<String> info, String taskName, Task task, int indexOfFor,
 		int indexOfP) {
@@ -330,10 +330,10 @@ public class CreateTask {
 
 	/**
 	 * create an event recurring task
-	 * @param info
-	 * @param taskName
-	 * @param task
-	 * @param indexOfFor
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param taskName : the task name string.
+	 * @param task : the task object.
+	 * @param indexOfFor : int index of keyword "for"
 	 */
 	private static void createEventRecurringTask(ArrayList<String> info, String taskName, Task task, int indexOfFor) {
 		int indexOfP;
@@ -389,10 +389,10 @@ public class CreateTask {
 
 	/**
 	 * create a deadline recurring task
-	 * @param info
-	 * @param taskName
-	 * @param task
-	 * @param indexOfFor
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param taskName : the task name string.
+	 * @param task : the task object.
+	 * @param indexOfFor : int index of keyword "for"
 	 */
 	private static void createDeadlineRecurringTask(ArrayList<String> info, String taskName, Task task,
 		int indexOfFor) {
@@ -440,9 +440,9 @@ public class CreateTask {
 
 	/**
 	 * get task details from the arraylist
-	 * @param info
-	 * @param start
-	 * @param end
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param start : the start index of the details.
+	 * @param end : the end index of the details.
 	 * @return the string of details
 	 */
 	public static String getDetail(ArrayList<String> info, int start, int end) {
@@ -456,9 +456,9 @@ public class CreateTask {
 	
 	/**
 	 * get task location from the arraylist
-	 * @param info
-	 * @param start
-	 * @param end
+	 * @param info : ArrayList containing each word of the user input.
+	 * @param start : the start index of the location details.
+	 * @param end : the end index of the location details.
 	 * @return the string of location
 	 */
 	public static String getLocation(ArrayList<String> info, int start, int end) {
@@ -471,7 +471,7 @@ public class CreateTask {
 
 	/**
 	 * get time from the date and time string
-	 * @param dateAndTime
+	 * @param dateAndTime : the date and time string.
 	 * @return time object
 	 */
 	public static Time getTime(String dateAndTime) {
@@ -495,8 +495,8 @@ public class CreateTask {
 
 	/**
 	 * deal with different time format
-	 * @param timeInfo
-	 * @param time
+	 * @param timeInfo : the raw time input string.
+	 * @param time : the time object.
 	 */
 	private static void handleDiffTimeFormat(String timeInfo, Time time) {
 		if(timeInfo.contains("am")||timeInfo.contains("pm")){
@@ -508,8 +508,8 @@ public class CreateTask {
 
 	/**
 	 * handle 4 time format: 12:00  midnight  noon and 1200 or 923
-	 * @param timeInfo
-	 * @param time
+	 * @param timeInfo : the raw time input string
+	 * @param time : the time object.
 	 */
 	private static void handleDiffTimeFormatPart1(String timeInfo,Time time){
 		if (timeInfo.contains(":")) {
@@ -535,8 +535,8 @@ public class CreateTask {
 
 	/**
 	 * handle the date format with "pm" and "am"
-	 * @param timeInfo
-	 * @param time
+	 * @param timeInfo : the raw time input string.
+	 * @param time : the time object.
 	 */
 	private static void handleDiffTimeFormatPart2(String timeInfo,Time time){
 		if (timeInfo.toLowerCase().contains("am")) {
@@ -589,7 +589,7 @@ public class CreateTask {
 
 	/**
 	 * get date from the date and time string
-	 * @param dateAndTime
+	 * @param dateAndTime : the raw date and time string.
 	 * @return the date object
 	 */
 	public static Date getDate(String dateAndTime) {
@@ -621,8 +621,8 @@ public class CreateTask {
 
 	/**
 	 * handle different date format
-	 * @param dateInfo
-	 * @param date
+	 * @param dateInfo : the raw date string.
+	 * @param date : the date object.
 	 */
 	private static void handleDiffDateFormat(String dateInfo, Date date) {
 		if (dateInfo.contains("/")) {
@@ -640,8 +640,8 @@ public class CreateTask {
 
 	/**
 	 * handle date format like this: 1st-apr or 11-aug
-	 * @param dateInfo
-	 * @param date
+	 * @param dateInfo : the raw date string.
+	 * @param date : the date object.
 	 */
 	private static void handleDateFormatWithDateAndMonth(String dateInfo, Date date) {
 		if (dateInfo.toLowerCase().contains("st")) {
@@ -719,8 +719,8 @@ public class CreateTask {
 
 	/**
 	 * handle date format like: Monday, Tuesday etc.
-	 * @param dateInfo
-	 * @param date
+	 * @param dateInfo : the raw date string.
+	 * @param date : the date object.
 	 */
 	private static void handleDateFormatWithWeekday(String dateInfo, Date date) {
 		Calendar cal = Calendar.getInstance();
@@ -741,7 +741,7 @@ public class CreateTask {
 
 	/**
 	 * handle date format like: tmr or tmrw or tomorrow
-	 * @param date
+	 * @param date : the date object.
 	 */
 	private static void handleDateFormatWithTmr(Date date) {
 		Calendar cal = Calendar.getInstance();
@@ -753,7 +753,7 @@ public class CreateTask {
 
 	/**
 	 * handle date format like: today
-	 * @param date
+	 * @param date : the date object.
 	 */
 	private static void handleDateFormatWithToday(Date date) {
 		Calendar cal = Calendar.getInstance();
@@ -764,8 +764,8 @@ public class CreateTask {
 
 	/**
 	 * handle date format like: 06/08/2016 or 06/08
-	 * @param dateInfo
-	 * @param date
+	 * @param dateInfo : the raw input date string.
+	 * @param date : the date object.
 	 */
 	private static void handleDateFormatWithBackSlash(String dateInfo, Date date) {
 		String dmy[] = dateInfo.split("/");
@@ -787,8 +787,8 @@ public class CreateTask {
 
 	/**
 	 * compare two date, witch only contains month and date
-	 * @param date
-	 * @param month
+	 * @param date : the date int
+	 * @param month : the month int
 	 * @return if the date is larger or equal to today's date, return true; or return false 
 	 */
 	protected static boolean compareMonth(int date, int month){
@@ -810,7 +810,7 @@ public class CreateTask {
 
 	/**
 	 * Translate the weekday to a number,Sunday to Saturday indicate 1 to 7
-	 * @param dateInfo
+	 * @param dateInfo : the raw date string.
 	 * @return the integer number
 	 */
 	protected static int dates(String dateInfo) {
@@ -846,7 +846,7 @@ public class CreateTask {
 
 	/**
 	 * Translate the month to a number, Jan to Dec indicate 0 to 11
-	 * @param dateInfo
+	 * @param dateInfo : the raw date string.
 	 * @return the integer number
 	 */
 	protected static int months(String dateInfo) {
@@ -897,7 +897,7 @@ public class CreateTask {
 
 	/**
 	 * judge if the string is time or date
-	 * @param timeInfo
+	 * @param timeInfo : the raw time string input.
 	 * @return true if the string is time
 	 */
 protected static boolean isTime(String timeInfo) {
@@ -918,7 +918,7 @@ protected static boolean isTime(String timeInfo) {
 
 	/**
 	 * to check whether the string only contains number
-	 * @param str
+	 * @param str : the string to be checked.
 	 * @return true if the string only has number
 	 */
 	protected static boolean containsOnlyNumbers(String str) {
@@ -931,8 +931,8 @@ protected static boolean isTime(String timeInfo) {
 
 	/**
 	 * give 2 time with hour and minute
-	 * @param t1
-	 * @param t2
+	 * @param t1 : first time object.
+	 * @param t2 : second time object.
 	 * @return true if the first time is bigger than the second one
 	 */
 	protected static boolean compareTwoTime(Time t1, Time t2) {
@@ -947,7 +947,7 @@ protected static boolean isTime(String timeInfo) {
 
 	/**
 	 * get priority from the string
-	 * @param p 
+	 * @param p : the priority string input.
 	 * @return integer number
 	 */
 	protected static int getPriority(String p) {
@@ -961,7 +961,7 @@ protected static boolean isTime(String timeInfo) {
 
 	/**
 	 * get frequency from the string 
-	 * @param fre
+	 * @param fre : the frequency string input.
 	 * @return integer number
 	 */
 	protected static int getFrequency(String fre) {

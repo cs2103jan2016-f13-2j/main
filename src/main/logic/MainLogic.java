@@ -86,6 +86,7 @@ public class MainLogic {
 	//-----Private methods-----
 	/**
 	 * Creates a Command object with the respective command type
+	 * @throws Exception for invalid date
 	 */
 	private static void createCommandObject() throws Exception {
 		if (!isValidDateAndTime()) {

@@ -150,7 +150,7 @@ public class Storage {
 	 * === For testing purposes ===
 	 * 
 	 * Sets the FILE_NAME to the test file path.
-	 * @param string : The file path of the test file.
+	 * @param fileName : The file path of the test file.
 	 */
 	public static void setFileName(String fileName) {
 		FILE_NAME = fileName;

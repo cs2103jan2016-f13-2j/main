@@ -29,7 +29,7 @@ public class Parser {
 	
 	/**
 	 * store the command into an array list
-	 * @param inputFromLogic
+	 * @param inputFromLogic : the string user input.
 	 * @return arraylist
 	 */
 	public final static ArrayList<String> retrieveCommand(String inputFromLogic){
@@ -43,7 +43,7 @@ public class Parser {
 
 	/**
 	 * assign the value to some of the attributes in UserInput
-	 * @param userInput
+	 * @param userInput : the userInput object.
 	 * @return userInput
 	 */
 	public final static UserInput resetUserInput (UserInput userInput){
@@ -115,7 +115,7 @@ public class Parser {
 
 	/**
 	 * deal with redo command,assign the "redo" to command
-	 * @param userInput
+	 * @param userInput : the userInput object.
 	 */
 	private static void setUserInputForRedo(UserInput userInput) {
 		userInput.setCommand("redo");
@@ -124,7 +124,7 @@ public class Parser {
 
 	/**
 	 * deal with undo command, assign the "undo" to command
-	 * @param userInput
+	 * @param userInput : the userInput object.
 	 */
 	private static void setUserInputForUndo(UserInput userInput) {
 		userInput.setCommand("undo");
@@ -135,7 +135,7 @@ public class Parser {
 
 	/**
 	 * deal with home command, assign the "home" to command
-	 * @param userInput
+	 * @param userInput : the userInput object.
 	 */
 	private static void setUserInputForHome(UserInput userInput) {
 		userInput.setCommand("home");
@@ -144,8 +144,8 @@ public class Parser {
 
 	/**
 	 * deal with the export command, assign the "exprot" to command and assign the path
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput : the userInput object.
+	 * @param inputCommand : the ArrayList containing the command.
 	 */
 	private static void setUserInputForExport(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("export");
@@ -155,8 +155,8 @@ public class Parser {
 
 	/**
 	 * deal with the import command, assign the "import" to command and assign the path
-	 * @param userInput
-	 * @param inputCommand
+	 * @param userInput : the userInput object.
+	 * @param inputCommand : the ArrayList containing the command.
 	 */
 	private static void setUserInputForImport(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("import");
