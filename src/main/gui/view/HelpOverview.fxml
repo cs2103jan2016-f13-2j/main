@@ -27,94 +27,144 @@
                   <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Today (F2)" />
       <Rectangle fx:id="overdueRectangle" arcHeight="50.0" arcWidth="50.0" fill="#d71717" height="19.0" layoutX="724.0" layoutY="5.0" mouseTransparent="true" onMouseClicked="#onClickedOverdue" stroke="BLACK" strokeType="INSIDE" width="26.0" />
                   <Label fx:id="overdueCounter" alignment="CENTER" layoutX="721.0" layoutY="6.0" mouseTransparent="true" prefHeight="12.0" prefWidth="32.0" styleClass="label-counter" textAlignment="CENTER" />      <DialogPane layoutY="51.0" prefHeight="466.0" prefWidth="1200.0" styleClass="table-view" stylesheets="@LightTheme.css" />
-      <VBox layoutX="569.0" layoutY="220.0" prefHeight="165.0" prefWidth="132.0">
+      <VBox layoutX="673.0" layoutY="51.0" prefHeight="165.0" prefWidth="132.0">
          <children>
             <Label text="Shortcuts" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="F11 - Minimize">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="F1 - All Tasks">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="F2 - Today's Task">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="F3 - Upcoming Tasks">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="F4 - Completed Tasks">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="F5 - Overdue Tasks">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="F12 - Help">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Undo - Ctrl + Z">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Redo - Ctrl + Y">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Quit - Ctrl + Q">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Home - ESC">
                <font>
-                  <Font name="Papyrus" size="12.0" />
+                  <Font name="Verdana" size="12.0" />
                </font>
             </Text>
+            <VBox prefHeight="63.0" prefWidth="165.0">
+               <children>
+                  <Label text="Import/Export" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Import &lt;AbsoluteFilePath&gt;">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export &lt;AbsoluteFilePath&gt;">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
          </children>
       </VBox>
-      <VBox layoutX="10.0" layoutY="51.0" prefHeight="400.0" prefWidth="812.0">
+      <VBox layoutX="10.0" layoutY="51.0" prefHeight="480.0" prefWidth="587.0">
          <children>
             <VBox prefHeight="115.0" prefWidth="812.0">
                <children>
                   <Label text="Adding a Task" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Deadline Task: Add &lt;TaskDetails&gt; by &lt;Date&gt;;&lt;Time&gt; at &lt;Location&gt; -p &lt;PriorityNo.&gt;">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Event Task: Add &lt;TaskDetails&gt; from &lt;StartDate&gt;;&lt;StartTime&gt; to &lt;EndDate&gt;;&lt;EndTime&gt; at &lt;Location&gt; -p &lt;PriorityNo.&gt;">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" " wrappingWidth="11.600006103515625">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Event Task: Add &lt;TaskDetails&gt; from &lt;StartDate&gt;;&lt;StartTime&gt; to &lt;EndDate&gt;;&lt;EndTime&gt;">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="at &lt;Location&gt; -p &lt;PriorityNo.&gt;">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" " wrappingWidth="11.600006103515625">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Floating Task: Add &lt;TaskDetails&gt; -p &lt;PriorityNo.&gt;">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Recurring Deadline: Add recur &lt;Frequency&gt; &lt;TaskDetails&gt; by &lt;Date&gt;;&lt;Time&gt; at &lt;Location&gt; -p &lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" " wrappingWidth="11.600006103515625">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Recurring Event: Add recur &lt;Frequency&gt; from &lt;StartTime/StartDate&gt; to &lt;EndTime/EndDate&gt; at &lt;location&gt; -p &lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Recurring Deadline: Add recur &lt;Frequency&gt; &lt;TaskDetails&gt; by &lt;Date&gt;;&lt;Time&gt;">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="at &lt;Location&gt; -p &lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" " wrappingWidth="11.600006103515625">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Adding Recurring Event: Add recur &lt;Frequency&gt; from &lt;StartTime/StartDate&gt; to &lt;EndTime/EndDate&gt;">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
+                     </font>
+                  </Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="at &lt;location&gt; -p &lt;PriorityNo.&gt; for &lt;No.OfTimes&gt; times">
+                     <font>
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                </children>
@@ -124,12 +174,12 @@
                   <Label text="Deleting a Task" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delete &lt;TaskType&gt;&lt;TaskNumber&gt;">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delete all &lt;TaskType&gt;&lt;TaskNumber&gt;">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                </children>
@@ -139,12 +189,12 @@
                   <Label text="Editting a task" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit &lt;TaskType&gt;&lt;TaskNumber&gt; -&lt;TaskColumn&gt; &lt;NewInput&gt;">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit all &lt;TaskType&gt;&lt;TaskNumber&gt; -&lt;TaskColumn&gt; &lt;NewInput&gt;">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                </children>
@@ -155,7 +205,7 @@
                   <Label text="Searching for a task" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search &lt;Content&gt;">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                </children>
@@ -165,41 +215,26 @@
                   <Label text="Sorting tasks" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="sort -&lt;TaskColumn&gt;">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
-                     </font>
-                  </Text>
-               </children>
-            </VBox>
-            <VBox prefHeight="63.0" prefWidth="165.0">
-               <children>
-                  <Label text="Import/Export" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Import &lt;AbsoluteFilePath&gt;">
-                     <font>
-                        <Font name="Papyrus" size="12.0" />
-                     </font>
-                  </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Export &lt;AbsoluteFilePath&gt;">
-                     <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                </children>
             </VBox>
          </children>
       </VBox>
-      <VBox layoutX="880.0" layoutY="51.0" prefHeight="435.0" prefWidth="300.0">
+      <VBox layoutX="859.0" layoutY="51.0" prefHeight="362.0" prefWidth="326.0">
          <children>
             <VBox prefHeight="52.0" prefWidth="256.0">
                <children>
                   <Label text="&lt;Date/StartDate/EndDate&gt;" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="DD/MM/YYYY OR DD/MM OR 0th-Mnth">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="today or tomorrow or tmrw or tmr">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                </children>
@@ -209,7 +244,7 @@
                   <Label text="&lt;Time/StartTime/EndTime&gt;" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="0000AM/PM OR 00:00 OR 0000 OR noon OR midnight">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                </children>
@@ -219,47 +254,47 @@
                   <Label prefHeight="30.0" prefWidth="154.0" text="&lt;TaskType&gt;" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="d/f/e">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                </children>
             </VBox>
-            <VBox prefHeight="238.0" prefWidth="258.0">
+            <VBox prefHeight="163.0" prefWidth="326.0">
                <children>
                   <Label prefHeight="30.0" prefWidth="154.0" text="&lt;TaskColumn&gt;" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task Details = de">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Time/StartTime = st">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EndTime = et">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="StartDate = sd">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EndDate = ed">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Priority = p">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Task Details = l">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                   <VBox prefHeight="52.0" prefWidth="132.0">
@@ -267,7 +302,7 @@
                         <Label prefHeight="30.0" prefWidth="154.0" text="&lt;PriorityNo.&gt;" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1 OR 2 OR 3">
                            <font>
-                              <Font name="Papyrus" size="12.0" />
+                              <Font name="Verdana" size="12.0" />
                            </font>
                         </Text>
                      </children>
@@ -279,7 +314,7 @@
                   <Label prefHeight="30.0" prefWidth="154.0" text="&lt;Frequency&gt;" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Weekly/Daily/Yearly">
                      <font>
-                        <Font name="Papyrus" size="12.0" />
+                        <Font name="Verdana" size="12.0" />
                      </font>
                   </Text>
                </children>
