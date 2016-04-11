@@ -515,10 +515,10 @@ public class CreateTask {
 			String hAndM[] = timeInfo.split(":");
 			time.setHour(Integer.parseInt(hAndM[0]));
 			time.setMinute(Integer.parseInt(hAndM[1]));
-		} else if (timeInfo.equals(MIDNIGHT)) {
+		} else if (timeInfo.toLowerCase().equals(MIDNIGHT)) {
 			time.setHour(23);
 			time.setMinute(59);
-		} else if (timeInfo.equals(NOON)) {
+		} else if (timeInfo.toLowerCase().equals(NOON)) {
 			time.setHour(12);
 			time.setMinute(0);
 		} else {
