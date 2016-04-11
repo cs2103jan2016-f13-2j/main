@@ -157,12 +157,69 @@ public class Storage {
 		FILE_NAME = fileName;
 	}
 
+	//===== Protected methods =====
+	
+	/**
+	 * Reads content of file into list for manipulation by other classes.
+	 * @param file : The file to be read.
+	 * @param list : The list for contents to be put into.
+	 * @return true if successfully read, false if exception thrown.
+	 */
+	protected boolean readFileToTaskArrayList(File file, ArrayList<Task> list) {
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+
+			Object object = in.readObject();
+
+			while (!(object instanceof EOFIndicator)) {
+				list.add((Task) object);
+				object = in.readObject();
+			}
+			in.close();
+		}
+		catch (IOException | ClassNotFoundException e) {
+			feedback.setMessage(MSG_FAIL_READ_FILE);
+			logger.log(Level.WARNING, "Unable to read from taskFile.");
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Writes the contents of existing task list to file.
+	 * @param list : The list to be written to file.
+	 * @param file : The destination file to be written to.
+	 * @return true if successfully written, false if exception thrown.
+	 */
+	protected boolean writeTaskArrayListToFile(ArrayList<Task> list, File file) {
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+
+			for (int i = 0; i < list.size(); i++) {
+				out.writeObject(list.get(i));
+			}
+
+			out.writeObject(new EOFIndicator());
+			out.close();
+		}
+		catch (FileNotFoundException e) {
+			feedback.setMessage(MSG_FAIL_DIRECTORY_NOT_FOUND);
+
+			return false;
+		}
+		catch (IOException e) {
+			feedback.setMessage(MSG_FAIL_WRITE_FILE);
+			logger.log(Level.WARNING, "Unable to write to taskFile.");
+
+			return false;
+		}
+
+		return true;
+	}
 
 	//===== Private methods =====
-
-
-
-
+	
 	/**
 	 * Initialises the class variables.
 	 */
@@ -196,7 +253,7 @@ public class Storage {
 			file.createNewFile();
 
 			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-			out.writeObject(new EofIndicator());
+			out.writeObject(new EOFIndicator());
 
 			out.close();
 		}
@@ -206,65 +263,6 @@ public class Storage {
 		}
 
 		assert(file.exists());
-		return true;
-	}
-
-	/**
-	 * Reads content of file into list for manipulation by other classes.
-	 * @param file : The file to be read.
-	 * @param list : The list for contents to be put into.
-	 * @return true if successfully read, false if exception thrown.
-	 */
-	private boolean readFileToTaskArrayList(File file, ArrayList<Task> list) {
-		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-
-			Object object = in.readObject();
-
-			while (!(object instanceof EofIndicator)) {
-				list.add((Task) object);
-				object = in.readObject();
-			}
-			in.close();
-		}
-		catch (IOException | ClassNotFoundException e) {
-			feedback.setMessage(MSG_FAIL_READ_FILE);
-			logger.log(Level.WARNING, "Unable to read from taskFile.");
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Writes the contents of existing task list to file.
-	 * @param list : The list to be written to file.
-	 * @param file : The destination file to be written to.
-	 * @return true if successfully written, false if exception thrown.
-	 */
-	private boolean writeTaskArrayListToFile(ArrayList<Task> list, File file) {
-		try {
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-
-			for (int i = 0; i < list.size(); i++) {
-				out.writeObject(list.get(i));
-			}
-
-			out.writeObject(new EofIndicator());
-			out.close();
-		}
-		catch (FileNotFoundException e) {
-			feedback.setMessage(MSG_FAIL_DIRECTORY_NOT_FOUND);
-
-			return false;
-		}
-		catch (IOException e) {
-			feedback.setMessage(MSG_FAIL_WRITE_FILE);
-			logger.log(Level.WARNING, "Unable to write to taskFile.");
-
-			return false;
-		}
-
 		return true;
 	}
 }

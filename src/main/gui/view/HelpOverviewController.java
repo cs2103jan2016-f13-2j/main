@@ -73,19 +73,19 @@ public class HelpOverviewController {
 	 * displays the number of overdued tasks if any
 	 */
 	private void showOverdueCounter() {
-		if (getNoOfDAndFTasks(MainLogic.getExpiredTasks()) > 0) {
-		overdueCounter.setText(""+getNoOfDAndFTasks(MainLogic.getExpiredTasks()));
+		if (getNoOfDAndETasks(MainLogic.getExpiredTasks()) > 0) {
+		overdueCounter.setText(""+getNoOfDAndETasks(MainLogic.getExpiredTasks()));
 		} else {
 			overdueRectangle.setOpacity(0);
 		}
 	}
 	
 	/**
-	 * get total number of deadline and floating tasks in an ArrayList<ArrayList<Task>> from MainLogic
+	 * get total number of deadline and event tasks in an ArrayList<ArrayList<Task>> from MainLogic
 	 * @param array
 	 * @return
 	 */
-	private int getNoOfDAndFTasks(ArrayList<ArrayList<Task>> array) {
+	private int getNoOfDAndETasks(ArrayList<ArrayList<Task>> array) {
 		int counter=0;
 		for (int i = 0; i < array.size(); i++) {
 			if(i != MAIN_LOGIC_FLOATING)

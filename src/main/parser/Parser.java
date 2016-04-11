@@ -263,7 +263,11 @@ public class Parser {
 	}
 
 
-
+	/**
+	 * deal with the add command, assign the "add" command and assign value to the task attribute
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForAdd(UserInput userInput, ArrayList<String> inputCommand) {
 		Task addTask = createTaskForAdd(inputCommand);
 		userInput.setTask(addTask);
@@ -271,7 +275,11 @@ public class Parser {
 	}
 
 
-
+	/**
+	 * deal with the recurring command, assign the "recurring" command and assign value to the task attribute
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForRecuring(UserInput userInput, ArrayList<String> inputCommand) {
 		Task recurringTask = CreateTask.createRecurring(RECURRING, inputCommand);
 		userInput.setTask(recurringTask);
@@ -279,7 +287,11 @@ public class Parser {
 	}
 
 	
-
+	/**
+	 * create different task type for add command
+	 * @param listFromLogic
+	 * @return a task object
+	 */
 	public final static Task createTaskForAdd(ArrayList<String> listFromLogic) {
 			
 			Task task = new Task();
@@ -302,7 +314,12 @@ public class Parser {
 		}
 	
 
-	
+	/**
+	 * get the string the user typed in and store each words in a right format in 
+	 * an array list.
+	 * @param inputFromLogic
+	 * @param contentListForLogic
+	 */
 	private static void updateList(String inputFromLogic, ArrayList<String> contentListForLogic) {
 		
 		//for commands: exit, help, undo etc
@@ -323,7 +340,11 @@ public class Parser {
 		}
 	}
 
-	
+	/**
+	 * identify different task type
+	 * @param listFromLogic
+	 * @return the string which represent different task type
+	 */
 	public static String identifyTaskType(ArrayList<String> listFromLogic ) {
 		
 		if(listFromLogic.contains(RECURRING)) {
@@ -340,6 +361,12 @@ public class Parser {
 		}
 	}
 
+	
+	/**
+	 * differentiate different command for editing
+	 * @param command
+	 * @return integer which represents the corresponding command
+	 */
 	private static Integer getNumber(String command){
 		int n = -1;
 		switch(command.toLowerCase()){
@@ -383,6 +410,11 @@ public class Parser {
 		return n;
 	} 
 	
+	/**
+	 * find what kind of task you want to delete
+	 * @param s
+	 * @return the integer number which represent the corresponding type
+	 */
 	public static int deleteType(String s){
 		int type = -1;
 		switch(s.substring(0,1).toLowerCase()){
@@ -401,6 +433,11 @@ public class Parser {
 		return type;
 	}
 	
+	/**
+	 * find the task number user wants to delete
+	 * @param s
+	 * @return the task number user wants to delete
+	 */
 	public static int deleteNumber(String s){
 		int num = -1;
 		try {
@@ -413,6 +450,12 @@ public class Parser {
 		return num;
 	}
 	
+	/**
+	 * find the next commnad such like "-st", "-sd" etc.
+	 * @param commands
+	 * @param n
+	 * @return the index number of the next command in the array list
+	 */
 	private static int findNextCommand(ArrayList<String> commands, int n){//for edit
 		int k = -1;
 		for(int i=n+1; i<commands.size(); i++){
@@ -426,7 +469,12 @@ public class Parser {
 	}
 	
 	
-	
+	/**
+	 * If the command is delete, then is will assign value to the deleteNumber attribute
+	 * @param commands
+	 * @param userInput
+	 * @param list
+	 */
 	private static void passDeletePart(ArrayList<String> commands, UserInput userInput, ArrayList<int[]> list){
 		for(int i=1; i<commands.size(); i++){
 			int[] arr = new int[2];
@@ -437,6 +485,15 @@ public class Parser {
 		userInput.setDeleteNumber(list);
 	}
 	
+	/**
+	 * If the command is edit, then this function will help to assign value to
+	 * details, start date, start time, end date, end time, location, priority and 
+	 * complete attributes
+	 * @param commands
+	 * @param userInput
+	 * @param list
+	 * @param start
+	 */
 	private static void passEditPart(ArrayList<String> commands, UserInput userInput, ArrayList<Integer> list,int start){
 		int i = start;
 		while(i<commands.size()){
@@ -495,11 +552,19 @@ public class Parser {
 		
 	}
 
-	//removes all unnecessary whitespaces to 1 whitespace
+	/**
+	 * removes all unnecessary whitespaces to 1 whitespace
+	 * @param input
+	 * @return String
+	 */
 	private final static String formatInputForValidParsing (String input) {
 		return input.replaceAll("\\s+", WHITESPACE).trim();
 	}
-	//check if a string input is only a word
+	/**
+	 * check if a string input is only a word
+	 * @param input
+	 * @return true if it contains only one word
+	 */
 	private final static boolean onlyOneWord(String input) {
 		if (input.contains(WHITESPACE)) {
 			return false;

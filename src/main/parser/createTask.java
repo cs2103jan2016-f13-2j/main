@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import main.resources.Date;
+import main.resources.Feedback;
 import main.resources.Task;
 import main.resources.Time;
 import main.parser.Shortcuts;
@@ -45,6 +46,11 @@ public class CreateTask {
 	private static final String OCTOBER = "October";
 	private static final String NOVEMBER = "November";
 	private static final String DECEMBER = "December";
+	
+	//Feedback strings
+	//private static final String MSG_FAIL_INVALID_PRIORITY = "Error: \"%1$s\" is an invalid priority.";
+	
+	//private static Feedback feedback = Feedback.getInstance();
 
 	
 	/**
@@ -78,7 +84,7 @@ public class CreateTask {
 	 * @param dateAndTime
 	 */
 	private static void setLocationForDeadlineTask(ArrayList<String> info, String taskName, Task task, int indexOfP,
-			String detail, String dateAndTime) {
+		String detail, String dateAndTime) {
 		if (info.contains(AT)) {//if has location, assign it
 			int indexOfAt = info.indexOf(AT);
 			Time time = getTime(dateAndTime);
@@ -156,7 +162,7 @@ public class CreateTask {
 	 * @param endDateAndTime
 	 */
 	private static void setLocationForEventTask(ArrayList<String> info, String taskName, Task task, int indexOfP,
-			String detail, String startDateAndTime, String endDateAndTime) {
+		String detail, String startDateAndTime, String endDateAndTime) {
 		if (info.contains(AT)) {//user indicate the location
 			int indexOfAt = info.indexOf(AT);
 			Time startTime = getTime(startDateAndTime);
@@ -211,7 +217,7 @@ public class CreateTask {
 	 * @param indexOfP
 	 */
 	private static void setLocationForFloatingTask(ArrayList<String> info, String taskName, Task task, int length,
-			int indexOfP) {
+		int indexOfP) {
 		if (info.contains(AT)) { // info has location
 			int indexOfAt = info.indexOf(AT);
 			String detail = getDetail(info, 1, indexOfAt);
@@ -290,7 +296,7 @@ public class CreateTask {
 	 * @param indexOfP
 	 */
 	private static void createFloatingRecurringTask(ArrayList<String> info, String taskName, Task task, int indexOfFor,
-			int indexOfP) {
+		int indexOfP) {
 		String detail;
 		if (info.contains(AT)) {//has location information
 			int indexOfAt = info.indexOf(AT);
@@ -385,7 +391,7 @@ public class CreateTask {
 	 * @param indexOfFor
 	 */
 	private static void createDeadlineRecurringTask(ArrayList<String> info, String taskName, Task task,
-			int indexOfFor) {
+		int indexOfFor) {
 		int indexOfP;
 		String detail;
 		String dateAndTime;
@@ -532,22 +538,49 @@ public class CreateTask {
 		if (timeInfo.toLowerCase().contains("am")) {
 			String h[] = timeInfo.toLowerCase().split("am");
 			if(h[0].length()<=2){
-				time.setHour(Integer.parseInt(h[0]));
+				int hour = Integer.parseInt(h[0]);
+				if (hour == 12) {
+					hour = 0;
+				}
+				else if (hour < 0 || hour > 12) {
+					hour = -1;
+				}
+				time.setHour(hour);
 				time.setMinute(0);
 			} else {
 				handleDiffTimeFormatPart1(h[0],time);
+				if (time.getHour() == 12) {
+					time.setHour(0);
+				}
+				else if (time.getHour() < 0 || time.getHour() > 12) {
+					time.setHour(-1);
+				}
 			}
 		} else {
 			String h[] = timeInfo.toLowerCase().split("pm");
 			if(h[0].length()<=2){
-				time.setHour(Integer.parseInt(h[0])+12);
+				int hour = Integer.parseInt(h[0]) + 12;
+				if (hour == 24) {
+					hour = 12;
+				}
+				else if (hour < 0 || hour > 12) {
+					hour = -1;
+				}
+				time.setHour(hour);
 				time.setMinute(0);
 			} else {
 				handleDiffTimeFormatPart1(h[0],time);
 				time.setHour(time.getHour()+12);
+				if (time.getHour() == 24) {
+					time.setHour(12);
+				}
+				else if (time.getHour() < 0 || time.getHour() > 12) {
+					time.setHour(-1);
+				}
 			}
 		}
 	}
+
 
 	/**
 	 * get date from the date and time string
@@ -570,7 +603,7 @@ public class CreateTask {
 			} else { // does not have date info
 				Time t1 = getTime(dateAndTime);
 				Time t2 = new Time(Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-						Calendar.getInstance().get(Calendar.MINUTE));
+					Calendar.getInstance().get(Calendar.MINUTE));
 				if (compareTwoTime(t1, t2)) {
 					handleDateFormatWithToday(date);
 				} else {
@@ -753,7 +786,7 @@ public class CreateTask {
 	 * @param month
 	 * @return if the date is larger or equal to today's date, return true; or return false 
 	 */
-	private static boolean compareMonth(int date, int month){
+	protected static boolean compareMonth(int date, int month){
 		Calendar cal = Calendar.getInstance();
 		int curDate = cal.get(Calendar.DAY_OF_MONTH);
 		int curMonth = cal.get(Calendar.MONTH)+1;
@@ -775,31 +808,31 @@ public class CreateTask {
 	 * @param dateInfo
 	 * @return the integer number
 	 */
-	private static int dates(String dateInfo) {
+	protected static int dates(String dateInfo) {
 		int a = 0;
 		switch (dateInfo) {
-		case MONDAY:
+			case MONDAY:
 			a = 2;
 			break;
-		case TUESDAY:
+			case TUESDAY:
 			a = 3;
 			break;
-		case WEDNESDAY:
+			case WEDNESDAY:
 			a = 4;
 			break;
-		case THURSDAY:
+			case THURSDAY:
 			a = 5;
 			break;
-		case FRIDAY:
+			case FRIDAY:
 			a = 6;
 			break;
-		case SATURDAY:
+			case SATURDAY:
 			a = 7;
 			break;
-		case SUNDAY:
+			case SUNDAY:
 			a = 1;
 			break;
-		default:
+			default:
 			a = -1;
 			break;
 		}
@@ -811,46 +844,46 @@ public class CreateTask {
 	 * @param dateInfo
 	 * @return the integer number
 	 */
-	private static int months(String dateInfo) {
+	protected static int months(String dateInfo) {
 		int a = 0;
 		switch (dateInfo) {
-		case JANUARY:
+			case JANUARY:
 			a = 0;
 			break;
-		case FEBRUARY:
+			case FEBRUARY:
 			a = 1;
 			break;
-		case MARCH:
+			case MARCH:
 			a = 2;
 			break;
-		case APRIL:
+			case APRIL:
 			a = 3;
 			break;
-		case MAY:
+			case MAY:
 			a = 4;
 			break;
-		case JUNE:
+			case JUNE:
 			a = 5;
 			break;
-		case JULY:
+			case JULY:
 			a = 6;
 			break;
-		case AUGUST:
+			case AUGUST:
 			a = 7;
 			break;
-		case SEPTEMBER:
+			case SEPTEMBER:
 			a = 8;
 			break;
-		case OCTOBER:
+			case OCTOBER:
 			a = 9;
 			break;
-		case NOVEMBER:
+			case NOVEMBER:
 			a = 10;
 			break;
-		case DECEMBER:
+			case DECEMBER:
 			a = 11;
 			break;
-		default:
+			default:
 			a = -1;
 			break;
 		}
@@ -862,13 +895,17 @@ public class CreateTask {
 	 * @param timeInfo
 	 * @return true if the string is time
 	 */
-	private static boolean isTime(String timeInfo) {
-		if (timeInfo.toLowerCase().contains("am") || timeInfo.toLowerCase().contains("pm")
-				|| timeInfo.contains(MIDNIGHT) || timeInfo.contains(NOON) || containsOnlyNumbers(timeInfo)) {
+	protected static boolean isTime(String timeInfo) {
+		if (timeInfo.toLowerCase().contains("am") || timeInfo.toLowerCase().contains("pm") || timeInfo.contains(MIDNIGHT) || timeInfo.contains(NOON) || containsOnlyNumbers(timeInfo) ||containsNumbersAndColon(timeInfo)) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	protected static boolean containsNumbersAndColon(String str){
+		String t[] = str.split(":");
+		return (containsOnlyNumbers(t[0])&&containsOnlyNumbers(t[1]));
 	}
 
 	/**
@@ -876,7 +913,7 @@ public class CreateTask {
 	 * @param str
 	 * @return true if the string only has number
 	 */
-	private static boolean containsOnlyNumbers(String str) {
+	protected static boolean containsOnlyNumbers(String str) {
 		for (int i = 0; i < str.length(); i++) {
 			if (!Character.isDigit(str.charAt(i)))
 				return false;
@@ -890,7 +927,7 @@ public class CreateTask {
 	 * @param t2
 	 * @return true if the first time is bigger than the second one
 	 */
-	private static boolean compareTwoTime(Time t1, Time t2) {
+	protected static boolean compareTwoTime(Time t1, Time t2) {
 		int t1TotalM = t1.getHour() * 60 + t1.getMinute();
 		int t2TotalM = t2.getHour() * 60 + t2.getMinute();
 		if (t1TotalM > t2TotalM) {
@@ -905,7 +942,7 @@ public class CreateTask {
 	 * @param p 
 	 * @return integer number
 	 */
-	public static int getPriority(String p) {
+	protected static int getPriority(String p) {
 		int n = Integer.parseInt(p);
 		if(n>=3){
 			return 3;
@@ -919,7 +956,7 @@ public class CreateTask {
 	 * @param fre
 	 * @return integer number
 	 */
-	public static int getFrequency(String fre) {
+	protected static int getFrequency(String fre) {
 		if (fre.equals(DAILY)) {
 			return 1;
 		} else if (fre.equals(WEEKLY)) {
