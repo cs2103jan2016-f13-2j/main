@@ -56,7 +56,7 @@ public class MainApp extends Application {
 
     /**
      * Returns the data as an observable list of Tasks. 
-     * @return
+     * @return the taskData list.
      */
     public ObservableList<Task> getTaskData() {
         return taskData;
@@ -74,7 +74,7 @@ public class MainApp extends Application {
 
     /**
      * Initializes primary stage.
-     * @param primaryStage
+     * @param primaryStage : the primary stage.
      */
 	private void initializePrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
@@ -240,7 +240,7 @@ public class MainApp extends Application {
     
     /**
      * Returns the main stage.
-     * @return
+     * @return the primary stage.
      */
     public Stage getPrimaryStage() {
         return primaryStage;
