@@ -19,7 +19,7 @@ public class TaskComparator implements Comparator<Task> {
 	/**
 	 * Compare method for Comparator
 	 * @param task0, task1: tasks to be compared
-	 * @return int of compare result
+	 * @return int: Integer value of compare result
 	 */
 	@Override
 	public int compare(Task task0, Task task1) {

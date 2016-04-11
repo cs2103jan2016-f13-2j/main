@@ -60,6 +60,7 @@ public class MainLogic {
 	/**
 	 * Runs the MainLogic
 	 * throws exception if any component fails to complete
+	 * @param input: Default UserInput object containing only raw data
 	 */
 	public static void run(UserInput input) {
 		logger.log(Level.INFO, "MainLogic START");
@@ -428,7 +429,7 @@ public class MainLogic {
 
 	/**
 	 * Searches all the Tasks the user intend to delete
-	 * @return ArrayList<Task> of Tasks if Task is present in list
+	 * @return ArrayList of Tasks if Task is present in list
 	 */
 	private static ArrayList<Task> findDeleteTask() {
 		int count;
@@ -457,7 +458,7 @@ public class MainLogic {
 
 	/**
 	 * Searches the Tasks the user intend to complete/uncomplete
-	 * @return ArrayList<Task> of Tasks if Tasks is present in list
+	 * @return ArrayList of Tasks if Tasks is present in list
 	 */
 	private static ArrayList<Task> completeTask() {
 		int count;
@@ -513,7 +514,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the current taskList user is viewing from
-	 * @return ArrayList<Task> of Task user is currently viewing
+	 * @return ArrayList of Task user is currently viewing
 	 */
 	private static ArrayList<Task> getList() {
 		switch (userInput.getTab()) {
@@ -587,7 +588,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the current displayList
-	 * @return ArrayList<Task> of Task of current displayList
+	 * @return ArrayList of Task of current displayList
 	 */
 	public static ArrayList<Task> getDisplayList() {
 		return displayList;
@@ -596,7 +597,7 @@ public class MainLogic {
 	/**
 	 * Filters the given list to 3 different components: Deadline, Floating, Event
 	 * @param list: list to be filtered
-	 * @return ArrayList<ArrayList<Task>> Object of filtered components
+	 * @return ArrayList of ArrayList of Task Object of filtered components
 	 */
 	private static ArrayList<ArrayList<Task>> getFilteredList(ArrayList<Task> list) {
 		ArrayList<ArrayList<Task>> newList = new ArrayList<ArrayList<Task>>();
@@ -618,6 +619,9 @@ public class MainLogic {
 	/**
 	 * Creates the list containing: Deadline, Floating, Event
 	 * @param newList: List to be created
+	 * @param eventList: Event list
+	 * @param floatList: Float list
+	 * @param deadlineList: Deadline list
 	 */
 	private static void createList(ArrayList<ArrayList<Task>> newList, ArrayList<Task> eventList,
 			ArrayList<Task> floatList, ArrayList<Task> deadlineList) {
@@ -629,6 +633,10 @@ public class MainLogic {
 
 	/**
 	 * Filter the task into the respective Deadline, Floating, Event lists
+	 * @param eventList: Event list
+	 * @param floatList: Float list
+	 * @param deadlineList: Deadline list
+	 * @param task: Task to be added
 	 */
 	private static void filterTask(ArrayList<Task> eventList, ArrayList<Task> floatList, ArrayList<Task> deadlineList,
 			Task task) {
@@ -649,8 +657,9 @@ public class MainLogic {
 	}
 
 	/**
-	 * Check whether the task is expired
+	  * Check whether the task is expired
 	 * @param list: taskList from Storage
+	 * @param i: Task object position in list
 	 * @return Task object after determining whether to toggle expired variable
 	 */
 	private static Task checkExpired(ArrayList<Task> list, int i) {
@@ -675,7 +684,7 @@ public class MainLogic {
 	//Lists
 	/**
 	 * Gets the filtered "All" taskList
-	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 * @return ArrayList of ArrayList of Tasks of filtered list
 	 */
 	public static ArrayList<ArrayList<Task>> getTaskList() {
 		return getFilteredList(getTaskListUnfiltered());
@@ -683,7 +692,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the filtered "Completed" taskList
-	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 * @return ArrayList of ArrayList of Tasks of filtered list
 	 */
 	public static ArrayList<ArrayList<Task>> getCompletedTasks() {
 		return getFilteredList(getCompletedTasksUnfiltered());
@@ -691,7 +700,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the filtered "Today" taskList
-	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 * @return ArrayList of ArrayList of Tasks of filtered list
 	 */
 	public static ArrayList<ArrayList<Task>> getTodayTasks() {
 		return getFilteredList(getTodayTasksUnfiltered());
@@ -699,7 +708,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the filtered "Expired" taskList
-	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 * @return ArrayList of ArrayList of Tasks of filtered list
 	 */
 	public static ArrayList<ArrayList<Task>> getExpiredTasks() {
 		return getFilteredList(getExpiredTasksUnfiltered());
@@ -707,7 +716,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the filtered "Upcoming" taskList
-	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 * @return ArrayList of ArrayList of Tasks of filtered list
 	 */
 	public static ArrayList<ArrayList<Task>> getWeekTasks() {
 		return getFilteredList(getWeekTasksUnfiltered());
@@ -715,7 +724,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the unfiltered "All" taskList
-	 * @return ArrayList<Task> of unfiltered list
+	 * @return ArrayList of Tasks of unfiltered list
 	 */
 	public static ArrayList<Task> getTaskListUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -730,7 +739,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the unfiltered "Completed" taskList
-	 * @return ArrayList<Task> of unfiltered list
+	 * @return ArrayList of Tasks of unfiltered list
 	 */
 	public static ArrayList<Task> getCompletedTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -745,7 +754,7 @@ public class MainLogic {
 	
 	/**
 	 * Gets the unfiltered "Today" taskList
-	 * @return ArrayList<Task> of unfiltered list
+	 * @return ArrayList of Tasks of unfiltered list
 	 */
 	public static ArrayList<Task> getTodayTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -764,7 +773,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the unfiltered "Expired" taskList
-	 * @return ArrayList<Task> of unfiltered list
+	 * @return ArrayList of Tasks of unfiltered list
 	 */
 	public static ArrayList<Task> getExpiredTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -780,7 +789,7 @@ public class MainLogic {
 
 	/**
 	 * Gets the unfiltered "Upcoming" taskList
-	 * @return ArrayList<Task> of unfiltered list
+	 * @return ArrayList of Tasks of unfiltered list
 	 */
 	public static ArrayList<Task> getWeekTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();

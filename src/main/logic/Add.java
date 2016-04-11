@@ -94,6 +94,7 @@ public class Add implements Command {
 
 	/**
 	 * Updates the taskList and recurList to the list of all recurring tasks
+	 * @param task: Task to be added to the list
 	 */
 	private void updateList(Task task) {
 		Task newTask;
@@ -105,6 +106,8 @@ public class Add implements Command {
 	/**
 	 * Updates the date for the recurring task
 	 * @param task: Task to be updated
+	 * @param calStart: Start date of task
+	 * @param calEnd: End date of task
 	 */
 	private void updateDate(Task task, Calendar calStart, Calendar calEnd) {
 		task.setRecurTime(task.getRecurTime() - 1);
@@ -120,6 +123,8 @@ public class Add implements Command {
 	/**
 	 * Creates an instance after updating the new recurring date
 	 * @param task: Task to update the date to
+	 * @param calStart: Start date of task
+	 * @param calEnd: End date of task
 	 */
 	private void generateRecurTasks(Task task, Calendar calStart, Calendar calEnd) {
 		switch (task.getRecurFrequency()) {

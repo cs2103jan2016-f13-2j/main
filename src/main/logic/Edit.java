@@ -35,7 +35,7 @@ public class Edit implements Command {
 
 	/**
 	 * Constructs an Edit command
-	 * @param userInput: userInput instance from MainLogic
+	 * @param userInput: UserInput instance from MainLogic
 	 */
 	public Edit(UserInput userInput) {
 		this.userInput = userInput;
