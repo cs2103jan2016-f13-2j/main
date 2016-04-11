@@ -14,12 +14,19 @@ public class Display implements Command {
 	Storage storage;
 	static Logger logger = Logger.getLogger("Display");
 
+	/**
+	 * Constructs a Display command
+	 * @param userInput: userInput instance from MainLogic
+	 */
 	public Display(UserInput userInput) {
 		this.userInput = userInput;
 		storage = Storage.getInstance();
 	}
 
 
+	/**
+	 * Execute the command
+	 */
 	@Override
 	public void execute() {
 		logger.log(Level.INFO, "Command DISPLAY");

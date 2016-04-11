@@ -1,5 +1,5 @@
 //@@author A0124487Y
-package main.gui.resources;
+package main.gui.view;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,8 +8,6 @@ import java.util.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -30,9 +28,18 @@ import main.resources.Task;
 import main.resources.UserInput;
 
 
-public class CompleteOverviewController {
+public class TodayOverviewController {
 	
 	private static final String CMD_DISPLAY = "display";
+	private static final int MAIN_LOGIC_DEADLINE = 2;
+	private static final int MAIN_LOGIC_EVENT = 0;
+	private static final int MAIN_LOGIC_FLOATING = 1;
+	
+	private static final int TOTAL_TASK_LIST_DEADLINE = 0;
+	private static final int TOTAL_TASK_LIST_EVENT = 1;
+	private static final int TOTAL_TASK_LIST_FLOATING = 2;
+
+	private static final int  USER_INPUT_TODAY_TAB= 2;
 	
 	private Boolean controlPressed = false;
     private Boolean zPressed = false;
@@ -84,10 +91,14 @@ public class CompleteOverviewController {
 	@FXML
 	private TableColumn<Task, String> floatingDetailsColumn;
 	
-	@FXML private Label instantFeedback;
-	@FXML private Label overdueCounter;
-	@FXML private Label todayDate;
-	@FXML private Rectangle overdueRectangle;
+	@FXML 
+	private Label instantFeedback;
+	@FXML 
+	private Label overdueCounter;
+	@FXML 
+	private Label todayDate;
+	@FXML 
+	private Rectangle overdueRectangle;
 	
 	@FXML
 	private TextField commandText;
@@ -96,7 +107,7 @@ public class CompleteOverviewController {
 	private ObservableList<Task> eventList = FXCollections.observableArrayList();
 	private ObservableList<Task> floatingList = FXCollections.observableArrayList();
 	
-	private ArrayList<ObservableList<Task>> totalList = new ArrayList<ObservableList<Task>>();
+	private ArrayList<ObservableList<Task>> totalTaskList = new ArrayList<ObservableList<Task>>();
 	private ArrayList<TableView<Task>> allTables = new ArrayList<TableView<Task>>();
 	
 	private Feedback feedback;
@@ -104,7 +115,7 @@ public class CompleteOverviewController {
 	// Reference to the main application.
 	private MainApp mainApp;
 
-	public CompleteOverviewController() {
+	public TodayOverviewController() {
 		
 	}
 
@@ -114,10 +125,22 @@ public class CompleteOverviewController {
 	 */
 	@FXML
 	private void initialize() {
-		initializeAllTables();
-		wrapTableColumns();
+		initializeLists();
+		initializeLabels();
+		displayAllTablesData();
+		showOverdueCounter();	
+		overrideTableProperties();
 	}
 
+	private void overrideTableProperties() {
+		wrapTableColumns();
+		initializeAllPriority();
+		initializeAllDates();
+	}
+
+	/**
+	 * Overrides table columns settings to wrap text 
+	 */
 	private void wrapTableColumns() {
 		taskDetailsWrap();
 		taskLocationWrap();
@@ -211,8 +234,10 @@ public class CompleteOverviewController {
 	    });
 	}
 
-
-	private void initializeAllTables() {
+	/**
+	 * Displays data from observableLists
+	 */
+	private void displayAllTablesData() {
 		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
 		taskPNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskPNumberProperty());
 		taskDetailsColumn.setCellValueFactory(cellData -> cellData.getValue().taskDetailsProperty());
@@ -235,6 +260,9 @@ public class CompleteOverviewController {
 		setTablePlaceHolder();
 	}
 
+	/**
+	 * Set text to put "No Tasks" if there are no contents in the table.
+	 */
 	private void setTablePlaceHolder() {
 		taskTable.setPlaceholder(new Label("No tasks"));
 		eventTable.setPlaceholder(new Label("No tasks"));
@@ -247,20 +275,15 @@ public class CompleteOverviewController {
 	 * @param mainApp
 	 */
 	public void setMainApp(MainApp mainApp) {
-		initializeLists();
 		this.mainApp = mainApp;
-		initializeLabels();
-		getTaskListFromFile();
-		showOverdueCounter();	
-		setTables();
-		initializeAllPriority();
-		initializeAllDates();
-
 	}
 
-	private void setTables() {
-		for (int i = 0; i < totalList.size(); i++) {
-		allTables.get(i).setItems(totalList.get(i));
+	/**
+	 * inputs the totalTaskList of tasks into the three tables
+	 */
+	private void setTablesArrayList() {
+		for (int i = 0; i < totalTaskList.size(); i++) {
+		allTables.get(i).setItems(totalTaskList.get(i));
 		}
 	}
 
@@ -525,14 +548,18 @@ public class CompleteOverviewController {
 	}
 
 	private void initializeLists() {
-		totalList.add(list);
-		totalList.add(eventList);
-		totalList.add(floatingList);
+		totalTaskList.add(list);
+		totalTaskList.add(eventList);
+		totalTaskList.add(floatingList);
 		allTables.add(taskTable);
 		allTables.add(eventTable);
 		allTables.add(floatingTable);
+		getTaskListFromFile();
 	}
 
+	/**
+	 * displays the number of overdued tasks if any
+	 */
 	private void showOverdueCounter() {
 		if (getNoOfDAndFTasks(MainLogic.getExpiredTasks()) > 0) {
 		overdueCounter.setText(""+getNoOfDAndFTasks(MainLogic.getExpiredTasks()));
@@ -541,33 +568,42 @@ public class CompleteOverviewController {
 		}
 	}
 	
-	
-	//convert arraylist to observable list
+	/**
+	 * converts the arrayList<arrayList<Task>> to an arrayList<ObservableList<Task>> 
+	 */
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
 		MainLogic.run(userInput);
-		//changes for every overview
-		ArrayList<ArrayList<Task>> temp = MainLogic.getCompletedTasks();
+		ArrayList<ArrayList<Task>> temp = MainLogic.getTodayTasks();
 		numberTaskArrayList(temp); 
-		setTotalList(temp);
+		setTaskTotalList(temp);
+		setTablesArrayList();
 	}
 
-	private void setTotalList(ArrayList<ArrayList<Task>> temp) {
-		for (int k = 0; k< totalList.size(); k++){ 
+	/**
+	 * adds in arrayList from the MainLogic to totalTaskList
+	 * @param temp
+	 */
+	private void setTaskTotalList(ArrayList<ArrayList<Task>> temp) {
+		for (int k = 0; k< totalTaskList.size(); k++){ 
 			for (int j = 0; j < temp.size(); j++) {
 				for (int i=0; i < temp.get(j).size(); i++) {
-					if (k == 0 && j == 2) {
-						totalList.get(0).add(temp.get(2).get(i));
-					} else if (k == 1 && j == 0) {
-						totalList.get(1).add(temp.get(0).get(i));
-					} else if (k == 2 && j == 1) {
-						totalList.get(2).add(temp.get(1).get(i));
+					if (k == TOTAL_TASK_LIST_DEADLINE && j == MAIN_LOGIC_DEADLINE) {
+						totalTaskList.get(TOTAL_TASK_LIST_DEADLINE).add(temp.get(MAIN_LOGIC_DEADLINE).get(i));
+					} else if (k == TOTAL_TASK_LIST_EVENT && j == MAIN_LOGIC_EVENT) {
+						totalTaskList.get(TOTAL_TASK_LIST_EVENT).add(temp.get(MAIN_LOGIC_EVENT).get(i));
+					} else if (k == TOTAL_TASK_LIST_FLOATING && j == MAIN_LOGIC_FLOATING) {
+						totalTaskList.get(TOTAL_TASK_LIST_FLOATING).add(temp.get(MAIN_LOGIC_FLOATING).get(i));
 					}
 				}
 			}
 		}
 	}
 	
+	/**
+	 * Assigns a unique number to each task starting from 1
+	 * @param list
+	 */
 	private void numberTaskArrayList(ArrayList<ArrayList<Task>> list) {
 		int taskNum = 1;
 		for (ArrayList<Task> listT : list) {
@@ -579,29 +615,37 @@ public class CompleteOverviewController {
 			}
 		}
 
-	
+	/**
+	 * get total number of deadline and floating tasks in an ArrayList<ArrayList<Task>> from MainLogic
+	 * @param array
+	 * @return
+	 */
 	private int getNoOfDAndFTasks(ArrayList<ArrayList<Task>> array) {
 		int counter=0;
-		for (int i = 0; i < array.size()-1; i++) {
+		for (int i = 0; i < array.size(); i++) {
+			if(i != MAIN_LOGIC_FLOATING)
 			counter += array.get(i).size();
 			}
 		return counter;
 	}
 
 	/**
-	 * Called when the user presses enter.
+	 * Called when the user presses enter. Creates a UserInput object and passes it to MainLogic.
 	 */
 	public void onEnter(){
 		feedback.setMessage(null);
 		String command = commandText.getText(); //string received from user.
 		commandText.setText("");
-		UserInput userInput = new UserInput(command, 1);
+		UserInput userInput = new UserInput(command, USER_INPUT_TODAY_TAB);
 		MainLogic.run(userInput);	
-		mainApp.showTaskOverview(); 
+		mainApp.showTodayOverview();
 	}    
 	
 	
-	
+	/**
+	 * Listener for TextField. If User enters a keyboard shortcut, it will be executed.
+	 * @param keyEvent
+	 */
 	@FXML
 	void onKeyPressed(KeyEvent keyEvent) {
 	  processKeyEventPressed(keyEvent);
@@ -665,31 +709,49 @@ public class CompleteOverviewController {
 		  }
 	}
 	
+	/**
+	 * when overdue tab is clicked
+	 */
 	@FXML 
 	void onClickedOverdue() {
 		mainApp.showOverdueOverview();
 	}
 	
+	/**
+	 * when help tab is clicked
+	 */
 	@FXML
 	void onClickedHelp(){
 		mainApp.showHelpOverview();
 	}
 	
+	/** 
+	 * when all tasks tab is clicked
+	 */
 	@FXML
 	void onClickedAllTask(){
 		mainApp.showTaskOverview();
 	}
 	
+	/**
+	 * when today tab is clicked
+	 */
 	@FXML
 	void onClickedToday(){
 		mainApp.showTodayOverview();
 	}
 	
+	/**
+	 * when upcoming tab is clicked
+	 */
 	@FXML
 	void onClickedUpcoming(){
 		mainApp.showUpcomingOverview();
 	}
 	
+	/**
+	 * when complete tab is clicked
+	 */
 	@FXML
 	void onClickedComplete(){
 		mainApp.showCompleteOverview();

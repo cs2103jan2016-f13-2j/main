@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@../LightTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.resources.UpcomingOverviewController">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" stylesheets="@LightTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.gui.view.TaskOverviewController">
    <children>
       <BorderPane prefHeight="609.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
@@ -17,7 +17,8 @@
                   <TextField fx:id="commandText" layoutX="10.0" layoutY="550.0" onAction="#onEnter" onKeyPressed="#onKeyPressed" onKeyReleased="#onKeyReleased" prefHeight="37.0" prefWidth="745.0" />
                   <Label layoutY="17.0" text="Deadlines" />
                   <Label fx:id="todayDate" alignment="CENTER" layoutX="759.0" layoutY="560.0" prefHeight="37.0" prefWidth="137.0" styleClass="label-date" />
-                  <Label fx:id="todayDate1" alignment="CENTER" layoutX="759.0" layoutY="545.0" prefHeight="31.0" prefWidth="137.0" styleClass="label-date" text="Today's Date:" />                  <TableView fx:id="taskTable" editable="true" layoutY="47.0" prefHeight="200.0" prefWidth="865.0" AnchorPane.bottomAnchor="321.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
+                  <Label fx:id="todayDate1" alignment="CENTER" layoutX="759.0" layoutY="545.0" prefHeight="31.0" prefWidth="137.0" styleClass="label-date" text="Today's Date:" />
+                  <TableView fx:id="taskTable" editable="true" layoutY="47.0" prefHeight="200.0" prefWidth="865.0" AnchorPane.bottomAnchor="321.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0">
                     <columns>
                       <TableColumn fx:id="taskNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="taskPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
@@ -29,7 +30,7 @@
                   </TableView>
                   <Label layoutY="279.0" text="Events" />
                   <Label fx:id="instantFeedback" layoutX="14.0" layoutY="526.0" prefHeight="25.0" prefWidth="712.0" styleClass="label-feedback" textAlignment="CENTER" />
-                  <TableView fx:id="eventTable" layoutY="309.0" prefHeight="200.0" prefWidth="890.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="309.0">
+                  <TableView fx:id="eventTable" layoutY="320.0" prefHeight="200.0" prefWidth="890.0" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="309.0">
                      <columns>
                         <TableColumn fx:id="eventNumberColumn" prefWidth="40.0" resizable="false" sortable="false" text="No." />
                         <TableColumn fx:id="eventPNumberColumn" prefWidth="61.0" resizable="false" sortable="false" text="Priority" />
@@ -41,22 +42,23 @@
                         <TableColumn fx:id="eventLocationColumn" prefWidth="221.0" resizable="false" sortable="false" text="Location" />
                      </columns>
                   </TableView>
-                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="120.0" layoutY="6.0" onMouseClicked="#onClickedAllTask" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ffc41f" height="36.0" layoutX="120.0" layoutY="6.0" onMouseClicked="#onClickedAllTask" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="245.0" layoutY="6.0" onMouseClicked="#onClickedToday" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
-                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#ffc41f" height="36.0" layoutX="370.0" layoutY="6.0" onMouseClicked="#onClickedUpcoming" stroke="BLACK" strokeType="INSIDE" width="117.0" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="370.0" layoutY="6.0" onMouseClicked="#onClickedUpcoming" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="495.0" layoutY="6.0" onMouseClicked="#onClickedComplete" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
                   <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="620.0" layoutY="6.0" onMouseClicked="#onClickedOverdue" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="117.0" />
-                  <Label layoutX="138.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="All Task (F1)" />
-                  <Label layoutX="379.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Upcoming (F3)" />
-                  <Label layoutX="502.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Completed (F4)" />
-                  <Label layoutX="635.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Overdue (F5)" />
-                  <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Today (F2)" />
+                  <Label layoutX="138.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="All Task (F1)" />
+                  <Label layoutX="379.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Upcoming (F3)" />
+                  <Label layoutX="502.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Completed (F4)" />
+                  <Label layoutX="635.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Overdue (F5)" />
+                  <Label layoutX="268.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Today (F2)" />
                   <Rectangle fx:id="overdueRectangle" arcHeight="50.0" arcWidth="50.0" fill="#d71717" height="19.0" layoutX="724.0" layoutY="5.0" mouseTransparent="true" onMouseClicked="#onClickedOverdue" stroke="BLACK" strokeType="INSIDE" width="26.0" />
-                  <Label fx:id="overdueCounter" alignment="CENTER" layoutX="721.0" layoutY="6.0" mouseTransparent="true" prefHeight="12.0" prefWidth="32.0" styleClass="label-counter" textAlignment="CENTER" />               </children>
+                  <Label fx:id="overdueCounter" alignment="CENTER" layoutX="721.0" layoutY="6.0" mouseTransparent="true" prefHeight="12.0" prefWidth="32.0" styleClass="label-counter" textAlignment="CENTER" />
+               </children>
             </AnchorPane>
          </center>
          <right>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="609.0" prefWidth="300.0" styleClass="background" BorderPane.alignment="CENTER">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="609.0" prefWidth="300.0" styleClass="background" stylesheets="@LightTheme.css" BorderPane.alignment="CENTER">
                <children>
                   <TableView fx:id="floatingTable" layoutX="6.0" layoutY="47.0" maxWidth="300.0" prefHeight="544.0" prefWidth="287.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="47.0">
                      <columns>
@@ -66,8 +68,8 @@
                      </columns>
                   </TableView>
                   <Label layoutX="7.0" layoutY="17.0" text="Floating Task" />
-                                    <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="206.0" layoutY="6.0" onMouseClicked="#onClickedHelp" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="76.0" />
-                  <Label layoutX="210.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@../LightTheme.css" text="Help (F12)" />
+                  <Rectangle arcHeight="50.0" arcWidth="50.0" fill="#fcde8b" height="36.0" layoutX="206.0" layoutY="6.0" onMouseClicked="#onClickedHelp" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="76.0" />
+                  <Label layoutX="210.0" layoutY="14.0" mouseTransparent="true" styleClass="label-tabs" stylesheets="@LightTheme.css" text="Help (F12)" />
                </children>
             </AnchorPane>
          </right>

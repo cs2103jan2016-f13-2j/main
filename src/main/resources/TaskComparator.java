@@ -8,10 +8,19 @@ public class TaskComparator implements Comparator<Task> {
 	
 	int compareType;
 	
+	/**
+	 * Constructs a TaskComparator
+	 * @param type: sortType from MainLogic
+	 */
 	public TaskComparator(int type) {
 		compareType = type;
 	}
 
+	/**
+	 * Compare method for Comparator
+	 * @param task0, task1: tasks to be compared
+	 * @return int of compare result
+	 */
 	@Override
 	public int compare(Task task0, Task task1) {
 		switch (compareType) {

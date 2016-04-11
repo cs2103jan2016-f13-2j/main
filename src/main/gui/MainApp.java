@@ -14,12 +14,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import main.gui.resources.CompleteOverviewController;
-import main.gui.resources.HelpOverviewController;
-import main.gui.resources.OverdueOverviewController;
-import main.gui.resources.TaskOverviewController;
-import main.gui.resources.TodayOverviewController;
-import main.gui.resources.UpcomingOverviewController;
+import main.gui.view.CompleteOverviewController;
+import main.gui.view.HelpOverviewController;
+import main.gui.view.OverdueOverviewController;
+import main.gui.view.TaskOverviewController;
+import main.gui.view.TodayOverviewController;
+import main.gui.view.UpcomingOverviewController;
 import main.resources.Task;
 
 public class MainApp extends Application {
@@ -28,13 +28,13 @@ public class MainApp extends Application {
 	private static final String WINDOW_TITLE = "Trekker";
 	
 	//Layout file paths
-	private static final String FXML_ROOT_LAYOUT = "resources/RootLayout.fxml";
-	private static final String FXML_TASK_OVERVIEW = "resources/TaskOverview.fxml";
-	private static final String FXML_HELP_OVERVIEW = "resources/HelpOverview.fxml";
-	private static final String FXML_COMPLETE_OVERVIEW = "resources/CompleteOverview.fxml";
-	private static final String FXML_TODAY_OVERVIEW = "resources/TodayOverview.fxml";
-	private static final String FXML_UPCOMING_OVERVIEW = "resources/UpcomingOverview.fxml";
-	private static final String FXML_OVERDUE_OVERVIEW = "resources/OverdueOverview.fxml";
+	private static final String FXML_ROOT_LAYOUT = "view/RootLayout.fxml";
+	private static final String FXML_TASK_OVERVIEW = "view/TaskOverview.fxml";
+	private static final String FXML_HELP_OVERVIEW = "view/HelpOverview.fxml";
+	private static final String FXML_COMPLETE_OVERVIEW = "view/CompleteOverview.fxml";
+	private static final String FXML_TODAY_OVERVIEW = "view/TodayOverview.fxml";
+	private static final String FXML_UPCOMING_OVERVIEW = "view/UpcomingOverview.fxml";
+	private static final String FXML_OVERDUE_OVERVIEW = "view/OverdueOverview.fxml";
 	
 
     private Stage primaryStage;
@@ -99,7 +99,9 @@ public class MainApp extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
+        	e.printStackTrace();
         	logger.log(Level.INFO, "UI Root Initialization failed.");
+        	e.printStackTrace();
         }
     }
 
@@ -121,7 +123,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-        	logger.log(Level.INFO, "UI TaskOverview Failed.");
+        	logger.log(Level.INFO, "UI TaskOverview initialization Failed.");
         }
     }
     
@@ -143,7 +145,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI HelpOverview initialization Failed.");
         }
     }
     
@@ -165,7 +167,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI CompleteOverview initialization Failed.");
         }
     }
 
@@ -187,7 +189,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI TodayOverview initialization Failed.");
         }
     }
     
@@ -209,7 +211,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI UpcomingOverview initialization Failed.");
         }
     }
     
@@ -231,7 +233,7 @@ public class MainApp extends Application {
             controller.setMainApp(this);
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.log(Level.INFO, "UI OverdueOverview initialization Failed.");
         }
     }
     

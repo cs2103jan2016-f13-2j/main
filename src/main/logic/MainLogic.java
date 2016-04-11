@@ -41,6 +41,9 @@ public class MainLogic {
 	static Logger logger = Logger.getLogger("MainLogic");
 
 	//-----Constructor-----
+	/**
+	 * Creates an instance of MainLogic and initializes variables
+	 */
 	public MainLogic() {
 		//Initialize variables
 		storage = Storage.getInstance();
@@ -54,6 +57,10 @@ public class MainLogic {
 		currentTime = null;
 	}
 
+	/**
+	 * Runs the MainLogic
+	 * throws exception if any component fails to complete
+	 */
 	public static void run(UserInput input) {
 		logger.log(Level.INFO, "MainLogic START");
 		success = true;
@@ -73,6 +80,9 @@ public class MainLogic {
 	}
 
 	//-----Private methods-----
+	/**
+	 * Creates a Command object with the respective command type
+	 */
 	private static void createCommandObject() throws Exception {
 		if (!isValidDateAndTime()) {
 			feedback.setMessage(MSG_FAIL_INVALID_DATE);
@@ -239,32 +249,57 @@ public class MainLogic {
 	}
 
 	//@@author A0125255L
+	/**
+	 * Calls the constructor of MainLogic if it doesn't exist
+	 */
 	private static void initializeMainLogic() {
 		if (mainLogic == null) {
 			MainLogic.createMainLogic();
 		}
 	}
-
+	
+	/**
+	 * Sets the local userInput variable to the current userInput
+	 * @param input: the userInput variable from TaskOverviewController
+	 */
 	private static void setUserInput(UserInput input) {
 		userInput = input;
 	}
 
+	/**
+	 * Updates the new userInput variable with parameters from Parser
+	 */
 	private static void runParser() {
 		userInput = Parser.resetUserInput(userInput);
 	}
 
+	/**
+	 * Executes the command object instance if it is not null 
+	 */
 	private static void executeCommand() {
 		command.execute();
 	}
 
+	/**
+	 * Updates the local variable taskList after Command object execution 
+	 */
 	private static void updateTaskList() {
 		taskList = storage.getTaskList();
 	}
 
+	/**
+	 * Gets the command intended by the input string from TaskOverviewController
+	 * @return String object of Command type
+	 */
 	private static String getCommand() {
 		return Shortcuts.shortcuts(userInput.getCommand().toLowerCase());
 	}
 
+	/**
+	 * Undo the last executed Command object
+	 * Removes the Object from the commandList and pushes the object to the
+	 * undoedCommandList for redoing purposes
+	 */
 	private static void undoCommand() {
 		if (!commandList.empty()) {
 			Command command = commandList.pop();
@@ -273,10 +308,18 @@ public class MainLogic {
 		}
 	}
 
+	/**
+	 * Clears the undo Command stack
+	 */
 	private static void clearUndoStack() {
 		undoedCommandList = new Stack<Command>();
 	}
 
+	/**
+	 * Redo the last undone Command object
+	 * Removes the Object from the undoedCommandList and pushes the object to 
+	 * the commandList for undoing purposes
+	 */
 	private static void redoCommand() {
 		if (!undoedCommandList.empty()) {
 			Command command = undoedCommandList.pop();
@@ -284,7 +327,11 @@ public class MainLogic {
 			command.redo();
 		}
 	}
-
+	
+	/**
+	 * Searches for the Task object the user intend to edit
+	 * @return Task if task is present in list
+	 */
 	private static Task findEditTask() {
 		int count = 0;
 		//ArrayList<Task> list = new ArrayList<Task>();
@@ -301,6 +348,10 @@ public class MainLogic {
 		return null;
 	}
 
+	/**
+	 * Searches all the Tasks the user intend to delete
+	 * @return ArrayList<Task> of Tasks if Task is present in list
+	 */
 	private static ArrayList<Task> findDeleteTask() {
 		int count;
 		ArrayList<Task> list = new ArrayList<Task>();
@@ -326,12 +377,15 @@ public class MainLogic {
 		return list;
 	}
 
+	/**
+	 * Searches the Tasks the user intend to complete/uncomplete
+	 * @return ArrayList<Task> of Tasks if Tasks is present in list
+	 */
 	private static ArrayList<Task> completeTask() {
 		int count;
 		int taskType = 0;
 		int taskNumber = 0;
 		ArrayList<Task> list = new ArrayList<Task>();;
-
 		for (int i=0; i<userInput.getDeleteNumber().size(); i++) {
 			count = 0;
 			taskType = userInput.getDeleteNumber().get(i)[0];
@@ -351,6 +405,10 @@ public class MainLogic {
 		return list;
 	}
 
+	/**
+	 * Creates a new duplicated instance of the taskList from Storage
+	 * @return ArrayList<Task> of Tasks duplicated from Storage
+	 */
 	private static ArrayList<Task> copyList() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0; i<storage.getTaskList().size(); i++) {
@@ -360,6 +418,9 @@ public class MainLogic {
 		return list;
 	}
 
+	/**
+	 * Gets and sets the local currentTime variable to the console time
+	 */
 	private static void setCurrentTime() {
 		Calendar cal = Calendar.getInstance();
 		int hour = cal.get(Calendar.HOUR_OF_DAY);
@@ -367,6 +428,9 @@ public class MainLogic {
 		currentTime = new Time(hour, minute);   
 	}
 
+	/**
+	 * Gets and sets the local currentDate variable to the console date
+	 */
 	private static void setCurrentDate() {
 		Calendar cal = Calendar.getInstance();
 		int year = cal.get(Calendar.YEAR);
@@ -375,10 +439,17 @@ public class MainLogic {
 		currentDate = new Date(day, month, year);
 	}
 
+	/**
+	 * Creates a mainLogic instance
+	 */
 	private static void createMainLogic() {
 		mainLogic = new MainLogic();
 	}
 
+	/**
+	 * Gets the current taskList user is viewing from
+	 * @return ArrayList<Task> of Task user is currently viewing
+	 */
 	private static ArrayList<Task> getList() {
 		switch (userInput.getTab()) {
 		case 1: {	//All
@@ -393,7 +464,7 @@ public class MainLogic {
 		case 4: {	//Complete
 			return getCompletedTasksUnfiltered();
 		}
-		case 6: {	//Overdue/Expired
+		case 5: {	//Overdue/Expired
 			return getExpiredTasksUnfiltered();
 		}
 		default: {
@@ -404,16 +475,28 @@ public class MainLogic {
 
 
 	//-----Public Methods-----
+	/**
+	 * Sets the current time and returns the Time object
+	 * @return Time object of current time
+	 */
 	public static Time getCurrentTime() {
 		setCurrentTime();
 		return currentTime;
 	}
 
+	/**
+	 * Sets the current date and returns the Date object
+	 * @return return Date object of current date
+	 */
 	public static Date getCurrentDate() {
 		setCurrentDate();
 		return currentDate;
 	}
 
+	/**
+	 * Gets the current day
+	 * @return String representation of current day
+	 */
 	public static String getCurrentDay() {
 		Calendar cal = Calendar.getInstance();
 		String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", 
@@ -421,175 +504,54 @@ public class MainLogic {
 		return days[cal.get(Calendar.DAY_OF_WEEK) - 1];
 	}
 
+	/**
+	 * Checks if the MainLogic runs to the end without errors
+	 * @return true if successful
+	 */
 	public static boolean isSuccessful() {
 		return success;
 	}
 
+	/**
+	 * Sets the displayList to a newList
+	 * @param newList: list to change the displayList to
+	 */
 	public static void setDisplayList(ArrayList<Task> newList) {
 		displayList = newList;
 	}
 
+	/**
+	 * Gets the current displayList
+	 * @return ArrayList<Task> of Task of current displayList
+	 */
 	public static ArrayList<Task> getDisplayList() {
 		return displayList;
 	}
 
+	/**
+	 * Filters the given list to 3 different components: Deadline, Floating, Event
+	 * @param list: list to be filtered
+	 * @return ArrayList<ArrayList<Task>> Object of filtered components
+	 */
 	private static ArrayList<ArrayList<Task>> getFilteredList(ArrayList<Task> list) {
 		ArrayList<ArrayList<Task>> newList = new ArrayList<ArrayList<Task>>();
 		ArrayList<Task> eventList = new ArrayList<Task>();
 		ArrayList<Task> floatList = new ArrayList<Task>();
 		ArrayList<Task> deadlineList = new ArrayList<Task>();
-
+		setCurrentDate();
+		setCurrentTime();
+		
 		for (int i=0; i<list.size(); i++) {
 			Task task = list.get(i);
-			setCurrentTime();
-			setCurrentDate();
-			Calendar calStart = Calendar.getInstance();
-			Calendar calEnd = Calendar.getInstance();
 			if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(currentDate) < 0) {
-				if (task.isRecurring() && task.getRecurTime() > 0) {
-					task.setRecurTime(task.getRecurTime() - 1);
-					Date dateStart = task.getTaskStartDate();
-					calStart.set(dateStart.getYear(), dateStart.getMonth(), dateStart.getDay());
-					Date dateEnd;
-					if (task.getTaskEndDate() != null) {
-						dateEnd = task.getTaskEndDate();
-						calEnd.set(dateEnd.getYear(), dateEnd.getMonth(), dateEnd.getDay());
-					}
-					switch (task.getRecurFrequency()) {
-					case 1: {	//daily
-						calStart.add(Calendar.DAY_OF_MONTH, 1);
-						calEnd.add(Calendar.DAY_OF_MONTH, 1);
-						task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-								calStart.get(Calendar.MONTH), 
-								calStart.get(Calendar.YEAR)));
-						if (task.getTaskEndDate() != null) {
-							task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-									calEnd.get(Calendar.MONTH), 
-									calEnd.get(Calendar.YEAR)));
-						}
-						break;
-					}
-					case 2: {	//weekly
-						calStart.add(Calendar.DAY_OF_MONTH, 7);
-						calEnd.add(Calendar.DAY_OF_MONTH, 7);
-						task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-								calStart.get(Calendar.MONTH), 
-								calStart.get(Calendar.YEAR)));
-						if (task.getTaskEndDate() != null) {
-							task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-									calEnd.get(Calendar.MONTH), 
-									calEnd.get(Calendar.YEAR)));
-						}
-						break;
-					}
-					case 3: {	//monthly
-						calStart.add(Calendar.MONTH, 1);
-						calEnd.add(Calendar.MONTH, 1);
-						task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-								calStart.get(Calendar.MONTH), 
-								calStart.get(Calendar.YEAR)));
-						if (task.getTaskEndDate() != null) {
-							task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-									calEnd.get(Calendar.MONTH), 
-									calEnd.get(Calendar.YEAR)));
-						}
-						break;
-					}
-					case 4: {	//yearly
-						calStart.add(Calendar.YEAR, 1);
-						calEnd.add(Calendar.YEAR, 1);
-						task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-								calStart.get(Calendar.MONTH), 
-								calStart.get(Calendar.YEAR)));
-						if (task.getTaskEndDate() != null) {
-							task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-									calEnd.get(Calendar.MONTH), 
-									calEnd.get(Calendar.YEAR)));
-						}
-						break;
-					}
-					}
-				}
-
-				else {
 					task.setExpired(true);
-				}
 			}
 
 			else if (task.getTaskStartDate() != null &&
 					task.getTaskStartDate().compareTo(currentDate) == 0 && 
 					task.getTaskStartTime() != null && 
 					task.getTaskStartTime().compareTo(currentTime) < 0) {
-				if (task.isRecurring()) {
-					if (task.isRecurring() && task.getRecurTime() > 0) {
-						task.setRecurTime(task.getRecurTime() - 1);
-						Date dateStart = task.getTaskStartDate();
-						calStart.set(dateStart.getYear(), dateStart.getMonth(), dateStart.getDay());
-						Date dateEnd;
-						if (task.getTaskEndDate() != null) {
-							dateEnd = task.getTaskEndDate();
-							calEnd.set(dateEnd.getYear(), dateEnd.getMonth(), dateEnd.getDay());
-						}
-						switch (task.getRecurFrequency()) {
-						case 1: {	//daily
-							calStart.add(Calendar.DAY_OF_MONTH, 1);
-							calEnd.add(Calendar.DAY_OF_MONTH, 1);
-							task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-									calStart.get(Calendar.MONTH), 
-									calStart.get(Calendar.YEAR)));
-							if (task.getTaskEndDate() != null) {
-								task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-										calEnd.get(Calendar.MONTH), 
-										calEnd.get(Calendar.YEAR)));
-							}
-							break;
-						}
-						case 2: {	//weekly
-							calStart.add(Calendar.DAY_OF_MONTH, 7);
-							calEnd.add(Calendar.DAY_OF_MONTH, 7);
-							task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-									calStart.get(Calendar.MONTH), 
-									calStart.get(Calendar.YEAR)));
-							if (task.getTaskEndDate() != null) {
-								task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-										calEnd.get(Calendar.MONTH), 
-										calEnd.get(Calendar.YEAR)));
-							}
-							break;
-						}
-						case 3: {	//monthly
-							calStart.add(Calendar.MONTH, 1);
-							calEnd.add(Calendar.MONTH, 1);
-							task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-									calStart.get(Calendar.MONTH), 
-									calStart.get(Calendar.YEAR)));
-							if (task.getTaskEndDate() != null) {
-								task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-										calEnd.get(Calendar.MONTH), 
-										calEnd.get(Calendar.YEAR)));
-							}
-							break;
-						}
-						case 4: {	//yearly
-							calStart.add(Calendar.YEAR, 1);
-							calEnd.add(Calendar.YEAR, 1);
-							task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
-									calStart.get(Calendar.MONTH), 
-									calStart.get(Calendar.YEAR)));
-							if (task.getTaskEndDate() != null) {
-								task.setTaskEndDate(new Date(calEnd.get(Calendar.DAY_OF_MONTH), 
-										calEnd.get(Calendar.MONTH), 
-										calEnd.get(Calendar.YEAR)));
-							}
-							break;
-						}
-						}
-					}
-				}
-
-				else {
 					task.setExpired(true);
-				}
 			}
 			
 			else {
@@ -620,26 +582,50 @@ public class MainLogic {
 	}
 
 	//Lists
+	/**
+	 * Gets the filtered "All" taskList
+	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 */
 	public static ArrayList<ArrayList<Task>> getTaskList() {
 		return getFilteredList(getTaskListUnfiltered());
 	}
 
+	/**
+	 * Gets the filtered "Completed" taskList
+	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 */
 	public static ArrayList<ArrayList<Task>> getCompletedTasks() {
 		return getFilteredList(getCompletedTasksUnfiltered());
 	}
 
+	/**
+	 * Gets the filtered "Today" taskList
+	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 */
 	public static ArrayList<ArrayList<Task>> getTodayTasks() {
 		return getFilteredList(getTodayTasksUnfiltered());
 	}
 
+	/**
+	 * Gets the filtered "Expired" taskList
+	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 */
 	public static ArrayList<ArrayList<Task>> getExpiredTasks() {
 		return getFilteredList(getExpiredTasksUnfiltered());
 	}
 
+	/**
+	 * Gets the filtered "Upcoming" taskList
+	 * @return ArrayList<ArrayList<Task>> of filtered list
+	 */
 	public static ArrayList<ArrayList<Task>> getWeekTasks() {
 		return getFilteredList(getWeekTasksUnfiltered());
 	}
 
+	/**
+	 * Gets the unfiltered "All" taskList
+	 * @return ArrayList<Task> of unfiltered list
+	 */
 	public static ArrayList<Task> getTaskListUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
@@ -651,6 +637,10 @@ public class MainLogic {
 		return list;
 	}
 
+	/**
+	 * Gets the unfiltered "Completed" taskList
+	 * @return ArrayList<Task> of unfiltered list
+	 */
 	public static ArrayList<Task> getCompletedTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
@@ -661,6 +651,11 @@ public class MainLogic {
 		}
 		return list;
 	}
+	
+	/**
+	 * Gets the unfiltered "Today" taskList
+	 * @return ArrayList<Task> of unfiltered list
+	 */
 	public static ArrayList<Task> getTodayTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
@@ -676,6 +671,10 @@ public class MainLogic {
 		return list;
 	}
 
+	/**
+	 * Gets the unfiltered "Expired" taskList
+	 * @return ArrayList<Task> of unfiltered list
+	 */
 	public static ArrayList<Task> getExpiredTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
@@ -688,6 +687,10 @@ public class MainLogic {
 		return list;
 	}
 
+	/**
+	 * Gets the unfiltered "Upcoming" taskList
+	 * @return ArrayList<Task> of unfiltered list
+	 */
 	public static ArrayList<Task> getWeekTasksUnfiltered() {
 		ArrayList<Task> list = new ArrayList<Task>();
 		Calendar cal = Calendar.getInstance();

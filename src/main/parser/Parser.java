@@ -27,7 +27,11 @@ public class Parser {
 	
 	private static Feedback feedback;
 	
-	
+	/**
+	 * store the command into an array list
+	 * @param inputFromLogic
+	 * @return arraylist
+	 */
 	public final static ArrayList<String> retrieveCommand(String inputFromLogic){
 		
 		ArrayList<String> contentListForLogic = new ArrayList<String>();
@@ -37,7 +41,11 @@ public class Parser {
 	}
 	
 
-	
+	/**
+	 * assign the value to some of the attributes in UserInput
+	 * @param userInput
+	 * @return userInput
+	 */
 	public final static UserInput resetUserInput (UserInput userInput){
 		feedback = Feedback.getInstance();
 		
@@ -71,12 +79,7 @@ public class Parser {
 		case "home":
 			setUserInputForHome(userInput);
 			break;
-		
-		case "display":
-			setUserInputForDisplay(userInput);
-			break;
-
-		
+				
 		case "undo":
 			setUserInputForUndo(userInput);
 			break;
@@ -110,45 +113,63 @@ public class Parser {
 	}
 
 
-
+	/**
+	 * deal with redo command,assign the "redo" to command
+	 * @param userInput
+	 */
 	private static void setUserInputForRedo(UserInput userInput) {
 		userInput.setCommand("redo");
 	}
 
 
-
+	/**
+	 * deal with undo command, assign the "undo" to command
+	 * @param userInput
+	 */
 	private static void setUserInputForUndo(UserInput userInput) {
 		userInput.setCommand("undo");
 	}
 
 
 
-	private static void setUserInputForDisplay(UserInput userInput) {
-		userInput.setCommand("display");
-	}
 
-
-
+	/**
+	 * deal with home command, assign the "home" to command
+	 * @param userInput
+	 */
 	private static void setUserInputForHome(UserInput userInput) {
 		userInput.setCommand("home");
 	}
 
 
-
+	/**
+	 * deal with the export command, assign the "exprot" to command and assign the path
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForExport(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("export");
 		userInput.setPath(inputCommand.get(1));
 	}
 
 
-
+	/**
+	 * deal with the import command, assign the "import" to command and assign the path
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForImport(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("import");
 		userInput.setPath(inputCommand.get(1));
 	}
 
 
-
+	/**
+	 * deal with the uncomplete command, assign the "uncomplete" to command, and assign value to 
+	 * the delete the deleteNumber
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForUncomplete(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("uncomplete");
 		userInput.setComplete(false);
@@ -157,7 +178,12 @@ public class Parser {
 	}
 
 
-
+	/**
+	 * deal with the complete command, assign the "complete" to command, and assign value to 
+	 * the delete the deleteNumber
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForComplete(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("complete");
 		userInput.setComplete(true);
@@ -166,7 +192,12 @@ public class Parser {
 	}
 
 
-
+	/**
+	 * deal with the sort command, assign the "sort" to command, and assign value to 
+	 * the searchTerm, sortType
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForSort(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("sort");
 		int sortType = getNumber(inputCommand.get(1));
@@ -174,7 +205,12 @@ public class Parser {
 	}
 
 
-
+	/**
+	 * deal with the search command, assign the "search" to command, and assign value to 
+	 * the serachTerm and taskList
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForSearch(UserInput userInput, ArrayList<String> inputCommand) {
 		String term = inputCommand.get(1);
 		userInput.setCommand("search");
@@ -182,7 +218,12 @@ public class Parser {
 	}
 
 
-
+	/**
+	 * deal with the edit command, assign the "edit" to command, and assign value to 
+	 * the editNumber, startTime, startDate, endTime, endDate, location, details priority and taskToEdit
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForEdit(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("edit");
 		ArrayList<Integer> editList = new ArrayList<Integer>();
@@ -201,7 +242,11 @@ public class Parser {
 	}
 
 
-
+	/**
+	 * deal with the delete command, assign the "delete" command and assign value to the deleteNumber
+	 * @param userInput
+	 * @param inputCommand
+	 */
 	private static void setUserInputForDelete(UserInput userInput, ArrayList<String> inputCommand) {
 		userInput.setCommand("delete");
 		ArrayList<int[]> deleteList = new ArrayList<int[]>();
