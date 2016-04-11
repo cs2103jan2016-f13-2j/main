@@ -26,7 +26,7 @@ public class MainLogic {
 	private static final int FLOATING = 2;
 	private static final int DEADLINE = 4;
 	private static final int SORT_TYPE_DATE = 2;
-	
+
 	//Global Variables
 	private static Storage storage;
 	private static Feedback feedback;
@@ -97,7 +97,7 @@ public class MainLogic {
 			feedback.setMessage(MSG_FAIL_START_DATE_LATER_THAN_END_DATE);
 			throw new Exception("End date/time is earlier than start date/time");
 		}
-		
+
 		switch (getCommand()) {
 		case "add": {
 			addCommand();		
@@ -173,7 +173,7 @@ public class MainLogic {
 		}
 		}
 	}
-	
+
 	/**
 	 * Creates the "Add" command object
 	 * Push the Object to the commandList
@@ -184,7 +184,7 @@ public class MainLogic {
 		clearUndoStack();
 		displayList = storage.getTaskList();
 	}
-	
+
 	/**
 	 * Creates the "Delete" command object
 	 * Push the Object to the commandList
@@ -240,7 +240,7 @@ public class MainLogic {
 	private static void homeCommand() {
 		displayList = storage.getTaskList();
 	}
-	
+
 	/**
 	 * Undo the last executed Command object
 	 * Removes the Object from the commandList and pushes the object to the
@@ -312,24 +312,24 @@ public class MainLogic {
 		if (userInput.getTask() == null) {
 			return true;
 		}
-		
+
 		Date startDate = userInput.getTask().getTaskStartDate();
 		Date endDate = userInput.getTask().getTaskEndDate();
 
 		if (startDate != null && !startDate.isValid() || endDate != null && !endDate.isValid()) {
 			return false;
 		}
-		
+
 		Time startTime = userInput.getTask().getTaskStartTime();
 		Time endTime = userInput.getTask().getTaskEndTime();
-		
+
 		if (startTime != null && !startTime.isValid() || endTime != null && !endTime.isValid()) {
 			return false;
 		}
 
 		return true;
 	}
-	
+
 	/**
 	 * Checks if the end date/time is earlier than the start date/time.
 	 * @return true if the end date/time is earlier than start date/time, false otherwise.
@@ -338,23 +338,24 @@ public class MainLogic {
 		if (userInput.getTask() == null) {
 			return false;
 		}
-		
+
 		assert(isValidDateAndTime());
-		
+
 		Date startDate = userInput.getTask().getTaskStartDate();
 		Date endDate = userInput.getTask().getTaskEndDate();
 		Time startTime = userInput.getTask().getTaskStartTime();
 		Time endTime = userInput.getTask().getTaskEndTime();
-		
+
 		if (startDate != null && endDate != null) {
 			if (startDate.compareTo(endDate) > 0) {
 				return true;
 			}
-			else if (startTime != null && endTime != null && startTime.compareTo(endTime) > 0) {
+
+			else if (startDate.equals(endDate) && startTime != null && endTime != null && startTime.compareTo(endTime) > 0) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -367,7 +368,7 @@ public class MainLogic {
 			MainLogic.createMainLogic();
 		}
 	}
-	
+
 	/**
 	 * Sets the local userInput variable to the current userInput
 	 * @param input: the userInput variable from TaskOverviewController
@@ -404,14 +405,14 @@ public class MainLogic {
 	private static String getCommand() {
 		return Shortcuts.shortcuts(userInput.getCommand().toLowerCase());
 	}
-	
+
 	/**
 	 * Clears the undo Command stack
 	 */
 	private static void clearUndoStack() {
 		undoedCommandList = new Stack<Command>();
 	}
-	
+
 	/**
 	 * Searches for the Task object the user intend to edit
 	 * @return Task if task is present in list
@@ -457,7 +458,7 @@ public class MainLogic {
 				}
 			}
 		}
-		
+
 		return list;
 	}
 
@@ -611,7 +612,7 @@ public class MainLogic {
 		ArrayList<Task> deadlineList = new ArrayList<Task>();
 		setCurrentDate();
 		setCurrentTime();
-		
+
 		for (int i=0; i<list.size(); i++) {
 			Task task = checkExpired(list, i);
 			filterTask(eventList, floatList, deadlineList, task);
@@ -662,7 +663,7 @@ public class MainLogic {
 	}
 
 	/**
-	  * Check whether the task is expired
+	 * Check whether the task is expired
 	 * @param list: taskList from Storage
 	 * @param i: Task object position in list
 	 * @return Task object after determining whether to toggle expired variable
@@ -670,16 +671,16 @@ public class MainLogic {
 	private static Task checkExpired(ArrayList<Task> list, int i) {
 		Task task = list.get(i);
 		if (task.getTaskStartDate() != null && task.getTaskStartDate().compareTo(currentDate) < 0) {
-				task.setExpired(true);
+			task.setExpired(true);
 		}
 
 		else if (task.getTaskStartDate() != null &&
 				task.getTaskStartDate().compareTo(currentDate) == 0 && 
 				task.getTaskStartTime() != null && 
 				task.getTaskStartTime().compareTo(currentTime) < 0) {
-				task.setExpired(true);
+			task.setExpired(true);
 		}
-		
+
 		else {
 			task.setExpired(false);
 		}
@@ -756,7 +757,7 @@ public class MainLogic {
 		}
 		return list;
 	}
-	
+
 	/**
 	 * Gets the unfiltered "Today" taskList
 	 * @return ArrayList of Tasks of unfiltered list
@@ -767,8 +768,8 @@ public class MainLogic {
 			Task task = displayList.get(i);
 			if ((task.getTaskStartDate() != null && 
 					(task.getTaskStartDate().compareTo(getCurrentDate()) == 0) &&
-						!task.isComplete()) ||
-							task.getTaskType() == FLOATING) {
+					!task.isComplete()) ||
+					task.getTaskType() == FLOATING) {
 				list.add(task);
 			}
 		}
@@ -806,8 +807,8 @@ public class MainLogic {
 			if ((task.getTaskStartDate() != null &&
 					((task.getTaskStartDate().compareTo(getCurrentDate()) >= 0) && 
 							(task.getTaskStartDate().compareTo(date) < 0)) &&
-								!task.isComplete()) ||
-									task.getTaskType() == FLOATING) {				
+					!task.isComplete()) ||
+					task.getTaskType() == FLOATING) {				
 				list.add(task);
 			}
 		}

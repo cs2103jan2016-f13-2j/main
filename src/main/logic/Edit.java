@@ -51,7 +51,7 @@ public class Edit implements Command {
 		feedback = Feedback.getInstance();
 		taskList = new ArrayList<Task>();
 		recurList = new ArrayList<Task>();
-	}
+	}	
 
 	/**
 	 * Execute the command
