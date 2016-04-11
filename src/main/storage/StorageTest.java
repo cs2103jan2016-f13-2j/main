@@ -60,7 +60,7 @@ public class StorageTest {
 	}
 	
 	/**
-	 * Test the writing and reading of empty task list.
+	 * Tests the writing and reading of empty task list.
 	 */
 	@Test
 	public void test2() {
