@@ -596,7 +596,7 @@ public class MainLogic {
 	/**
 	 * Filters the given list to 3 different components: Deadline, Floating, Event
 	 * @param list: list to be filtered
-	 * @return ArrayList<ArrayList<Task>> Object of filtered components
+	 * @return Task ArrayList Object of filtered components
 	 */
 	private static ArrayList<ArrayList<Task>> getFilteredList(ArrayList<Task> list) {
 		ArrayList<ArrayList<Task>> newList = new ArrayList<ArrayList<Task>>();
