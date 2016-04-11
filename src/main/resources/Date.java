@@ -249,7 +249,7 @@ public class Date implements Comparable<Date>, Serializable {
 	 * Calculates if the year is a leap year, given a valid year.
 	 * @return true if year is leap year, false otherwise.
 	 */
-	private boolean isLeapYear() {
+	protected boolean isLeapYear() {
 		assert(isValidYear());
 
 		if (year % 4 != 0 || year % 100 == 0 && year % 400 != 0) {
