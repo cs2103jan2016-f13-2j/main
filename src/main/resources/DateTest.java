@@ -48,14 +48,14 @@ public class DateTest {
 		assertFalse(date1.equals(date3));
 	}
 	
-	
+	@Test
 	public void testIsLeapYear(){
 		Date date1 = new Date(5,8,2016);
 		Date date2 = new Date(5,8,2017);
 		Date date3 = new Date(5,8,2018);
 		assertTrue(date1.isLeapYear());
-		assertTrue(date2.isLeapYear());
-		assertTrue(date3.isLeapYear());
+		assertFalse(date2.isLeapYear());
+		assertFalse(date3.isLeapYear());
 		
 		
 		
