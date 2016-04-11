@@ -126,20 +126,23 @@ public class TodayOverviewController {
 	@FXML
 	private void initialize() {
 		initializeLists();
-		initializeLabels();
+		displayLabels();
 		displayAllTablesData();
 		showOverdueCounter();	
 		overrideTableProperties();
 	}
 
+	/**
+	 * Overrides all tables properties.
+	 */
 	private void overrideTableProperties() {
 		wrapTableColumns();
-		initializeAllPriority();
-		initializeAllDates();
+		displayPriorityColour();
+		displayDates();
 	}
 
 	/**
-	 * Overrides table columns settings to wrap text 
+	 * Overrides table columns settings to wrap text. 
 	 */
 	private void wrapTableColumns() {
 		taskDetailsWrap();
@@ -149,6 +152,9 @@ public class TodayOverviewController {
 		floatingDetailsWrap();
 	}
 
+	/**
+	 * Wraps text in floating details table column.
+	 */
 	private void floatingDetailsWrap() {
 		floatingDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
 
@@ -166,6 +172,9 @@ public class TodayOverviewController {
 	    });
 	}
 
+	/**
+	 * Wraps text in event location table column.
+	 */
 	private void eventLocationWrap() {
 		eventLocationColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
 
@@ -183,6 +192,9 @@ public class TodayOverviewController {
 	    });
 	}
 
+	/**
+	 * Wraps text in event details table column.
+	 */
 	private void eventDetailsWrap() {
 		eventDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
 
@@ -200,6 +212,9 @@ public class TodayOverviewController {
 	    });
 	}
 
+	/**
+	 * Wraps text in deadline location table column.
+	 */
 	private void taskLocationWrap() {
 		taskLocationColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
 
@@ -217,6 +232,9 @@ public class TodayOverviewController {
 	    });
 	}
 
+	/**
+	 * Wraps text in deadline details table column.
+	 */
 	private void taskDetailsWrap() {
 		taskDetailsColumn.setCellFactory(new Callback<TableColumn<Task, String>, TableCell<Task, String>>() {
 
@@ -235,7 +253,7 @@ public class TodayOverviewController {
 	}
 
 	/**
-	 * Displays data from observableLists
+	 * Displays data from observableLists.
 	 */
 	private void displayAllTablesData() {
 		taskNumberColumn.setCellValueFactory(cellData -> cellData.getValue().taskNumberProperty());
@@ -272,14 +290,14 @@ public class TodayOverviewController {
 	/**
 	 * Is called by the main application to give a reference back to itself.
 	 * 
-	 * @param mainApp
+	 * @param mainApp Main Application for GUI
 	 */
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 
 	/**
-	 * inputs the totalTaskList of tasks into the three tables
+	 * Inputs the totalTaskList of tasks into the three tables.
 	 */
 	private void setTablesArrayList() {
 		for (int i = 0; i < totalTaskList.size(); i++) {
@@ -287,19 +305,98 @@ public class TodayOverviewController {
 		}
 	}
 
-	private void initializeAllPriority() {
-		initializePriority();
-		initializeEventPriority();
-		initializeFloatingPriority();
+	/**
+	 * Displays all the priority as L, M, H and sets corresponding colour as grey, orange, and red.
+	 */
+	private void displayPriorityColour() {
+		displayPriority();
+		displayEventPriority();
+		displayFloatingPriority();
 	}
 
-	private void initializeAllDates() {
-		initializeTaskDateColumn();
-		initializeEventStartDateColumn();
-		initializeEventEndDateColumn();
+	/**
+	 * Displays all dates. Today's and tomorrow's dates will be labelled as today and tomorrow. 
+	 * Passed dates will be highlighted grey.
+	 */
+	private void displayDates() {
+		displayTaskDateColumn();
+		displayEventStartDateColumn();
+		displayEventEndDateColumn();
 	}
 
-	private void initializeFloatingPriority() {
+
+	/**
+	 * Displays deadline priority as L, M, H and sets corresponding colour as grey, orange, and red.
+	 */
+	private void displayPriority() {
+		taskPNumberColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		            	 setText("");
+		                 setStyle("");
+		            } else {
+		                setText(item);
+		                if (item.equals("1")) {
+		                	setText("H");
+		                    setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: red");
+		                } else if (item.equals("2")) {
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
+		                } else {
+		                	setText("L");
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		            }
+		        }
+		    };
+		});
+	}
+	
+
+	/**
+	 * Displays event priority as L, M, H and sets corresponding colour as grey, orange, and red.
+	 */
+	private void displayEventPriority() {
+		eventPNumberColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+		            if (item == null || empty) {
+		            	 setText("");
+		                 setStyle("");
+		            } else {
+		                setText(item);
+		                if (item.equals("1")) {
+		                	setText("H");
+		                    setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: red");
+		                } else if (item.equals("2")) {
+		                	setText("M");
+		                	setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: orange");
+		                } else {
+		                	setText("L");
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		            }
+		        }
+		    };
+		});
+	}
+	
+	/**
+	 * Displays floating priority as L, M, H and sets corresponding colour as grey, orange, and red.
+	 */
+	private void displayFloatingPriority() {
 		floatingPNumberColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
@@ -333,135 +430,11 @@ public class TodayOverviewController {
 		});
 	}
 
-	private void initializeEventPriority() {
-		eventPNumberColumn.setCellFactory(column -> {
-		    return new TableCell<Task, String>() {
-		        @Override
-		        protected void updateItem(String item, boolean empty) {
-		            super.updateItem(item, empty);
-		            if (item == null || empty) {
-		            	 setText("");
-		                 setStyle("");
-		            } else {
-		                setText(item);
-		                if (item.equals("1")) {
-		                	setText("H");
-		                    setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: red");
-		                } else if (item.equals("2")) {
-		                	setText("M");
-		                	setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: orange");
-		                } else {
-		                	setText("L");
-		                	setTextFill(Color.BLACK);
-		                    setStyle("");
-		                }
-		            }
-		        }
-		    };
-		});
-	}
-
-	private void initializeEventEndDateColumn() {
-		eventEndDateColumn.setCellFactory(column -> {
-		    return new TableCell<Task, String>() {
-		        @Override
-		        protected void updateItem(String item, boolean empty) {
-		            super.updateItem(item, empty);
-
-		            if (item == null || empty) {
-		            	 setText("");
-		                 setStyle("");
-		            } else {
-		            	String[] date = item.split("-");
-		            	boolean isExpired = false;
-		            	boolean isTomorrow = false;
-		            	boolean isToday = false;	            	
-		            	Calendar cal = Calendar.getInstance();
-		            	cal.add(Calendar.DAY_OF_MONTH, 1);
-		            	Date todayDate = MainLogic.getCurrentDate();
-		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
-									cal.get(Calendar.MONTH) + 1, 
-									cal.get(Calendar.YEAR));
-		            	Date taskDate = new Date(
-		            			Integer.parseInt(date[0]), 
-		            			Integer.parseInt(date[1]), 
-		            			Integer.parseInt(date[2]));
-		            	if(taskDate.compareTo(todayDate) < 0)
-		            		isExpired = true;
-		            	if(taskDate.equals(tmrwDate))
-		            		isTomorrow = true;
-		            	if(taskDate.equals(todayDate))
-		            		isToday = true;
-		                setText(item);
-		                if (isExpired) {
-		                    setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
-						} else {
-		                	setTextFill(Color.BLACK);
-		                    setStyle("");
-		                }
-		                if (isTomorrow)
-		                	setText("Tomorrow");
-		                if (isToday)
-		                	setText("Today");
-		            }
-		        }
-		    };
-		});
-	}
-
-	private void initializeEventStartDateColumn() {
-		eventStartDateColumn.setCellFactory(column -> {
-		    return new TableCell<Task, String>() {
-		        @Override
-		        protected void updateItem(String item, boolean empty) {
-		            super.updateItem(item, empty);
-
-		            if (item == null || empty) {
-		            	 setText("");
-		                 setStyle("");
-		            } else {
-		            	boolean isExpired = false;
-		            	boolean isTomorrow = false;
-		            	boolean isToday = false;
-		            	String[] date = item.split("-");
-		            	Calendar cal = Calendar.getInstance();
-		            	cal.add(Calendar.DAY_OF_MONTH, 1);
-		            	Date todayDate = MainLogic.getCurrentDate();
-		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
-									cal.get(Calendar.MONTH) + 1, 
-									cal.get(Calendar.YEAR));
-		            	Date taskDate = new Date(
-		            			Integer.parseInt(date[0]), 
-		            			Integer.parseInt(date[1]), 
-		            			Integer.parseInt(date[2]));
-		            	if(taskDate.compareTo(todayDate) < 0)
-		            		isExpired = true;
-		            	if(taskDate.equals(tmrwDate))
-		            		isTomorrow = true;
-		            	if(taskDate.equals(todayDate))
-		            		isToday = true;
-		                setText(item);
-		                if (isExpired) {
-		                    setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
-						} else {
-		                	setTextFill(Color.BLACK);
-		                    setStyle("");
-		                }
-		                if (isTomorrow)
-		                	setText("Tomorrow");
-		                if (isToday)
-		                	setText("Today");
-		            }
-		        }
-		    };
-		});
-	}
-
-	private void initializeTaskDateColumn() {
+	/**
+	 * Displays deadline dates. Today's and tomorrow's dates will be labeled as today and tomorrow. 
+	 * Passed dates will be highlighted grey.
+	 */
+	private void displayTaskDateColumn() {
 		taskDateColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
@@ -510,8 +483,12 @@ public class TodayOverviewController {
 		});
 	}
 
-	private void initializePriority() {
-		taskPNumberColumn.setCellFactory(column -> {
+	/**
+	 * Displays event start dates. Today's and tomorrow's dates will be labeled as today and tomorrow. 
+	 * Passed dates will be highlighted grey.
+	 */
+	private void displayEventStartDateColumn() {
+		eventStartDateColumn.setCellFactory(column -> {
 		    return new TableCell<Task, String>() {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
@@ -521,32 +498,111 @@ public class TodayOverviewController {
 		            	 setText("");
 		                 setStyle("");
 		            } else {
+		            	boolean isExpired = false;
+		            	boolean isTomorrow = false;
+		            	boolean isToday = false;
+		            	String[] date = item.split("-");
+		            	Calendar cal = Calendar.getInstance();
+		            	cal.add(Calendar.DAY_OF_MONTH, 1);
+		            	Date todayDate = MainLogic.getCurrentDate();
+		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
+									cal.get(Calendar.MONTH) + 1, 
+									cal.get(Calendar.YEAR));
+		            	Date taskDate = new Date(
+		            			Integer.parseInt(date[0]), 
+		            			Integer.parseInt(date[1]), 
+		            			Integer.parseInt(date[2]));
+		            	if(taskDate.compareTo(todayDate) < 0)
+		            		isExpired = true;
+		            	if(taskDate.equals(tmrwDate))
+		            		isTomorrow = true;
+		            	if(taskDate.equals(todayDate))
+		            		isToday = true;
 		                setText(item);
-		                if (item.equals("1")) {
-		                	setText("H");
+		                if (isExpired) {
 		                    setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: red");
-		                } else if (item.equals("2")) {
-		                	setText("M");
-		                	setTextFill(Color.WHITE);
-		                    setStyle("-fx-background-color: orange");
-		                } else {
-		                	setText("L");
+		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
+						} else {
 		                	setTextFill(Color.BLACK);
 		                    setStyle("");
 		                }
+		                if (isTomorrow)
+		                	setText("Tomorrow");
+		                if (isToday)
+		                	setText("Today");
+		            }
+		        }
+		    };
+		});
+	}
+	
+	/**
+	 * Displays event end dates. Today's and tomorrow's dates will be labeled as today and tomorrow. 
+	 * Passed dates will be highlighted grey.
+	 */
+	private void displayEventEndDateColumn() {
+		eventEndDateColumn.setCellFactory(column -> {
+		    return new TableCell<Task, String>() {
+		        @Override
+		        protected void updateItem(String item, boolean empty) {
+		            super.updateItem(item, empty);
+
+		            if (item == null || empty) {
+		            	 setText("");
+		                 setStyle("");
+		            } else {
+		            	boolean isExpired = false;
+		            	boolean isTomorrow = false;
+		            	boolean isToday = false;
+		            	String[] date = item.split("-");
+		            	Calendar cal = Calendar.getInstance();
+		            	cal.add(Calendar.DAY_OF_MONTH, 1);
+		            	Date todayDate = MainLogic.getCurrentDate();
+		            	Date tmrwDate = new Date(cal.get(Calendar.DAY_OF_MONTH),
+									cal.get(Calendar.MONTH) + 1, 
+									cal.get(Calendar.YEAR));
+		            	Date taskDate = new Date(
+		            			Integer.parseInt(date[0]), 
+		            			Integer.parseInt(date[1]), 
+		            			Integer.parseInt(date[2]));
+		            	if(taskDate.compareTo(todayDate) < 0)
+		            		isExpired = true;
+		            	if(taskDate.equals(tmrwDate))
+		            		isTomorrow = true;
+		            	if(taskDate.equals(todayDate))
+		            		isToday = true;
+		                setText(item);
+		                if (isExpired) {
+		                    setTextFill(Color.WHITE);
+		                    setStyle("-fx-background-color: transparent, derive(#808080,20%);");
+						} else {
+		                	setTextFill(Color.BLACK);
+		                    setStyle("");
+		                }
+		                if (isTomorrow)
+		                	setText("Tomorrow");
+		                if (isToday)
+		                	setText("Today");
 		            }
 		        }
 		    };
 		});
 	}
 
-	private void initializeLabels() {
+
+
+	/**
+	 * Displays today's date and instant feedback labels.
+	 */
+	private void displayLabels() {
 		todayDate.setText(MainLogic.getCurrentDate().getDateString());
 		feedback = Feedback.getInstance();
 		instantFeedback.setText(feedback.getMessage());
 	}
 
+	/**
+	 * Initializes lists from MainLogic.
+	 */
 	private void initializeLists() {
 		totalTaskList.add(list);
 		totalTaskList.add(eventList);
@@ -558,7 +614,7 @@ public class TodayOverviewController {
 	}
 
 	/**
-	 * displays the number of overdued tasks if any
+	 * Displays the number of overdue tasks, and displays nothing when there are no overdue tasks.
 	 */
 	private void showOverdueCounter() {
 		if (getNoOfDAndETasks(MainLogic.getExpiredTasks()) > 0) {
@@ -569,7 +625,7 @@ public class TodayOverviewController {
 	}
 	
 	/**
-	 * converts the arrayList<arrayList<Task>> to an arrayList<ObservableList<Task>> 
+	 * Converts a list of list of tasks from MainLogic to a list of ObservableList of Task. 
 	 */
 	private void getTaskListFromFile() {
 		UserInput userInput = new UserInput(CMD_DISPLAY);
@@ -582,18 +638,19 @@ public class TodayOverviewController {
 
 	/**
 	 * adds in arrayList from the MainLogic to totalTaskList
-	 * @param temp
+	 * 
+	 * @param mainLogicList List of list of tasks from MainLogic
 	 */
-	private void setTaskTotalList(ArrayList<ArrayList<Task>> temp) {
+	private void setTaskTotalList(ArrayList<ArrayList<Task>> mainLogicList) {
 		for (int k = 0; k< totalTaskList.size(); k++){ 
-			for (int j = 0; j < temp.size(); j++) {
-				for (int i=0; i < temp.get(j).size(); i++) {
+			for (int j = 0; j < mainLogicList.size(); j++) {
+				for (int i=0; i < mainLogicList.get(j).size(); i++) {
 					if (k == TOTAL_TASK_LIST_DEADLINE && j == MAIN_LOGIC_DEADLINE) {
-						totalTaskList.get(TOTAL_TASK_LIST_DEADLINE).add(temp.get(MAIN_LOGIC_DEADLINE).get(i));
+						totalTaskList.get(TOTAL_TASK_LIST_DEADLINE).add(mainLogicList.get(MAIN_LOGIC_DEADLINE).get(i));
 					} else if (k == TOTAL_TASK_LIST_EVENT && j == MAIN_LOGIC_EVENT) {
-						totalTaskList.get(TOTAL_TASK_LIST_EVENT).add(temp.get(MAIN_LOGIC_EVENT).get(i));
+						totalTaskList.get(TOTAL_TASK_LIST_EVENT).add(mainLogicList.get(MAIN_LOGIC_EVENT).get(i));
 					} else if (k == TOTAL_TASK_LIST_FLOATING && j == MAIN_LOGIC_FLOATING) {
-						totalTaskList.get(TOTAL_TASK_LIST_FLOATING).add(temp.get(MAIN_LOGIC_FLOATING).get(i));
+						totalTaskList.get(TOTAL_TASK_LIST_FLOATING).add(mainLogicList.get(MAIN_LOGIC_FLOATING).get(i));
 					}
 				}
 			}
@@ -601,8 +658,8 @@ public class TodayOverviewController {
 	}
 	
 	/**
-	 * Assigns a unique number to each task starting from 1
-	 * @param list
+	 * Assigns a unique number to each task in a list of list of tasks starting from 1 within each list of task
+	 * @param list A list of list of tasks
 	 */
 	private void numberTaskArrayList(ArrayList<ArrayList<Task>> list) {
 		int taskNum = 1;
@@ -616,15 +673,15 @@ public class TodayOverviewController {
 		}
 
 	/**
-	 * get total number of deadline and event tasks in an ArrayList<ArrayList<Task>> from MainLogic
-	 * @param array
-	 * @return
+	 * get total number of deadline and event tasks in an list of list of tasks from MainLogic.
+	 * @param TotalList a list of list of tasks
+	 * @return The number of deadline and event tasks
 	 */
-	private int getNoOfDAndETasks(ArrayList<ArrayList<Task>> array) {
+	private int getNoOfDAndETasks(ArrayList<ArrayList<Task>> list) {
 		int counter=0;
-		for (int i = 0; i < array.size(); i++) {
+		for (int i = 0; i < list.size(); i++) {
 			if(i != MAIN_LOGIC_FLOATING)
-			counter += array.get(i).size();
+			counter += list.get(i).size();
 			}
 		return counter;
 	}
@@ -644,13 +701,17 @@ public class TodayOverviewController {
 	
 	/**
 	 * Listener for TextField. If User enters a keyboard shortcut, it will be executed.
-	 * @param keyEvent
+	 * @param keyEvent An event which indicates that a keystroke occurred in a component.
 	 */
 	@FXML
 	void onKeyPressed(KeyEvent keyEvent) {
 	  processKeyEventPressed(keyEvent);
 	}
 
+	/**
+	 * Processes the key event pressed.
+	 * @param keyEvent An event which indicates that a keystroke occurred in a component.
+	 */
 	private void processKeyEventPressed(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.CONTROL) { 
 		    System.out.print("ctrl pressed");
@@ -692,11 +753,21 @@ public class TodayOverviewController {
 		  }
 	}
 
+	/**
+	 * Listener for TextField. If User releases a keyboard shortcut, it will be executed.
+	 * @param keyEvent An event which indicates that a keystroke occurred in a component.
+	 * 
+	 */
 	@FXML
 	void onKeyReleased(KeyEvent keyEvent) {
 	  processKeyEventReleased(keyEvent);
 	}
 
+	/**
+	 * Processes the key event pressed.
+	 * @param keyEvent An event which indicates that a keystroke occurred in a component.
+	 * 
+	 */
 	private void processKeyEventReleased(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.CONTROL) { 
 		    controlPressed = false;
@@ -710,7 +781,7 @@ public class TodayOverviewController {
 	}
 	
 	/**
-	 * when overdue tab is clicked
+	 * When overdue tab is clicked, show overdue overview.
 	 */
 	@FXML 
 	void onClickedOverdue() {
@@ -718,7 +789,7 @@ public class TodayOverviewController {
 	}
 	
 	/**
-	 * when help tab is clicked
+	 * When help tab is clicked, show help overview.
 	 */
 	@FXML
 	void onClickedHelp(){
@@ -726,7 +797,7 @@ public class TodayOverviewController {
 	}
 	
 	/** 
-	 * when all tasks tab is clicked
+	 * When all tasks tab is clicked, show task overview.
 	 */
 	@FXML
 	void onClickedAllTask(){
@@ -734,7 +805,7 @@ public class TodayOverviewController {
 	}
 	
 	/**
-	 * when today tab is clicked
+	 * When today tab is clicked, show today's overview.
 	 */
 	@FXML
 	void onClickedToday(){
@@ -742,7 +813,7 @@ public class TodayOverviewController {
 	}
 	
 	/**
-	 * when upcoming tab is clicked
+	 * When upcoming tab is clicked, show upcoming overview.
 	 */
 	@FXML
 	void onClickedUpcoming(){
@@ -750,7 +821,7 @@ public class TodayOverviewController {
 	}
 	
 	/**
-	 * when complete tab is clicked
+	 * When complete tab is clicked, show complete overview.
 	 */
 	@FXML
 	void onClickedComplete(){
