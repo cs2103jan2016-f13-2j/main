@@ -22,7 +22,6 @@ public class Storage {
 
 	//String constants
 	private static String FILE_NAME = "task.dat";
-	private static String DEFAULT = "default";
 
 	//Feedback strings
 	private static String MSG_SUCCESS_IMPORT = "Successfully imported file data from %1$s";

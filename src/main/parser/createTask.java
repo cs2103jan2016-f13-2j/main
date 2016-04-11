@@ -397,7 +397,7 @@ public class createTask {
 					if (hour == 12) {
 						hour = 0;
 					}
-					else if (hour < 0 || hour > 12) {
+					else if (hour < 1 || hour > 12) {
 						hour = -1;
 					}
 					time.setHour(hour);
@@ -407,7 +407,7 @@ public class createTask {
 					if (time.getHour() == 12) {
 						time.setHour(0);
 					}
-					else if (time.getHour() < 0 || time.getHour() > 12) {
+					else if (time.getHour() < 1 || time.getHour() > 12) {
 						time.setHour(-1);
 					}
 				}
@@ -418,7 +418,7 @@ public class createTask {
 					if (hour == 24) {
 						hour = 12;
 					}
-					else if (hour < 0 || hour > 12) {
+					else if (hour < 13 || hour > 24) {
 						hour = -1;
 					}
 					time.setHour(hour);
@@ -429,7 +429,7 @@ public class createTask {
 					if (time.getHour() == 24) {
 						time.setHour(12);
 					}
-					else if (time.getHour() < 0 || time.getHour() > 12) {
+					else if (time.getHour() < 13 || time.getHour() > 24) {
 						time.setHour(-1);
 					}
 				}

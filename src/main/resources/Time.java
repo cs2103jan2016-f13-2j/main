@@ -111,8 +111,8 @@ public class Time implements Comparable<Time>, Serializable {
 
 	/**
 	 * Compares if two times are equal.
-	 * @param date : The time to compare with.
-	 * @return True if equal, false otherwise.
+	 * @param time : The time to compare with.
+	 * @return true if equal, false otherwise.
 	 */
 	public boolean equals(Time time){
 		if (time == null) {

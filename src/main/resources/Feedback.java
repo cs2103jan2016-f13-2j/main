@@ -40,7 +40,7 @@ public class Feedback {
 
 	/**
 	 * Sets the feedback message to be displayed.
-	 * @param feedback message
+	 * @param message : The feedback message
 	 */
 	public void setMessage(String message) {
 		if (this.message == null || message == null) {
@@ -50,7 +50,7 @@ public class Feedback {
 
 	/**
 	 * Sets the sort string that was entered as the sort term.
-	 * @param sort term
+	 * @param string : The sort term
 	 */
 	public void setSortString(String string) {
 		this.sortString = string;
