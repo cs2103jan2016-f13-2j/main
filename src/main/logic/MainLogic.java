@@ -22,7 +22,11 @@ public class MainLogic {
 	//Feedback Strings
 	private static final String MSG_FAIL_INVALID_DATE = "Error: Invalid date/time entered.";
 	private static final String MSG_FAIL_START_DATE_LATER_THAN_END_DATE = "Error: End date/time is earlier than start date/time";
-
+	private static final int EVENT = 1;
+	private static final int FLOATING = 2;
+	private static final int DEADLINE = 4;
+	private static final int SORT_TYPE_DATE = 2;
+	
 	//Global Variables
 	private static Storage storage;
 	private static Feedback feedback;
@@ -50,7 +54,7 @@ public class MainLogic {
 		feedback = Feedback.getInstance();
 		updateTaskList();
 		setDisplayList(taskList);
-		sortType = 2;
+		sortType = SORT_TYPE_DATE;
 		commandList = new Stack<Command>();
 		undoedCommandList = new Stack<Command>();
 		currentDate = null;
@@ -641,15 +645,15 @@ public class MainLogic {
 	private static void filterTask(ArrayList<Task> eventList, ArrayList<Task> floatList, ArrayList<Task> deadlineList,
 			Task task) {
 		switch (task.getTaskType()) {
-		case 1: {	//event
+		case EVENT: {	//event
 			eventList.add(task);
 			break;
 		}
-		case 2: {	//floating
+		case FLOATING: {	//floating
 			floatList.add(task);
 			break;
 		}
-		case 4: {	//deadline
+		case DEADLINE: {	//deadline
 			deadlineList.add(task);
 			break;
 		}
@@ -763,7 +767,7 @@ public class MainLogic {
 			if ((task.getTaskStartDate() != null && 
 					(task.getTaskStartDate().compareTo(getCurrentDate()) == 0) &&
 						!task.isComplete()) ||
-							task.getTaskType() == 2) {
+							task.getTaskType() == FLOATING) {
 				list.add(task);
 			}
 		}
@@ -779,7 +783,7 @@ public class MainLogic {
 		ArrayList<Task> list = new ArrayList<Task>();
 		for (int i=0 ;i<displayList.size(); i++) {
 			Task task = displayList.get(i);
-			if ((task.isExpired() || task.getTaskType() == 2) && !task.isComplete()) {
+			if ((task.isExpired() || task.getTaskType() == FLOATING) && !task.isComplete()) {
 				list.add(task);
 			}
 		}
@@ -802,7 +806,7 @@ public class MainLogic {
 					((task.getTaskStartDate().compareTo(getCurrentDate()) >= 0) && 
 							(task.getTaskStartDate().compareTo(date) < 0)) &&
 								!task.isComplete()) ||
-									task.getTaskType() == 2) {				
+									task.getTaskType() == FLOATING) {				
 				list.add(task);
 			}
 		}

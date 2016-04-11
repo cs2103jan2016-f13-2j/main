@@ -29,6 +29,7 @@ public class Complete implements Command {
 
 	private static Logger logger = Logger.getLogger("Complete");
 	private static boolean COMPLETE = true;
+	private static boolean INCOMPLETE = false;
 
 	/**
 	 * Constructs a Complete command
@@ -55,9 +56,9 @@ public class Complete implements Command {
 			for (Task t: taskList) {
 				if (taskToMark.equals(t)) {
 					if (userInput.getComplete() == COMPLETE) {
-						if (t.isComplete() == false) {
-							t.setComplete(true);
-							taskToMark.setComplete(true);
+						if (!t.isComplete()) {
+							t.setComplete(COMPLETE);
+							taskToMark.setComplete(COMPLETE);
 							feedback.setMessage(MSG_SUCCESS_COMPLETE);
 							done = true;
 						}
@@ -67,9 +68,9 @@ public class Complete implements Command {
 						}
 					}
 					else {
-						if (t.isComplete() == true) {
-							t.setComplete(false);
-							taskToMark.setComplete(false);
+						if (t.isComplete()) {
+							t.setComplete(INCOMPLETE);
+							taskToMark.setComplete(INCOMPLETE);
 							feedback.setMessage(MSG_SUCCESS_UNCOMPLETE);
 							done = true;
 						}
@@ -99,13 +100,13 @@ public class Complete implements Command {
 			for (Task t: taskList) {
 				if (taskToMark.equals(t)) {
 					if (userInput.getComplete() == COMPLETE) {
-						t.setComplete(false);
-						taskToMark.setComplete(false);
+						t.setComplete(INCOMPLETE);
+						taskToMark.setComplete(INCOMPLETE);
 					}
 
 					else {
-						t.setComplete(true);
-						taskToMark.setComplete(true);
+						t.setComplete(COMPLETE);
+						taskToMark.setComplete(COMPLETE);
 					}
 				}
 			}
@@ -127,13 +128,13 @@ public class Complete implements Command {
 			for (Task t: taskList) {
 				if (taskToMark.equals(t)) {
 					if (userInput.getComplete() == COMPLETE) {
-						t.setComplete(true);
-						taskToMark.setComplete(true);
+						t.setComplete(COMPLETE);
+						taskToMark.setComplete(COMPLETE);
 					}
 
 					else {
-						t.setComplete(false);
-						taskToMark.setComplete(false);
+						t.setComplete(INCOMPLETE);
+						taskToMark.setComplete(INCOMPLETE);
 					}
 				}
 			}

@@ -47,6 +47,12 @@ public class createTask {
 	private static final String DECEMBER = "December";
 	
 
+	/**
+	 * Creates a Task object of type "deadline"
+	 * @param taskType: Task type of task
+	 * @param info: Information to be added to the Task object
+	 * @return Task object of the created task
+	 */
 	public final static Task createDeadline(String taskType, ArrayList<String> info) {
 		String taskName = taskType + " task";
 		Task task = new Task();
@@ -62,6 +68,15 @@ public class createTask {
 		return task;
 	}
 
+	/**
+	 * Sets the location for the deadline task
+	 * @param info: 
+	 * @param taskName
+	 * @param task
+	 * @param indexOfP
+	 * @param detail
+	 * @param dateAndTime
+	 */
 	private static void setLocationForDeadlineTask(ArrayList<String> info, String taskName, Task task, int indexOfP,
 			String detail, String dateAndTime) {
 		if (info.contains(AT)) {

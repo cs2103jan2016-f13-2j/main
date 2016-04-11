@@ -23,6 +23,12 @@ public class Sort implements Command {
 	private static final String TYPE_START_TIME = "time";
 	private static final String TYPE_LOCATION = "location";
 	private static final String TYPE_PRIORITY = "priority";
+	
+	private static final int SORT_TYPE_DETAILS = 1;
+	private static final int SORT_TYPE_DATE = 2;
+	private static final int SORT_TYPE_TIME = 3;
+	private static final int SORT_TYPE_LOCATION = 6;
+	private static final int SORT_TYPE_PRIORITY = 7;
 
 	private UserInput userInput;
 	private static Storage storage;
@@ -50,29 +56,29 @@ public class Sort implements Command {
 		taskList = storage.getTaskList();
 		ArrayList<Task> displayList = MainLogic.getDisplayList();
 		switch (userInput.getSortType()) {
-		case 1:	//task details
-			Collections.sort(taskList, new TaskComparator(1));
-			Collections.sort(displayList, new TaskComparator(1));
+		case SORT_TYPE_DETAILS:	//task details
+			Collections.sort(taskList, new TaskComparator(SORT_TYPE_DETAILS));
+			Collections.sort(displayList, new TaskComparator(SORT_TYPE_DETAILS));
 			break;
 
-		case 2:	//task date
-			Collections.sort(taskList, new TaskComparator(2));
-			Collections.sort(displayList, new TaskComparator(2));
+		case SORT_TYPE_DATE:	//task date
+			Collections.sort(taskList, new TaskComparator(SORT_TYPE_DETAILS));
+			Collections.sort(displayList, new TaskComparator(SORT_TYPE_DETAILS));
 			break;
 
-		case 3:	//task time
-			Collections.sort(taskList, new TaskComparator(3));
-			Collections.sort(displayList, new TaskComparator(3));
+		case SORT_TYPE_TIME:	//task time
+			Collections.sort(taskList, new TaskComparator(SORT_TYPE_TIME));
+			Collections.sort(displayList, new TaskComparator(SORT_TYPE_TIME));
 			break;
 
-		case 6:	//task location
-			Collections.sort(taskList, new TaskComparator(6));
-			Collections.sort(displayList, new TaskComparator(6));
+		case SORT_TYPE_LOCATION:	//task location
+			Collections.sort(taskList, new TaskComparator(SORT_TYPE_LOCATION));
+			Collections.sort(displayList, new TaskComparator(SORT_TYPE_LOCATION));
 			break;
 
-		case 7:	//task priority
-			Collections.sort(taskList, new TaskComparator(7));
-			Collections.sort(displayList, new TaskComparator(7));
+		case SORT_TYPE_PRIORITY:	//task priority
+			Collections.sort(taskList, new TaskComparator(SORT_TYPE_PRIORITY));
+			Collections.sort(displayList, new TaskComparator(SORT_TYPE_PRIORITY));
 			break;
 
 		default:
