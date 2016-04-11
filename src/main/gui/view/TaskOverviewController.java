@@ -4,6 +4,7 @@ package main.gui.view;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static org.junit.Assert.assertTrue;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -334,17 +335,22 @@ public class TaskOverviewController {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
 		            super.updateItem(item, empty);
+		            setPriorityStyle(item, empty);
+		        }
 
-		            if (item == null || empty) {
+				private void setPriorityStyle(String item, boolean empty) {
+					if (item == null || empty) {
 		            	 setText("");
 		                 setStyle("");
 		            } else {
 		                setText(item);
-		                if (item.equals("1")) {
+		                int priority = Integer.parseInt(item);
+		                assertTrue(priority <= 3 && priority >= 1);
+		                if (priority == 1) {
 		                	setText("H");
-		                    setTextFill(Color.WHITE);
+		                	setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: red");
-		                } else if (item.equals("2")) {
+		                } else if (priority == 2) {
 		                	setText("M");
 		                	setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: orange");
@@ -354,7 +360,7 @@ public class TaskOverviewController {
 		                    setStyle("");
 		                }
 		            }
-		        }
+				}
 		    };
 		});
 	}
@@ -369,16 +375,22 @@ public class TaskOverviewController {
 		        @Override
 		        protected void updateItem(String item, boolean empty) {
 		            super.updateItem(item, empty);
-		            if (item == null || empty) {
+		            setPriorityStyle(item, empty);
+		        }
+
+				private void setPriorityStyle(String item, boolean empty) {
+					if (item == null || empty) {
 		            	 setText("");
 		                 setStyle("");
 		            } else {
 		                setText(item);
-		                if (item.equals("1")) {
+		                int priority = Integer.parseInt(item);
+		                assertTrue(priority <= 3 && priority >= 1);
+		                if (priority == 1) {
 		                	setText("H");
-		                    setTextFill(Color.WHITE);
+		                	setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: red");
-		                } else if (item.equals("2")) {
+		                } else if (priority == 2) {
 		                	setText("M");
 		                	setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: orange");
@@ -388,7 +400,7 @@ public class TaskOverviewController {
 		                    setStyle("");
 		                }
 		            }
-		        }
+				}
 		    };
 		});
 	}
@@ -411,11 +423,13 @@ public class TaskOverviewController {
 		                 setStyle("");
 		            } else {
 		                setText(item);
-		                if (item.equals("1")) {
+		                int priority = Integer.parseInt(item);
+		                assertTrue(priority <= 3 && priority >= 1);
+		                if (priority == 1) {
 		                	setText("H");
 		                	setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: red");
-		                } else if (item.equals("2")) {
+		                } else if (priority == 2) {
 		                	setText("M");
 		                	setTextFill(Color.WHITE);
 		                    setStyle("-fx-background-color: orange");
@@ -459,6 +473,9 @@ public class TaskOverviewController {
 		            			Integer.parseInt(date[0]), 
 		            			Integer.parseInt(date[1]), 
 		            			Integer.parseInt(date[2]));
+		            	assertTrue(todayDate.isValid());
+		            	assertTrue(tmrwDate.isValid());
+		            	assertTrue(taskDate.isValid());
 		            	if(taskDate.compareTo(todayDate) < 0)
 		            		isExpired = true;
 		            	if(taskDate.equals(tmrwDate))
@@ -512,6 +529,9 @@ public class TaskOverviewController {
 		            			Integer.parseInt(date[0]), 
 		            			Integer.parseInt(date[1]), 
 		            			Integer.parseInt(date[2]));
+		            	assertTrue(todayDate.isValid());
+		            	assertTrue(tmrwDate.isValid());
+		            	assertTrue(taskDate.isValid());
 		            	if(taskDate.compareTo(todayDate) < 0)
 		            		isExpired = true;
 		            	if(taskDate.equals(tmrwDate))
@@ -565,6 +585,9 @@ public class TaskOverviewController {
 		            			Integer.parseInt(date[0]), 
 		            			Integer.parseInt(date[1]), 
 		            			Integer.parseInt(date[2]));
+		            	assertTrue(todayDate.isValid());
+		            	assertTrue(tmrwDate.isValid());
+		            	assertTrue(taskDate.isValid());
 		            	if(taskDate.compareTo(todayDate) < 0)
 		            		isExpired = true;
 		            	if(taskDate.equals(tmrwDate))
