@@ -25,6 +25,14 @@ public class Edit implements Command {
 	private static final String MSG_FAIL_INVALID_DATE = "Error: Invalid date/time entered.";
 	private static final String MSG_FAIL_START_DATE_LATER_THAN_END_DATE = "Error: End date/time is earlier than start date/time";
 
+	private static final int EDIT_TASK_DETAIL = 1;
+	private static final int EDIT_TASK_START_DATE = 2;
+	private static final int EDIT_TASK_START_TIME = 3;
+	private static final int EDIT_TASK_END_DATE = 4;
+	private static final int EDIT_TASK_END_TIME = 5;
+	private static final int EDIT_TASK_LOCATION = 6;
+	private static final int EDIT_TASK_PRIORITY = 7;
+	private static final int EDIT_TASK_COMPLETE = 8;
 
 	private UserInput userInput;
 	private static Storage storage;
@@ -35,7 +43,7 @@ public class Edit implements Command {
 
 	/**
 	 * Constructs an Edit command
-	 * @param userInput: userInput instance from MainLogic
+	 * @param userInput: UserInput instance from MainLogic
 	 */
 	public Edit(UserInput userInput) {
 		this.userInput = userInput;
@@ -125,13 +133,13 @@ public class Edit implements Command {
 			Task newTask) {
 		for (int i=1; i<userInput.getEditNumber().size(); i++) {
 			switch (userInput.getEditNumber().get(i)) {
-			case 1:	{	//task detail
+			case EDIT_TASK_DETAIL:	{	//task detail
 				newTask.setTaskDetails(userInput.getDetails());
 				success = true;
 				break;
 			}
 
-			case 2: {	//task start date
+			case EDIT_TASK_START_DATE: {	//task start date
 				if (newTask.getTaskType() == 2) {	//floating
 					if (!changedTaskType) {
 						changedTaskType = true;
@@ -143,7 +151,7 @@ public class Edit implements Command {
 				break;
 			}
 
-			case 3:	{	//task start time
+			case EDIT_TASK_START_TIME:	{	//task start time
 				if (newTask.getTaskType() == 2) {	//floating
 					if (!changedTaskType) {
 						changedTaskType = true;
@@ -154,7 +162,7 @@ public class Edit implements Command {
 				success = true;
 				break;
 			}
-			case 4:	{	//task end date		
+			case EDIT_TASK_END_DATE:	{	//task end date		
 				if (newTask.getTaskType() == 2) { //floating
 					feedback.setMessage(MSG_FAIL_NO_START_DATE);
 					break;
@@ -170,7 +178,7 @@ public class Edit implements Command {
 				success = true;
 				break;
 			}
-			case 5:	{	//task end time
+			case EDIT_TASK_END_TIME:	{	//task end time
 				if (newTask.getTaskType() == 2) { //floating
 					feedback.setMessage(MSG_FAIL_NO_START_TIME);
 					break;
@@ -185,17 +193,17 @@ public class Edit implements Command {
 				success = true;
 				break;
 			}
-			case 6: {	//task location
+			case EDIT_TASK_LOCATION: {	//task location
 				newTask.setTaskLocation(userInput.getLocation());
 				success = true;
 				break;
 			}
-			case 7:	{	//task priority
+			case EDIT_TASK_PRIORITY:	{	//task priority
 				newTask.setPriority(userInput.getPriority());
 				success = true;
 				break;
 			}
-			case 8: {	//is complete			
+			case EDIT_TASK_COMPLETE: {	//is complete			
 				newTask.setComplete(userInput.getComplete());
 				success = true;
 				break;

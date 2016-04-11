@@ -6,6 +6,12 @@ import java.util.Comparator;
 
 public class TaskComparator implements Comparator<Task> {
 	
+	private static final int SORT_TYPE_DETAILS = 1;
+	private static final int SORT_TYPE_DATE = 2;
+	private static final int SORT_TYPE_TIME = 3;
+	private static final int SORT_TYPE_LOCATION = 6;
+	private static final int SORT_TYPE_PRIORITY = 7;
+	
 	int compareType;
 	
 	/**
@@ -19,12 +25,12 @@ public class TaskComparator implements Comparator<Task> {
 	/**
 	 * Compare method for Comparator
 	 * @param task0, task1: tasks to be compared
-	 * @return int of compare result
+	 * @return int: Integer value of compare result
 	 */
 	@Override
 	public int compare(Task task0, Task task1) {
 		switch (compareType) {
-		case 1: {	//task details
+		case SORT_TYPE_DETAILS: {	//task details
 			if (task0.getTaskDetails() == null) {
 				return 1;
 			}
@@ -41,7 +47,7 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getPriority() - task1.getPriority();
 			}
 		}
-		case 2: {	//task date
+		case SORT_TYPE_DATE: {	//task date
 			if (task0.getTaskStartDate() == null && 
 					task1.getTaskStartDate() == null) {
 				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
@@ -76,7 +82,7 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getTaskStartTime().compareTo(task1.getTaskStartTime());
 			}
 		}
-		case 3: {	//task time
+		case SORT_TYPE_TIME: {	//task time
 			if (task0.getTaskStartTime() == null && 
 					task1.getTaskStartTime() == null) {
 				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
@@ -100,7 +106,7 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
 			}
 		}
-		case 6: {	//task location
+		case SORT_TYPE_LOCATION: {	//task location
 			if (task0.getTaskLocation() == null && 
 					task1.getTaskLocation() == null) {
 				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
@@ -122,7 +128,7 @@ public class TaskComparator implements Comparator<Task> {
 				return task0.getTaskDetails().compareTo(task1.getTaskDetails());
 			}
 		}
-		case 7: { 	//task priority
+		case SORT_TYPE_PRIORITY: { 	//task priority
 			if (task0.getPriority() != task1.getPriority()) {
 				return task0.getPriority() - task1.getPriority();	
 			}

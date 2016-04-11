@@ -26,6 +26,11 @@ public class Add implements Command {
 	private static final String TYPE_FLOATING = "floating";
 	private static final String TYPE_RECURRING = "recurring";
 	
+	private static final int RECUR_TYPE_DAILY = 1;
+	private static final int RECUR_TYPE_WEEKLY = 2;
+	private static final int RECUR_TYPE_MONTHLY = 3;
+	private static final int RECUR_TYPE_YEARLY = 4;
+	
 	private UserInput userInput;
 	private static Storage storage;
 	private static Feedback feedback;
@@ -94,6 +99,7 @@ public class Add implements Command {
 
 	/**
 	 * Updates the taskList and recurList to the list of all recurring tasks
+	 * @param task: Task to be added to the list
 	 */
 	private void updateList(Task task) {
 		Task newTask;
@@ -105,6 +111,8 @@ public class Add implements Command {
 	/**
 	 * Updates the date for the recurring task
 	 * @param task: Task to be updated
+	 * @param calStart: Start date of task
+	 * @param calEnd: End date of task
 	 */
 	private void updateDate(Task task, Calendar calStart, Calendar calEnd) {
 		task.setRecurTime(task.getRecurTime() - 1);
@@ -120,10 +128,12 @@ public class Add implements Command {
 	/**
 	 * Creates an instance after updating the new recurring date
 	 * @param task: Task to update the date to
+	 * @param calStart: Start date of task
+	 * @param calEnd: End date of task
 	 */
 	private void generateRecurTasks(Task task, Calendar calStart, Calendar calEnd) {
 		switch (task.getRecurFrequency()) {
-		case 1: {	//daily
+		case RECUR_TYPE_DAILY: {	//daily
 			calStart.add(Calendar.DAY_OF_MONTH, 1);
 			calEnd.add(Calendar.DAY_OF_MONTH, 1);
 			task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
@@ -136,7 +146,7 @@ public class Add implements Command {
 			}
 			break;
 		}
-		case 2: {	//weekly
+		case RECUR_TYPE_WEEKLY: {	//weekly
 			calStart.add(Calendar.DAY_OF_MONTH, 7);
 			calEnd.add(Calendar.DAY_OF_MONTH, 7);
 			task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
@@ -149,7 +159,7 @@ public class Add implements Command {
 			}
 			break;
 		}
-		case 3: {	//monthly
+		case RECUR_TYPE_MONTHLY: {	//monthly
 			calStart.add(Calendar.MONTH, 1);
 			calEnd.add(Calendar.MONTH, 1);
 			task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
@@ -162,7 +172,7 @@ public class Add implements Command {
 			}
 			break;
 		}
-		case 4: {	//yearly
+		case RECUR_TYPE_YEARLY: {	//yearly
 			calStart.add(Calendar.YEAR, 1);
 			calEnd.add(Calendar.YEAR, 1);
 			task.setTaskStartDate(new Date(calStart.get(Calendar.DAY_OF_MONTH), 
