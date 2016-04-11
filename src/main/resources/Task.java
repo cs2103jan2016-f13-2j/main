@@ -13,6 +13,7 @@ import javafx.beans.property.StringProperty;
 //@@author A024487Y
 public class Task implements Serializable {
 /**
+	
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;

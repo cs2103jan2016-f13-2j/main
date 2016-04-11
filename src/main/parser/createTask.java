@@ -12,7 +12,7 @@ import main.parser.Shortcuts;
 
 //@@author A0133926A
 
-public class createTask {
+public class CreateTask {
 	private static final String FROM = "from";
 	private static final String BY = "by";
 	private static final String TO = "to";
@@ -47,6 +47,13 @@ public class createTask {
 	private static final String NOVEMBER = "November";
 	private static final String DECEMBER = "December";
 	
+	//Feedback strings
+	//private static final String MSG_FAIL_INVALID_PRIORITY = "Error: \"%1$s\" is an invalid priority.";
+	
+	//private static Feedback feedback = Feedback.getInstance();
+
+
+	
 
 	/**
 	 * Creates a Task object of type "deadline"
@@ -70,6 +77,8 @@ public class createTask {
 	}
 
 	/**
+	 * assign location,start time, start date, task details to deadline task
+	 * @param info
 	 * Sets the location for the deadline task
 	 * @param info: 
 	 * @param taskName
@@ -79,8 +88,8 @@ public class createTask {
 	 * @param dateAndTime
 	 */
 	private static void setLocationForDeadlineTask(ArrayList<String> info, String taskName, Task task, int indexOfP,
-			String detail, String dateAndTime) {
-		if (info.contains(AT)) {
+		String detail, String dateAndTime) {
+		if (info.contains(AT)) {//if has location, assign it
 			int indexOfAt = info.indexOf(AT);
 			Time time = getTime(dateAndTime);
 			Date date = getDate(dateAndTime);
@@ -92,7 +101,7 @@ public class createTask {
 			task.setTaskLocation(location);
 			task.setTaskType(4);
 
-		} else {
+		} else {//do not have location
 			Time time = getTime(dateAndTime);
 			Date date = getDate(dateAndTime);
 			task.setTaskName(taskName);
@@ -103,19 +112,32 @@ public class createTask {
 		}
 	}
 
+	/**
+	 * assign priority to deadline task
+	 * @param info
+	 * @param task
+	 * @param length
+	 * @return the index of the keyword priority in the arraylist
+	 */
 	private static int setPriorityForDeadlineTask(ArrayList<String> info, Task task, int length) {
 		int indexOfP;
-		if (info.contains(PRIORITY)) {
+		if (info.contains(PRIORITY)) {//if has priority, assign it
 			indexOfP = info.indexOf(PRIORITY);
 			String priority = info.get(indexOfP + 1);
 			task.setPriority(getPriority(priority));
-		} else {
+		} else {//do not indicate priority, set the priority as 3(lowest priority)
 			indexOfP = length;
 			task.setPriority(3);
 		}
 		return indexOfP;
 	}
 
+	/**
+	 * create the event task
+	 * @param taskType
+	 * @param info
+	 * @return an event task
+	 */
 	public final static Task createEvent(String taskType, ArrayList<String> info) {
 		String taskName = taskType + " task";
 		Task task = new Task();
@@ -128,7 +150,24 @@ public class createTask {
 		String detail = getDetail(info, 1, indexOfFrom);
 		String startDateAndTime = info.get(indexOfFrom + 1);
 		String endDateAndTime = info.get(indexOfTo + 1);
-		if (info.contains(AT)) {
+		setLocationForEventTask(info, taskName, task, indexOfP, detail, startDateAndTime, endDateAndTime);
+		return task;
+	}
+
+	
+	/**
+	 * assign the location,start time, end time, start date and end date to the event task
+	 * @param info
+	 * @param taskName
+	 * @param task
+	 * @param indexOfP
+	 * @param detail
+	 * @param startDateAndTime
+	 * @param endDateAndTime
+	 */
+	private static void setLocationForEventTask(ArrayList<String> info, String taskName, Task task, int indexOfP,
+		String detail, String startDateAndTime, String endDateAndTime) {
+		if (info.contains(AT)) {//user indicate the location
 			int indexOfAt = info.indexOf(AT);
 			Time startTime = getTime(startDateAndTime);
 			Date startDate = getDate(startDateAndTime);
@@ -143,7 +182,7 @@ public class createTask {
 			task.setTaskEndTime(endTime);
 			task.setTaskLocation(location);
 			task.setTaskType(1);
-		} else {
+		} else {//do not indicate the location
 			Time startTime = getTime(startDateAndTime);
 			Date startDate = getDate(startDateAndTime);
 			Time endTime = getTime(endDateAndTime);
@@ -156,174 +195,256 @@ public class createTask {
 			task.setTaskEndTime(endTime);
 			task.setTaskType(1);
 		}
-		return task;
 	}
-
+	
+	/**
+	 * create the floating task
+	 * @param taskType
+	 * @param info
+	 * @return the floating task
+	 */
 	public final static Task createFloating(String taskType, ArrayList<String> info) {
 		String taskName = taskType + " task";
 		Task task = new Task();
 		int length = info.size();
-
 		int indexOfP = 0;
+		setLocationForFloatingTask(info, taskName, task, length, indexOfP);
+		return task;
+	}
 
+	/**
+	 * assign the location and location to the floating task
+	 * @param info
+	 * @param taskName
+	 * @param task
+	 * @param length
+	 * @param indexOfP
+	 */
+	private static void setLocationForFloatingTask(ArrayList<String> info, String taskName, Task task, int length,
+		int indexOfP) {
 		if (info.contains(AT)) { // info has location
 			int indexOfAt = info.indexOf(AT);
 			String detail = getDetail(info, 1, indexOfAt);
-			String location = getLocation(info, indexOfAt + 1, indexOfP);
 			indexOfP = setPriorityForDeadlineTask(info, task, length);
+			String location = getLocation(info, indexOfAt + 1, indexOfP);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
-			;
 			task.setTaskLocation(location);
 			task.setTaskType(2);
 		} else { // info does not have location
 			String detail;
-			if (info.contains(PRIORITY)) {
-				indexOfP = info.indexOf(PRIORITY);
-				detail = getDetail(info, 1, indexOfP);
-				String priority = info.get(indexOfP + 1);
-				task.setPriority(getPriority(priority));
-			} else {
-				indexOfP = length;
-				task.setPriority(3);
-				detail = getDetail(info, 1, length);
-			}
-
+			detail = setPriorityForFloatingTask(info, task, length);
 			task.setTaskName(taskName);
 			task.setTaskDetails(detail);
 			task.setTaskType(2);
 		}
-		return task;
 	}
 
+	/**
+	 * assign the priority to the floating task
+	 * @param info
+	 * @param task
+	 * @param length
+	 * @return the index number of the keyword priority in the arraylist
+	 */
+	private static String setPriorityForFloatingTask(ArrayList<String> info, Task task, int length) {
+		int indexOfP;
+		String detail;
+		if (info.contains(PRIORITY)) {//has priority, set the priority to the task
+			indexOfP = info.indexOf(PRIORITY);
+			detail = getDetail(info, 1, indexOfP);
+			String priority = info.get(indexOfP + 1);
+			task.setPriority(getPriority(priority));
+		} else {//do not indicate the priority, set the priority as 3(lowest priority)
+			indexOfP = length;
+			task.setPriority(3);
+			detail = getDetail(info, 1, length);
+		}
+		return detail;
+	}
+
+	/**
+	 * create recurring task
+	 * @param taskType
+	 * @param info
+	 * @return a recurring task
+	 */
 	public final static Task createRecurring(String taskType, ArrayList<String> info) {
 		String taskName = taskType + " task";
 		Task task = new Task();
 		int indexOfFor = info.indexOf(FOR);
 		int indexOfP = 0;
-		String detail;
-		String dateAndTime;
-		String endDateAndTime;
 		int fre = getFrequency(info.get(1));
 		task.setRecurFrequency(fre);
 		task.setRecurTime(Integer.parseInt(info.get(indexOfFor + 1)));
 
-		if (info.contains(BY)) {
-			int indexOfBy = info.indexOf(BY);
-			detail = getDetail(info, 2, indexOfBy);
-			dateAndTime = info.get(indexOfBy + 1);
-			if (info.contains(AT)) {
-				int indexOfAt = info.indexOf(AT);
-				Time time = getTime(dateAndTime);
-				Date date = getDate(dateAndTime);
-				if (info.contains(PRIORITY)) {
-					indexOfP = info.indexOf(PRIORITY);
-					String priority = info.get(indexOfP + 1);
-					task.setPriority(getPriority(priority));
-					String location = getLocation(info, indexOfAt + 1, indexOfP);
-					task.setTaskLocation(location);
-				} else {
-					indexOfP = indexOfFor;
-					task.setPriority(3);
-					String location = getLocation(info, indexOfAt + 1, indexOfP);
-					task.setTaskLocation(location);
-				}
-				task.setTaskName(taskName);
-				task.setTaskDetails(detail);
-				task.setTaskStartDate(date);
-				task.setTaskStartTime(time);
+		if (info.contains(BY)) {//the recurring task is a deadline task
+			createDeadlineRecurringTask(info, taskName, task, indexOfFor);
 
-				task.setTaskType(4);
-
-			} else {
-				Time time = getTime(dateAndTime);
-				Date date = getDate(dateAndTime);
-				task.setTaskName(taskName);
-				task.setTaskDetails(detail);
-				task.setTaskStartDate(date);
-				task.setTaskStartTime(time);
-				task.setTaskType(4);
-
-				indexOfP = setPriorityForDeadlineTask(info, task, indexOfFor);
-			}
-
-		} else if (info.contains(FROM)) {
-			int indexOfFrom = info.indexOf(FROM);
-			int indexOfTo = info.indexOf(TO);
-			detail = getDetail(info, 2, indexOfFrom);
-			dateAndTime = info.get(indexOfFrom + 1);
-			endDateAndTime = info.get(indexOfTo + 1);
-			if (info.contains(AT)) {
-				int indexOfAt = info.indexOf(AT);
-				Time startTime = getTime(dateAndTime);
-				Date startDate = getDate(dateAndTime);
-				Time endTime = getTime(endDateAndTime);
-				Date endDate = getDate(endDateAndTime);
-				if (info.contains(PRIORITY)) {
-					indexOfP = info.indexOf(PRIORITY);
-					String priority = info.get(indexOfP + 1);
-					String location = getLocation(info, indexOfAt + 1, indexOfP);
-					task.setTaskLocation(location);
-					task.setPriority(getPriority(priority));
-				} else {
-					indexOfP = indexOfFor;
-					task.setPriority(3);
-					String location = getLocation(info, indexOfAt + 1, indexOfFor);
-					task.setTaskLocation(location);
-				}
-				task.setTaskName(taskName);
-				task.setTaskDetails(detail);
-				task.setTaskStartDate(startDate);
-				task.setTaskStartTime(startTime);
-				task.setTaskEndDate(endDate);
-				task.setTaskEndTime(endTime);
-
-				task.setTaskType(1);
-			} else {
-				Time startTime = getTime(dateAndTime);
-				Date startDate = getDate(dateAndTime);
-				Time endTime = getTime(endDateAndTime);
-				Date endDate = getDate(endDateAndTime);
-				task.setTaskName(taskName);
-				task.setTaskDetails(detail);
-				task.setTaskStartDate(startDate);
-				task.setTaskStartTime(startTime);
-				task.setTaskEndDate(endDate);
-				task.setTaskEndTime(endTime);
-				task.setTaskType(1);
-				indexOfP = setPriorityForDeadlineTask(info, task, indexOfFor);
-			}
-		} else {
-			if (info.contains(AT)) {
-				int indexOfAt = info.indexOf(AT);
-				detail = getDetail(info, 2, indexOfAt);
-				String location = getLocation(info, indexOfAt + 1, indexOfP);
-				task.setTaskName(taskName);
-				task.setTaskDetails(detail);
-				task.setTaskLocation(location);
-				task.setTaskType(2);
-
-			} else {
-				if (info.contains(PRIORITY)) {
-					indexOfP = info.indexOf(PRIORITY);
-					detail = getDetail(info, 2, indexOfP);
-					String priority = info.get(indexOfP + 1);
-					task.setPriority(getPriority(priority));
-				} else {
-					indexOfP = indexOfFor;
-					detail = getDetail(info, 2, indexOfP);
-					task.setPriority(3);
-				}
-				task.setTaskName(taskName);
-				task.setTaskDetails(detail);
-				task.setTaskType(2);
-			}
+		} else if (info.contains(FROM)) {//the recurring task is a deadline task
+			createEventRecurringTask(info, taskName, task, indexOfFor);
+		} else {//the recurring task is a floating task
+			createFloatingRecurringTask(info, taskName, task, indexOfFor, indexOfP);
 		}
 
 		task.setRecurring(true);
 		return task;
 	}
 
+	/**
+	 * create a floating recurring task
+	 * @param info
+	 * @param taskName
+	 * @param task
+	 * @param indexOfFor
+	 * @param indexOfP
+	 */
+	private static void createFloatingRecurringTask(ArrayList<String> info, String taskName, Task task, int indexOfFor,
+		int indexOfP) {
+		String detail;
+		if (info.contains(AT)) {//has location information
+			int indexOfAt = info.indexOf(AT);
+			detail = getDetail(info, 2, indexOfAt);
+			String location = getLocation(info, indexOfAt + 1, indexOfP);
+			task.setTaskName(taskName);
+			task.setTaskDetails(detail);
+			task.setTaskLocation(location);
+			task.setTaskType(2);
+
+		} else {//do not have location information
+			if (info.contains(PRIORITY)) {//indicate priority
+				indexOfP = info.indexOf(PRIORITY);
+				detail = getDetail(info, 2, indexOfP);
+				String priority = info.get(indexOfP + 1);
+				task.setPriority(getPriority(priority));
+			} else {//do not indicate priority
+				indexOfP = indexOfFor;
+				detail = getDetail(info, 2, indexOfP);
+				task.setPriority(3);
+			}
+			task.setTaskName(taskName);
+			task.setTaskDetails(detail);
+			task.setTaskType(2);
+		}
+	}
+
+	/**
+	 * create an event recurring task
+	 * @param info
+	 * @param taskName
+	 * @param task
+	 * @param indexOfFor
+	 */
+	private static void createEventRecurringTask(ArrayList<String> info, String taskName, Task task, int indexOfFor) {
+		int indexOfP;
+		String detail;
+		String dateAndTime;
+		String endDateAndTime;
+		int indexOfFrom = info.indexOf(FROM);
+		int indexOfTo = info.indexOf(TO);
+		detail = getDetail(info, 2, indexOfFrom);
+		dateAndTime = info.get(indexOfFrom + 1);
+		endDateAndTime = info.get(indexOfTo + 1);
+		if (info.contains(AT)) {//indicate location
+			int indexOfAt = info.indexOf(AT);
+			Time startTime = getTime(dateAndTime);
+			Date startDate = getDate(dateAndTime);
+			Time endTime = getTime(endDateAndTime);
+			Date endDate = getDate(endDateAndTime);
+			if (info.contains(PRIORITY)) {//indicate priority
+				indexOfP = info.indexOf(PRIORITY);
+				String priority = info.get(indexOfP + 1);
+				String location = getLocation(info, indexOfAt + 1, indexOfP);
+				task.setTaskLocation(location);
+				task.setPriority(getPriority(priority));
+			} else {//do not indicate the priority
+				indexOfP = indexOfFor;
+				task.setPriority(3);
+				String location = getLocation(info, indexOfAt + 1, indexOfFor);
+				task.setTaskLocation(location);
+			}
+			task.setTaskName(taskName);
+			task.setTaskDetails(detail);
+			task.setTaskStartDate(startDate);
+			task.setTaskStartTime(startTime);
+			task.setTaskEndDate(endDate);
+			task.setTaskEndTime(endTime);
+
+			task.setTaskType(1);
+		} else {//do not indicate location
+			Time startTime = getTime(dateAndTime);
+			Date startDate = getDate(dateAndTime);
+			Time endTime = getTime(endDateAndTime);
+			Date endDate = getDate(endDateAndTime);
+			task.setTaskName(taskName);
+			task.setTaskDetails(detail);
+			task.setTaskStartDate(startDate);
+			task.setTaskStartTime(startTime);
+			task.setTaskEndDate(endDate);
+			task.setTaskEndTime(endTime);
+			task.setTaskType(1);
+			indexOfP = setPriorityForDeadlineTask(info, task, indexOfFor);
+		}
+	}
+
+	/**
+	 * create a deadline recurring task
+	 * @param info
+	 * @param taskName
+	 * @param task
+	 * @param indexOfFor
+	 */
+	private static void createDeadlineRecurringTask(ArrayList<String> info, String taskName, Task task,
+		int indexOfFor) {
+		int indexOfP;
+		String detail;
+		String dateAndTime;
+		int indexOfBy = info.indexOf(BY);
+		detail = getDetail(info, 2, indexOfBy);
+		dateAndTime = info.get(indexOfBy + 1);
+		if (info.contains(AT)) {//indicate location
+			int indexOfAt = info.indexOf(AT);
+			Time time = getTime(dateAndTime);
+			Date date = getDate(dateAndTime);
+			if (info.contains(PRIORITY)) {//indicate priority
+				indexOfP = info.indexOf(PRIORITY);
+				String priority = info.get(indexOfP + 1);
+				task.setPriority(getPriority(priority));
+				String location = getLocation(info, indexOfAt + 1, indexOfP);
+				task.setTaskLocation(location);
+			} else {//do not indicate priority
+				indexOfP = indexOfFor;
+				task.setPriority(3);
+				String location = getLocation(info, indexOfAt + 1, indexOfP);
+				task.setTaskLocation(location);
+			}
+			task.setTaskName(taskName);
+			task.setTaskDetails(detail);
+			task.setTaskStartDate(date);
+			task.setTaskStartTime(time);
+
+			task.setTaskType(4);
+
+		} else {//do not indicate location
+			Time time = getTime(dateAndTime);
+			Date date = getDate(dateAndTime);
+			task.setTaskName(taskName);
+			task.setTaskDetails(detail);
+			task.setTaskStartDate(date);
+			task.setTaskStartTime(time);
+			task.setTaskType(4);
+
+			indexOfP = setPriorityForDeadlineTask(info, task, indexOfFor);
+		}
+	}
+
+	/**
+	 * get task details from the arraylist
+	 * @param info
+	 * @param start
+	 * @param end
+	 * @return the string of details
+	 */
 	public static String getDetail(ArrayList<String> info, int start, int end) {
 		String detail = "";
 		for (int i = start; i < end; i++) {
@@ -332,6 +453,14 @@ public class createTask {
 		return detail.trim();
 	}
 
+	
+	/**
+	 * get task location from the arraylist
+	 * @param info
+	 * @param start
+	 * @param end
+	 * @return the string of location
+	 */
 	public static String getLocation(ArrayList<String> info, int start, int end) {
 		String location = "";
 		for (int i = start; i < end; i++) {
@@ -340,6 +469,11 @@ public class createTask {
 		return location.trim();
 	}
 
+	/**
+	 * get time from the date and time string
+	 * @param dateAndTime
+	 * @return time object
+	 */
 	public static Time getTime(String dateAndTime) {
 		Time time = new Time();
 		if (dateAndTime.contains(";")) { // has both time and date
@@ -359,6 +493,11 @@ public class createTask {
 		return time;
 	}
 
+	/**
+	 * deal with different time format
+	 * @param timeInfo
+	 * @param time
+	 */
 	private static void handleDiffTimeFormat(String timeInfo, Time time) {
 		if(timeInfo.contains("am")||timeInfo.contains("pm")){
 			handleDiffTimeFormatPart2(timeInfo,time);
@@ -366,7 +505,12 @@ public class createTask {
 			handleDiffTimeFormatPart1(timeInfo,time);
 		}
 	}
-	
+
+	/**
+	 * handle 4 time format: 12:00  midnight  noon and 1200 or 923
+	 * @param timeInfo
+	 * @param time
+	 */
 	private static void handleDiffTimeFormatPart1(String timeInfo,Time time){
 		if (timeInfo.contains(":")) {
 			String hAndM[] = timeInfo.split(":");
@@ -388,54 +532,66 @@ public class createTask {
 			}
 		}
 	}
-	
+
+	/**
+	 * handle the date format with "pm" and "am"
+	 * @param timeInfo
+	 * @param time
+	 */
 	private static void handleDiffTimeFormatPart2(String timeInfo,Time time){
-			if (timeInfo.toLowerCase().contains("am")) {
-				String h[] = timeInfo.toLowerCase().split("am");
-				if(h[0].length()<=2){
-					int hour = Integer.parseInt(h[0]);
-					if (hour == 12) {
-						hour = 0;
-					}
-					else if (hour < 1 || hour > 12) {
-						hour = -1;
-					}
-					time.setHour(hour);
-					time.setMinute(0);
-				} else {
-					handleDiffTimeFormatPart1(h[0],time);
-					if (time.getHour() == 12) {
-						time.setHour(0);
-					}
-					else if (time.getHour() < 1 || time.getHour() > 12) {
-						time.setHour(-1);
-					}
+		if (timeInfo.toLowerCase().contains("am")) {
+			String h[] = timeInfo.toLowerCase().split("am");
+			if(h[0].length()<=2){
+				int hour = Integer.parseInt(h[0]);
+				if (hour == 12) {
+					hour = 0;
 				}
+				else if (hour < 1 || hour > 12) {
+					hour = -1;
+				}
+				time.setHour(hour);
+				time.setMinute(0);
 			} else {
-				String h[] = timeInfo.toLowerCase().split("pm");
-				if(h[0].length()<=2){
-					int hour = Integer.parseInt(h[0]) + 12;
-					if (hour == 24) {
-						hour = 12;
-					}
-					else if (hour < 13 || hour > 24) {
-						hour = -1;
-					}
-					time.setHour(hour);
-					time.setMinute(0);
-				} else {
-					handleDiffTimeFormatPart1(h[0],time);
-					time.setHour(time.getHour()+12);
-					if (time.getHour() == 24) {
-						time.setHour(12);
-					}
-					else if (time.getHour() < 13 || time.getHour() > 24) {
-						time.setHour(-1);
-					}
+				handleDiffTimeFormatPart1(h[0],time);
+				if (time.getHour() == 12) {
+					time.setHour(0);
+				}
+				else if (time.getHour() < 1 || time.getHour() > 12) {
+					time.setHour(-1);
 				}
 			}
-	}
+		} else {
+			String h[] = timeInfo.toLowerCase().split("pm");
+			if(h[0].length()<=2){
+				int hour = Integer.parseInt(h[0]) + 12;
+				if (hour == 24) {
+					hour = 12;
+				}
+				else if (hour < 13 || hour > 24) {
+					hour = -1;
+				}
+				time.setHour(hour);
+				time.setMinute(0);
+			} else {
+				handleDiffTimeFormatPart1(h[0],time);
+				time.setHour(time.getHour()+12);
+				if (time.getHour() == 24) {
+					time.setHour(12);
+				}
+				else if (time.getHour() < 13 || time.getHour() > 24) {
+					time.setHour(-1);
+				}
+			}
+		}
+}
 
+
+
+	/**
+	 * get date from the date and time string
+	 * @param dateAndTime
+	 * @return the date object
+	 */
 	public static Date getDate(String dateAndTime) {
 		Date date = new Date();
 		if (dateAndTime.contains(";")) { // has both time and date
@@ -447,149 +603,195 @@ public class createTask {
 			}
 		} else { // has either time or date
 			if (!isTime(dateAndTime)) { // only have date info
-				
+
 				handleDiffDateFormat(dateAndTime, date);
 			} else { // does not have date info
 				Time t1 = getTime(dateAndTime);
 				Time t2 = new Time(Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-						Calendar.getInstance().get(Calendar.MINUTE));
+					Calendar.getInstance().get(Calendar.MINUTE));
 				if (compareTwoTime(t1, t2)) {
-					Calendar cal = Calendar.getInstance();
-					date.setDay(cal.get(Calendar.DAY_OF_MONTH));
-					date.setMonth(cal.get(Calendar.MONTH) + 1);
-					date.setYear(cal.get(Calendar.YEAR));
+					handleDateFormatWithToday(date);
 				} else {
-					Calendar cal = Calendar.getInstance();
-					cal.add(Calendar.DAY_OF_MONTH, 1);
-					date.setDay(cal.get(Calendar.DAY_OF_MONTH));
-					date.setMonth(cal.get(Calendar.MONTH) + 1);
-					date.setYear(cal.get(Calendar.YEAR));
+					handleDateFormatWithTmr(date);
 				}
 			}
 		}
 		return date;
 	}
 
+	/**
+	 * handle different date format
+	 * @param dateInfo
+	 * @param date
+	 */
 	private static void handleDiffDateFormat(String dateInfo, Date date) {
 		if (dateInfo.contains("/")) {
-			String dmy[] = dateInfo.split("/");
-			date.setDay(Integer.parseInt(dmy[0]));
-			date.setMonth(Integer.parseInt(dmy[1]));
-			if(dmy.length==3){
-				date.setYear(Integer.parseInt(dmy[2]));
-			} else {
-				if(compareMonth(Integer.parseInt(dmy[0]),Integer.parseInt(dmy[1]))){
-					Calendar cal = Calendar.getInstance();
-					date.setYear(cal.get(Calendar.YEAR));
-				} else{
-					Calendar cal = Calendar.getInstance();
-					cal.add(Calendar.YEAR, 1);
-					date.setYear(cal.get(Calendar.YEAR));
-				}
-			}
-			
+			handleDateFormatWithBackSlash(dateInfo, date);		
 		} else if(Shortcuts.diffDateFormat(dateInfo).contains(TODAY)) {
-			Calendar cal = Calendar.getInstance();
-			date.setDay(cal.get(Calendar.DAY_OF_MONTH));
-			date.setMonth(cal.get(Calendar.MONTH) + 1);
-			date.setYear(cal.get(Calendar.YEAR));
+			handleDateFormatWithToday(date);
 		} else if (Shortcuts.diffDateFormat(dateInfo).contains(TOMORROW)) {
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.DAY_OF_MONTH, 1);
-			date.setDay(cal.get(Calendar.DAY_OF_MONTH));
-			date.setMonth(cal.get(Calendar.MONTH) + 1);
-			date.setYear(cal.get(Calendar.YEAR));
+			handleDateFormatWithTmr(date);
 		} else if (dates(Shortcuts.diffDateFormat(dateInfo)) != -1) {
+			handleDateFormatWithWeekday(dateInfo, date);
+		} else {
+			handleDateFormatWithDateAndMonth(dateInfo, date);
+		}
+	}
+
+	/**
+	 * handle date format like this: 1st-apr or 11-aug
+	 * @param dateInfo
+	 * @param date
+	 */
+	private static void handleDateFormatWithDateAndMonth(String dateInfo, Date date) {
+		if (dateInfo.toLowerCase().contains("st")) {
+			String dAndM[] = dateInfo.toLowerCase().split("st-");
+			dAndM[1] = dAndM[1].trim();
 			Calendar cal = Calendar.getInstance();
-			int infoDayOfWeek = dates(Shortcuts.diffDateFormat(dateInfo));
-			int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
-			if (infoDayOfWeek >= dayOfWeek) {
-				cal.add(Calendar.DAY_OF_MONTH, infoDayOfWeek - dayOfWeek);
-				date.setDay(cal.get(Calendar.DAY_OF_MONTH));
-				date.setMonth(cal.get(Calendar.MONTH) + 1);
+			if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
 				date.setYear(cal.get(Calendar.YEAR));
 			} else {
-				cal.add(Calendar.DAY_OF_MONTH, infoDayOfWeek - dayOfWeek + 7);
-				date.setDay(cal.get(Calendar.DAY_OF_MONTH));
-				date.setMonth(cal.get(Calendar.MONTH) + 1);
+				cal.add(Calendar.YEAR, 1);
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+				date.setYear(cal.get(Calendar.YEAR));
+			}
+		} else if (dateInfo.toLowerCase().contains("nd")) {
+			String dAndM[] = dateInfo.toLowerCase().split("nd-");
+			dAndM[1] = dAndM[1].trim();
+			Calendar cal = Calendar.getInstance();
+			if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+				date.setYear(cal.get(Calendar.YEAR));
+			} else {
+				cal.add(Calendar.YEAR, 1);
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+				date.setYear(cal.get(Calendar.YEAR));
+			}
+		} else if (dateInfo.toLowerCase().contains("rd")) {
+			String dAndM[] = dateInfo.toLowerCase().split("rd-");
+			dAndM[1] = dAndM[1].trim();
+			Calendar cal = Calendar.getInstance();
+			if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+				date.setYear(cal.get(Calendar.YEAR));
+			} else {
+				cal.add(Calendar.YEAR, 1);
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+				date.setYear(cal.get(Calendar.YEAR));
+			}
+		} else if(dateInfo.toLowerCase().contains("th")){
+			String dAndM[] = dateInfo.toLowerCase().split("th-");
+			dAndM[1] = dAndM[1].trim();
+			Calendar cal = Calendar.getInstance();
+			if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+				date.setYear(cal.get(Calendar.YEAR));
+			} else {
+				cal.add(Calendar.YEAR, 1);
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
 				date.setYear(cal.get(Calendar.YEAR));
 			}
 		} else {
-			if (dateInfo.toLowerCase().contains("st")) {
-				String dAndM[] = dateInfo.toLowerCase().split("st-");
-				dAndM[1] = dAndM[1].trim();
-				Calendar cal = Calendar.getInstance();
-				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				} else {
-					cal.add(Calendar.YEAR, 1);
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				}
-			} else if (dateInfo.toLowerCase().contains("nd")) {
-				String dAndM[] = dateInfo.toLowerCase().split("nd-");
-				dAndM[1] = dAndM[1].trim();
-				Calendar cal = Calendar.getInstance();
-				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				} else {
-					cal.add(Calendar.YEAR, 1);
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				}
-			} else if (dateInfo.toLowerCase().contains("rd")) {
-				String dAndM[] = dateInfo.toLowerCase().split("rd-");
-				dAndM[1] = dAndM[1].trim();
-				Calendar cal = Calendar.getInstance();
-				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				} else {
-					cal.add(Calendar.YEAR, 1);
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				}
-			} else if(dateInfo.toLowerCase().contains("th")){
-				String dAndM[] = dateInfo.toLowerCase().split("th-");
-				dAndM[1] = dAndM[1].trim();
-				Calendar cal = Calendar.getInstance();
-				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				} else {
-					cal.add(Calendar.YEAR, 1);
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				}
+			String dAndM[] = dateInfo.toLowerCase().split("-");
+			dAndM[1] = dAndM[1].trim();
+			Calendar cal = Calendar.getInstance();
+			if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+				date.setYear(cal.get(Calendar.YEAR));
 			} else {
-				String dAndM[] = dateInfo.toLowerCase().split("-");
-				dAndM[1] = dAndM[1].trim();
-				Calendar cal = Calendar.getInstance();
-				if (compareMonth(Integer.parseInt(dAndM[0]),months(Shortcuts.diffDateFormat(dAndM[1]))+1)) {
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				} else {
-					cal.add(Calendar.YEAR, 1);
-					date.setDay(Integer.parseInt(dAndM[0]));
-					date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
-					date.setYear(cal.get(Calendar.YEAR));
-				}
+				cal.add(Calendar.YEAR, 1);
+				date.setDay(Integer.parseInt(dAndM[0]));
+				date.setMonth(months(Shortcuts.diffDateFormat(dAndM[1]))+1);
+				date.setYear(cal.get(Calendar.YEAR));
 			}
 		}
 	}
-	
-	private static boolean compareMonth(int date, int month){
+
+	/**
+	 * handle date format like: Monday, Tuesday etc.
+	 * @param dateInfo
+	 * @param date
+	 */
+	private static void handleDateFormatWithWeekday(String dateInfo, Date date) {
+		Calendar cal = Calendar.getInstance();
+		int infoDayOfWeek = dates(Shortcuts.diffDateFormat(dateInfo));
+		int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+		if (infoDayOfWeek >= dayOfWeek) {
+			cal.add(Calendar.DAY_OF_MONTH, infoDayOfWeek - dayOfWeek);
+			date.setDay(cal.get(Calendar.DAY_OF_MONTH));
+			date.setMonth(cal.get(Calendar.MONTH) + 1);
+			date.setYear(cal.get(Calendar.YEAR));
+		} else {
+			cal.add(Calendar.DAY_OF_MONTH, infoDayOfWeek - dayOfWeek + 7);
+			date.setDay(cal.get(Calendar.DAY_OF_MONTH));
+			date.setMonth(cal.get(Calendar.MONTH) + 1);
+			date.setYear(cal.get(Calendar.YEAR));
+		}
+	}
+
+	/**
+	 * handle date format like: tmr or tmrw or tomorrow
+	 * @param date
+	 */
+	private static void handleDateFormatWithTmr(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, 1);
+		date.setDay(cal.get(Calendar.DAY_OF_MONTH));
+		date.setMonth(cal.get(Calendar.MONTH) + 1);
+		date.setYear(cal.get(Calendar.YEAR));
+	}
+
+	/**
+	 * handle date format like: today
+	 * @param date
+	 */
+	private static void handleDateFormatWithToday(Date date) {
+		Calendar cal = Calendar.getInstance();
+		date.setDay(cal.get(Calendar.DAY_OF_MONTH));
+		date.setMonth(cal.get(Calendar.MONTH) + 1);
+		date.setYear(cal.get(Calendar.YEAR));
+	}
+
+	/**
+	 * handle date format like: 06/08/2016 or 06/08
+	 * @param dateInfo
+	 * @param date
+	 */
+	private static void handleDateFormatWithBackSlash(String dateInfo, Date date) {
+		String dmy[] = dateInfo.split("/");
+		date.setDay(Integer.parseInt(dmy[0]));
+		date.setMonth(Integer.parseInt(dmy[1]));
+		if(dmy.length==3){
+			date.setYear(Integer.parseInt(dmy[2]));
+		} else {
+			if(compareMonth(Integer.parseInt(dmy[0]),Integer.parseInt(dmy[1]))){
+				Calendar cal = Calendar.getInstance();
+				date.setYear(cal.get(Calendar.YEAR));
+			} else{
+				Calendar cal = Calendar.getInstance();
+				cal.add(Calendar.YEAR, 1);
+				date.setYear(cal.get(Calendar.YEAR));
+			}
+		}
+	}
+
+	/**
+	 * compare two date, witch only contains month and date
+	 * @param date
+	 * @param month
+	 * @return if the date is larger or equal to today's date, return true; or return false 
+	 */
+	protected static boolean compareMonth(int date, int month){
 		Calendar cal = Calendar.getInstance();
 		int curDate = cal.get(Calendar.DAY_OF_MONTH);
 		int curMonth = cal.get(Calendar.MONTH)+1;
@@ -606,99 +808,120 @@ public class createTask {
 		}
 	}
 
-	private static int dates(String dateInfo) {
+	/**
+	 * Translate the weekday to a number,Sunday to Saturday indicate 1 to 7
+	 * @param dateInfo
+	 * @return the integer number
+	 */
+	protected static int dates(String dateInfo) {
 		int a = 0;
 		switch (dateInfo) {
-		case MONDAY:
+			case MONDAY:
 			a = 2;
 			break;
-		case TUESDAY:
+			case TUESDAY:
 			a = 3;
 			break;
-		case WEDNESDAY:
+			case WEDNESDAY:
 			a = 4;
 			break;
-		case THURSDAY:
+			case THURSDAY:
 			a = 5;
 			break;
-		case FRIDAY:
+			case FRIDAY:
 			a = 6;
 			break;
-		case SATURDAY:
+			case SATURDAY:
 			a = 7;
 			break;
-		case SUNDAY:
+			case SUNDAY:
 			a = 1;
 			break;
-		default:
+			default:
 			a = -1;
 			break;
 		}
 		return a;
 	}
 
-	private static int months(String dateInfo) {
+	/**
+	 * Translate the month to a number, Jan to Dec indicate 0 to 11
+	 * @param dateInfo
+	 * @return the integer number
+	 */
+	protected static int months(String dateInfo) {
 		int a = 0;
 		switch (dateInfo) {
-		case JANUARY:
+			case JANUARY:
 			a = 0;
 			break;
-		case FEBRUARY:
+			case FEBRUARY:
 			a = 1;
 			break;
-		case MARCH:
+			case MARCH:
 			a = 2;
 			break;
-		case APRIL:
+			case APRIL:
 			a = 3;
 			break;
-		case MAY:
+			case MAY:
 			a = 4;
 			break;
-		case JUNE:
+			case JUNE:
 			a = 5;
 			break;
-		case JULY:
+			case JULY:
 			a = 6;
 			break;
-		case AUGUST:
+			case AUGUST:
 			a = 7;
 			break;
-		case SEPTEMBER:
+			case SEPTEMBER:
 			a = 8;
 			break;
-		case OCTOBER:
+			case OCTOBER:
 			a = 9;
 			break;
-		case NOVEMBER:
+			case NOVEMBER:
 			a = 10;
 			break;
-		case DECEMBER:
+			case DECEMBER:
 			a = 11;
 			break;
-		default:
+			default:
 			a = -1;
 			break;
 		}
 		return a;
 	}
 
-	private static boolean isTime(String timeInfo) {
-		if (timeInfo.toLowerCase().contains("am") || timeInfo.toLowerCase().contains("pm")
-				|| timeInfo.contains(MIDNIGHT) || timeInfo.contains(NOON) || containsOnlyNumbers(timeInfo) ||
-				containsNumbersAndColon(timeInfo)) {
-			return true;
-		} else {
-			return false;
-		}
+	/**
+	 * judge if the string is time or date
+	 * @param timeInfo
+	 * @return true if the string is time
+	 */
+protected static boolean isTime(String timeInfo) {
+	if (timeInfo.toLowerCase().contains("am") || timeInfo.toLowerCase().contains("pm")
+			|| timeInfo.contains(MIDNIGHT) || timeInfo.contains(NOON) || containsOnlyNumbers(timeInfo) ||
+			containsNumbersAndColon(timeInfo)) {
+		return true;
+	} else {
+		return false;
 	}
+}
 	
-	private static boolean containsNumbersAndColon(String str){
+	protected static boolean containsNumbersAndColon(String str){
 		String t[] = str.split(":");
 		return containsOnlyNumbers(t[0])&&containsOnlyNumbers(t[1]);
 	}
 
-	private static boolean containsOnlyNumbers(String str) {
+
+	/**
+	 * to check whether the string only contains number
+	 * @param str
+	 * @return true if the string only has number
+	 */
+	protected static boolean containsOnlyNumbers(String str) {
 		for (int i = 0; i < str.length(); i++) {
 			if (!Character.isDigit(str.charAt(i)))
 				return false;
@@ -706,7 +929,13 @@ public class createTask {
 		return true;
 	}
 
-	private static boolean compareTwoTime(Time t1, Time t2) {
+	/**
+	 * give 2 time with hour and minute
+	 * @param t1
+	 * @param t2
+	 * @return true if the first time is bigger than the second one
+	 */
+	protected static boolean compareTwoTime(Time t1, Time t2) {
 		int t1TotalM = t1.getHour() * 60 + t1.getMinute();
 		int t2TotalM = t2.getHour() * 60 + t2.getMinute();
 		if (t1TotalM > t2TotalM) {
@@ -716,7 +945,12 @@ public class createTask {
 		}
 	}
 
-	public static int getPriority(String p) {
+	/**
+	 * get priority from the string
+	 * @param p 
+	 * @return integer number
+	 */
+	protected static int getPriority(String p) {
 		int n = Integer.parseInt(p);
 		if(n>=3){
 			return 3;
@@ -725,15 +959,22 @@ public class createTask {
 		}
 	}
 
-	public static int getFrequency(String fre) {
+	/**
+	 * get frequency from the string 
+	 * @param fre
+	 * @return integer number
+	 */
+	protected static int getFrequency(String fre) {
 		if (fre.equals(DAILY)) {
 			return 1;
 		} else if (fre.equals(WEEKLY)) {
 			return 2;
 		} else if (fre.equals(MONTHLY)) {
 			return 3;
-		} else {
+		} else if(fre.equals(YEARLY)){
 			return 4;
+		} else {
+			return -1;
 		}
 	}
 }

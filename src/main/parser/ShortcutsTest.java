@@ -86,7 +86,7 @@ public class ShortcutsTest {
 		assertTrue(Shortcuts.diffDateFormat("fri").equals("friday"));
 		assertTrue(Shortcuts.diffDateFormat("friday").equals("friday"));
 		
-		//test Saturday shrotcut
+		//test Saturday shortcut
 		assertTrue(Shortcuts.diffDateFormat("sat").equals("saturday"));
 		assertTrue(Shortcuts.diffDateFormat("saturday").equals("saturday"));
 		
