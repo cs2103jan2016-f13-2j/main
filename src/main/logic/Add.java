@@ -86,7 +86,6 @@ public class Add implements Command {
 					(task.getTaskStartDate().compareTo(MainLogic.getCurrentDate()) < 0)) {
 				task.setExpired(true);
 			}
-			
 			taskList.add(task);
 		}
 		

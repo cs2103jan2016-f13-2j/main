@@ -738,7 +738,6 @@ public class OverdueOverviewController {
 	 */
 	private void processKeyEventPressed(KeyEvent keyEvent) {
 		if (keyEvent.getCode() == KeyCode.CONTROL) { 
-		    System.out.print("ctrl pressed");
 		    controlPressed = true;
 		  } else if (keyEvent.getCode() == KeyCode.Z) {
 		      zPressed = true;
